@@ -332,10 +332,9 @@ MonoBehaviour:
     type: 3}
   cameraRotationSpeed: 0.3
   invertRotation: 1
-  cameraDistanceFactor: 15
-  cameraDistance: 20
+  cameraDistance: {x: 10, y: 20}
   cameraDistanceRange:
-    min: 0
+    min: 5
     max: 20
 --- !u!195 &6126187404098910138
 NavMeshAgent:

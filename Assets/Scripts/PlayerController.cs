@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Composites;
 using Utils;
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -20,12 +19,8 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Whether the rotation of the camera with the mouse should be flipped")] [SerializeField]
     private bool invertRotation;
 
-    [Tooltip("This influences the graph on which the camera moves to and from the player (using cos and sin)")]
-    [SerializeField]
-    private float cameraDistanceFactor;
-
     [Tooltip("The distance of the camera to the user")] [SerializeField]
-    private float cameraDistance;
+    private Vector2 cameraDistance;
 
     [Tooltip("The min- and max-distance of the camera")] [SerializeField]
     private Range cameraDistanceRange;
@@ -39,6 +34,7 @@ public class PlayerController : MonoBehaviour
     /// The current horizontal angle of the camera, relative to the player
     /// </summary>
     private float _cameraAngleX;
+
     /// <summary>
     /// The current position of the camera, relative to the player
     /// </summary>
@@ -130,8 +126,9 @@ public class PlayerController : MonoBehaviour
     private void UpdateCameraAngle(float cameraDistanceChange)
     {
         float radian = (float) Math.PI * _cameraAngleX / 180;
-        _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistanceFactor, cameraDistance,
-            (float) -Math.Cos(radian) * cameraDistanceFactor);
-        cameraDistance = Mathf.Clamp(cameraDistance + cameraDistanceChange, cameraDistanceRange.min, cameraDistanceRange.max);
+        cameraDistance.y = Mathf.Clamp(cameraDistance.y + cameraDistanceChange, cameraDistanceRange.min,
+            cameraDistanceRange.max);
+        _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
+            (float) -Math.Cos(radian) * cameraDistance.x);
     }
 }
