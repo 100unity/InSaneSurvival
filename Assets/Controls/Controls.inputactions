@@ -1,0 +1,52 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Game",
+            "id": "19d5d016-8713-4cd5-ba8e-767f73bb7513",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "6292ecd5-6dea-4f80-9a09-a998d8b10408",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "RotateCamera",
+                    "type": "Value",
+                    "id": "7043aad4-8a12-4ca0-92fd-21acf37b132f",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f202e9f7-4869-4da8-95b4-355497fc0fdd",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c777685e-9039-4e2d-a210-69f32b4bbc0b",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
