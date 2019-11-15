@@ -2,21 +2,52 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Composites;
+using Utils;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private LayerMask moveClickLayers;
-    [SerializeField] private GameObject clickEffect;
-    [SerializeField] private float cameraOffset;
-    [SerializeField] private float cameraRotationSpeed;
-    
+    [Tooltip("The clickable layer. Defines where the player can click/move")] [SerializeField]
+    private LayerMask moveClickLayers;
+
+    [Tooltip("An effect that will be displayed whenever the player clicks to move")] [SerializeField]
+    private GameObject clickEffect;
+
+    [Tooltip("The speed with which the player can rotate the camera around the character")] [SerializeField]
+    private float cameraRotationSpeed;
+
+    [Tooltip("Whether the rotation of the camera with the mouse should be flipped")] [SerializeField]
+    private bool invertRotation;
+
+    [Tooltip("This influences the graph on which the camera moves to and from the player (using cos and sin)")]
+    [SerializeField]
+    private float cameraDistanceFactor;
+
+    [Tooltip("The distance of the camera to the user")] [SerializeField]
+    private float cameraDistance;
+
+    [Tooltip("The min- and max-distance of the camera")] [SerializeField]
+    private Range cameraDistanceRange;
+
+    //Component references
     private NavMeshAgent _navMeshAgent;
     private Camera _camera;
-    private Vector3 _previousMousePosition;
-    private float _angle;
-    
-    private void Start()
+    private Controls _controls;
+
+    /// <summary>
+    /// The current horizontal angle of the camera, relative to the player
+    /// </summary>
+    private float _cameraAngleX;
+    /// <summary>
+    /// The current position of the camera, relative to the player
+    /// </summary>
+    private Vector3 _cameraPosition;
+
+    /// <summary>
+    /// Gets the camera and the NavMeshAgent component and sets up the controls
+    /// </summary>
+    private void Awake()
     {
         _camera = Camera.main;
         if (_camera == null)
@@ -24,46 +55,83 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("No main camera found");
             return;
         }
+
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        SetUpControls();
     }
 
+    private void OnEnable()
+    {
+        UpdateCameraAngle(0);
+        _controls.Enable();
+    }
+
+    private void OnDisable() => _controls.Disable();
+
+    /// <summary>
+    /// Moves the camera with the player
+    /// </summary>
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            if (_previousMousePosition != Vector3.zero)
-            {
-                var moveDelta = Input.mousePosition.x - _previousMousePosition.x;
-                _angle += moveDelta * cameraRotationSpeed;
-            }
-            _previousMousePosition = Input.mousePosition;
-        }
-        
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-            _previousMousePosition = Vector3.zero;
-        
         // Set camera position and look angle
-        var playerPosition = transform.position;
-        var radian = (float) Math.PI * _angle / 180;
-        var offset = new Vector3((float) Math.Sin(radian) * 15, cameraOffset, (float) -Math.Cos(radian) * 15);
-        _camera.transform.position = playerPosition + offset;
+        Vector3 playerPosition = transform.position;
+        _camera.transform.position = playerPosition + _cameraPosition;
         _camera.transform.LookAt(playerPosition);
     }
 
-    private void OnMove()
+    /// <summary>
+    /// This will set up all event for the player-controls
+    /// </summary>
+    private void SetUpControls()
     {
-        var clickLocation = Mouse.current.position.ReadValue();
-        var clickRay = _camera.ScreenPointToRay(clickLocation);
+        _controls = new Controls();
+        _controls.Game.Move.performed += Move;
+        _controls.Game.RotateCamera.performed += RotateCamera;
+        _controls.Game.Zoom.performed += Zoom;
+    }
+
+    /// <summary>
+    /// When the right mouse button is pressed, the player moves to the pressed location using a raycast and the NavMeshAgent.
+    /// </summary>
+    private void Move(InputAction.CallbackContext obj)
+    {
+        Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         // Get ground position from mouse click
-        if (Physics.Raycast(clickRay, out var hit, 10000, moveClickLayers))
+        if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, moveClickLayers))
         {
             // Set destination for nav mesh agent
             _navMeshAgent.SetDestination(hit.point);
             _navMeshAgent.isStopped = false;
-            
+
             // Create click point effect
             Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
         }
+    }
+
+    /// <summary>
+    /// Using the delta-x of the mouse movement it will add to the <see cref="_cameraAngleX"/> when the left mouse button is pressed
+    /// </summary>
+    private void RotateCamera(InputAction.CallbackContext obj)
+    {
+        _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
+        UpdateCameraAngle(0);
+    }
+
+    /// <summary>
+    /// Allows the player to zoom in and out
+    /// </summary>
+    private void Zoom(InputAction.CallbackContext obj) => UpdateCameraAngle(obj.ReadValue<float>());
+
+    /// <summary>
+    /// Sets the distance of the camera to the player
+    /// </summary>
+    /// <param name="cameraDistanceChange">The increase/decrease of the camera distance</param>
+    private void UpdateCameraAngle(float cameraDistanceChange)
+    {
+        float radian = (float) Math.PI * _cameraAngleX / 180;
+        _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistanceFactor, cameraDistance,
+            (float) -Math.Cos(radian) * cameraDistanceFactor);
+        cameraDistance = Mathf.Clamp(cameraDistance + cameraDistanceChange, cameraDistanceRange.min, cameraDistanceRange.max);
     }
 }
