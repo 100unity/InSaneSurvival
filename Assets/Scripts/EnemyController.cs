@@ -5,40 +5,65 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float lookRadius = 10f;
-    [SerializeField] private float rotationSpeed;
+    [Tooltip("The radius around the NPC in which a player gets the aggro.")] [SerializeField]
+    private float lookRadius;
 
-    private Transform target;
-    private NavMeshAgent agent;
+    [Tooltip("The speed the NPC rotates with.")] [SerializeField]
+    private float rotationSpeed;
 
-    void Start()
+    private Transform _target;
+    private NavMeshAgent _agent;
+
+    /// <summary>
+    /// Gets the player as target and the NavMeshAgent component.
+    /// </summary>
+    private void Awake()
     {
-        target = PlayerManager.Instance.GetPlayer().transform;
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
+        _target = PlayerManager.Instance.GetPlayer().transform;
+        if (_target == null)
+        {
+            Debug.LogError("No player found.");
+        }
     }
 
-    void Update()
+    /// <summary>
+    /// Moves around randomly and checks for a target near. If a target is near,
+    /// follows it to the position the target left the lookRadius of the NPC.
+    /// In the stopping distance of the NavMeshAgent it rotates to face the target.
+    /// </summary>
+    private void Update()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
+        // Move randomly
+
+
+        // Check for a target near
+        float distance = Vector3.Distance(_target.position, transform.position);
 
         if (distance <= lookRadius)
         {
-            agent.SetDestination(target.position);
+            _agent.SetDestination(_target.position);
     
-            if (distance <= agent.stoppingDistance)
+            if (distance <= _agent.stoppingDistance)
             {
                 FaceTarget();
             }
         }
     }
 
+    /// <summary>
+    /// Rotates to face a target.
+    /// </summary>
     private void FaceTarget()
     {
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (_target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
+    /// <summary>
+    /// Draws wire sphere to display the lookRadius.
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
