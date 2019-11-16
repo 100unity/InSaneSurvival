@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        UpdateCameraAngle(0);
+        UpdateCameraAngle();
         _controls.Enable();
     }
 
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
     private void RotateCamera(InputAction.CallbackContext obj)
     {
         _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
-        UpdateCameraAngle(0);
+        UpdateCameraAngle();
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
     /// Sets the distance of the camera to the player
     /// </summary>
     /// <param name="cameraDistanceChange">The increase/decrease of the camera distance</param>
-    private void UpdateCameraAngle(float cameraDistanceChange)
+    private void UpdateCameraAngle(float cameraDistanceChange = 0)
     {
         float radian = (float) Math.PI * _cameraAngleX / 180;
         cameraDistance.y = Mathf.Clamp(cameraDistance.y + cameraDistanceChange, cameraDistanceRange.min,
