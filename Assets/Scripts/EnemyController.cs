@@ -6,40 +6,53 @@ using Utils;
 
 public class EnemyController : MonoBehaviour
 {
-    [Tooltip("The radius around the NPC in which a player gets the aggro.")] [SerializeField]
-    private float lookRadius;
-
-    [Tooltip("The area the enemy wanders in.")] [SerializeField]
+    [Tooltip("The area the enemy wanders in.")]
+    [SerializeField]
     private WanderArea wanderArea;
 
-    [Tooltip("The frequency at which the NPC walks to a new point in the wander area.")] [SerializeField]
+    [Tooltip("The frequency at which the NPC walks to a new point in the wander area.")]
+    [SerializeField]
     private float wanderTimer;
 
+    [Tooltip("The ground the NPC should walk on.")]
     [SerializeField]
-    private float escapeRadius; // TODO
-
-    [Tooltip("The ground the NPC should walk on.")] [SerializeField]
     private LayerMask moveLayer;
 
-    [Tooltip("The speed the NPC rotates with.")] [SerializeField]
+    [Tooltip("The speed the NPC rotates with.")]
+    [SerializeField]
     private float rotationSpeed;
 
-    [Tooltip("Determine whether the NPC attacks and chases the player.")] [SerializeField]
+    [Tooltip("The speed the NPC chases targets with.")]
+    [SerializeField]
+    private float runningSpeed;
+
+    [Tooltip("Determine whether the NPC attacks and chases the player.")]
+    [SerializeField]
     private bool isAggressive;
 
+    [Tooltip("The radius around the NPC in which a player gets the aggro.")]
     [SerializeField]
-    private bool chaseBeyondPatrolRadius; // TODO
+    private float lookRadius;
+
+    [Tooltip("The frequency at which the NPC walks to a new point in the wander area.")]
+    [SerializeField]
+    private float escapeRadius;
+
+    [Tooltip("Show escape radius in scene view.")]
+    [SerializeField]
+    private bool showEscapeRadius;
 
     private Transform _target;
     private NavMeshAgent _agent;
     private WanderAI _wanderAI;
     private float _timer;
-    private bool isChasing; // TODO
+    private bool _isChasing;
+    private float _initialSpeed;
 
     /// <summary>
     /// Gets the player as target and the NavMeshAgent component.
     /// </summary>
-    private void Awake() // change to onEnable TODO
+    private void OnEnable()
     {
         // init components
         _agent = GetComponent<NavMeshAgent>();
@@ -51,44 +64,86 @@ public class EnemyController : MonoBehaviour
         {
             Debug.LogError("No player found.");
         }
-        
+
         wanderArea.FreezeArea();
         _timer = wanderTimer;
+        // remember initial speed
+        _initialSpeed = _agent.speed;
     }
 
     /// <summary>
     /// Moves around randomly in the defined wander area at a defined frequency and checks for a 
-    /// target near. If a target is near, follows it to the position the target left the lookRadius of the NPC.
-    /// In the stopping distance of the NavMeshAgent it rotates to face the target.
+    /// target near. If a target is near, starts chasing (possibly attacking) it until the aggro is lost.
     /// </summary>
     private void Update()
     {
-        // move randomly
-        _timer += Time.deltaTime;
-        if (_timer >= wanderTimer)
-        {
-            NavMeshPath wanderPath = _wanderAI.GetNextWanderPath(wanderArea, _agent, moveLayer.value);
-            _agent.SetPath(wanderPath);
-            _timer = 0;
-            //TODO very high speed and acceleration make NPC move out of circle
-        }
-        
-        // WIP TODO
+        if (!_isChasing) //readability
+            Wander();
+
         if (isAggressive)
         {
             // Check for a target near
-            float distance = Vector3.Distance(_target.position, transform.position);
-
-            if (distance <= lookRadius)
+            float distanceToTarget = Vector3.Distance(_target.position, transform.position);
+            if (distanceToTarget <= lookRadius || _isChasing)
             {
-                //isChasing = true;
-                _agent.SetDestination(_target.position);
-
-                if (distance <= _agent.stoppingDistance)
-                {
-                    FaceTarget();
-                }
+                Chase(distanceToTarget);
             }
+
+            // stop chasing
+            if (_isChasing && distanceToTarget >= escapeRadius)
+            {
+                _agent.speed = _initialSpeed;
+                _isChasing = false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Wanders in wander area.
+    /// </summary>
+    private void Wander()
+    {
+        _timer += Time.deltaTime;
+        if (_timer >= wanderTimer)
+        {
+            MoveToNextPoint();
+            _timer = 0;
+        }
+    }
+
+    /// <summary>
+    /// Chases the target.
+    /// </summary>
+    /// <param name="distanceToTarget">The distance between NPC and its target</param>
+    private void Chase(float distanceToTarget)
+    {
+        _isChasing = true;
+        _agent.speed = runningSpeed;
+        _agent.SetDestination(_target.position);
+
+        if (distanceToTarget <= _agent.stoppingDistance)
+        {
+            FaceTarget();
+            // attack
+        }
+    }
+
+    /// <summary>
+    /// Starts moving to a new random point in the wander area or goes back to wander area if outside.
+    /// </summary>
+    private void MoveToNextPoint()
+    {
+        // move back to wander area after chasing, also in this case:
+        /* at very high speed and acceleration the NPC can get out of the wander area because 
+         * the NavMeshAgent behaves in a physical manner (inertia) */
+        if (!_wanderAI.IsInArea(wanderArea, transform.position))
+        {
+            _agent.SetDestination(wanderArea.GetCenterPosition());
+        }
+        else
+        {
+            NavMeshPath wanderPath = _wanderAI.GetNextWanderPath(wanderArea, _agent, moveLayer.value);
+            _agent.SetPath(wanderPath);
         }
     }
 
@@ -103,7 +158,7 @@ public class EnemyController : MonoBehaviour
     }
 
     /// <summary>
-    /// Draws wire sphere to display the lookRadius.
+    /// Draws wire spheres to display lookRadius, wander area and escapeRadius.
     /// </summary>
     private void OnDrawGizmosSelected()
     {
@@ -114,10 +169,17 @@ public class EnemyController : MonoBehaviour
         // wanderArea
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(wanderArea.GetCenterPosition(), wanderArea.radius);
+
+        // escapeRadius
+        if (showEscapeRadius)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, escapeRadius);
+        }
     }
 
     /* maybe this is useful at another place?
-        // don't move beyond patrolRadius
+        // restrict walkable area
         Vector3 newLocation = transform.position;
         float walkDistance = Vector3.Distance(newLocation, _centerPosition);
 

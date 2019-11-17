@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Utils;
 
-public class WanderAI : MonoBehaviour
+public class WanderAI
 {
     // maxDistance for mapping random points onto the NavMesh
     private float maxNavMeshMappingDistance;
@@ -16,7 +16,7 @@ public class WanderAI : MonoBehaviour
     {
         // init constants
         maxNavMeshMappingDistance = 1.0f;
-        mappingIterations = 30;
+        mappingIterations = 500; // just a high value to ensure random point generation
     }
 
     /// <summary>
@@ -27,8 +27,7 @@ public class WanderAI : MonoBehaviour
     /// <param name="wanderArea">The area to generate the path in</param>
     /// <param name="agent">The agent of the NPC to generate the path for</param>
     /// <param name="layermask">The ground</param>
-    /// <returns>The next wander path or an empty path if mapping a random wander point 
-    /// onto the NavMesh was not successful</returns>
+    /// <returns>The next wander path</returns>
     public NavMeshPath GetNextWanderPath(WanderArea wanderArea, NavMeshAgent agent, int layermask)
     {
         NavMeshPath path = new NavMeshPath();
@@ -37,8 +36,20 @@ public class WanderAI : MonoBehaviour
             Vector3 wanderPoint = GetRandomWanderPoint(wanderArea, layermask);
             agent.CalculatePath(wanderPoint, path);
         }
-        while (!IsPathInCircle(wanderArea, path));
+        while (!IsPathInArea(wanderArea, path));
         return path;
+    }
+
+    /// <summary>
+    /// Checks if a point is in an area.
+    /// </summary>
+    /// <param name="area">The area the point should be in</param>
+    /// <param name="point">The point to be checked</param>
+    /// <returns>Whether the point is in the area</returns>
+    public bool IsInArea(WanderArea area, Vector3 point)
+    {
+        float distance = Vector3.Distance(area.GetCenterPosition(), point);
+        return distance < area.radius;
     }
 
     /// <summary>
@@ -48,7 +59,7 @@ public class WanderAI : MonoBehaviour
     /// </summary>
     /// <param name="wanderArea">The area to draw the point from</param>
     /// <param name="layermask">The ground</param>
-    /// <returns>The random point on the ground or zero if none was found (within mappingIterations)</returns>
+    /// <returns>The random point on the ground</returns>
     private Vector3 GetRandomWanderPoint(WanderArea wanderArea, int layermask)
     {
         for (int i = 0; i < mappingIterations; i++)
@@ -61,7 +72,7 @@ public class WanderAI : MonoBehaviour
                 return hit.position;
             }
         }
-        return Vector3.zero;
+        throw new Exception("Could not map a point onto the NavMesh in " + mappingIterations + " random points.");
     }
 
     /// <summary>
@@ -81,12 +92,12 @@ public class WanderAI : MonoBehaviour
     /// <param name="wanderArea">The area the path should be in</param>
     /// <param name="path"></param>
     /// <returns>Whether the whole path is in the wander area</returns>
-    private bool IsPathInCircle(WanderArea wanderArea, NavMeshPath path)
+    private bool IsPathInArea(WanderArea wanderArea, NavMeshPath path)
     {
         Vector3[] corners = path.corners;
         foreach (Vector3 corner in corners)
         {
-            if (Vector3.Distance(wanderArea.GetCenterPosition(), corner) > wanderArea.radius)
+            if (!IsInArea(wanderArea, corner))
                 return false;
         }
         return true;
