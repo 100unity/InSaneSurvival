@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Utils;
 
 public class WanderAI : MonoBehaviour
 {
@@ -19,31 +20,40 @@ public class WanderAI : MonoBehaviour
     }
 
     /// <summary>
-    /// Draws a random point from a sphere with a certain radius.
+    /// Generates a path for an NPC to wander. The path will not leave the defined wander area
+    /// which ensures that the NPC doesn't leave its area and wander to a different plain on the NavMesh
+    /// (given that the NPC is placed near a canyon or similar).
     /// </summary>
-    /// <param name="center">Center of the sphere</param>
-    /// <param name="radius">Radius of the sphere</param>
-    /// <returns>The random point</returns>
-    private Vector3 GetRandomPoint(Vector3 center, float radius)
+    /// <param name="wanderArea">The area to generate the path in</param>
+    /// <param name="agent">The agent of the NPC to generate the path for</param>
+    /// <param name="layermask">The ground</param>
+    /// <returns>The next wander path or an empty path if mapping a random wander point 
+    /// onto the NavMesh was not successful</returns>
+    public NavMeshPath GetNextWanderPath(WanderArea wanderArea, NavMeshAgent agent, int layermask)
     {
-        Vector3 randomPoint = center + UnityEngine.Random.insideUnitSphere * radius;
-        return randomPoint;
+        NavMeshPath path = new NavMeshPath();
+        do
+        {
+            Vector3 wanderPoint = GetRandomWanderPoint(wanderArea, layermask);
+            agent.CalculatePath(wanderPoint, path);
+        }
+        while (!IsPathInCircle(wanderArea, path));
+        return path;
     }
 
     /// <summary>
-    /// Generates a random point with a maximum radius x from a center y on the ground.
+    /// Generates a random point in the wander area (with a maximum radius x from a center y on the ground).
     /// Since NavMesh.SamplePosition() can get very expensive, it's better to use it with a small distance
     /// and try multiple times (and only use the random points that are near the NavMesh).
     /// </summary>
-    /// <param name="center">The center of the area to draw the point from</param>
-    /// <param name="range">The maximum distance between the point and center</param>
+    /// <param name="wanderArea">The area to draw the point from</param>
     /// <param name="layermask">The ground</param>
     /// <returns>The random point on the ground or zero if none was found (within mappingIterations)</returns>
-    public Vector3 GetRandomWanderPoint(Vector3 center, float range, int layermask)
+    private Vector3 GetRandomWanderPoint(WanderArea wanderArea, int layermask)
     {
         for (int i = 0; i < mappingIterations; i++)
         {
-            Vector3 randomPoint = GetRandomPoint(center, range);
+            Vector3 randomPoint = GetRandomPoint(wanderArea);
             // try to map random point onto NavMesh
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randomPoint, out hit, maxNavMeshMappingDistance, layermask))
@@ -55,13 +65,30 @@ public class WanderAI : MonoBehaviour
     }
 
     /// <summary>
-    /// WIP TODO
+    /// Draws a random point from a sphere generated using the wander area's center and radius.
     /// </summary>
-    /// <param name="centerPosition"></param>
-    /// <param name="wanderRadius"></param>
-    /// <param name="wanderPoint"></param>
-    public void GetNearestRunnablePoint(Vector3 centerPosition, float wanderRadius, Vector3 wanderPoint)
+    /// <param name="wanderArea">The area to generate a sphere from and draw a point</param>
+    /// <returns>The random point</returns>
+    private Vector3 GetRandomPoint(WanderArea wanderArea)
     {
-        throw new NotImplementedException();
+        Vector3 randomPoint = wanderArea.GetCenterPosition() + UnityEngine.Random.insideUnitSphere * wanderArea.radius;
+        return randomPoint;
+    }
+
+    /// <summary>
+    /// Checks if a path leaves the wander area at any time.
+    /// </summary>
+    /// <param name="wanderArea">The area the path should be in</param>
+    /// <param name="path"></param>
+    /// <returns>Whether the whole path is in the wander area</returns>
+    private bool IsPathInCircle(WanderArea wanderArea, NavMeshPath path)
+    {
+        Vector3[] corners = path.corners;
+        foreach (Vector3 corner in corners)
+        {
+            if (Vector3.Distance(wanderArea.GetCenterPosition(), corner) > wanderArea.radius)
+                return false;
+        }
+        return true;
     }
 }
