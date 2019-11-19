@@ -15,11 +15,19 @@
                 },
                 {
                     "name": "RotateCamera",
-                    "type": "Value",
-                    "id": "7043aad4-8a12-4ca0-92fd-21acf37b132f",
-                    "expectedControlType": "Axis",
+                    "type": "PassThrough",
+                    "id": "281c1cd8-61ea-445c-a2c1-f570edef5e50",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
+                },
+                {
+                    "name": "Zoom",
+                    "type": "PassThrough",
+                    "id": "ada413de-6adf-4130-9b2b-d1c01230395b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -35,13 +43,46 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "c777685e-9039-4e2d-a210-69f32b4bbc0b",
+                    "name": "LeftClickAndDeltaX",
+                    "id": "fade2be7-c2bd-42af-b93a-4e424fa03b0c",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateCamera",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Modifier",
+                    "id": "a51a8544-93fc-47ea-b3c2-45875bbaf40d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Button",
+                    "id": "606dcdc7-cf61-4f1f-b09b-549c1934a75b",
                     "path": "<Mouse>/delta/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "RotateCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a420c22f-acbb-4c2d-a681-c088e0618d9b",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "Clamp(min=-1,max=1),Invert",
+                    "groups": "",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
