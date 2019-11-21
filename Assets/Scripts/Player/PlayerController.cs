@@ -96,7 +96,7 @@ namespace Player
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // Get ground position from mouse click
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, moveClickLayers))
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 1000000, moveClickLayers))
             {
                 // Set destination for nav mesh agent
                 _navMeshAgent.SetDestination(hit.point);

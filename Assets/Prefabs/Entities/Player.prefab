@@ -334,7 +334,7 @@ MonoBehaviour:
   invertRotation: 1
   cameraDistance: {x: 10, y: 20}
   cameraDistanceRange:
-    min: 5
+    min: 10
     max: 20
 --- !u!195 &6126187404098910138
 NavMeshAgent:
