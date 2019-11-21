@@ -1,4 +1,6 @@
 ﻿using System;
+using Managers;
+using UI.Menus;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -56,6 +58,7 @@ namespace Player
 
             _navMeshAgent = GetComponent<NavMeshAgent>();
             SetUpControls();
+            PauseMenu.PauseEvent += OnPause;
         }
 
         private void OnEnable()
@@ -86,7 +89,10 @@ namespace Player
             _controls.Game.Move.performed += Move;
             _controls.Game.RotateCamera.performed += RotateCamera;
             _controls.Game.Zoom.performed += Zoom;
+            _controls.Game.Pause.performed += Pause;
         }
+
+        private void Pause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();
 
         /// <summary>
         /// When the right mouse button is pressed, the player moves to the pressed location using a raycast and the NavMeshAgent.
@@ -132,6 +138,14 @@ namespace Player
                 cameraDistanceRange.max);
             _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
                 (float) -Math.Cos(radian) * cameraDistance.x);
+        }
+
+        private void OnPause(bool isPaused)
+        {
+            if (isPaused)
+                _controls.Disable();
+            else
+                _controls.Enable();
         }
     }
 }

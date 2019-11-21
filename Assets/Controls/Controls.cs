@@ -9,6 +9,7 @@ using UnityEngine.InputSystem.Utilities;
 public class @Controls : IInputActionCollection, IDisposable
 {
     private InputActionAsset asset;
+
     public @Controls()
     {
         asset = InputActionAsset.FromJson(@"{
@@ -38,6 +39,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""Zoom"",
                     ""type"": ""PassThrough"",
                     ""id"": ""ada413de-6adf-4130-9b2b-d1c01230395b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""274c2f09-88a3-45a8-874c-e5c74128fe90"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -98,6 +107,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""429f07fa-b78a-4211-988f-2e90bafee669"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -109,6 +129,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
         m_Game_RotateCamera = m_Game.FindAction("RotateCamera", throwIfNotFound: true);
         m_Game_Zoom = m_Game.FindAction("Zoom", throwIfNotFound: true);
+        m_Game_Pause = m_Game.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -161,18 +182,44 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Game_Move;
     private readonly InputAction m_Game_RotateCamera;
     private readonly InputAction m_Game_Zoom;
+    private readonly InputAction m_Game_Pause;
+
     public struct GameActions
     {
         private @Controls m_Wrapper;
-        public GameActions(@Controls wrapper) { m_Wrapper = wrapper; }
+
+        public GameActions(@Controls wrapper)
+        {
+            m_Wrapper = wrapper;
+        }
+
         public InputAction @Move => m_Wrapper.m_Game_Move;
         public InputAction @RotateCamera => m_Wrapper.m_Game_RotateCamera;
         public InputAction @Zoom => m_Wrapper.m_Game_Zoom;
-        public InputActionMap Get() { return m_Wrapper.m_Game; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
+        public InputAction @Pause => m_Wrapper.m_Game_Pause;
+
+        public InputActionMap Get()
+        {
+            return m_Wrapper.m_Game;
+        }
+
+        public void Enable()
+        {
+            Get().Enable();
+        }
+
+        public void Disable()
+        {
+            Get().Disable();
+        }
+
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GameActions set) { return set.Get(); }
+
+        public static implicit operator InputActionMap(GameActions set)
+        {
+            return set.Get();
+        }
+
         public void SetCallbacks(IGameActions instance)
         {
             if (m_Wrapper.m_GameActionsCallbackInterface != null)
@@ -186,7 +233,11 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Zoom.started -= m_Wrapper.m_GameActionsCallbackInterface.OnZoom;
                 @Zoom.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnZoom;
                 @Zoom.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnZoom;
+                @Pause.started -= m_Wrapper.m_GameActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnPause;
             }
+
             m_Wrapper.m_GameActionsCallbackInterface = instance;
             if (instance != null)
             {
@@ -199,14 +250,20 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Zoom.started += instance.OnZoom;
                 @Zoom.performed += instance.OnZoom;
                 @Zoom.canceled += instance.OnZoom;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
+
     public GameActions @Game => new GameActions(this);
+
     public interface IGameActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
