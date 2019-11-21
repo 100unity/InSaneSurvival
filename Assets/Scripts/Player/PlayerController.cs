@@ -26,7 +26,7 @@ namespace Player
 
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
-
+        
         //Component references
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
