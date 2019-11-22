@@ -14,6 +14,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float wanderTimer;
 
+    [Tooltip("Whether the area should be fixed on enable.")]
+    [SerializeField]
+    public bool freezeArea;
+
     [Tooltip("The ground the NPC should walk on.")]
     [SerializeField]
     private LayerMask moveLayer;
@@ -34,7 +38,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float lookRadius;
 
-    [Tooltip("The frequency at which the NPC walks to a new point in the wander area.")]
+    [Tooltip("The radius around the NPC in which a player can escape.")]
     [SerializeField]
     private float escapeRadius;
 
@@ -49,23 +53,30 @@ public class EnemyController : MonoBehaviour
     private bool _isChasing;
     private float _initialSpeed;
 
+
+    private void Awake()
+    {
+        // init components
+        _agent = GetComponent<NavMeshAgent>();
+        _wanderAI = new WanderAI();
+    }
+
     /// <summary>
     /// Gets the player as target and the NavMeshAgent component.
     /// </summary>
     private void OnEnable()
     {
-        // init components
-        _agent = GetComponent<NavMeshAgent>();
-        _wanderAI = new WanderAI();
-
         // set target to player
         _target = PlayerManager.Instance.GetPlayer().transform;
         if (_target == null)
         {
             Debug.LogError("No player found.");
         }
-
-        wanderArea.FreezeArea();
+        
+        if (freezeArea)
+        {
+            wanderArea.FreezeArea();
+        }
         _timer = wanderTimer;
         // remember initial speed
         _initialSpeed = _agent.speed;
@@ -154,7 +165,11 @@ public class EnemyController : MonoBehaviour
     {
         Vector3 direction = (_target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        double diff = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
+        if (diff > 0.5)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        }
     }
 
     /// <summary>

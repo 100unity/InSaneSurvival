@@ -103,6 +103,7 @@ MonoBehaviour:
     center: {fileID: 1510608199083388096}
     radius: 15
   wanderTimer: 5
+  freezeArea: 1
   moveLayer:
     serializedVersion: 2
     m_Bits: 1

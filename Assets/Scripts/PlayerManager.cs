@@ -5,17 +5,16 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     #region Singleton
-    private static PlayerManager _instance;
-    public static PlayerManager Instance { get { return _instance; } }
+    public static PlayerManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
         } else
         {
-            _instance = this;
+            Instance = this;
         }
     }
     #endregion

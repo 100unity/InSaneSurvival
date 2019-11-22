@@ -15,7 +15,6 @@ namespace Utils
         [Tooltip("The radius of the wander area.")]
         public float radius;
 
-
         private Vector3 _centerFrozen;
         
         /// <summary>
@@ -24,7 +23,7 @@ namespace Utils
         /// <returns>The center of the wander area</returns>
         public Vector3 GetCenterPosition()
         {
-            if (_centerFrozen == Vector3.zero)
+            if (_centerFrozen.Equals(default))
                 return center.position;
             return _centerFrozen;
         }

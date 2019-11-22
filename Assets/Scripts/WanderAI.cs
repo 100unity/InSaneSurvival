@@ -7,18 +7,6 @@ using Utils;
 
 public class WanderAI
 {
-    // maxDistance for mapping random points onto the NavMesh
-    private float maxNavMeshMappingDistance;
-    // the number of tries to map a random point onto the NavMesh
-    private int mappingIterations;
-
-    public WanderAI ()
-    {
-        // init constants
-        maxNavMeshMappingDistance = 1.0f;
-        mappingIterations = 500; // just a high value to ensure random point generation
-    }
-
     /// <summary>
     /// Generates a path for an NPC to wander. The path will not leave the defined wander area
     /// which ensures that the NPC doesn't leave its area and wander to a different plain on the NavMesh
@@ -62,17 +50,17 @@ public class WanderAI
     /// <returns>The random point on the ground</returns>
     private Vector3 GetRandomWanderPoint(WanderArea wanderArea, int layermask)
     {
-        for (int i = 0; i < mappingIterations; i++)
+        for (int i = 0; i < Constants.Enemy.MAPPING_ITERATIONS; i++)
         {
             Vector3 randomPoint = GetRandomPoint(wanderArea);
             // try to map random point onto NavMesh
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, maxNavMeshMappingDistance, layermask))
+            if (NavMesh.SamplePosition(randomPoint, out hit, Constants.Enemy.MAX_NAVMESH_MAPPING_DISTANCE, layermask))
             {
                 return hit.position;
             }
         }
-        throw new Exception("Could not map a point onto the NavMesh in " + mappingIterations + " random points.");
+        throw new Exception("Could not map a point onto the NavMesh in " + Constants.Enemy.MAPPING_ITERATIONS + " random points.");
     }
 
     /// <summary>
