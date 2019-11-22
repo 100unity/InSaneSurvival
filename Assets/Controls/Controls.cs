@@ -19,7 +19,7 @@ public class @Controls : IInputActionCollection, IDisposable
             ""id"": ""19d5d016-8713-4cd5-ba8e-767f73bb7513"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Click"",
                     ""type"": ""Button"",
                     ""id"": ""6292ecd5-6dea-4f80-9a09-a998d8b10408"",
                     ""expectedControlType"": """",
@@ -51,7 +51,7 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -106,7 +106,7 @@ public class @Controls : IInputActionCollection, IDisposable
 }");
         // Game
         m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
-        m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
+        m_Game_Click = m_Game.FindAction("Click", throwIfNotFound: true);
         m_Game_RotateCamera = m_Game.FindAction("RotateCamera", throwIfNotFound: true);
         m_Game_Zoom = m_Game.FindAction("Zoom", throwIfNotFound: true);
     }
@@ -158,14 +158,14 @@ public class @Controls : IInputActionCollection, IDisposable
     // Game
     private readonly InputActionMap m_Game;
     private IGameActions m_GameActionsCallbackInterface;
-    private readonly InputAction m_Game_Move;
+    private readonly InputAction m_Game_Click;
     private readonly InputAction m_Game_RotateCamera;
     private readonly InputAction m_Game_Zoom;
     public struct GameActions
     {
         private @Controls m_Wrapper;
         public GameActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Game_Move;
+        public InputAction @Click => m_Wrapper.m_Game_Click;
         public InputAction @RotateCamera => m_Wrapper.m_Game_RotateCamera;
         public InputAction @Zoom => m_Wrapper.m_Game_Zoom;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
@@ -177,9 +177,9 @@ public class @Controls : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_GameActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
+                @Click.started -= m_Wrapper.m_GameActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnClick;
                 @RotateCamera.started -= m_Wrapper.m_GameActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnRotateCamera;
@@ -190,9 +190,9 @@ public class @Controls : IInputActionCollection, IDisposable
             m_Wrapper.m_GameActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
                 @RotateCamera.started += instance.OnRotateCamera;
                 @RotateCamera.performed += instance.OnRotateCamera;
                 @RotateCamera.canceled += instance.OnRotateCamera;
@@ -205,7 +205,7 @@ public class @Controls : IInputActionCollection, IDisposable
     public GameActions @Game => new GameActions(this);
     public interface IGameActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
     }
