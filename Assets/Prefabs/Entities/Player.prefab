@@ -336,6 +336,12 @@ MonoBehaviour:
   cameraDistanceRange:
     min: 5
     max: 20
+  damage: 5
+  attackRange: 4
+  attackTime: 2
+  hitRotationTolerance: 40
+  rotationSpeed: 5
+  rotationTolerance: 10
 --- !u!195 &6126187404098910138
 NavMeshAgent:
   m_ObjectHideFlags: 0
