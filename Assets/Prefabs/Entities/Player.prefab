@@ -332,7 +332,7 @@ MonoBehaviour:
     type: 3}
   cameraRotationSpeed: 0.3
   invertRotation: 1
-  cameraDistance: {x: 10, y: 20}
+  cameraDistance: {x: 15, y: 20}
   cameraDistanceRange:
     min: 10
     max: 20

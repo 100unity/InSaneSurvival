@@ -94,7 +94,7 @@ namespace Player
         private void Move(InputAction.CallbackContext obj)
         {
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
+            
             // Get ground position from mouse click
             if (Physics.Raycast(clickRay, out RaycastHit hit, 1000000, moveClickLayers))
             {
