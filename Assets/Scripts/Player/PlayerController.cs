@@ -7,7 +7,7 @@ using Utils;
 namespace Player
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IMovable
     {
         [Tooltip("The clickable layer. Defines where the player can click/move")]
         [SerializeField]
@@ -33,22 +33,6 @@ namespace Player
         [SerializeField]
         private Range cameraDistanceRange;
 
-        [Tooltip("The base damage the player deals")]
-        [SerializeField]
-        private int damage;
-
-        [Tooltip("The maximum distance between player and target in order to deal damage")]
-        [SerializeField]
-        private int attackRange;
-
-        [Tooltip("The time needed for an attack in seconds")]
-        [SerializeField]
-        private double attackTime;
-
-        [Tooltip("The maximum difference in degrees for the player between look direction and target direction in order to perform a successful hit")]
-        [SerializeField]
-        private double hitRotationTolerance;
-
         [Tooltip("The speed the player rotates with")]
         [SerializeField]
         private int rotationSpeed;
@@ -62,6 +46,7 @@ namespace Player
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
         private Controls _controls;
+        private AttackLogic _attackLogic;
 
         /// <summary>
         /// The current horizontal angle of the camera, relative to the player
@@ -73,13 +58,9 @@ namespace Player
         /// </summary>
         private Vector3 _cameraPosition;
 
-        private float _timer;
-        // can only hold IDamageables
-        private GameObject _target;
-        private bool _performingHit;
 
         /// <summary>
-        /// Gets the camera and the NavMeshAgent component and sets up the controls
+        /// Gets references and sets up the controls.
         /// </summary>
         private void Awake()
         {
@@ -92,6 +73,7 @@ namespace Player
 
             _navMeshAgent = GetComponent<NavMeshAgent>();
             SetUpControls();
+            _attackLogic = GetComponent<AttackLogic>();
         }
 
         private void OnEnable()
@@ -103,7 +85,7 @@ namespace Player
         private void OnDisable() => _controls.Disable();
 
         /// <summary>
-        /// Moves the camera with the player
+        /// Moves the camera with the player.
         /// </summary>
         private void Update()
         {
@@ -111,11 +93,6 @@ namespace Player
             Vector3 playerPosition = transform.position;
             _camera.transform.position = playerPosition + _cameraPosition;
             _camera.transform.LookAt(playerPosition);
-
-            if (_target != null)
-            {
-                Attack();
-            }
         }
 
         /// <summary>
@@ -129,137 +106,34 @@ namespace Player
             _controls.Game.Zoom.performed += Zoom;
         }
 
+        /// <summary>
+        /// Is called on mouse click.
+        /// If right clicked, checks whether clicked on a damageable object or the ground.
+        /// If clicked on a damageable object, attack it. If clicked on the ground, cancel attack
+        /// and move to the clicked point.
+        /// </summary>
         private void OnRightClick(InputAction.CallbackContext obj)
         {
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000) && !_performingHit)
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000) && !_attackLogic.PerformingHit)
             {
-                Debug.Log("Click");
                 GameObject objectHit = hit.collider.gameObject;
-                Debug.Log(objectHit.name);
                 IDamageable damageable = (IDamageable)objectHit.GetComponent<IDamageable>();
                 if (damageable != null)
                 {
                     // implementation NOT capable of area damage
-                    Debug.Log("is damageable");
-                    // object is damageable --> start the attack
-                    Debug.Log("Attack");
-                    _target = objectHit;
-                    //Attack();
+                    _attackLogic.StartAttack(objectHit);
                 }
                 // Get ground position from mouse click
                 else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, moveClickLayers))
                 {
                     // cancel possible ongoing attacks
-                    _target = null;
-                    Debug.Log("Move");
+                    _attackLogic.StopAttack();
                     Move(groundHit);
                 }
             }
-        }
-
-        private void Attack()
-        {
-            // ----------
-            MeshRenderer gameObjectRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
-            // ----------
-
-            IDamageable damageable = (IDamageable)_target.GetComponent<IDamageable>();
-            float distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
-            if (distanceToTarget < attackRange && !_performingHit)
-            {
-                // is in range
-                _navMeshAgent.isStopped = true;
-                Debug.Log("target reached");
-                // face target
-                if (FaceTarget(true))
-                {
-                    // faces target
-                    _performingHit = true;
-                    // ----------
-                    Material newMaterial = new Material(Shader.Find("Standard"));
-                    newMaterial.color = Color.red;
-                    gameObjectRenderer.material = newMaterial;
-                    // ----------
-                }
-            }
-            else if (_performingHit)
-            {
-                // perform hit
-                bool? success = PerformHit();
-                if (success != null)
-                {
-                    Debug.Log("hit performed");
-                    if (success == true)
-                    {
-                        // hit performed --> deal damage
-                        damageable.Hit(damage);
-                    }
-
-                    // ----------
-                    Material newMaterial = new Material(Shader.Find("Standard"));
-                    newMaterial.color = new Color(0.2784f, 1, 0.2784f);
-                    gameObjectRenderer.material = newMaterial;
-                    // ----------
-
-                    _performingHit = false;
-                    // reset aggro independent of (un-)successful hit
-                    _target = null;
-                }
-            }
-            else
-            {
-                // chase target until reached
-                _navMeshAgent.SetDestination(_target.transform.position);
-                _navMeshAgent.isStopped = false;
-            }
-        }
-
-        private bool? PerformHit()
-        {
-            _timer += Time.deltaTime;
-
-            if (_timer > attackTime)
-            {
-                // animation finished
-                _timer = 0;
-                // target still in range?
-                float distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
-                if (distanceToTarget < attackRange)
-                {
-                    // check rotation as well
-                    float difference;
-                    FaceTarget(false, out difference);
-                    Debug.Log("rot diff: " + difference);
-                    return difference < hitRotationTolerance;
-                }
-                Debug.Log("target out of range");
-                return false;
-            }
-            return null;
-        }
-
-        private bool FaceTarget(bool shouldTurn)
-        {
-            float f;
-            return FaceTarget(shouldTurn, out f);
-        }
-
-        /// <summary>
-        /// Rotates to face a target.
-        /// Note: same in EnemyController
-        /// </summary>
-        private bool FaceTarget(bool shouldTurn, out float difference)
-        {
-            Vector3 direction = (_target.transform.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            difference = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
-            bool facesTarget = difference < rotationTolerance;
-            if (!facesTarget && shouldTurn)
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-            return facesTarget;
         }
 
         /// <summary>
@@ -274,6 +148,57 @@ namespace Player
 
             // Create click point effect
             Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
+        }
+
+        /// <summary>
+        /// Faces the target. Returns true if facing the target.
+        /// </summary>
+        /// <param name="target">The target to face</param>
+        /// <param name="shouldTurn">Whether the object should turn to the target or not</param>
+        /// <returns>Whether the object is facing the target</returns>
+        public bool FaceTarget(GameObject target, bool shouldTurn)
+        {
+            float f;
+            return FaceTarget(target, shouldTurn, out f);
+        }
+
+        // ----- Note: same in EnemyController --> make IMovable abstract class and inherit? ------
+
+        /// <summary>
+        /// Faces the target. Returns true if facing the target.
+        /// </summary>
+        /// <param name="target">The target to face</param>
+        /// <param name="shouldTurn">Whether the object should turn to the target or not</param>
+        /// <param name="difference">The difference between object and target in degrees</param>
+        /// <returns>Whether the object is facing the target</returns>
+        public bool FaceTarget(GameObject target, bool shouldTurn, out float difference)
+        {
+            Vector3 direction = (target.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+            difference = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
+            bool facesTarget = difference < rotationTolerance;
+            if (!facesTarget && shouldTurn)
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            return facesTarget;
+        }
+
+        /// <summary>
+        /// Move to a certain position.
+        /// </summary>
+        /// <param name="position">The position to move to</param>
+        public void Move(Vector3 position)
+        {
+            // Set destination for nav mesh agent
+            _navMeshAgent.SetDestination(position);
+            _navMeshAgent.isStopped = false;
+        }
+
+        /// <summary>
+        /// Stops moving.
+        /// </summary>
+        public void StopMoving()
+        {
+            _navMeshAgent.isStopped = true;
         }
 
         /// <summary>
