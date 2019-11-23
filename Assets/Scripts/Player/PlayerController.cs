@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Utils;
 
 namespace Player
 {
+    [System.Serializable] public class UnityEventVector3:UnityEvent<Vector3> {}
+    
     [RequireComponent(typeof(NavMeshAgent))]
     public class PlayerController : MonoBehaviour
     {
@@ -26,6 +29,9 @@ namespace Player
 
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
+        
+        [Header("Event that will throw when the player's position updates")]
+        public UnityEventVector3 playerPositionUpdated;
         
         //Component references
         private NavMeshAgent _navMeshAgent;
@@ -104,6 +110,8 @@ namespace Player
 
                 // Create click point effect
                 Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
+                
+                playerPositionUpdated.Invoke(transform.position);
             }
         }
 

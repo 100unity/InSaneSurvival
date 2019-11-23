@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
+using Random = System.Random;
 
 namespace Player
 {
@@ -7,6 +9,16 @@ namespace Player
     [System.Serializable] public class UnityEventInt:UnityEvent<int> {}
     public class PlayerState : MonoBehaviour
     {
+        private readonly Random _random = new Random();
+        private void FixedUpdate()
+        {
+            //only for testing
+            if (_random.NextDouble() < 0.002)
+            {
+                ChangePlayerHealth(-1);
+            }
+        }
+
         //Player State values
         [SerializeField] [Range(0, 100)] 
         private int health;
@@ -21,9 +33,9 @@ namespace Player
         public UnityEventInt playerHeathUpdated;
 
         
-        public void SetPlayerHealth(int changeBy)
+        public void ChangePlayerHealth(int changeBy)
         {
-            var updatedValue = health + changeBy;
+            int updatedValue = health + changeBy;
             if (updatedValue > 100) updatedValue = 100;
             else if (updatedValue < 0)
             {

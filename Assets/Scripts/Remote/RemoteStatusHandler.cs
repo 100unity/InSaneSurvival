@@ -13,10 +13,16 @@ namespace Remote
 
         [SerializeField] private string ip;
         [SerializeField] private int port;
+        
     
         private void Start()
         {
             Connect(ip);
+        }
+
+        private void OnApplicationQuit()
+        {
+            Disconnect();
         }
         
         //server connection
@@ -34,7 +40,7 @@ namespace Remote
             }
         }
 
-        public void SendString(string message)
+        private void SendString(string message)
         {
             byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
             _stream.Write(data, 0, data.Length);
@@ -51,7 +57,12 @@ namespace Remote
         //event listeners
         public void HeathUpdated(int newValue)
         {
-            Debug.Log(newValue);
+            SendString("HP/"+newValue);
+        }
+
+        public void PositionUpdated(Vector3 newPosition)
+        {
+            SendString("POS/"+newPosition.x+"/"+newPosition.y+"/"+newPosition.z);
         }
     }
 }
