@@ -291,6 +291,8 @@ GameObject:
   - component: {fileID: 6126187404098910141}
   - component: {fileID: 6126187404098910138}
   - component: {fileID: 6126187404098910140}
+  - component: {fileID: 1535071274}
+  - component: {fileID: 1535071275}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -336,10 +338,6 @@ MonoBehaviour:
   cameraDistanceRange:
     min: 5
     max: 20
-  damage: 5
-  attackRange: 4
-  attackTime: 2
-  hitRotationTolerance: 40
   rotationSpeed: 5
   rotationTolerance: 10
 --- !u!195 &6126187404098910138
@@ -392,3 +390,33 @@ MonoBehaviour:
   m_DefaultActionMap: Game
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1535071274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126187404098910136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa35902a700a3c4fa0f8326cfd2b2f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  attackRange: 3
+  attackTime: 3
+  hitRotationTolerance: 40
+  resetAfterHit: 1
+--- !u!114 &1535071275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126187404098910136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7e0814987cfba44bdd4de5e1bd3f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMarkTime: 0.3

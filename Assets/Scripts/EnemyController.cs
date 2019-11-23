@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Utils;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IMovable
 {
     [Tooltip("The area the enemy wanders in.")]
     [SerializeField]
@@ -26,6 +26,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float rotationSpeed;
 
+    [Tooltip("The maximum difference in degrees for the NPC between look direction and target direction in order to be facing the target.")]
+    [SerializeField]
+    private float rotationTolerance;
+
     [Tooltip("The speed the NPC chases targets with.")]
     [SerializeField]
     private float runningSpeed;
@@ -46,9 +50,13 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private bool showEscapeRadius;
 
-    private Transform _target;
+    // component references
     private NavMeshAgent _agent;
     private WanderAI _wanderAI;
+    private AttackLogic _attackLogic;
+
+    // hold player object to check distance
+    private GameObject _player;
     private float _timer;
     private bool _isChasing;
     private float _initialSpeed;
@@ -59,52 +67,54 @@ public class EnemyController : MonoBehaviour
         // init components
         _agent = GetComponent<NavMeshAgent>();
         _wanderAI = new WanderAI();
+        _attackLogic = GetComponent<AttackLogic>();
+        if (_attackLogic == null)
+            Debug.LogError("NPC is not able to attack without an AttackLogic component.");
     }
 
     /// <summary>
-    /// Gets the player as target and the NavMeshAgent component.
+    /// Gets the player object and freezes wander area if necessary.
     /// </summary>
     private void OnEnable()
     {
         // set target to player
-        _target = PlayerManager.Instance.GetPlayer().transform;
-        if (_target == null)
-        {
+        _player = PlayerManager.Instance.GetPlayer();
+        if (_player == null)
             Debug.LogError("No player found.");
-        }
         
         if (freezeArea)
-        {
             wanderArea.FreezeArea();
-        }
         _timer = wanderTimer;
         // remember initial speed
         _initialSpeed = _agent.speed;
     }
 
     /// <summary>
-    /// Moves around randomly in the defined wander area at a defined frequency and checks for a 
-    /// target near. If a target is near, starts chasing (possibly attacking) it until the aggro is lost.
+    /// Moves around randomly in the defined wander area at a defined frequency and checks for an attackable 
+    /// target near (which is the player for now). If the player is near, starts chasing (and attacking) it until the aggro is lost.
     /// </summary>
     private void Update()
     {
-        if (!_isChasing) //readability
+        if (!_isChasing)
             Wander();
 
         if (isAggressive)
         {
-            // Check for a target near
-            float distanceToTarget = Vector3.Distance(_target.position, transform.position);
-            if (distanceToTarget <= lookRadius || _isChasing)
+            // Check distance to player
+            float distanceToTarget = Vector3.Distance(_player.transform.position, transform.position);
+            if (distanceToTarget <= lookRadius && !_isChasing)
             {
-                Chase(distanceToTarget);
+                IDamageable damageable = (IDamageable)_player.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    StartChasing(_player);
+                }
             }
 
-            // stop chasing
-            if (_isChasing && distanceToTarget >= escapeRadius)
+            // stop chasing when player out of escapeRadius and is not performing a hit right now (and is chasing)
+            if (distanceToTarget >= escapeRadius && !_attackLogic.PerformingHit && _isChasing)
             {
-                _agent.speed = _initialSpeed;
-                _isChasing = false;
+                StopChasing();
             }
         }
     }
@@ -123,20 +133,24 @@ public class EnemyController : MonoBehaviour
     }
 
     /// <summary>
-    /// Chases the target.
+    /// Starts attacking and chasing the target.
     /// </summary>
-    /// <param name="distanceToTarget">The distance between NPC and its target</param>
-    private void Chase(float distanceToTarget)
+    /// <param name="target">The target to attack</param>
+    private void StartChasing(GameObject target)
     {
         _isChasing = true;
         _agent.speed = runningSpeed;
-        _agent.SetDestination(_target.position);
+        _attackLogic.StartAttack(target);
+    }
 
-        if (distanceToTarget <= _agent.stoppingDistance)
-        {
-            FaceTarget();
-            // attack
-        }
+    /// <summary>
+    /// Stops chasing and attack the current target.
+    /// </summary>
+    private void StopChasing()
+    {
+        _isChasing = false;
+        _agent.speed = _initialSpeed;
+        _attackLogic.StopAttack();
     }
 
     /// <summary>
@@ -149,27 +163,65 @@ public class EnemyController : MonoBehaviour
          * the NavMeshAgent behaves in a physical manner (inertia) */
         if (!_wanderAI.IsInArea(wanderArea, transform.position))
         {
-            _agent.SetDestination(wanderArea.GetCenterPosition());
+            Move(wanderArea.GetCenterPosition());
         }
         else
         {
+            // don't use SetDestination but set calculated path
             NavMeshPath wanderPath = _wanderAI.GetNextWanderPath(wanderArea, _agent, moveLayer.value);
             _agent.SetPath(wanderPath);
+            _agent.isStopped = false;
         }
+    }
+    
+    /// <summary>
+    /// Faces the target. Returns true if facing the target.
+    /// </summary>
+    /// <param name="target">The target to face</param>
+    /// <param name="shouldTurn">Whether the object should turn to the target or not</param>
+    /// <returns>Whether the object is facing the target</returns>
+    public bool FaceTarget(GameObject target, bool shouldTurn)
+    {
+        float f;
+        return FaceTarget(target, shouldTurn, out f);
+    }
+
+    // ----- Note: same in PlayerController --> make IMovable abstract class and inherit? ------
+
+    /// <summary>
+    /// Faces the target. Returns true if facing the target.
+    /// </summary>
+    /// <param name="target">The target to face</param>
+    /// <param name="shouldTurn">Whether the object should turn to the target or not</param>
+    /// <param name="difference">The difference between object and target in degrees</param>
+    /// <returns>Whether the object is facing the target</returns>
+    public bool FaceTarget(GameObject target, bool shouldTurn, out float difference)
+    {
+        Vector3 direction = (target.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+        difference = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
+        bool facesTarget = difference < rotationTolerance;
+        if (!facesTarget && shouldTurn)
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        return facesTarget;
     }
 
     /// <summary>
-    /// Rotates to face a target.
+    /// Sets destination for NavMesh agent and starts moving.
     /// </summary>
-    private void FaceTarget()
+    /// <param name="position">The position to move to</param>
+    public void Move(Vector3 position)
     {
-        Vector3 direction = (_target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-        double diff = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
-        if (diff > 0.5)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-        }
+        _agent.SetDestination(position);
+        _agent.isStopped = false;
+    }
+
+    /// <summary>
+    /// Stops moving.
+    /// </summary>
+    public void StopMoving()
+    {
+        _agent.isStopped = true;
     }
 
     /// <summary>
