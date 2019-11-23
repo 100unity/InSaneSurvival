@@ -44,8 +44,6 @@ namespace Remote
         {
             byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
             _stream.Write(data, 0, data.Length);
-
-            // Console.WriteLine("Sent: {0}", message);
         }
 
         private void Disconnect()
@@ -58,6 +56,16 @@ namespace Remote
         public void HeathUpdated(int newValue)
         {
             SendString("HP/"+newValue);
+        }
+
+        public void HungerUpdated(int newValue)
+        {
+            SendString("HNG/"+newValue);
+        }
+
+        public void ThirstUpdated(int newValue)
+        {
+            SendString("THR/"+newValue);
         }
 
         public void PositionUpdated(Vector3 newPosition)

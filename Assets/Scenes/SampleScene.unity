@@ -879,6 +879,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  playerHungerUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 877790600}
+        m_MethodName: HungerUpdated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  playerThirstUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 877790600}
+        m_MethodName: ThirstUpdated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &8720530237884330151
 PrefabInstance:
   m_ObjectHideFlags: 0

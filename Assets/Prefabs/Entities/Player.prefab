@@ -329,9 +329,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e825beb0ed384efe9610c64377c31bf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  hunger: 0
-  thirst: 0
+  health: 100
+  hunger: 100
+  thirst: 100
+  playerHeathUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+          type: 3}
+        m_MethodName: HeathUpdated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  playerHungerUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+          type: 3}
+        m_MethodName: HungerUpdated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  playerThirstUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+          type: 3}
+        m_MethodName: ThirstUpdated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +400,21 @@ MonoBehaviour:
   cameraDistanceRange:
     min: 5
     max: 20
+  playerPositionUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+          type: 3}
+        m_MethodName: PositionUpdated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!195 &6126187404098910138
 NavMeshAgent:
   m_ObjectHideFlags: 0

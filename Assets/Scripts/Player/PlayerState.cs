@@ -10,29 +10,27 @@ namespace Player
     public class PlayerState : MonoBehaviour
     {
         private readonly Random _random = new Random();
-        private void FixedUpdate()
-        {
-            //only for testing
-            if (_random.NextDouble() < 0.002)
-            {
-                ChangePlayerHealth(-1);
-            }
-        }
-
+        
         //Player State values
-        [SerializeField] [Range(0, 100)] 
+        [Tooltip("100 - full health, 0 - dead")] [SerializeField] [Range(0, 100)] 
         private int health;
 
-        [SerializeField] [Range(0, 100)] 
+        [Tooltip("100 means no hunger, 0 means the player is in desperate need for food")] [SerializeField] [Range(0, 100)] 
         private int hunger;
 
-        [SerializeField] [Range(0, 100)] 
+        [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
         private int thirst;
         
-        [Header("Event that will throw when the player's state changes")]
+        [Header("Event that will throw when the player's health changes")]
         public UnityEventInt playerHeathUpdated;
 
+        [Header("Event that will throw when the player's hunger changes")]
+        public UnityEventInt playerHungerUpdated;
         
+        [Header("Event that will throw when the player's thirst changes")]
+        public UnityEventInt playerThirstUpdated;
+        
+        //Interface
         public void ChangePlayerHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
@@ -47,6 +45,34 @@ namespace Player
             
             //throws an event with the new health value as a parameter
             playerHeathUpdated.Invoke(updatedValue);
+        }
+
+        public void ChangePlayerHunger(int changeBy)
+        {
+            int updatedValue = hunger + changeBy;
+            if (updatedValue > 100) updatedValue = 100;
+            else if (updatedValue < 0)
+            {
+                updatedValue = 0;
+                ChangePlayerHealth(-1);
+            }
+
+            hunger = updatedValue;
+            playerHungerUpdated.Invoke(updatedValue);
+        }
+
+        public void ChangePlayerThrist(int changeBy)
+        {
+            int updatedValue = thirst + changeBy;
+            if (updatedValue > 100) updatedValue = 100;
+            else if (updatedValue < 0)
+            {
+                updatedValue = 0;
+                ChangePlayerHealth(-1);
+            }
+
+            thirst = updatedValue;
+            playerThirstUpdated.Invoke(updatedValue);
         }
     }
 }
