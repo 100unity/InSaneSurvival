@@ -58,7 +58,7 @@ namespace Player
 
             _navMeshAgent = GetComponent<NavMeshAgent>();
             SetUpControls();
-            PauseMenu.PauseEvent += OnPause;
+            PauseMenu.OnPause += OnPause;
         }
 
         private void OnEnable()
@@ -140,6 +140,10 @@ namespace Player
                 (float) -Math.Cos(radian) * cameraDistance.x);
         }
 
+        /// <summary>
+        /// Enables/Disables the controls if the game is paused/unpaused
+        /// </summary>
+        /// <param name="isPaused">Whether the game is paused</param>
         private void OnPause(bool isPaused)
         {
             if (isPaused)

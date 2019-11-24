@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7632053602209911916}
   m_Layer: 5
-  m_Name: PauseUI
+  m_Name: PauseContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,15 +427,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36106d0bd9194f3e97df5515c8da864b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseUI: {fileID: 542631458074623826}
-  freezeGameOnPause: 1
-  optionsUI: {fileID: 5114663453599438222}
+  pauseContent: {fileID: 542631458074623826}
+  optionsContent: {fileID: 5114663453599438222}
   backgroundDim: {fileID: 5998016062496270873}
+  freezeGameOnPause: 1
   continueButton: {fileID: 3721883529016313442}
   optionsButton: {fileID: 6772362466013532724}
+  optionsBackButton: {fileID: 5114663452298187346}
   mainMenuButton: {fileID: 4439265953709426736}
   quitButton: {fileID: 803501575617334236}
-  optionsBackButton: {fileID: 5114663452298187346}
 --- !u!1 &2877867113684831962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,6 +1704,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 3079361501013541428, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3079361501047116246, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1809,11 +1814,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3079361501013541428, guid: 1c81e42cf6bc47643aec06e3f903be30,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3079361499728896742, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1839,6 +1839,21 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3079361499728896742, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361499728896742, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361499728896742, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3079361501652257426, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1862,6 +1877,21 @@ PrefabInstance:
     - target: {fileID: 3079361501652257426, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361501652257426, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361501652257426, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361501652257426, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.b
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3079361500242716010, guid: 1c81e42cf6bc47643aec06e3f903be30,
@@ -1929,6 +1959,21 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3079361501084096284, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361501084096284, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361501084096284, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3079361500843019573, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1979,6 +2024,21 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3079361500845178492, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361500845178492, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361500845178492, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3079361501713545497, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2022,6 +2082,21 @@ PrefabInstance:
     - target: {fileID: 3079361499716409320, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361499716409320, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361499716409320, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361499716409320, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_fontColor.b
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
