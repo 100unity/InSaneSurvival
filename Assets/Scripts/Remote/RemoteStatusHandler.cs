@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Net.Sockets;
-using Player;
-using Polybrush;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +14,7 @@ namespace Remote
 
         [SerializeField] private string ip;
         [SerializeField] private int port;
+        [SerializeField] private bool use;
         
         [Header("Event that will throw when the player's health has been changed via Remote")]
         public UnityEventInt playerHeathRemoteUpdate;
@@ -28,12 +27,19 @@ namespace Remote
     
         private void Start()
         {
-            Connect(ip);
+            if (use)
+            {
+                Connect(ip);
+            }
         }
 
         private void OnApplicationQuit()
         {
-            Disconnect();
+            if (use)
+            {
+                Disconnect();
+            }
+            
         }
         
         //server connection
@@ -50,7 +56,7 @@ namespace Remote
                     int read = await _stream.ReadAsync(buffer, 0, buffer.Length);
                     if (read > 0 ){
                         string responseData = System.Text.Encoding.ASCII.GetString(buffer, 0, read);
-                        MessageRecieved(responseData);
+                        MessageReceived(responseData);
                     }
                 }
                 
@@ -63,11 +69,14 @@ namespace Remote
 
         private void SendString(string message)
         {
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
-            _stream.Write(data, 0, data.Length);
+            if (use)
+            {
+                byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+                _stream.Write(data, 0, data.Length);
+            }
         }
 
-        private void MessageRecieved(string message)
+        private void MessageReceived(string message)
         {
             if (message.Contains("/"))
             {
