@@ -65,6 +65,8 @@ namespace UI.Menus
             _isPaused = !_isPaused;
             backgroundDim.SetActive(_isPaused);
             pauseContent.SetActive(_isPaused);
+            if(!_isPaused)
+                optionsContent.SetActive(false);
             Time.timeScale = _isPaused && freezeGameOnPause ? 0 : 1;
             OnPause?.Invoke(_isPaused);
         }
