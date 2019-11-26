@@ -9,6 +9,7 @@ using Utils;
 namespace Player
 {
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
         [Tooltip("The clickable layer. Defines where the player can click/move")] [SerializeField]
@@ -61,13 +62,25 @@ namespace Player
             PauseMenu.OnPause += OnPause;
         }
 
+        /// <summary>
+        /// Update camera once, and enable correct controls
+        /// </summary>
         private void OnEnable()
         {
             UpdateCameraAngle();
-            _controls.Enable();
+            _controls.PlayerControls.Enable();
+            _controls.PauseMenuControls.Disable();
         }
-
+        
+        /// <summary>
+        /// Player disabled -> Disable all input
+        /// </summary>
         private void OnDisable() => _controls.Disable();
+
+        /// <summary>
+        /// If the player gets destroyed we need to dispose the controls. Otherwise the events will stay and add up.
+        /// </summary>
+        private void OnDestroy() => _controls.Dispose();
 
         /// <summary>
         /// Moves the camera with the player
@@ -86,12 +99,17 @@ namespace Player
         private void SetUpControls()
         {
             _controls = new Controls();
-            _controls.Game.Move.performed += Move;
-            _controls.Game.RotateCamera.performed += RotateCamera;
-            _controls.Game.Zoom.performed += Zoom;
-            _controls.Game.Pause.performed += Pause;
+            _controls.PlayerControls.Move.performed += Move;
+            _controls.PlayerControls.RotateCamera.performed += RotateCamera;
+            _controls.PlayerControls.Zoom.performed += Zoom;
+            _controls.PlayerControls.Pause.performed += Pause;
+
+            _controls.PauseMenuControls.ExitPause.performed += Pause;
         }
 
+        /// <summary>
+        /// Let's the GameManager know, that the player pressed pause.
+        /// </summary>
         private void Pause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();
 
         /// <summary>
@@ -141,15 +159,21 @@ namespace Player
         }
 
         /// <summary>
-        /// Enables/Disables the controls if the game is paused/unpaused
+        /// Enables/Disables the correct controls if the game is paused/unpaused
         /// </summary>
         /// <param name="isPaused">Whether the game is paused</param>
         private void OnPause(bool isPaused)
         {
             if (isPaused)
-                _controls.Disable();
+            {
+                _controls.PlayerControls.Disable();
+                _controls.PauseMenuControls.Enable();
+            }
             else
-                _controls.Enable();
+            {
+                _controls.PlayerControls.Enable();
+                _controls.PauseMenuControls.Disable();
+            }
         }
     }
 }

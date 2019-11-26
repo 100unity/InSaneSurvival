@@ -74,8 +74,20 @@ namespace UI.Menus
         /// </summary>
         private void GoToMainMenu()
         {
-            //TogglePause();
             SceneManager.LoadScene(Consts.MAIN_MENU_SCENE);
+            SceneManager.sceneLoaded += SceneLoadCompleted;
+        }
+
+        /// <summary>
+        /// This will wait until the MainMenuScene is loaded before hiding the PauseMenu
+        /// </summary>
+        /// <param name="scene">The loaded scene</param>
+        /// <param name="mode">The loading mode</param>
+        private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.buildIndex != Consts.MAIN_MENU_SCENE) return;
+            SceneManager.sceneLoaded -= SceneLoadCompleted;
+            TogglePause();
         }
 
         /// <summary>
