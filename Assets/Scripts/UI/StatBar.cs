@@ -19,21 +19,15 @@ public class StatBar : MonoBehaviour
     
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _barStates = Resources.LoadAll<Sprite>(SpriteLocation);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-         
-    }
-
+    
     public void UpdateBar(int value)
     {
-        var newValue = value;
-        var oldValue = _statusValue;
+        int newValue = value;
+        int oldValue = _statusValue;
 
         if (newValue > 100 || newValue < 0)
         {

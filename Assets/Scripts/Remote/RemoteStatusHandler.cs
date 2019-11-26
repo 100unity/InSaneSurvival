@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Remote
 {
@@ -17,7 +18,7 @@ namespace Remote
         [SerializeField] private bool use;
         
         [Header("Event that will throw when the player's health has been changed via Remote")]
-        public UnityEventInt playerHeathRemoteUpdate;
+        public UnityEventInt playerHealthRemoteUpdate;
         
         [Header("Event that will throw when the player's hunger has been changed via Remote")]
         public UnityEventInt playerHungerRemoteUpdate;
@@ -33,7 +34,7 @@ namespace Remote
             }
         }
 
-        private void OnApplicationQuit()
+        private void OnDestroy()
         {
             if (use)
             {
@@ -63,7 +64,8 @@ namespace Remote
             }
             catch (Exception e)
             {
-                Debug.Log(e.Message);
+                use = false;
+                Debug.Log("Connection to Remote Server failed");
             }
         }
 
@@ -83,7 +85,7 @@ namespace Remote
                 string[] parameters = message.Split('/');
                 switch (parameters[0])
                 {
-                    case "HP": playerHeathRemoteUpdate.Invoke(int.Parse(parameters[1])); 
+                    case "HP": playerHealthRemoteUpdate.Invoke(int.Parse(parameters[1])); 
                         break;
                     case "HNG": playerHungerRemoteUpdate.Invoke(int.Parse(parameters[1]));
                         break;
