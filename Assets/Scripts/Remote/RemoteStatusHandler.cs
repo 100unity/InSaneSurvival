@@ -20,11 +20,11 @@ namespace Remote
         [Header("Event that will throw when the player's health has been changed via Remote")]
         public UnityEventInt playerHealthRemoteUpdate;
         
-        [Header("Event that will throw when the player's hunger has been changed via Remote")]
-        public UnityEventInt playerHungerRemoteUpdate;
+        [Header("Event that will throw when the player's saturation has been changed via Remote")]
+        public UnityEventInt playerSaturationRemoteUpdate;
         
-        [Header("Event that will throw when the player's thirst has been changed via Remote")]
-        public UnityEventInt playerThirstRemoteUpdate;
+        [Header("Event that will throw when the player's hydration has been changed via Remote")]
+        public UnityEventInt playerHydrationRemoteUpdate;
     
         private void Start()
         {
@@ -87,9 +87,9 @@ namespace Remote
                 {
                     case "HP": playerHealthRemoteUpdate.Invoke(int.Parse(parameters[1])); 
                         break;
-                    case "HNG": playerHungerRemoteUpdate.Invoke(int.Parse(parameters[1]));
+                    case "HNG": playerSaturationRemoteUpdate.Invoke(int.Parse(parameters[1]));
                         break;
-                    case "THR": playerThirstRemoteUpdate.Invoke(int.Parse(parameters[1]));
+                    case "THR": playerHydrationRemoteUpdate.Invoke(int.Parse(parameters[1]));
                         break;
                 }
                     
@@ -108,12 +108,12 @@ namespace Remote
             SendString("HP/"+newValue);
         }
 
-        public void HungerUpdated(int newValue)
+        public void SaturationUpdated(int newValue)
         {
             SendString("HNG/"+newValue);
         }
 
-        public void ThirstUpdated(int newValue)
+        public void HydrationUpdated(int newValue)
         {
             SendString("THR/"+newValue);
         }

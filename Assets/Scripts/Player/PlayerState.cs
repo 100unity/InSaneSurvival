@@ -15,20 +15,20 @@ namespace Player
         [Tooltip("100 - full health, 0 - dead")] [SerializeField] [Range(0, 100)] 
         private int health;
 
-        [Tooltip("100 means no hunger, 0 means the player is in desperate need for food")] [SerializeField] [Range(0, 100)] 
-        private int hunger;
+        [Tooltip("100: no hunger, 0: the player is in desperate need for food")] [SerializeField] [Range(0, 100)] 
+        private int saturation;
 
         [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
-        private int thirst;
+        private int hydration;
         
         [Header("Event that will throw when the player's health changes")]
-        public UnityEventInt playerHeathUpdated;
+        public UnityEventInt playerHealthUpdated;
 
-        [Header("Event that will throw when the player's hunger changes")]
-        public UnityEventInt playerHungerUpdated;
+        [Header("Event that will throw when the player's saturation changes")]
+        public UnityEventInt playerSaturationUpdated;
         
-        [Header("Event that will throw when the player's thirst changes")]
-        public UnityEventInt playerThirstUpdated;
+        [Header("Event that will throw when the player's hydration changes")]
+        public UnityEventInt playerHydrationUpdated;
         
         //Interface
         public void ChangePlayerHealth(int changeBy)
@@ -44,12 +44,12 @@ namespace Player
             health = updatedValue;
             
             //throws an event with the new health value as a parameter
-            playerHeathUpdated.Invoke(updatedValue);
+            playerHealthUpdated.Invoke(updatedValue);
         }
 
-        public void ChangePlayerHunger(int changeBy)
+        public void ChangePlayerSaturation(int changeBy)
         {
-            int updatedValue = hunger + changeBy;
+            int updatedValue = saturation + changeBy;
             if (updatedValue > 100) updatedValue = 100;
             else if (updatedValue < 0)
             {
@@ -57,13 +57,13 @@ namespace Player
                 ChangePlayerHealth(-1);
             }
 
-            hunger = updatedValue;
-            playerHungerUpdated.Invoke(updatedValue);
+            saturation = updatedValue;
+            playerSaturationUpdated.Invoke(updatedValue);
         }
 
-        public void ChangePlayerThrist(int changeBy)
+        public void ChangePlayerHydration(int changeBy)
         {
-            int updatedValue = thirst + changeBy;
+            int updatedValue = hydration + changeBy;
             if (updatedValue > 100) updatedValue = 100;
             else if (updatedValue < 0)
             {
@@ -71,8 +71,8 @@ namespace Player
                 ChangePlayerHealth(-1);
             }
 
-            thirst = updatedValue;
-            playerThirstUpdated.Invoke(updatedValue);
+            hydration = updatedValue;
+            playerHydrationUpdated.Invoke(updatedValue);
         }
     }
 }

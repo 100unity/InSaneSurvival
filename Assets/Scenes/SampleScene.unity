@@ -149,6 +149,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
         type: 3}
+      propertyPath: playerHealthRemoteUpdate.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerSaturationRemoteUpdate.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHydrationRemoteUpdate.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
       propertyPath: port
       value: 12000
       objectReference: {fileID: 0}
@@ -231,6 +246,81 @@ PrefabInstance:
         type: 3}
       propertyPath: use
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHealthRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHealthRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHealthRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1911887728}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHealthRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangePlayerHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHealthRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerSaturationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerSaturationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHydrationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHydrationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerSaturationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1911887728}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHydrationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1911887728}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerSaturationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangePlayerSaturation
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerSaturationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHydrationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangePlayerHydration
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720530238762120495, guid: e00ee3d03e0eb0347871bfaa0513e8de,
+        type: 3}
+      propertyPath: playerHydrationRemoteUpdate.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8720530238762120494, guid: e00ee3d03e0eb0347871bfaa0513e8de,
         type: 3}
@@ -690,6 +780,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
         type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
       propertyPath: playerHeathUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 0
       objectReference: {fileID: 0}
@@ -792,6 +897,156 @@ PrefabInstance:
         type: 3}
       propertyPath: playerThirstUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ThirstUpdated
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1634769895}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 657174418}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1634769895}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1634769895}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1246618264}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 874576759}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HealthUpdated
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HydrationUpdated
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaturationUpdated
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdateBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHealthUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdateBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerSaturationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdateBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800914933927852534, guid: ac266ca1609a642418a6e415ddd9ecbb,
+        type: 3}
+      propertyPath: playerHydrationUpdated.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6126187404098910139, guid: ac266ca1609a642418a6e415ddd9ecbb,
         type: 3}
