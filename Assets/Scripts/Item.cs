@@ -6,7 +6,5 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     [SerializeField]
-    new private string name = "New Item";
-    [SerializeField]
     private Sprite icon = null;
 }
