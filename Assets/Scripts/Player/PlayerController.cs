@@ -1,4 +1,5 @@
 ﻿using System;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -26,6 +27,9 @@ namespace Player
 
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
+
+        [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
+        private InventoryUI inventoryUI;
 
         //Component references
         private NavMeshAgent _navMeshAgent;
@@ -86,6 +90,7 @@ namespace Player
             _controls.Game.Move.performed += Move;
             _controls.Game.RotateCamera.performed += RotateCamera;
             _controls.Game.Zoom.performed += Zoom;
+            _controls.Game.Inventory.performed += ctx => inventoryUI.ToggleInventory();
         }
 
         /// <summary>
