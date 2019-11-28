@@ -16,17 +16,24 @@ namespace UI
         private void Awake()
         {
             _itemStacks = new Dictionary<Item, ItemButton>();
-            
+            // Subscribe to inventory events
             inventory.OnItemAdded += AddItem;
             inventory.OnItemRemoved += RemoveItem;
         }
 
+        /// <summary>
+        /// Toggles the inventory's visibility
+        /// </summary>
         public void ToggleInventory()
         {
             IsActive = !IsActive;
             gameObject.SetActive(IsActive);
         }
 
+        /// <summary>
+        /// Adds an item to the inventory UI or increases the stack size in case it already exists
+        /// </summary>
+        /// <param name="item">The item to add to the UI</param>
         private void AddItem(Item item)
         {
             if (_itemStacks.ContainsKey(item))
@@ -42,6 +49,11 @@ namespace UI
             _itemStacks[item] = itemButton;
         }
 
+        /// <summary>
+        /// Removes an item from the inventory UI or decreases the stack size
+        /// by one if there are at least two items of the same type
+        /// </summary>
+        /// <param name="item">The item to remove from the UI</param>
         private void RemoveItem(Item item)
         {
             if (!_itemStacks.ContainsKey(item)) return;

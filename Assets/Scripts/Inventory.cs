@@ -9,12 +9,20 @@ public class Inventory : MonoBehaviour
     public event InventoryUpdate OnItemAdded;
     public event InventoryUpdate OnItemRemoved;
 
+    /// <summary>
+    /// Adds an item to the player's inventory
+    /// </summary>
+    /// <param name="item">The item to add</param>
     public void Add(Item item)
     {
         items.Add(item);
         OnItemAdded?.Invoke(item);
     }
 
+    /// <summary>
+    /// Removes an item from the player's inventory
+    /// </summary>
+    /// <param name="item"></param>
     public void Remove(Item item)
     {
         items.Remove(item);
