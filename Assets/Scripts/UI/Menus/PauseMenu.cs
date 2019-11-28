@@ -88,8 +88,8 @@ namespace UI.Menus
         private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
         {
             if (scene.buildIndex != Consts.Scene.MAIN_MENU) return;
-            SceneManager.sceneLoaded -= SceneLoadCompleted;
             TogglePause();
+            SceneManager.sceneLoaded -= SceneLoadCompleted;
         }
 
         /// <summary>
