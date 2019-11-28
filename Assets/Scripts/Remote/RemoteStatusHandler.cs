@@ -17,7 +17,6 @@ namespace Remote
         [SerializeField] private string ip;
         [SerializeField] private int port;
         [SerializeField] private bool use;
-        [SerializeField] 
         
         public static event PlayerStateChanged OnPlayerHealthRemoteUpdate;
         public static event PlayerStateChanged OnPlayerSaturationRemoteUpdate;
@@ -108,22 +107,22 @@ namespace Remote
         }
         
         //event listeners
-        public void HealthUpdated(int newValue)
+        private void HealthUpdated(int newValue)
         {
             SendString("HP/"+newValue);
         }
 
-        public void SaturationUpdated(int newValue)
+        private void SaturationUpdated(int newValue)
         {
             SendString("HNG/"+newValue);
         }
 
-        public void HydrationUpdated(int newValue)
+        private void HydrationUpdated(int newValue)
         {
             SendString("THR/"+newValue);
         }
 
-        public void PositionUpdated(Vector3 newPosition)
+        private void PositionUpdated(Vector3 newPosition)
         {
             SendString("POS/"+newPosition.x+"/"+newPosition.y+"/"+newPosition.z);
         }

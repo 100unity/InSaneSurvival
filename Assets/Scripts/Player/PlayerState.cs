@@ -34,7 +34,7 @@ namespace Player
         }
 
         //Interface
-        public void ChangePlayerHealth(int changeBy)
+        private void ChangePlayerHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
             if (updatedValue > 100) updatedValue = 100;
