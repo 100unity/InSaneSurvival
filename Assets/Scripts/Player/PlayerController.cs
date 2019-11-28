@@ -50,13 +50,6 @@ namespace Player
         /// </summary>
         private void Awake()
         {
-            _camera = Camera.main;
-            if (_camera == null)
-            {
-                Debug.LogError("No main camera found");
-                return;
-            }
-
             _navMeshAgent = GetComponent<NavMeshAgent>();
             SetUpControls();
             PauseMenu.OnPause += OnPause;
@@ -67,6 +60,9 @@ namespace Player
         /// </summary>
         private void OnEnable()
         {
+            _camera = Camera.main;
+            if (_camera == null) Debug.LogError("No main camera found");
+            
             UpdateCameraAngle();
             _controls.PlayerControls.Enable();
             _controls.PauseMenuControls.Disable();
@@ -102,15 +98,15 @@ namespace Player
             _controls.PlayerControls.Move.performed += Move;
             _controls.PlayerControls.RotateCamera.performed += RotateCamera;
             _controls.PlayerControls.Zoom.performed += Zoom;
-            _controls.PlayerControls.Pause.performed += Pause;
+            _controls.PlayerControls.Pause.performed += TogglePause;
 
-            _controls.PauseMenuControls.ExitPause.performed += Pause;
+            _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
 
         /// <summary>
         /// Let's the GameManager know, that the player pressed pause.
         /// </summary>
-        private void Pause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();
+        private void TogglePause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();
 
         /// <summary>
         /// When the right mouse button is pressed, the player moves to the pressed location using a raycast and the NavMeshAgent.

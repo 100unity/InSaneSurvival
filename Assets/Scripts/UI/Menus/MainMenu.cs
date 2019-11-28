@@ -39,7 +39,7 @@ namespace UI.Menus
         /// <summary>
         /// Loads the GameScene
         /// </summary>
-        private void Play() => SceneManager.LoadScene(Consts.GAME_SCENE);
+        private void Play() => SceneManager.LoadScene(Consts.Scene.GAME);
 
         /// <summary>
         /// Shows/Hides the options

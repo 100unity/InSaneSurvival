@@ -40,7 +40,7 @@ namespace UI.Menus
         /// <summary>
         /// Will be invoked when the game gets paused
         /// </summary>
-        public static PauseDelegate OnPause;
+        public static event PauseDelegate OnPause;
 
 
         private bool _isPaused;
@@ -76,7 +76,7 @@ namespace UI.Menus
         /// </summary>
         private void GoToMainMenu()
         {
-            SceneManager.LoadScene(Consts.MAIN_MENU_SCENE);
+            SceneManager.LoadScene(Consts.Scene.MAIN_MENU);
             SceneManager.sceneLoaded += SceneLoadCompleted;
         }
 
@@ -87,7 +87,7 @@ namespace UI.Menus
         /// <param name="mode">The loading mode</param>
         private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
         {
-            if (scene.buildIndex != Consts.MAIN_MENU_SCENE) return;
+            if (scene.buildIndex != Consts.Scene.MAIN_MENU) return;
             SceneManager.sceneLoaded -= SceneLoadCompleted;
             TogglePause();
         }
