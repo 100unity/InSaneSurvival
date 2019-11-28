@@ -2,6 +2,7 @@
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Utils;
 
@@ -30,7 +31,10 @@ namespace Player
 
         [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
         private InventoryUI inventoryUI;
-
+        
+        public delegate void PlayerPositionChanged(Vector3 newPosition);
+        public static event PlayerPositionChanged OnPlayerPositionUpdated;
+        
         //Component references
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
@@ -109,6 +113,8 @@ namespace Player
 
                 // Create click point effect
                 Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
+                
+                OnPlayerPositionUpdated?.Invoke(transform.position);
             }
         }
 
