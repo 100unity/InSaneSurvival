@@ -1,4 +1,6 @@
 ﻿using System;
+using Interfaces;
+using Remote;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = System.Random;
@@ -6,10 +8,9 @@ using Random = System.Random;
 namespace Player
 {
     
-    [System.Serializable] public class UnityEventInt:UnityEvent<int> {}
-    public class PlayerState : MonoBehaviour
+    public class PlayerState : MonoBehaviour, IDamageable
     {
-        private readonly Random _random = new Random();
+        public delegate void PlayerStateChanged(int newValue);
         
         //Player State values
         [Tooltip("100 - full health, 0 - dead")] [SerializeField] [Range(0, 100)] 
@@ -21,15 +22,17 @@ namespace Player
         [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
         private int hydration;
         
-        [Header("Event that will throw when the player's health changes")]
-        public UnityEventInt playerHealthUpdated;
+        public static event PlayerStateChanged OnPlayerHealthUpdated;
+        public static event PlayerStateChanged OnPlayerSaturationUpdated;
+        public static event PlayerStateChanged OnPlayerHydrationUpdated;
 
-        [Header("Event that will throw when the player's saturation changes")]
-        public UnityEventInt playerSaturationUpdated;
-        
-        [Header("Event that will throw when the player's hydration changes")]
-        public UnityEventInt playerHydrationUpdated;
-        
+        private void Awake()
+        {
+            RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
+            RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
+            RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
+        }
+
         //Interface
         public void ChangePlayerHealth(int changeBy)
         {
@@ -38,13 +41,13 @@ namespace Player
             else if (updatedValue < 0)
             {
                 updatedValue = 0;
-                //TODO: invoke death
+                Die();
             }
 
             health = updatedValue;
             
             //throws an event with the new health value as a parameter
-            playerHealthUpdated.Invoke(updatedValue);
+            OnPlayerHealthUpdated?.Invoke(updatedValue);
         }
 
         public void ChangePlayerSaturation(int changeBy)
@@ -58,7 +61,7 @@ namespace Player
             }
 
             saturation = updatedValue;
-            playerSaturationUpdated.Invoke(updatedValue);
+            OnPlayerSaturationUpdated?.Invoke(updatedValue);
         }
 
         public void ChangePlayerHydration(int changeBy)
@@ -72,7 +75,17 @@ namespace Player
             }
 
             hydration = updatedValue;
-            playerHydrationUpdated.Invoke(updatedValue);
+            OnPlayerHydrationUpdated?.Invoke(updatedValue);
+        }
+
+        public void Hit(int damage)
+        {
+            ChangePlayerHealth(-damage);
+        }
+
+        public void Die()
+        {
+            Debug.Log("Player is dead");
         }
     }
 }

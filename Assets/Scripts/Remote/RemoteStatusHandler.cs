@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Net.Sockets;
+using Player;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Remote
 {
-    [System.Serializable] public class UnityEventInt:UnityEvent<int> {}
     public class RemoteStatusHandler : MonoBehaviour
     {
-        
+        public delegate void PlayerStateChanged(int newValue);
+
         private TcpClient _client;
         private NetworkStream _stream;
 
         [SerializeField] private string ip;
         [SerializeField] private int port;
         [SerializeField] private bool use;
+        [SerializeField] 
         
-        [Header("Event that will throw when the player's health has been changed via Remote")]
-        public UnityEventInt playerHealthRemoteUpdate;
-        
-        [Header("Event that will throw when the player's saturation has been changed via Remote")]
-        public UnityEventInt playerSaturationRemoteUpdate;
-        
-        [Header("Event that will throw when the player's hydration has been changed via Remote")]
-        public UnityEventInt playerHydrationRemoteUpdate;
-    
+        public static event PlayerStateChanged OnPlayerHealthRemoteUpdate;
+        public static event PlayerStateChanged OnPlayerSaturationRemoteUpdate;
+        public static event PlayerStateChanged OnPlayerHydrationRemoteUpdate;
+
+        private void Awake()
+        {
+            PlayerState.OnPlayerHealthUpdated += HealthUpdated;
+            PlayerState.OnPlayerSaturationUpdated += SaturationUpdated;
+            PlayerState.OnPlayerHydrationUpdated += HydrationUpdated;
+            PlayerController.OnPlayerPositionUpdated += PositionUpdated;
+        }
+
         private void Start()
         {
             if (use)
@@ -85,11 +90,11 @@ namespace Remote
                 string[] parameters = message.Split('/');
                 switch (parameters[0])
                 {
-                    case "HP": playerHealthRemoteUpdate.Invoke(int.Parse(parameters[1])); 
+                    case "HP": OnPlayerHealthRemoteUpdate?.Invoke(int.Parse(parameters[1])); 
                         break;
-                    case "HNG": playerSaturationRemoteUpdate.Invoke(int.Parse(parameters[1]));
+                    case "HNG": OnPlayerSaturationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
-                    case "THR": playerHydrationRemoteUpdate.Invoke(int.Parse(parameters[1]));
+                    case "THR": OnPlayerHydrationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
                 }
                     

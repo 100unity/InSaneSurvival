@@ -45,3 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ip: localhost
   port: 12000
+  use: 1
