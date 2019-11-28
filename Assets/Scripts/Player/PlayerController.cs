@@ -3,6 +3,7 @@ using Managers;
 using UI.Menus;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Utils;
 
@@ -12,6 +13,8 @@ namespace Player
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
+        public delegate void PlayerPositionChanged(Vector3 newPosition);
+        
         [Tooltip("The clickable layer. Defines where the player can click/move")] [SerializeField]
         private LayerMask moveClickLayers;
 
@@ -29,7 +32,9 @@ namespace Player
 
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
-
+        
+        public static event PlayerPositionChanged OnPlayerPositionUpdated;
+        
         //Component references
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
@@ -124,6 +129,8 @@ namespace Player
 
                 // Create click point effect
                 Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
+                
+                OnPlayerPositionUpdated?.Invoke(transform.position);
             }
         }
 
