@@ -58,6 +58,11 @@ public class AttackLogic : MonoBehaviour
         // ----------
     }
 
+    private void OnEnable()
+    {
+        Status = AttackStatus.None;
+    }
+
     /// <summary>
     /// If it has a target, attacks it.
     /// </summary>
