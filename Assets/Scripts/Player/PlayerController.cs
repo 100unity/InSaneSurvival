@@ -40,6 +40,13 @@ namespace Player
         private Camera _camera;
         private Controls _controls;
 
+        //Interactables
+        [Tooltip("Showing the object player is focusing")] [SerializeField]
+        public Interactable focus;
+
+        [Tooltip("Showing the object target player is following")] [SerializeField]
+        public Transform target; //Target to follow
+
         /// <summary>
         /// The current horizontal angle of the camera, relative to the player
         /// </summary>
@@ -83,7 +90,86 @@ namespace Player
             Vector3 playerPosition = transform.position;
             _camera.transform.position = playerPosition + _cameraPosition;
             _camera.transform.LookAt(playerPosition);
+
+            #region Interactable
+            // Check and set destination of character to the currently focused Object
+            if (target != null)
+            {
+                _navMeshAgent.SetDestination(target.position);
+                FaceTarget();
+            }
+
+            // If player press right mouse button
+            if (Input.GetMouseButtonDown(1))
+            {
+                // Creates a ray
+                Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                // If the ray hits
+                if(Physics.Raycast(ray, out hit, 100))
+                {
+                    // Check if player hit an interactable
+                    Interactable interactable = hit.collider.GetComponent<Interactable>();
+                    if (interactable != null)
+                    {
+                        //Set as focus
+                        SetFocus(interactable);
+                    }
+                    else
+                    {
+                        RemoveFocus();
+                    }
+                }
+            }
+            #endregion
         }
+
+        /// <summary>
+        /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..) using raycast and _NavMeshAgent
+        /// (Won't conflict with character moving on the map)
+        /// </summary>
+        #region Interactables Functions
+        public void FollowTarget(Interactable newTarget)
+        {
+            _navMeshAgent.stoppingDistance = newTarget.radius * .8f;
+            _navMeshAgent.updateRotation = false;
+            target = newTarget.transform;
+        }
+
+        public void StopFollowingTarget()
+        {
+            _navMeshAgent.stoppingDistance = 0f;
+            _navMeshAgent.updateRotation = true;
+            target = null;
+        }
+
+        public void SetFocus(Interactable newFocus)
+        {
+            if(newFocus != focus)
+            {
+                if(focus != null) focus.OnDefocused();
+                focus = newFocus;
+                FollowTarget(newFocus);
+            }
+
+            newFocus.OnFocused(transform);
+        }
+
+        public void RemoveFocus()
+        {
+            if (focus != null) focus.OnDefocused();
+            focus = null;
+            StopFollowingTarget();
+        }
+
+        void FaceTarget()
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
+        #endregion
 
         /// <summary>
         /// This will set up all event for the player-controls
@@ -112,8 +198,11 @@ namespace Player
                 _navMeshAgent.isStopped = false;
 
                 // Create click point effect
-                Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
-                
+                if (focus == null)
+                {
+                    Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
+                }
+
                 OnPlayerPositionUpdated?.Invoke(transform.position);
             }
         }
@@ -144,5 +233,6 @@ namespace Player
             _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
                 (float) -Math.Cos(radian) * cameraDistance.x);
         }
+
     }
 }
