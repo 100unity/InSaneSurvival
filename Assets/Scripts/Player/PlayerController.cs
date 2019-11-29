@@ -1,4 +1,6 @@
 ﻿using System;
+using Managers;
+using UI.Menus;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -8,6 +10,7 @@ using Utils;
 namespace Player
 {
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
         public delegate void PlayerPositionChanged(Vector3 newPosition);
@@ -52,24 +55,33 @@ namespace Player
         /// </summary>
         private void Awake()
         {
-            _camera = Camera.main;
-            if (_camera == null)
-            {
-                Debug.LogError("No main camera found");
-                return;
-            }
-
             _navMeshAgent = GetComponent<NavMeshAgent>();
             SetUpControls();
+            PauseMenu.OnPause += OnPause;
         }
 
+        /// <summary>
+        /// Update camera once, and enable correct controls
+        /// </summary>
         private void OnEnable()
         {
+            _camera = Camera.main;
+            if (_camera == null) Debug.LogError("No main camera found");
+            
             UpdateCameraAngle();
-            _controls.Enable();
+            _controls.PlayerControls.Enable();
+            _controls.PauseMenuControls.Disable();
         }
-
+        
+        /// <summary>
+        /// Player disabled -> Disable all input
+        /// </summary>
         private void OnDisable() => _controls.Disable();
+
+        /// <summary>
+        /// If the player gets destroyed we need to dispose the controls. Otherwise the events will stay and add up.
+        /// </summary>
+        private void OnDestroy() => _controls.Dispose();
 
         /// <summary>
         /// Moves the camera with the player
@@ -88,10 +100,18 @@ namespace Player
         private void SetUpControls()
         {
             _controls = new Controls();
-            _controls.Game.Move.performed += Move;
-            _controls.Game.RotateCamera.performed += RotateCamera;
-            _controls.Game.Zoom.performed += Zoom;
+            _controls.PlayerControls.Move.performed += Move;
+            _controls.PlayerControls.RotateCamera.performed += RotateCamera;
+            _controls.PlayerControls.Zoom.performed += Zoom;
+            _controls.PlayerControls.Pause.performed += TogglePause;
+
+            _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
+
+        /// <summary>
+        /// Let's the GameManager know, that the player pressed pause.
+        /// </summary>
+        private void TogglePause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();
 
         /// <summary>
         /// When the right mouse button is pressed, the player moves to the pressed location using a raycast and the NavMeshAgent.
@@ -139,6 +159,24 @@ namespace Player
                 cameraDistanceRange.max);
             _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
                 (float) -Math.Cos(radian) * cameraDistance.x);
+        }
+
+        /// <summary>
+        /// Enables/Disables the correct controls if the game is paused/unpaused
+        /// </summary>
+        /// <param name="isPaused">Whether the game is paused</param>
+        private void OnPause(bool isPaused)
+        {
+            if (isPaused)
+            {
+                _controls.PlayerControls.Disable();
+                _controls.PauseMenuControls.Enable();
+            }
+            else
+            {
+                _controls.PlayerControls.Enable();
+                _controls.PauseMenuControls.Disable();
+            }
         }
     }
 }
