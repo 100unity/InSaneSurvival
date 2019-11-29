@@ -1,17 +1,22 @@
-﻿using Interfaces;
-using System;
+﻿using System;
+using Interfaces;
+using Managers;
+using UI.Menus;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Utils;
 
 namespace Player
 {
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour, IMovable
     {
-        [Tooltip("The clickable layer. Defines where the player can click/move")]
-        [SerializeField]
+        public delegate void PlayerPositionChanged(Vector3 newPosition);
+
+        [Tooltip("The clickable layer. Defines where the player can click/move")] [SerializeField]
         private LayerMask moveClickLayers;
 
         [Tooltip("An effect that will be displayed whenever the player clicks to move")]
@@ -42,7 +47,9 @@ namespace Player
         [SerializeField]
         private int rotationTolerance;
 
-
+        
+        public static event PlayerPositionChanged OnPlayerPositionUpdated;
+        
         //Component references
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
@@ -65,25 +72,34 @@ namespace Player
         /// </summary>
         private void Awake()
         {
-            _camera = Camera.main;
-            if (_camera == null)
-            {
-                Debug.LogError("No main camera found");
-                return;
-            }
-
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            SetUpControls();
             _attackLogic = GetComponent<AttackLogic>();
+            SetUpControls();
+            PauseMenu.OnPause += OnPause;
         }
 
+        /// <summary>
+        /// Update camera once, and enable correct controls
+        /// </summary>
         private void OnEnable()
         {
+            _camera = Camera.main;
+            if (_camera == null) Debug.LogError("No main camera found");
+            
             UpdateCameraAngle();
-            _controls.Enable();
+            _controls.PlayerControls.Enable();
+            _controls.PauseMenuControls.Disable();
         }
-
+        
+        /// <summary>
+        /// Player disabled -> Disable all input
+        /// </summary>
         private void OnDisable() => _controls.Disable();
+
+        /// <summary>
+        /// If the player gets destroyed we need to dispose the controls. Otherwise the events will stay and add up.
+        /// </summary>
+        private void OnDestroy() => _controls.Dispose();
 
         /// <summary>
         /// Moves the camera with the player.
@@ -102,10 +118,18 @@ namespace Player
         private void SetUpControls()
         {
             _controls = new Controls();
-            _controls.Game.Click.performed += OnRightClick;
-            _controls.Game.RotateCamera.performed += RotateCamera;
-            _controls.Game.Zoom.performed += Zoom;
+            _controls.PlayerControls.Click.performed += OnRightClick;
+            _controls.PlayerControls.RotateCamera.performed += RotateCamera;
+            _controls.PlayerControls.Zoom.performed += Zoom;
+            _controls.PlayerControls.Pause.performed += TogglePause;
+
+            _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
+
+        /// <summary>
+        /// Let's the GameManager know, that the player pressed pause.
+        /// </summary>
+        private void TogglePause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();
 
         /// <summary>
         /// Is called on mouse click.
@@ -149,6 +173,8 @@ namespace Player
 
             // Create click point effect
             Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
+
+			OnPlayerPositionUpdated?.Invoke(transform.position);
         }
 
         /// <summary>
@@ -226,6 +252,24 @@ namespace Player
                 cameraDistanceRange.max);
             _cameraPosition = new Vector3((float)Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
                 (float)-Math.Cos(radian) * cameraDistance.x);
+        }
+
+        /// <summary>
+        /// Enables/Disables the correct controls if the game is paused/unpaused
+        /// </summary>
+        /// <param name="isPaused">Whether the game is paused</param>
+        private void OnPause(bool isPaused)
+        {
+            if (isPaused)
+            {
+                _controls.PlayerControls.Disable();
+                _controls.PauseMenuControls.Enable();
+            }
+            else
+            {
+                _controls.PlayerControls.Enable();
+                _controls.PauseMenuControls.Disable();
+            }
         }
     }
 }
