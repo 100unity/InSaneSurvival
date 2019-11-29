@@ -323,7 +323,6 @@ GameObject:
   - component: {fileID: 6126187404098910138}
   - component: {fileID: 6126187404098910140}
   - component: {fileID: 1535071274}
-  - component: {fileID: 1535071275}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -362,6 +361,8 @@ MonoBehaviour:
   health: 100
   saturation: 100
   hydration: 100
+  hitMarkTime: 0.3
+  _gameObjectRenderer: {fileID: 6126187403260861676}
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,16 +455,3 @@ MonoBehaviour:
   attackTime: 3
   hitRotationTolerance: 40
   resetAfterHit: 1
---- !u!114 &1535071275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6126187404098910136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f7e0814987cfba44bdd4de5e1bd3f4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitMarkTime: 0.3

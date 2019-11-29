@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1510608199083388107}
   - component: {fileID: 1510608199083388106}
   - component: {fileID: 4583121872170788062}
-  - component: {fileID: 4783301930381875756}
+  - component: {fileID: 629533310}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -133,7 +133,7 @@ MonoBehaviour:
   attackTime: 3
   hitRotationTolerance: 30
   resetAfterHit: 0
---- !u!114 &4783301930381875756
+--- !u!114 &629533310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitMarkTime: 0.3
+  _gameObjectRenderer: {fileID: 1510608199636081249}
 --- !u!1 &1510608199636081255
 GameObject:
   m_ObjectHideFlags: 0

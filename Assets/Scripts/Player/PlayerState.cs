@@ -21,7 +21,24 @@ namespace Player
 
         [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
         private int hydration;
-        
+
+
+        // ------temp for hit animation------
+        [Tooltip("The time the object should be marked as hit after being hit")]
+        [SerializeField]
+        private float hitMarkTime;
+
+        [Tooltip("The MeshRenderer of the graphics object of the player")]
+        [SerializeField]
+        private MeshRenderer _gameObjectRenderer;
+
+        private Material _prevMat;
+        private Material _hitMarkerMaterial;
+        private float _timer;
+        private bool _hit;
+        // ----------
+
+
         public static event PlayerStateChanged OnPlayerHealthUpdated;
         public static event PlayerStateChanged OnPlayerSaturationUpdated;
         public static event PlayerStateChanged OnPlayerHydrationUpdated;
@@ -31,6 +48,31 @@ namespace Player
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
+
+            // ------------
+            _hitMarkerMaterial = new Material(Shader.Find("Standard"));
+            _hitMarkerMaterial.color = Color.red;
+            // just put initial mat here
+            _prevMat = _gameObjectRenderer.material;
+            // ------------
+        }
+
+        /// <summary>
+        /// Changes the objects color back to normal after being hit.
+        /// </summary>
+        private void Update()
+        {
+            if (_hit)
+            {
+                _timer += Time.deltaTime;
+
+                if (_timer > hitMarkTime)
+                {
+                    _hit = false;
+                    _timer = 0;
+                    _gameObjectRenderer.material = _prevMat;
+                }
+            }
         }
 
         //Interface
@@ -78,9 +120,19 @@ namespace Player
             OnPlayerHydrationUpdated?.Invoke(updatedValue);
         }
 
+        /// <summary>
+        /// Does damage to the player.
+        /// Marks the player as hit after being hit.
+        /// </summary>
+        /// <param name="damage">The damage dealt to player</param>
         public void Hit(int damage)
         {
             ChangePlayerHealth(-damage);
+
+            //-------
+            _hit = true;
+            _gameObjectRenderer.material = _hitMarkerMaterial;
+            //-------
         }
 
         public void Die()

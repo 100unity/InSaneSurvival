@@ -4,29 +4,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class is for testing the attack system implementation and does not have to be implemented like this.
+/// This class does not really implement the stats (like health etc) YET.
 /// </summary>
-public class Stats : MonoBehaviour, IDamageable
+public class EnemyState : MonoBehaviour, IDamageable
 {
     [Tooltip("The time the object should be marked as hit after being hit")]
     [SerializeField]
     private float hitMarkTime;
-    
-    // ------temp for hit animation------
+
+    [Tooltip("The MeshRenderer of the graphics object of the player")]
+    [SerializeField]
     private MeshRenderer _gameObjectRenderer;
+
     private Material _prevMat;
     private Material _hitMarkerMaterial;
-    // ----------
 
     private float _timer;
     private bool _hit;
 
     private void Awake()
     {
-        _gameObjectRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
         _hitMarkerMaterial = new Material(Shader.Find("Standard"));
         _hitMarkerMaterial.color = Color.red;
-        // just put initial mat here
         _prevMat = _gameObjectRenderer.material;
     }
 
@@ -55,8 +54,6 @@ public class Stats : MonoBehaviour, IDamageable
     public void Hit(int damage)
     {
         _hit = true;
-
-        //_prevMat = _gameObjectRenderer.material;
         _gameObjectRenderer.material = _hitMarkerMaterial;
     }
     public void Die()
