@@ -118,10 +118,10 @@ namespace Player
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000) && !_attackLogic.PerformingHit)
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000) && _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
-                IDamageable damageable = (IDamageable)objectHit.GetComponent<IDamageable>();
+                IDamageable damageable = objectHit.GetComponent<IDamageable>();
                 if (damageable != null)
                 {
                     // implementation NOT capable of area damage
@@ -159,8 +159,7 @@ namespace Player
         /// <returns>Whether the object is facing the target</returns>
         public bool FaceTarget(GameObject target, bool shouldTurn)
         {
-            float f;
-            return FaceTarget(target, shouldTurn, out f);
+            return FaceTarget(target, shouldTurn, out _);
         }
 
         // ----- Note: same in EnemyController --> make IMovable abstract class and inherit? ------

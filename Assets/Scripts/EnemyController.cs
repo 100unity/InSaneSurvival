@@ -113,7 +113,7 @@ public class EnemyController : MonoBehaviour, IMovable
             }
 
             // stop chasing when player out of escapeRadius and is not performing a hit right now (and is chasing)
-            if (distanceToTarget >= escapeRadius && !_attackLogic.PerformingHit && _isChasing)
+            if (distanceToTarget >= escapeRadius && _attackLogic.Status == AttackLogic.AttackStatus.None && _isChasing)
             {
                 StopChasing();
             }

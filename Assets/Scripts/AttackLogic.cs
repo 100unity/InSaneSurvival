@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(IMovable))]
 public class AttackLogic : MonoBehaviour
 {
     [Tooltip("The base damage dealt")]
@@ -27,14 +29,15 @@ public class AttackLogic : MonoBehaviour
     private bool resetAfterHit;
 
 
-    public bool PerformingHit { get; private set; }
+    public enum AttackStatus { Hit, Miss, NotFinished, None };
+    public AttackStatus Status { get; private set; }
 
     // component references
     private IMovable _movable;
-    
+
     private float _timer;
-    // can only hold IDamageables
     private GameObject _target;
+    private float _distanceToTarget;
 
     // ----temporary as animation replacement------
         private MeshRenderer _gameObjectRenderer;
@@ -73,60 +76,71 @@ public class AttackLogic : MonoBehaviour
     /// </summary>
     private void Attack()
     {
-        
-
-        float distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
-        if (distanceToTarget < attackRange && !PerformingHit)
+        _distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
+        if (_distanceToTarget < attackRange && Status == AttackStatus.None)
         {
-            // is in range
-            _movable.StopMoving();
-            // face target
-            if (_movable.FaceTarget(_target, true))
-            {
-                // faces target
-                // perform hit
-                PerformingHit = true;
-
-                // -----temp-----
-                    _prevMat = _gameObjectRenderer.material;
-                
-                    _gameObjectRenderer.material = _attackAnimationMaterial;
-                // ----------
-
-            }
+            IsInRange();
         }
-        else if (PerformingHit)
+        else if (Status == AttackStatus.NotFinished)
         {
-            bool? success = PerformHit();
-            if (success != null)
+            Status = PerformHit();
+            if (Status != AttackStatus.NotFinished)
             {
-                // hit animation performed
-                if (success == true)
-                {
-                    // deal damage
-                    IDamageable damageable = (IDamageable)_target.GetComponent<IDamageable>();
-                    damageable.Hit(damage);
-                }
-
-                // -----temp-----
-                    //Material newMaterial = new Material(Shader.Find("Standard"));
-                    //newMaterial.color = Color.gray;
-                    _gameObjectRenderer.material = _prevMat;
-                // ----------
-                
-                // end hit
-                PerformingHit = false;
-                if (resetAfterHit)
-                {
-                    // reset aggro independent of (un-)successful hit
-                    _target = null;
-                }
+                HitFinished();
             }
         }
         else
         {
             // chase target
             _movable.Move(_target.transform.position);
+        }
+    }
+
+    /// <summary>
+    /// Stops moving, faces the target if not facing yet, if facing, starts a hit.
+    /// </summary>
+    private void IsInRange()
+    {
+        _movable.StopMoving();
+        // face target
+        if (_movable.FaceTarget(_target, true))
+        {
+            // faces target
+            // perform hit
+            Status = AttackStatus.NotFinished;
+
+            // -----temp-----
+            _prevMat = _gameObjectRenderer.material;
+            _gameObjectRenderer.material = _attackAnimationMaterial;
+            // ----------
+        }
+    }
+
+    /// <summary>
+    /// Ends the hit. Deals damage to the target, if hit was successful. Resets aggro if necessary.
+    /// </summary>
+    private void HitFinished()
+    {
+        // hit animation performed
+        if (Status == AttackStatus.Hit)
+        {
+            // deal damage
+            IDamageable damageable = (IDamageable)_target.GetComponent<IDamageable>();
+            damageable.Hit(damage);
+        }
+
+        // -----temp-----
+        //Material newMaterial = new Material(Shader.Find("Standard"));
+        //newMaterial.color = Color.gray;
+        _gameObjectRenderer.material = _prevMat;
+        // ----------
+
+        // end hit
+        Status = AttackStatus.None;
+        if (resetAfterHit)
+        {
+            // reset aggro independent of (un-)successful hit
+            _target = null;
         }
     }
 
@@ -150,8 +164,8 @@ public class AttackLogic : MonoBehaviour
     /// <summary>
     /// Waits (attackTime) for hit to be finished and returns the result.
     /// </summary>
-    /// <returns>Null if hit not finished, true if hit successful performed, false if unsuccessful</returns>
-    private bool? PerformHit()
+    /// <returns>NotFinished if hit not finished, Hit if hit performed successfully, Miss if unsuccessful</returns>
+    private AttackStatus PerformHit()
     {
         _timer += Time.deltaTime;
 
@@ -160,16 +174,18 @@ public class AttackLogic : MonoBehaviour
             // animation finished
             _timer = 0;
             // target still in range?
-            float distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
-            if (distanceToTarget < attackRange)
+            if (_distanceToTarget < attackRange)
             {
                 // check rotation as well
                 float difference;
                 _movable.FaceTarget(_target, false, out difference);
-                return difference < hitRotationTolerance;
+                if (difference < hitRotationTolerance)
+                    return AttackStatus.Hit;
+                else
+                    return AttackStatus.Miss;
             }
-            return false;
+            return AttackStatus.Miss;
         }
-        return null;
+        return AttackStatus.NotFinished;
     }
 }

@@ -36,14 +36,16 @@ public class Stats : MonoBehaviour, IDamageable
     private void Update()
     {
         if (_hit)
+        {
             _timer += Time.deltaTime;
 
-        if (_timer > hitMarkTime)
-        {
-            _hit = false;
-            _timer = 0;
-            _gameObjectRenderer.material = _prevMat;
-        }
+            if (_timer > hitMarkTime)
+            {
+                _hit = false;
+                _timer = 0;
+                _gameObjectRenderer.material = _prevMat;
+            }
+        }   
     }
     
     /// <summary>
