@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4301568037724515229}
   - component: {fileID: 4301568037724515228}
   - component: {fileID: 4301568037724515206}
-  - component: {fileID: 4301568037724515225}
   m_Layer: 0
   m_Name: chicken_leg
   m_TagString: Untagged
@@ -126,16 +125,3 @@ MonoBehaviour:
   radius: 3
   item: {fileID: 11400000, guid: b8508a1e29cad8b4795593aa43fdd5cc, type: 2}
   inventory: {fileID: 0}
---- !u!114 &4301568037724515225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4301568035862080632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83a83993f67462f46a88643d6255be52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 3

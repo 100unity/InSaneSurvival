@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class ItemPickup : Interactable
 {
-    public Item item;
+    [SerializeField] public Item item; //reference for items
 
-    public Inventory inventory;
+    [SerializeField] public Inventory inventory; // reference for the inventory
+
+    private void Start()
+    {
+        inventory = GameObject.Find("Inventory").GetComponent<Inventory>(); //auto assign the Inventory to the component
+    }
 
     public override void Interact()
     {
@@ -17,8 +22,7 @@ public class ItemPickup : Interactable
     void PickUp()
     {
         //Pick up item
-        inventory.Add(item);
-        //Add to inventory
-        Destroy(gameObject);
+        inventory.Add(item); //Add to inventory   
+        Destroy(gameObject); //Destroy object
     }
 }
