@@ -49,18 +49,6 @@ namespace UI
                 yield return null;
             }
         }
-        
-        private void GoToDeathScene()
-        {
-            SceneManager.LoadScene(Consts.Scene.DEATH);
-            SceneManager.sceneLoaded += SceneLoadCompleted;
-        }
-        
-        private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
-        {
-            if (scene.buildIndex != Consts.Scene.DEATH) return;
-            SceneManager.sceneLoaded -= SceneLoadCompleted;
-        }
     }
 
 }
