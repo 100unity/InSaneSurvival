@@ -657,16 +657,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2231707837894894260, guid: 020e187f976e204409e4925869b9c012,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1535071273}
     - target: {fileID: 2231707837894894261, guid: 020e187f976e204409e4925869b9c012,
         type: 3}
       propertyPath: m_Name
       value: PlayerManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2231707837894894260, guid: 020e187f976e204409e4925869b9c012,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1535071273}
     - target: {fileID: 2231707837894894263, guid: 020e187f976e204409e4925869b9c012,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -918,7 +918,7 @@ PrefabInstance:
     - target: {fileID: 2169712501981468428, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
       propertyPath: m_Name
-      value: InitiateDeathScene
+      value: WhiteLight
       objectReference: {fileID: 0}
     - target: {fileID: 995698552585204302, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
@@ -930,6 +930,11 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 409775199843066372, guid: d04fb0230baa9d84fb848b4b92f33456,
+        type: 3}
+      propertyPath: whiteLight
+      value: 
+      objectReference: {fileID: 6367347879534100693}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d04fb0230baa9d84fb848b4b92f33456, type: 3}
 --- !u!1 &6367347879534100692 stripped

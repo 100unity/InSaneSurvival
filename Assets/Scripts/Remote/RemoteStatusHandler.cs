@@ -22,6 +22,7 @@ namespace Remote
         public static event PlayerStateChanged OnPlayerSaturationRemoteUpdate;
         public static event PlayerStateChanged OnPlayerHydrationRemoteUpdate;
 
+
         private void Awake()
         {
             PlayerState.OnPlayerHealthUpdated += HealthUpdated;
