@@ -9,13 +9,13 @@ namespace UI
         [SerializeField] private ItemButton itemButtonPrefab;
         [SerializeField] private Inventory inventory;
 
-        private Dictionary<Item, ItemButton> _itemStacks;
+        private Dictionary<AUsable, ItemButton> _itemStacks;
 
         public bool IsActive { get; private set; }
 
         private void Awake()
         {
-            _itemStacks = new Dictionary<Item, ItemButton>();
+            _itemStacks = new Dictionary<AUsable, ItemButton>();
             // Subscribe to inventory events
             inventory.OnItemAdded += AddItem;
             inventory.OnItemRemoved += RemoveItem;
@@ -34,7 +34,7 @@ namespace UI
         /// Adds an item to the inventory UI or increases the stack size in case it already exists
         /// </summary>
         /// <param name="item">The item to add to the UI</param>
-        private void AddItem(Item item)
+        private void AddItem(AUsable item)
         {
             if (_itemStacks.ContainsKey(item))
             {
@@ -46,6 +46,8 @@ namespace UI
             itemButton.Icon.sprite = item.Icon;
             itemButton.NameLabel.text = item.name;
             itemButton.Count = 1;
+            itemButton.Item = item;
+            itemButton.Inventory = inventory;
             _itemStacks[item] = itemButton;
         }
 
@@ -54,12 +56,15 @@ namespace UI
         /// by one if there are at least two items of the same type
         /// </summary>
         /// <param name="item">The item to remove from the UI</param>
-        private void RemoveItem(Item item)
+        private void RemoveItem(AUsable item)
         {
             if (!_itemStacks.ContainsKey(item)) return;
             _itemStacks[item].Count -= 1;
             if (_itemStacks[item].Count <= 0)
+            {
+                Destroy(_itemStacks[item].gameObject);
                 _itemStacks.Remove(item);
+            }
         }
     }
 }
