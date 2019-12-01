@@ -11,7 +11,7 @@ public class DeathScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        whiteLight.FadeOut(3f);
+        whiteLight.FadeOut(2.5f);
         playerCharacter.GetComponent<Animator>().SetBool ("isDead", true);
     }
 

@@ -48,6 +48,7 @@ namespace UI
                 currentTime += Time.deltaTime;
                 yield return null;
             }
+            gameObject.SetActive(false);
         }
     }
 
