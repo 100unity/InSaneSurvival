@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -173,18 +174,6 @@ public class EnemyController : MonoBehaviour, IMovable
             _agent.SetPath(wanderPath);
             _agent.isStopped = false;
         }
-    }
-    
-    /// <summary>
-    /// Faces the target. Returns true if facing the target.
-    /// </summary>
-    /// <param name="target">The target to face</param>
-    /// <param name="shouldTurn">Whether the object should turn to the target or not</param>
-    /// <returns>Whether the object is facing the target</returns>
-    public bool FaceTarget(GameObject target, bool shouldTurn)
-    {
-        float f;
-        return FaceTarget(target, shouldTurn, out f);
     }
 
     // ----- Note: same in PlayerController --> make IMovable abstract class and inherit? ------

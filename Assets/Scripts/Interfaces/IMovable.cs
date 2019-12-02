@@ -10,8 +10,6 @@ namespace Interfaces
 
         bool FaceTarget(GameObject target, bool shouldTurn, out float difference);
 
-        bool FaceTarget(GameObject target, bool shouldTurn);
-
         void StopMoving();
     }
 }

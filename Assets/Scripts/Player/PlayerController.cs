@@ -177,17 +177,6 @@ namespace Player
 			OnPlayerPositionUpdated?.Invoke(transform.position);
         }
 
-        /// <summary>
-        /// Faces the target. Returns true if facing the target.
-        /// </summary>
-        /// <param name="target">The target to face</param>
-        /// <param name="shouldTurn">Whether the object should turn to the target or not</param>
-        /// <returns>Whether the object is facing the target</returns>
-        public bool FaceTarget(GameObject target, bool shouldTurn)
-        {
-            return FaceTarget(target, shouldTurn, out _);
-        }
-
         // ----- Note: same in EnemyController --> make IMovable abstract class and inherit? ------
 
         /// <summary>

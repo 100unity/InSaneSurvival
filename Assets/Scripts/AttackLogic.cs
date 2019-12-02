@@ -108,7 +108,7 @@ public class AttackLogic : MonoBehaviour
     {
         _movable.StopMoving();
         // face target
-        if (_movable.FaceTarget(_target, true))
+        if (_movable.FaceTarget(_target, true, out _))
         {
             // faces target
             // perform hit
@@ -130,7 +130,7 @@ public class AttackLogic : MonoBehaviour
         if (Status == AttackStatus.Hit)
         {
             // deal damage
-            IDamageable damageable = (IDamageable)_target.GetComponent<IDamageable>();
+            IDamageable damageable = _target.GetComponent<IDamageable>();
             damageable.Hit(damage);
         }
 
@@ -150,7 +150,8 @@ public class AttackLogic : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts the attack.
+    /// Starts the attack. If the target is not in attacking range, chases it. If the target is near
+    /// performs a hit on it and either resets or continues attacking.
     /// </summary>
     /// <param name="target">The target to be attacked</param>
     public void StartAttack(GameObject target)
@@ -159,7 +160,7 @@ public class AttackLogic : MonoBehaviour
     }
 
     /// <summary>
-    /// Stops the ongoing attack
+    /// Stops the ongoing attack.
     /// </summary>
     public void StopAttack()
     {

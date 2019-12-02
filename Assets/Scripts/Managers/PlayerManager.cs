@@ -1,21 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Managers;
-using Player;
-using UnityEngine;
-using UnityEngine.Networking.PlayerConnection;
+﻿using UnityEngine;
 
 namespace Managers
 {
     public class PlayerManager : Singleton<PlayerManager>
     {
-        [SerializeField] private GameObject player;
+        [SerializeField] private GameObject _player;
         
         public GameObject GetPlayer()
         {
-            if (player == null)
-                GameObject.FindGameObjectWithTag("Player"); //BUG: Replace me with Trigger
-            return player;
+            if (_player == null)
+                _player = GameObject.FindGameObjectWithTag("Player"); //BUG: Replace me with Trigger
+            return _player;
         }
 
     }
