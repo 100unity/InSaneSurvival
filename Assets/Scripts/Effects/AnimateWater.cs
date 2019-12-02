@@ -7,13 +7,13 @@ namespace Effects
     public class AnimateWater : MonoBehaviour
     {
         [SerializeField] [Tooltip("Determines the difference between the peak and bottom of a wave")]
-        private float power = 3f;
+        private float power;
     
         [SerializeField] [Tooltip("Determines the size of waves")]
-        private float scale = 1f;
+        private float scale;
     
         [SerializeField] [Tooltip("Determines how fast waves aree")]
-        private float frequency = 1f;
+        private float frequency;
 
         private float _xOffset, _yOffset;
         private MeshFilter _meshFilter;

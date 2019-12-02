@@ -9,10 +9,10 @@ namespace Effects
     public class GenerateWaterPlane : MonoBehaviour
     {
         [SerializeField][Tooltip("Size of the mesh")]
-        private float size = 1f;
+        private float size;
     
         [SerializeField][Tooltip("Subdivisions of the mesh")]
-        private int gridSize = 16;
+        private int gridSize;
 
         private MeshFilter _filter;
 
