@@ -30,7 +30,7 @@ namespace Player
 
         [Tooltip("The MeshRenderer of the graphics object of the player")]
         [SerializeField]
-        private MeshRenderer _gameObjectRenderer;
+        private MeshRenderer gameObjectRenderer;
 
         private Material _prevMat;
         private Material _hitMarkerMaterial;
@@ -53,7 +53,7 @@ namespace Player
             _hitMarkerMaterial = new Material(Shader.Find("Standard"));
             _hitMarkerMaterial.color = Color.red;
             // just put initial mat here
-            _prevMat = _gameObjectRenderer.material;
+            _prevMat = gameObjectRenderer.material;
             // ------------
         }
 
@@ -70,7 +70,7 @@ namespace Player
                 {
                     _hit = false;
                     _timer = 0;
-                    _gameObjectRenderer.material = _prevMat;
+                    gameObjectRenderer.material = _prevMat;
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace Player
 
             //-------
             _hit = true;
-            _gameObjectRenderer.material = _hitMarkerMaterial;
+            gameObjectRenderer.material = _hitMarkerMaterial;
             //-------
         }
 

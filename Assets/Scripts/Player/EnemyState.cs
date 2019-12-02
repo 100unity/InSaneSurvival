@@ -14,7 +14,7 @@ public class EnemyState : MonoBehaviour, IDamageable
 
     [Tooltip("The MeshRenderer of the graphics object of the player")]
     [SerializeField]
-    private MeshRenderer _gameObjectRenderer;
+    private MeshRenderer gameObjectRenderer;
 
     private Material _prevMat;
     private Material _hitMarkerMaterial;
@@ -26,7 +26,7 @@ public class EnemyState : MonoBehaviour, IDamageable
     {
         _hitMarkerMaterial = new Material(Shader.Find("Standard"));
         _hitMarkerMaterial.color = Color.red;
-        _prevMat = _gameObjectRenderer.material;
+        _prevMat = gameObjectRenderer.material;
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public class EnemyState : MonoBehaviour, IDamageable
             {
                 _hit = false;
                 _timer = 0;
-                _gameObjectRenderer.material = _prevMat;
+                gameObjectRenderer.material = _prevMat;
             }
         }   
     }
@@ -54,7 +54,7 @@ public class EnemyState : MonoBehaviour, IDamageable
     public void Hit(int damage)
     {
         _hit = true;
-        _gameObjectRenderer.material = _hitMarkerMaterial;
+        gameObjectRenderer.material = _hitMarkerMaterial;
     }
     public void Die()
     {

@@ -4,13 +4,13 @@ namespace Managers
 {
     public class PlayerManager : Singleton<PlayerManager>
     {
-        [SerializeField] private GameObject _player;
+        [SerializeField] private GameObject player;
         
         public GameObject GetPlayer()
         {
-            if (_player == null)
-                _player = GameObject.FindGameObjectWithTag("Player"); //BUG: Replace me with Trigger
-            return _player;
+            if (player == null)
+                player = GameObject.FindGameObjectWithTag("Player"); //BUG: Replace me with Trigger
+            return player;
         }
 
     }
