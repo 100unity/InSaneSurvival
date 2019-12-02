@@ -16,13 +16,12 @@ namespace Effects
         private float frequency = 1f;
 
         private float _xOffset, _yOffset;
-        private MeshFilter _mf;
+        private MeshFilter _meshFilter;
 
 
         void Start()
         {
-            _mf = GetComponent<MeshFilter>();
-            AnimateWaves();
+            _meshFilter = GetComponent<MeshFilter>();
         }
     
         void Update()
@@ -35,14 +34,14 @@ namespace Effects
     
         private void AnimateWaves()
         {
-            Vector3[] vertices = _mf.mesh.vertices;
+            Vector3[] vertices = _meshFilter.mesh.vertices;
 
             for (int i = 0; i < vertices.Length; i++)
             {
                 vertices[i].y = CalculateHeight(vertices[i].x, vertices[i].z) * power;
             }
 
-            _mf.mesh.vertices = vertices;
+            _meshFilter.mesh.vertices = vertices;
         }
 
         private float CalculateHeight(float x, float y)
