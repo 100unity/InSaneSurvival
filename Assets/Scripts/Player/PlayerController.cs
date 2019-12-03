@@ -29,10 +29,19 @@ namespace Player
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
 
+<<<<<<< Updated upstream
         [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
         private InventoryUI inventoryUI;
         
         public delegate void PlayerPositionChanged(Vector3 newPosition);
+=======
+        [Tooltip("Showing the object player is focusing")] [SerializeField]
+        public Interactable focus;
+
+        [Tooltip("Showing the object target player is following")] [SerializeField]
+        public Transform target;
+
+>>>>>>> Stashed changes
         public static event PlayerPositionChanged OnPlayerPositionUpdated;
         
         //Component references
@@ -107,7 +116,11 @@ namespace Player
                 RaycastHit hit;
 
                 // If the ray hits
+<<<<<<< Updated upstream
                 if(Physics.Raycast(ray, out hit, 100))
+=======
+                if (Physics.Raycast(ray, out hit, 100))
+>>>>>>> Stashed changes
                 {
                     // Check if player hit an interactable
                     Interactable interactable = hit.collider.GetComponent<Interactable>();
@@ -123,7 +136,56 @@ namespace Player
                 }
             }
             #endregion
+<<<<<<< Updated upstream
+=======
         }
+
+        /// <summary>
+        /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..) using raycast and _NavMeshAgent
+        /// (Won't conflict with character moving on the map)
+        /// </summary>
+        #region Interactables Functions
+        public void FollowTarget(Interactable newTarget)
+        {
+            _navMeshAgent.stoppingDistance = newTarget.radius * .8f;
+            _navMeshAgent.updateRotation = false;
+            target = newTarget.transform;
+        }
+
+        public void StopFollowingTarget()
+        {
+            _navMeshAgent.stoppingDistance = 0f;
+            _navMeshAgent.updateRotation = true;
+            target = null;
+        }
+
+        public void SetFocus(Interactable newFocus)
+        {
+            if (newFocus != focus)
+            {
+                if (focus != null) focus.OnDefocused();
+                focus = newFocus;
+                FollowTarget(newFocus);
+            }
+
+            newFocus.OnFocused(transform);
+        }
+
+        public void RemoveFocus()
+        {
+            if (focus != null) focus.OnDefocused();
+            focus = null;
+            StopFollowingTarget();
+        }
+
+        void FaceTarget()
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+>>>>>>> Stashed changes
+        }
+        #endregion
 
         /// <summary>
         /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..) using raycast and _NavMeshAgent

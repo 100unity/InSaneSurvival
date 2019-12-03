@@ -11,7 +11,10 @@ GameObject:
   - component: {fileID: 4301568035862114392}
   - component: {fileID: 4301568035858690168}
   - component: {fileID: 4301568035859821240}
+<<<<<<< Updated upstream
   - component: {fileID: 4301568037724515229}
+=======
+>>>>>>> Stashed changes
   - component: {fileID: 4301568037724515228}
   - component: {fileID: 4301568037724515206}
   m_Layer: 0
@@ -81,6 +84,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+<<<<<<< Updated upstream
 --- !u!54 &4301568037724515229
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -97,6 +101,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+=======
+>>>>>>> Stashed changes
 --- !u!65 &4301568037724515228
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -123,5 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 3
+<<<<<<< Updated upstream
+=======
+  isFocus: 0
+  hasInteracted: 0
+>>>>>>> Stashed changes
   item: {fileID: 11400000, guid: b8508a1e29cad8b4795593aa43fdd5cc, type: 2}
   inventory: {fileID: 0}
