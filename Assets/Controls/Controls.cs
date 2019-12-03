@@ -19,7 +19,7 @@ public class @Controls : IInputActionCollection, IDisposable
             ""id"": ""19d5d016-8713-4cd5-ba8e-767f73bb7513"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Click"",
                     ""type"": ""Button"",
                     ""id"": ""6292ecd5-6dea-4f80-9a09-a998d8b10408"",
                     ""expectedControlType"": """",
@@ -59,7 +59,7 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -152,7 +152,7 @@ public class @Controls : IInputActionCollection, IDisposable
 }");
         // PlayerControls
         m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
-        m_PlayerControls_Move = m_PlayerControls.FindAction("Move", throwIfNotFound: true);
+        m_PlayerControls_Click = m_PlayerControls.FindAction("Click", throwIfNotFound: true);
         m_PlayerControls_RotateCamera = m_PlayerControls.FindAction("RotateCamera", throwIfNotFound: true);
         m_PlayerControls_Zoom = m_PlayerControls.FindAction("Zoom", throwIfNotFound: true);
         m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
@@ -208,7 +208,7 @@ public class @Controls : IInputActionCollection, IDisposable
     // PlayerControls
     private readonly InputActionMap m_PlayerControls;
     private IPlayerControlsActions m_PlayerControlsActionsCallbackInterface;
-    private readonly InputAction m_PlayerControls_Move;
+    private readonly InputAction m_PlayerControls_Click;
     private readonly InputAction m_PlayerControls_RotateCamera;
     private readonly InputAction m_PlayerControls_Zoom;
     private readonly InputAction m_PlayerControls_Pause;
@@ -216,7 +216,7 @@ public class @Controls : IInputActionCollection, IDisposable
     {
         private @Controls m_Wrapper;
         public PlayerControlsActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_PlayerControls_Move;
+        public InputAction @Click => m_Wrapper.m_PlayerControls_Click;
         public InputAction @RotateCamera => m_Wrapper.m_PlayerControls_RotateCamera;
         public InputAction @Zoom => m_Wrapper.m_PlayerControls_Zoom;
         public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
@@ -229,9 +229,9 @@ public class @Controls : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PlayerControlsActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnMove;
+                @Click.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnClick;
                 @RotateCamera.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnRotateCamera;
@@ -245,9 +245,9 @@ public class @Controls : IInputActionCollection, IDisposable
             m_Wrapper.m_PlayerControlsActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
                 @RotateCamera.started += instance.OnRotateCamera;
                 @RotateCamera.performed += instance.OnRotateCamera;
                 @RotateCamera.canceled += instance.OnRotateCamera;
@@ -296,7 +296,7 @@ public class @Controls : IInputActionCollection, IDisposable
     public PauseMenuControlsActions @PauseMenuControls => new PauseMenuControlsActions(this);
     public interface IPlayerControlsActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
