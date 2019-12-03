@@ -16,8 +16,12 @@ namespace Player
     {
         public delegate void PlayerPositionChanged(Vector3 newPosition);
 
-        [Tooltip("The clickable layer. Defines where the player can click/move")] [SerializeField]
-        private LayerMask moveClickLayers;
+        [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
+        private LayerMask clickableLayers;
+        
+        [Tooltip("Defines where the player can move")] [SerializeField]
+        private LayerMask groundLayer;
+
 
         [Tooltip("An effect that will be displayed whenever the player clicks to move")]
         [SerializeField]
@@ -142,7 +146,7 @@ namespace Player
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000) && _attackLogic.Status == AttackLogic.AttackStatus.None)
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) && _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
                 IDamageable damageable = objectHit.GetComponent<IDamageable>();
@@ -152,7 +156,7 @@ namespace Player
                     _attackLogic.StartAttack(objectHit);
                 }
                 // Get ground position from mouse click
-                else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, moveClickLayers))
+                else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, groundLayer))
                 {
                     // cancel possible ongoing attacks
                     _attackLogic.StopAttack();
