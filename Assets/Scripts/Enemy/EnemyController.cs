@@ -23,28 +23,35 @@ namespace Enemy
         [Tooltip("The ground the NPC should walk on.")] [SerializeField]
         private LayerMask moveLayer;
 
+        [Header("Attacking")]
+        [Tooltip("Determine whether the NPC attacks and chases the player.")] [SerializeField]
+        private bool isAggressive;
+        
+        [Tooltip("The speed the NPC chases targets with.")] [SerializeField]
+        private float runningSpeed;
+        
         [Tooltip("The speed the NPC rotates with.")] [SerializeField]
         private float rotationSpeed;
-
+        
         [Tooltip(
             "The maximum difference in degrees for the NPC between look direction and target direction in order to be facing the target.")]
         [SerializeField]
         private float rotationTolerance;
-
-        [Tooltip("The speed the NPC chases targets with.")] [SerializeField]
-        private float runningSpeed;
-
-        [Tooltip("Determine whether the NPC attacks and chases the player.")] [SerializeField]
-        private bool isAggressive;
-
+        
         [Tooltip("The radius around the NPC in which a player can escape.")] [SerializeField]
         private float escapeRadius;
 
         [Tooltip("Show escape radius in scene view.")] [SerializeField]
         private bool showEscapeRadius;
 
+        [Tooltip("TargetFinderComponent - Finds nearby targets")] [SerializeField]
+        private TargetFinder targetFinder;
+        
+        
+        
         // component references
         private NavMeshAgent _agent;
+
         private WanderAI _wanderAI;
         private AttackLogic _attackLogic;
 
@@ -52,8 +59,6 @@ namespace Enemy
         private float _timer;
         private bool _isChasing;
         private float _initialSpeed;
-
-        public readonly List<GameObject> Targets = new List<GameObject>(); //TODO: Type should be Abstract class
 
         private void Awake()
         {
@@ -86,9 +91,10 @@ namespace Enemy
             if (!_isChasing)
                 Wander();
 
-            if (!isAggressive || Targets.Count == 0) return;
+            if (!isAggressive || targetFinder.Targets.Count == 0) return;
 
-            GameObject currentTarget = Targets[0];
+            // Attack first target in list
+            GameObject currentTarget = targetFinder.Targets[0];
 
             if (!_isChasing)
                 StartChasing(currentTarget);
@@ -168,7 +174,7 @@ namespace Enemy
         /// </summary>
         private void StopChasing()
         {
-            Targets.RemoveAt(0);
+            targetFinder.Targets.RemoveAt(0);
             _isChasing = false;
             _agent.speed = _initialSpeed;
             _attackLogic.StopAttack();

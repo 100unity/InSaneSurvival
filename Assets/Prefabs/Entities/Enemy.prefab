@@ -58,12 +58,13 @@ MonoBehaviour:
   moveLayer:
     serializedVersion: 2
     m_Bits: 1
+  isAggressive: 1
+  runningSpeed: 4
   rotationSpeed: 5
   rotationTolerance: 10
-  runningSpeed: 4
-  isAggressive: 1
   escapeRadius: 12
   showEscapeRadius: 1
+  targetFinder: {fileID: 3145862669928777254}
 --- !u!114 &4583121872170788062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,7 +238,7 @@ GameObject:
   - component: {fileID: 3145862669928777254}
   - component: {fileID: 4071612706760851343}
   m_Layer: 25
-  m_Name: LookArea
+  m_Name: TargetFinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c321abfa09b1477cbacfe1c58bbc6939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyController: {fileID: 1510608199083388106}
   attackableLayers:
     serializedVersion: 2
     m_Bits: 1048576
