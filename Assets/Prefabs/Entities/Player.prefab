@@ -376,7 +376,7 @@ MonoBehaviour:
   saturation: 100
   hydration: 100
   hitMarkTime: 0.3
-  _gameObjectRenderer: {fileID: 6126187403260861676}
+  gameObjectRenderer: {fileID: 6126187403260861676}
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +402,7 @@ MonoBehaviour:
     max: 20
   rotationSpeed: 5
   rotationTolerance: 10
+  inventoryUI: {fileID: 0}
 --- !u!195 &6126187404098910138
 NavMeshAgent:
   m_ObjectHideFlags: 0
