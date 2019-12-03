@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1107132285515203231}
+  - component: {fileID: 4480492776089546363}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -30,6 +31,19 @@ Transform:
   m_Father: {fileID: 6126187404098910139}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4480492776089546363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4626056273412037261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a5cc031036f574baf037348fb26349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
 --- !u!1 &6126187402722040379
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,7 +376,7 @@ MonoBehaviour:
   saturation: 100
   hydration: 100
   hitMarkTime: 0.3
-  _gameObjectRenderer: {fileID: 6126187403260861676}
+  gameObjectRenderer: {fileID: 6126187403260861676}
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +402,7 @@ MonoBehaviour:
     max: 20
   rotationSpeed: 5
   rotationTolerance: 10
+  inventoryUI: {fileID: 0}
 --- !u!195 &6126187404098910138
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -110,7 +110,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   rotationSpeed: 5
-  rotationTolerance: 10
+  rotationTolerance: 0
   runningSpeed: 4
   isAggressive: 1
   lookRadius: 8
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitMarkTime: 0.3
-  _gameObjectRenderer: {fileID: 1510608199636081249}
+  gameObjectRenderer: {fileID: 1510608199636081249}
 --- !u!1 &1510608199636081255
 GameObject:
   m_ObjectHideFlags: 0

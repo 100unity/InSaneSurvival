@@ -1,13 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField]
-    private List<Item> items = new List<Item>();
+    [SerializeField] private List<Item> items = new List<Item>();
+    
+    public delegate void InventoryUpdate(Item item);
+    public event InventoryUpdate OnItemAdded;
+    public event InventoryUpdate OnItemRemoved;
 
-    public void Add(Item item) => items.Add(item);
+    /// <summary>
+    /// Adds an item to the player's inventory
+    /// </summary>
+    /// <param name="item">The item to add</param>
+    public void Add(Item item)
+    {
+        items.Add(item);
+        OnItemAdded?.Invoke(item);
+    }
 
-    public void Remove(Item item) => items.Remove(item);
+    /// <summary>
+    /// Removes an item from the player's inventory
+    /// </summary>
+    /// <param name="item"></param>
+    public void Remove(Item item)
+    {
+        items.Remove(item);
+        OnItemRemoved?.Invoke(item);
+    }
 }
