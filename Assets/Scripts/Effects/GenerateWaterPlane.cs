@@ -17,7 +17,7 @@ namespace Effects
         private MeshFilter _filter;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             _filter = GetComponent<MeshFilter>();
             _filter.mesh = GenerateMesh();

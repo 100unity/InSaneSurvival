@@ -19,12 +19,12 @@ namespace Effects
         private MeshFilter _meshFilter;
 
 
-        void Start()
+        private void Awake()
         {
             _meshFilter = GetComponent<MeshFilter>();
         }
     
-        void Update()
+        private void Update()
         {
             AnimateWaves();
             _xOffset += Time.deltaTime * frequency;
