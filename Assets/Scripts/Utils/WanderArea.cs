@@ -23,7 +23,7 @@ namespace Utils
         /// <returns>The center of the wander area</returns>
         public Vector3 GetCenterPosition()
         {
-            if (_centerFrozen.Equals(default))
+            if (_centerFrozen.Equals(Vector3.zero))
                 return center.position;
             return _centerFrozen;
         }

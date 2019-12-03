@@ -1,5 +1,7 @@
 ﻿using System;
 using UI;
+using Managers;
+using UI.Menus;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -9,6 +11,7 @@ using Utils;
 namespace Player
 {
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
         [Tooltip("The clickable layer. Defines where the player can click/move")] [SerializeField]
@@ -29,19 +32,16 @@ namespace Player
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
 
-<<<<<<< Updated upstream
         [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
         private InventoryUI inventoryUI;
         
         public delegate void PlayerPositionChanged(Vector3 newPosition);
-=======
         [Tooltip("Showing the object player is focusing")] [SerializeField]
         public Interactable focus;
 
         [Tooltip("Showing the object target player is following")] [SerializeField]
         public Transform target;
 
->>>>>>> Stashed changes
         public static event PlayerPositionChanged OnPlayerPositionUpdated;
         
         //Component references
@@ -71,24 +71,33 @@ namespace Player
         /// </summary>
         private void Awake()
         {
-            _camera = Camera.main;
-            if (_camera == null)
-            {
-                Debug.LogError("No main camera found");
-                return;
-            }
-
             _navMeshAgent = GetComponent<NavMeshAgent>();
             SetUpControls();
+            PauseMenu.OnPause += OnPause;
         }
 
+        /// <summary>
+        /// Update camera once, and enable correct controls
+        /// </summary>
         private void OnEnable()
         {
+            _camera = Camera.main;
+            if (_camera == null) Debug.LogError("No main camera found");
+            
             UpdateCameraAngle();
-            _controls.Enable();
+            _controls.PlayerControls.Enable();
+            _controls.PauseMenuControls.Disable();
         }
-
+        
+        /// <summary>
+        /// Player disabled -> Disable all input
+        /// </summary>
         private void OnDisable() => _controls.Disable();
+
+        /// <summary>
+        /// If the player gets destroyed we need to dispose the controls. Otherwise the events will stay and add up.
+        /// </summary>
+        private void OnDestroy() => _controls.Dispose();
 
         /// <summary>
         /// Moves the camera with the player
@@ -116,11 +125,7 @@ namespace Player
                 RaycastHit hit;
 
                 // If the ray hits
-<<<<<<< Updated upstream
                 if(Physics.Raycast(ray, out hit, 100))
-=======
-                if (Physics.Raycast(ray, out hit, 100))
->>>>>>> Stashed changes
                 {
                     // Check if player hit an interactable
                     Interactable interactable = hit.collider.GetComponent<Interactable>();
@@ -136,54 +141,6 @@ namespace Player
                 }
             }
             #endregion
-<<<<<<< Updated upstream
-=======
-        }
-
-        /// <summary>
-        /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..) using raycast and _NavMeshAgent
-        /// (Won't conflict with character moving on the map)
-        /// </summary>
-        #region Interactables Functions
-        public void FollowTarget(Interactable newTarget)
-        {
-            _navMeshAgent.stoppingDistance = newTarget.radius * .8f;
-            _navMeshAgent.updateRotation = false;
-            target = newTarget.transform;
-        }
-
-        public void StopFollowingTarget()
-        {
-            _navMeshAgent.stoppingDistance = 0f;
-            _navMeshAgent.updateRotation = true;
-            target = null;
-        }
-
-        public void SetFocus(Interactable newFocus)
-        {
-            if (newFocus != focus)
-            {
-                if (focus != null) focus.OnDefocused();
-                focus = newFocus;
-                FollowTarget(newFocus);
-            }
-
-            newFocus.OnFocused(transform);
-        }
-
-        public void RemoveFocus()
-        {
-            if (focus != null) focus.OnDefocused();
-            focus = null;
-            StopFollowingTarget();
-        }
-
-        void FaceTarget()
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
->>>>>>> Stashed changes
         }
         #endregion
 
@@ -243,7 +200,19 @@ namespace Player
             _controls.Game.RotateCamera.performed += RotateCamera;
             _controls.Game.Zoom.performed += Zoom;
             _controls.Game.Inventory.performed += ctx => inventoryUI.ToggleInventory();
+            
+            _controls.PlayerControls.Move.performed += Move;
+            _controls.PlayerControls.RotateCamera.performed += RotateCamera;
+            _controls.PlayerControls.Zoom.performed += Zoom;
+            _controls.PlayerControls.Pause.performed += TogglePause;
+
+            _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
+
+        /// <summary>
+        /// Let's the GameManager know, that the player pressed pause.
+        /// </summary>
+        private void TogglePause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();
 
         /// <summary>
         /// When the right mouse button is pressed, the player moves to the pressed location using a raycast and the NavMeshAgent.
@@ -296,5 +265,22 @@ namespace Player
                 (float) -Math.Cos(radian) * cameraDistance.x);
         }
 
+        /// <summary>
+        /// Enables/Disables the correct controls if the game is paused/unpaused
+        /// </summary>
+        /// <param name="isPaused">Whether the game is paused</param>
+        private void OnPause(bool isPaused)
+        {
+            if (isPaused)
+            {
+                _controls.PlayerControls.Disable();
+                _controls.PauseMenuControls.Enable();
+            }
+            else
+            {
+                _controls.PlayerControls.Enable();
+                _controls.PauseMenuControls.Disable();
+            }
+        }
     }
 }
