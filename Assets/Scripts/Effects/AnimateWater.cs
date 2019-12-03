@@ -7,22 +7,21 @@ namespace Effects
     public class AnimateWater : MonoBehaviour
     {
         [SerializeField] [Tooltip("Determines the difference between the peak and bottom of a wave")]
-        private float power = 3f;
+        private float power;
     
         [SerializeField] [Tooltip("Determines the size of waves")]
-        private float scale = 1f;
+        private float scale;
     
         [SerializeField] [Tooltip("Determines how fast waves aree")]
-        private float frequency = 1f;
+        private float frequency;
 
         private float _xOffset, _yOffset;
-        private MeshFilter _mf;
+        private MeshFilter _meshFilter;
 
 
         void Start()
         {
-            _mf = GetComponent<MeshFilter>();
-            AnimateWaves();
+            _meshFilter = GetComponent<MeshFilter>();
         }
     
         void Update()
@@ -35,14 +34,14 @@ namespace Effects
     
         private void AnimateWaves()
         {
-            Vector3[] vertices = _mf.mesh.vertices;
+            Vector3[] vertices = _meshFilter.mesh.vertices;
 
             for (int i = 0; i < vertices.Length; i++)
             {
                 vertices[i].y = CalculateHeight(vertices[i].x, vertices[i].z) * power;
             }
 
-            _mf.mesh.vertices = vertices;
+            _meshFilter.mesh.vertices = vertices;
         }
 
         private float CalculateHeight(float x, float y)

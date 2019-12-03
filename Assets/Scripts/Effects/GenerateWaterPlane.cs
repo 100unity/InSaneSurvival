@@ -9,10 +9,10 @@ namespace Effects
     public class GenerateWaterPlane : MonoBehaviour
     {
         [SerializeField][Tooltip("Size of the mesh")]
-        private float size = 1f;
+        private float size;
     
         [SerializeField][Tooltip("Subdivisions of the mesh")]
-        private int gridSize = 16;
+        private int gridSize;
 
         private MeshFilter _filter;
 
@@ -20,19 +20,21 @@ namespace Effects
         void Start()
         {
             _filter = GetComponent<MeshFilter>();
-            _filter.mesh = generateMesh();
+            _filter.mesh = GenerateMesh();
         }
 
-        private Mesh generateMesh()
+        private Mesh GenerateMesh()
         {
             Mesh m = new Mesh();
             List<Vector3> vertices = new List<Vector3>();
             List<Vector3> normals = new List<Vector3>();
             List<Vector2> uvs = new List<Vector2>();
+            
+            int vertCount = gridSize + 1;
         
-            for(int x = 0; x < gridSize + 1; x++)
+            for(int x = 0; x < vertCount; x++)
             {
-                for (int y = 0; y < gridSize + 1; y++)
+                for (int y = 0; y < vertCount; y++)
                 {
                     vertices.Add(new Vector3(-size * .5f + size * (x / ((float)gridSize)), 0, -size * .5f + size * (y / ((float)gridSize))));
                     normals.Add(Vector3.up);
@@ -41,7 +43,6 @@ namespace Effects
             }
 
             List<int> triangles = new List<int>();
-            int vertCount = gridSize + 1;
 
             for (int i = 0; i < vertCount * vertCount - vertCount; i++)
             {
