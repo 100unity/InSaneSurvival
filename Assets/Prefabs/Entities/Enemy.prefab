@@ -101,6 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc151df84d5a7a4fb860079b2f52530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 5
+  rotationTolerance: 10
   wanderArea:
     center: {fileID: 1510608199083388096}
     radius: 15
@@ -109,8 +111,6 @@ MonoBehaviour:
   moveLayer:
     serializedVersion: 2
     m_Bits: 1
-  rotationSpeed: 5
-  rotationTolerance: 0
   runningSpeed: 4
   isAggressive: 1
   lookRadius: 8

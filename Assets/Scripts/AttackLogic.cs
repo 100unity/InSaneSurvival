@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(IMovable))]
+[RequireComponent(typeof(Movable))]
 public class AttackLogic : MonoBehaviour
 {
     [Tooltip("The base damage dealt")]
@@ -33,7 +33,7 @@ public class AttackLogic : MonoBehaviour
     public AttackStatus Status { get; private set; }
 
     // component references
-    private IMovable _movable;
+    private Movable _movable;
 
     private float _timer;
     private GameObject _target;
@@ -48,7 +48,7 @@ public class AttackLogic : MonoBehaviour
     private void Awake()
     {
         // init components
-        _movable = GetComponent<IMovable>();
+        _movable = GetComponent<Movable>();
 
         // -----temp replacement for animation-----
             _gameObjectRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
@@ -156,6 +156,7 @@ public class AttackLogic : MonoBehaviour
     /// <param name="target">The target to be attacked</param>
     public void StartAttack(GameObject target)
     {
+        print("start attack");
         _target = target;
     }
 
