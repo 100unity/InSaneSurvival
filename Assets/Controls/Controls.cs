@@ -43,12 +43,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""274c2f09-88a3-45a8-874c-e5c74128fe90"",
                     ""name"": ""Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""07411ab1-7dfe-4b8c-8922-2910b73a8f47"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""274c2f09-88a3-45a8-874c-e5c74128fe90"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -112,6 +117,17 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e09e4adb-7acf-44b6-ae83-f560131b058f"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""429f07fa-b78a-4211-988f-2e90bafee669"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -145,12 +161,6 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ExitPause"",
-                    ""id"": ""e09e4adb-7acf-44b6-ae83-f560131b058f"",
-                    ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -164,16 +174,11 @@ public class @Controls : IInputActionCollection, IDisposable
         m_PlayerControls_Move = m_PlayerControls.FindAction("Move", throwIfNotFound: true);
         m_PlayerControls_RotateCamera = m_PlayerControls.FindAction("RotateCamera", throwIfNotFound: true);
         m_PlayerControls_Zoom = m_PlayerControls.FindAction("Zoom", throwIfNotFound: true);
+        m_PlayerControls_Inventory = m_PlayerControls.FindAction("Inventory", throwIfNotFound: true);
         m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
         // PauseMenuControls
         m_PauseMenuControls = asset.FindActionMap("PauseMenuControls", throwIfNotFound: true);
         m_PauseMenuControls_ExitPause = m_PauseMenuControls.FindAction("ExitPause", throwIfNotFound: true);
-        // Game
-        m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
-        m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
-        m_Game_RotateCamera = m_Game.FindAction("RotateCamera", throwIfNotFound: true);
-        m_Game_Zoom = m_Game.FindAction("Zoom", throwIfNotFound: true);
-        m_Game_Inventory = m_Game.FindAction("Inventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -226,6 +231,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControls_Move;
     private readonly InputAction m_PlayerControls_RotateCamera;
     private readonly InputAction m_PlayerControls_Zoom;
+    private readonly InputAction m_PlayerControls_Inventory;
     private readonly InputAction m_PlayerControls_Pause;
     public struct PlayerControlsActions
     {
@@ -234,24 +240,9 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerControls_Move;
         public InputAction @RotateCamera => m_Wrapper.m_PlayerControls_RotateCamera;
         public InputAction @Zoom => m_Wrapper.m_PlayerControls_Zoom;
+        public InputAction @Inventory => m_Wrapper.m_PlayerControls_Inventory;
         public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
-    // Game
-    private readonly InputActionMap m_Game;
-    private IGameActions m_GameActionsCallbackInterface;
-    private readonly InputAction m_Game_Move;
-    private readonly InputAction m_Game_RotateCamera;
-    private readonly InputAction m_Game_Zoom;
-    private readonly InputAction m_Game_Inventory;
-    public struct GameActions
-    {
-        private @Controls m_Wrapper;
-        public GameActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Game_Move;
-        public InputAction @RotateCamera => m_Wrapper.m_Game_RotateCamera;
-        public InputAction @Zoom => m_Wrapper.m_Game_Zoom;
-        public InputAction @Inventory => m_Wrapper.m_Game_Inventory;
-        public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
@@ -269,21 +260,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Zoom.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnZoom;
                 @Zoom.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnZoom;
                 @Zoom.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnZoom;
+                @Inventory.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
                 @Pause.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
-                @Move.started -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
-                @RotateCamera.started -= m_Wrapper.m_GameActionsCallbackInterface.OnRotateCamera;
-                @RotateCamera.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnRotateCamera;
-                @RotateCamera.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnRotateCamera;
-                @Zoom.started -= m_Wrapper.m_GameActionsCallbackInterface.OnZoom;
-                @Zoom.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnZoom;
-                @Zoom.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnZoom;
-                @Inventory.started -= m_Wrapper.m_GameActionsCallbackInterface.OnInventory;
-                @Inventory.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnInventory;
-                @Inventory.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnInventory;
             }
             m_Wrapper.m_PlayerControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -297,6 +279,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Zoom.started += instance.OnZoom;
                 @Zoom.performed += instance.OnZoom;
                 @Zoom.canceled += instance.OnZoom;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -333,9 +318,6 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ExitPause.started += instance.OnExitPause;
                 @ExitPause.performed += instance.OnExitPause;
                 @ExitPause.canceled += instance.OnExitPause;
-                @Inventory.started += instance.OnInventory;
-                @Inventory.performed += instance.OnInventory;
-                @Inventory.canceled += instance.OnInventory;
             }
         }
     }
@@ -345,11 +327,11 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
     public interface IPauseMenuControlsActions
     {
         void OnExitPause(InputAction.CallbackContext context);
-        void OnInventory(InputAction.CallbackContext context);
     }
 }

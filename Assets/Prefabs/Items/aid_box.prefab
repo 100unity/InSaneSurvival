@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6877438478682125357
+--- !u!1 &6015213507665351012
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,15 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6877438478682220557}
-  - component: {fileID: 6877438478678796333}
-  - component: {fileID: 6877438478679927533}
-<<<<<<< Updated upstream
-  - component: {fileID: 6877438478719217239}
-=======
->>>>>>> Stashed changes
-  - component: {fileID: 6877438478719217238}
-  - component: {fileID: 6877438478719217237}
+  - component: {fileID: 6015213507665055044}
+  - component: {fileID: 6015213507668446564}
+  - component: {fileID: 6015213507667349412}
+  - component: {fileID: 6015213507387815616}
+  - component: {fileID: 6015213507387815647}
   m_Layer: 0
   m_Name: aid_box
   m_TagString: Untagged
@@ -24,35 +20,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6877438478682220557
+--- !u!4 &6015213507665055044
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6877438478682125357}
+  m_GameObject: {fileID: 6015213507665351012}
   m_LocalRotation: {x: -0.7071068, y: -0.00000023040464, z: -0.00000023040468, w: 0.7071067}
-  m_LocalPosition: {x: 1.36, y: 1.67, z: 2.46}
+  m_LocalPosition: {x: 10.02, y: 1.67, z: -8.71}
   m_LocalScale: {x: 300, y: 300, z: 300}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6877438478678796333
+--- !u!33 &6015213507668446564
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6877438478682125357}
+  m_GameObject: {fileID: 6015213507665351012}
   m_Mesh: {fileID: 4300000, guid: 7c2cb991e4fea624e9cdc4e37d7fd820, type: 3}
---- !u!23 &6877438478679927533
+--- !u!23 &6015213507667349412
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6877438478682125357}
+  m_GameObject: {fileID: 6015213507665351012}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -84,55 +80,31 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-<<<<<<< Updated upstream
---- !u!54 &6877438478719217239
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6877438478682125357}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
-=======
->>>>>>> Stashed changes
---- !u!65 &6877438478719217238
+--- !u!65 &6015213507387815616
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6877438478682125357}
+  m_GameObject: {fileID: 6015213507665351012}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.0038208917, y: 0.003484699, z: 0.002851162}
   m_Center: {x: 0.0009219792, y: -2.9103822e-10, z: 0.0014369136}
---- !u!114 &6877438478719217237
+--- !u!114 &6015213507387815647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6877438478682125357}
+  m_GameObject: {fileID: 6015213507665351012}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc28bee92d7f2f947ae8461b6a02d855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 3
-<<<<<<< Updated upstream
-=======
-  isFocus: 0
-  hasInteracted: 0
->>>>>>> Stashed changes
   item: {fileID: 11400000, guid: 475b2b88ad934e44890bab14d1be4dea, type: 2}
   inventory: {fileID: 0}

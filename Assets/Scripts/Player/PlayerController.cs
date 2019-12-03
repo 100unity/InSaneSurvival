@@ -34,13 +34,14 @@ namespace Player
 
         [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
         private InventoryUI inventoryUI;
-        
-        public delegate void PlayerPositionChanged(Vector3 newPosition);
+
         [Tooltip("Showing the object player is focusing")] [SerializeField]
         public Interactable focus;
 
         [Tooltip("Showing the object target player is following")] [SerializeField]
         public Transform target;
+
+        public delegate void PlayerPositionChanged(Vector3 newPosition);
 
         public static event PlayerPositionChanged OnPlayerPositionUpdated;
         
@@ -48,13 +49,6 @@ namespace Player
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
         private Controls _controls;
-
-        //Interactables
-        [Tooltip("Showing the object player is focusing")] [SerializeField]
-        public Interactable focus;
-
-        [Tooltip("Showing the object target player is following")] [SerializeField]
-        public Transform target; //Target to follow
 
         /// <summary>
         /// The current horizontal angle of the camera, relative to the player
@@ -142,7 +136,6 @@ namespace Player
             }
             #endregion
         }
-        #endregion
 
         /// <summary>
         /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..) using raycast and _NavMeshAgent
@@ -196,10 +189,6 @@ namespace Player
         private void SetUpControls()
         {
             _controls = new Controls();
-            _controls.Game.Move.performed += Move;
-            _controls.Game.RotateCamera.performed += RotateCamera;
-            _controls.Game.Zoom.performed += Zoom;
-            _controls.Game.Inventory.performed += ctx => inventoryUI.ToggleInventory();
             
             _controls.PlayerControls.Move.performed += Move;
             _controls.PlayerControls.RotateCamera.performed += RotateCamera;
