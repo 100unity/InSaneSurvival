@@ -2,6 +2,7 @@
 using Interfaces;
 using Managers;
 using UI.Menus;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -13,7 +14,6 @@ namespace Player
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour, IMovable
     {
-        public delegate void PlayerPositionChanged(Vector3 newPosition);
 
         [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
         private LayerMask clickableLayers;
@@ -49,8 +49,12 @@ namespace Player
         [Tooltip("The maximum difference in degrees for the player between look direction and target direction in order to be facing the target.")]
         [SerializeField]
         private int rotationTolerance;
-
         
+        [Tooltip("The inventory UI to toggle when pressing the inventory key")]
+        [SerializeField]
+        private InventoryUI inventoryUI;
+        
+        public delegate void PlayerPositionChanged(Vector3 newPosition);
         public static event PlayerPositionChanged OnPlayerPositionUpdated;
         
         //Component references
@@ -68,8 +72,7 @@ namespace Player
         /// The current position of the camera, relative to the player
         /// </summary>
         private Vector3 _cameraPosition;
-
-
+        
         /// <summary>
         /// Gets references and sets up the controls.
         /// </summary>
@@ -130,6 +133,7 @@ namespace Player
             _controls.PlayerControls.RotateCamera.performed += RotateCamera;
             _controls.PlayerControls.Zoom.performed += Zoom;
             _controls.PlayerControls.Pause.performed += TogglePause;
+            _controls.PlayerControls.Inventory.performed += ctx => inventoryUI.ToggleInventory();
 
             _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
