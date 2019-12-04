@@ -4,7 +4,6 @@ using Managers;
 using UI.Menus;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Utils;
 
@@ -79,7 +78,6 @@ namespace Player
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _attackLogic = GetComponent<AttackLogic>();
             SetUpControls();
-            PauseMenu.OnPause += OnPause;
         }
 
         /// <summary>
@@ -93,12 +91,18 @@ namespace Player
             UpdateCameraAngle();
             _controls.PlayerControls.Enable();
             _controls.PauseMenuControls.Disable();
+            
+            PauseMenu.OnPause += OnPause;
         }
         
         /// <summary>
         /// Player disabled -> Disable all input
         /// </summary>
-        private void OnDisable() => _controls.Disable();
+        private void OnDisable()
+        {
+            _controls.Disable();
+            PauseMenu.OnPause -= OnPause;
+        }
 
         /// <summary>
         /// If the player gets destroyed we need to dispose the controls. Otherwise the events will stay and add up.

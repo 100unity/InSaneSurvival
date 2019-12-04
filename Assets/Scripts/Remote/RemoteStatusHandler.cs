@@ -2,8 +2,6 @@
 using System.Net.Sockets;
 using Player;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Remote
 {
@@ -22,12 +20,20 @@ namespace Remote
         public static event PlayerStateChanged OnPlayerSaturationRemoteUpdate;
         public static event PlayerStateChanged OnPlayerHydrationRemoteUpdate;
 
-        private void Awake()
+        private void OnEnable()
         {
             PlayerState.OnPlayerHealthUpdated += HealthUpdated;
             PlayerState.OnPlayerSaturationUpdated += SaturationUpdated;
             PlayerState.OnPlayerHydrationUpdated += HydrationUpdated;
             PlayerController.OnPlayerPositionUpdated += PositionUpdated;
+        }
+        
+        private void OnDisable()
+        {
+            PlayerState.OnPlayerHealthUpdated -= HealthUpdated;
+            PlayerState.OnPlayerSaturationUpdated -= SaturationUpdated;
+            PlayerState.OnPlayerHydrationUpdated -= HydrationUpdated;
+            PlayerController.OnPlayerPositionUpdated -= PositionUpdated;
         }
 
         private void Start()
