@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Managers;
-using Player;
-using UnityEngine;
-using UnityEngine.Networking.PlayerConnection;
+﻿using UnityEngine;
 
 namespace Managers
 {
@@ -14,7 +9,7 @@ namespace Managers
         public GameObject GetPlayer()
         {
             if (player == null)
-                GameObject.FindGameObjectWithTag("Player"); //BUG: Replace me with Trigger
+                player = GameObject.FindGameObjectWithTag("Player"); //BUG: Replace me with Trigger
             return player;
         }
 
