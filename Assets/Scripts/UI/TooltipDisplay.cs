@@ -17,8 +17,8 @@ public class TooltipDisplay : MonoBehaviour
 
     private void Start()
     {
-        myText = myText.GetComponent<Text>();
-        tooltip = tooltip.GetComponent<Canvas>();
+        myText = gameObject.GetComponentInChildren<Text>();
+        tooltip = gameObject.GetComponentInChildren<Canvas>();
         tooltip.enabled = false;
     }
 
@@ -38,7 +38,7 @@ public class TooltipDisplay : MonoBehaviour
     }
 
     /// <summary>
-    /// This function will cause the Tooltip fade in and out
+    /// This function will show the tooltip when mouse hover over it
     /// </summary>
     void ShowTooltip()
     {

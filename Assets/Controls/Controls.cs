@@ -174,7 +174,6 @@ public class @Controls : IInputActionCollection, IDisposable
         m_PlayerControls_Click = m_PlayerControls.FindAction("Click", throwIfNotFound: true);
         m_PlayerControls_RotateCamera = m_PlayerControls.FindAction("RotateCamera", throwIfNotFound: true);
         m_PlayerControls_Zoom = m_PlayerControls.FindAction("Zoom", throwIfNotFound: true);
-        m_PlayerControls_Inventory = m_PlayerControls.FindAction("Inventory", throwIfNotFound: true);
         m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
         m_PlayerControls_Inventory = m_PlayerControls.FindAction("Inventory", throwIfNotFound: true);
         // PauseMenuControls
@@ -232,7 +231,6 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControls_Click;
     private readonly InputAction m_PlayerControls_RotateCamera;
     private readonly InputAction m_PlayerControls_Zoom;
-    private readonly InputAction m_PlayerControls_Inventory;
     private readonly InputAction m_PlayerControls_Pause;
     private readonly InputAction m_PlayerControls_Inventory;
     public struct PlayerControlsActions
@@ -242,7 +240,6 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Click => m_Wrapper.m_PlayerControls_Click;
         public InputAction @RotateCamera => m_Wrapper.m_PlayerControls_RotateCamera;
         public InputAction @Zoom => m_Wrapper.m_PlayerControls_Zoom;
-        public InputAction @Inventory => m_Wrapper.m_PlayerControls_Inventory;
         public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
         public InputAction @Inventory => m_Wrapper.m_PlayerControls_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
@@ -263,9 +260,6 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Zoom.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnZoom;
                 @Zoom.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnZoom;
                 @Zoom.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnZoom;
-                @Inventory.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
-                @Inventory.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
-                @Inventory.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
                 @Pause.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;

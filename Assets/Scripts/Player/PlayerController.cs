@@ -119,78 +119,54 @@ namespace Player
             _camera.transform.position = playerPosition + _cameraPosition;
             _camera.transform.LookAt(playerPosition);
 
-            #region Interactable
-            // Check and set destination of character to the currently focused Object
-            if (target != null)
-            {
-                _navMeshAgent.SetDestination(target.position);
-                FaceTarget();
-            }
-
-            // If player press right mouse button
-            if (Input.GetMouseButtonDown(1))
-            {
-                // Creates a ray
-                Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                // If the ray hits
-                if(Physics.Raycast(ray, out hit, 100))
-                {
-                    // Check if player hit an interactable
-                    Interactable interactable = hit.collider.GetComponent<Interactable>();
-                    if (interactable != null)
-                    {
-                        //Set as focus
-                        SetFocus(interactable);
-                    }
-                    else
-                    {
-                        RemoveFocus();
-                    }
-                }
-            }
-            #endregion
+            // Check and makes character facing the target object when moving toward it
+            if (target != null) FaceTarget();
         }
 
         /// <summary>
         /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..) using raycast and _NavMeshAgent
-        /// (Won't conflict with character moving on the map)
+        /// (Won't conflict with character attacking enemy or moving on the map)
         /// </summary>
         #region Interactables Functions
-        public void FollowTarget(Interactable newTarget)
+        
+        // This will make character moving to the target object
+        public void MovingToTarget(Interactable newTarget)
         {
             _navMeshAgent.stoppingDistance = newTarget.radius * .8f;
             _navMeshAgent.updateRotation = false;
             target = newTarget.transform;
         }
 
-        public void StopFollowingTarget()
+        // Makes character stop moving to target object
+        public void StopMovingToTarget()
         {
             _navMeshAgent.stoppingDistance = 0f;
             _navMeshAgent.updateRotation = true;
             target = null;
         }
 
+        // Set focus when interact
         public void SetFocus(Interactable newFocus)
         {
             if(newFocus != focus)
             {
                 if(focus != null) focus.OnDefocused();
                 focus = newFocus;
-                FollowTarget(newFocus);
+                MovingToTarget(newFocus);
             }
 
             newFocus.OnFocused(transform);
         }
 
+        // Remove focus when not interact
         public void RemoveFocus()
         {
             if (focus != null) focus.OnDefocused();
             focus = null;
-            StopFollowingTarget();
+            StopMovingToTarget();
         }
 
+        // Makes character facing the target when moving toward it
         void FaceTarget()
         {
             Vector3 direction = (target.position - transform.position).normalized;
@@ -223,7 +199,7 @@ namespace Player
         /// Is called on mouse click.
         /// If right clicked, checks whether clicked on a damageable object or the ground.
         /// If clicked on a damageable object, attack it. If clicked on the ground, cancel attack
-        /// and move to the clicked point.
+        /// and move to the clicked point. If clicked on a interactable object that is not a damageable object, interact with it.
         /// </summary>
         private void OnRightClick(InputAction.CallbackContext obj)
         {
@@ -233,7 +209,9 @@ namespace Player
             if (Physics.Raycast(clickRay, out RaycastHit hit, 10000) && _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
                 IDamageable damageable = objectHit.GetComponent<IDamageable>();
+
                 if (damageable != null)
                 {
                     // implementation NOT capable of area damage
@@ -246,6 +224,17 @@ namespace Player
                     _attackLogic.StopAttack();
                     Move(groundHit);
                 }
+        
+                if (interactable != null)
+                {
+                    //Set as focus
+                    SetFocus(interactable);
+                }
+
+                else
+                {
+                    RemoveFocus();
+                }          
             }
         }
 

@@ -52,7 +52,8 @@ public class Interactable : MonoBehaviour
     }
 
     /// <summary>
-    /// This method is meant to be overwritten for each interactable objects (for example: OPEN if it's a crate or CHOP wood if it's a tree...)
+    /// This method is meant to be overwritten for each interactable objects 
+    /// (for example: OPEN if it was a "crate" or CHOP if it was a "tree"...)
     /// </summary>
     public virtual void Interact()
     {

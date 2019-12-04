@@ -11,7 +11,7 @@ public class ItemPickup : Interactable
     // Unity Events
     private void Start()
     {
-        inventory = GameObject.Find("Inventory").GetComponent<Inventory>(); //auto assign the Inventory to the component
+        inventory = GameObject.Find("Player").GetComponentInChildren<Inventory>(); //auto assign the Inventory to the component
     }
 
     /// <summary>
@@ -29,8 +29,7 @@ public class ItemPickup : Interactable
     public void PickUp()
     {
         //Add to inventory
-
-        //inventory.Add(item); 
+        inventory.Add(item); 
 
         //Destroy object
         Destroy(gameObject); 
