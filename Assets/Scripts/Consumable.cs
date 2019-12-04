@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 using Player;
 
@@ -15,7 +16,7 @@ public class Consumable : AUsable
 
     public override bool Use() 
     {
-        PlayerState playerState = PlayerManager.Instance.GetPlayer().GetComponent<PlayerState>();
+        PlayerState playerState = Singleton<PlayerManager>.Instance.GetPlayer().GetComponent<PlayerState>();
         if (healthValue > 0)
             playerState.Hit(-healthValue);
         if (saturationValue > 0)
