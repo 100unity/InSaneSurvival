@@ -14,7 +14,8 @@ namespace UI
 
         public Image Icon => icon;
         public TextMeshProUGUI NameLabel => nameLabel;
-
+        
+        
         private AUsable item;
 
         private Inventory inventory;
@@ -45,13 +46,16 @@ namespace UI
             }
         }
 
+        /// <summary>
+        /// The number of items on the item stack. Also updates the label in the inventory UI when changed.
+        /// </summary>
         public int Count
         {
             get => _count;
             set
             {
                 _count = value;
-                countLabel.text = _count.ToString();
+                countLabel.SetText(_count.ToString());
             }
         }
 
