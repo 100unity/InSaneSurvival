@@ -1,5 +1,5 @@
 ﻿using System;
-using Player;
+using Entity.Player;
 using UnityEngine;
 
 namespace UI

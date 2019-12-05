@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Inventory;
 using UnityEngine;
 
 namespace UI
@@ -7,7 +8,7 @@ namespace UI
     {
         [SerializeField] private GameObject itemGrid;
         [SerializeField] private ItemButton itemButtonPrefab;
-        [SerializeField] private Inventory inventory;
+        [SerializeField] private InventoryController inventory;
 
         [Tooltip("Used for showing and hiding the inventory")] [SerializeField]
         private GameObject inventoryUIContent;

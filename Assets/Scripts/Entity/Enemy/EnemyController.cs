@@ -1,13 +1,9 @@
-﻿using System;
-using Interfaces;
-using Managers;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
 
-namespace Enemy
+namespace Entity.Enemy
 {
     public class EnemyController : MonoBehaviour, IMovable
     {

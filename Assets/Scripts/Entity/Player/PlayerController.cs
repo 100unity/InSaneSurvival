@@ -1,14 +1,14 @@
 ﻿using System;
 using Interfaces;
 using Managers;
-using UI.Menus;
 using UI;
+using UI.Menus;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using Utils;
 
-namespace Player
+namespace Entity.Player
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(PlayerInput))]

@@ -1,11 +1,8 @@
-﻿using System;
-using Interfaces;
+﻿using Interfaces;
 using Remote;
 using UnityEngine;
-using UnityEngine.Events;
-using Random = System.Random;
 
-namespace Player
+namespace Entity.Player
 {
     
     public class PlayerState : MonoBehaviour, IDamageable

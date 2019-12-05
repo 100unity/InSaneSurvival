@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
 using Utils;
 
-namespace Enemy
+namespace Entity.Enemy
 {
     /// <summary>
     /// Finds all attackable objects that enter the trigger-collider and gives them to the enemy controller
