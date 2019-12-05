@@ -1,21 +1,26 @@
 ﻿using System;
 using Interfaces;
 using Managers;
-using UI.Menus;
 using UI;
+using UI.Menus;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using Utils;
 
-namespace Player
+namespace Entity.Player
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour, IMovable
     {
-        [Tooltip("The clickable layer. Defines where the player can click/move")] [SerializeField]
-        private LayerMask moveClickLayers;
+
+        [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
+        private LayerMask clickableLayers;
+        
+        [Tooltip("Defines where the player can move")] [SerializeField]
+        private LayerMask groundLayer;
+
 
         [Tooltip("An effect that will be displayed whenever the player clicks to move")]
         [SerializeField]
@@ -76,7 +81,6 @@ namespace Player
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _attackLogic = GetComponent<AttackLogic>();
             SetUpControls();
-            PauseMenu.OnPause += OnPause;
         }
 
         /// <summary>
@@ -90,12 +94,18 @@ namespace Player
             UpdateCameraAngle();
             _controls.PlayerControls.Enable();
             _controls.PauseMenuControls.Disable();
+            
+            PauseMenu.OnPause += OnPause;
         }
         
         /// <summary>
         /// Player disabled -> Disable all input
         /// </summary>
-        private void OnDisable() => _controls.Disable();
+        private void OnDisable()
+        {
+            _controls.Disable();
+            PauseMenu.OnPause -= OnPause;
+        }
 
         /// <summary>
         /// If the player gets destroyed we need to dispose the controls. Otherwise the events will stay and add up.
@@ -144,7 +154,7 @@ namespace Player
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000) && _attackLogic.Status == AttackLogic.AttackStatus.None)
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) && _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
                 IDamageable damageable = objectHit.GetComponent<IDamageable>();
@@ -154,7 +164,7 @@ namespace Player
                     _attackLogic.StartAttack(objectHit);
                 }
                 // Get ground position from mouse click
-                else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, moveClickLayers))
+                else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, groundLayer))
                 {
                     // cancel possible ongoing attacks
                     _attackLogic.StopAttack();

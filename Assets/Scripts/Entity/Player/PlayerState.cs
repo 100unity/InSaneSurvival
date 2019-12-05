@@ -1,11 +1,8 @@
-﻿using System;
-using Interfaces;
+﻿using Interfaces;
 using Remote;
 using UnityEngine;
-using UnityEngine.Events;
-using Random = System.Random;
 
-namespace Player
+namespace Entity.Player
 {
     
     public class PlayerState : MonoBehaviour, IDamageable
@@ -45,16 +42,26 @@ namespace Player
 
         private void Awake()
         {
-            RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
-            RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
-            RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
-
             // ------------
             _hitMarkerMaterial = new Material(Shader.Find("Standard"));
             _hitMarkerMaterial.color = Color.red;
             // just put initial mat here
             _prevMat = gameObjectRenderer.material;
             // ------------
+        }
+
+        private void OnEnable()
+        {
+            RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
+            RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
+            RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
+        }
+
+        private void OnDisable()
+        {
+            RemoteStatusHandler.OnPlayerHealthRemoteUpdate -= ChangePlayerHealth;
+            RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
+            RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
         }
 
         /// <summary>

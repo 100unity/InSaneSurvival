@@ -1,5 +1,5 @@
 ﻿using System;
-using Player;
+using Entity.Player;
 using UnityEngine;
 
 namespace UI
@@ -10,11 +10,22 @@ namespace UI
         [SerializeField] private StatBar saturationBar;
         [SerializeField] private StatBar hydrationBar;
 
-        private void Awake()
+        private void OnEnable()
         {
-            PlayerState.OnPlayerHealthUpdated += value => healthBar.UpdateBar(value);
-            PlayerState.OnPlayerHydrationUpdated += value => hydrationBar.UpdateBar(value);
-            PlayerState.OnPlayerSaturationUpdated += value => saturationBar.UpdateBar(value);
+            PlayerState.OnPlayerHealthUpdated += OnHealthUpdated;
+            PlayerState.OnPlayerHydrationUpdated += OnHydrationUpdated;
+            PlayerState.OnPlayerSaturationUpdated += OnSaturationUpdated;
         }
+        
+        private void OnDisable()
+        {
+            PlayerState.OnPlayerHealthUpdated -= OnHealthUpdated;
+            PlayerState.OnPlayerHydrationUpdated -= OnHydrationUpdated;
+            PlayerState.OnPlayerSaturationUpdated -= OnSaturationUpdated;
+        }
+        
+        private void OnHealthUpdated(int value) => healthBar.UpdateBar(value);
+        private void OnHydrationUpdated(int value) => hydrationBar.UpdateBar(value);
+        private void OnSaturationUpdated(int value) => saturationBar.UpdateBar(value);
     }
 }
