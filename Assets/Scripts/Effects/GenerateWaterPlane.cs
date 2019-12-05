@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Effects
 {
-    [ExecuteInEditMode]
     public class GenerateWaterPlane : MonoBehaviour
     {
         [SerializeField][Tooltip("Size of the mesh")]
@@ -14,18 +13,18 @@ namespace Effects
         [SerializeField][Tooltip("Subdivisions of the mesh")]
         private int gridSize;
 
-        private MeshFilter _filter;
+        private MeshFilter _meshFilter;
 
         // Start is called before the first frame update
         private void Start()
         {
-            _filter = GetComponent<MeshFilter>();
-            _filter.mesh = GenerateMesh();
+            _meshFilter = GetComponent<MeshFilter>();
+            _meshFilter.mesh = GenerateMesh();
         }
 
         private Mesh GenerateMesh()
         {
-            Mesh m = new Mesh();
+            Mesh mesh = new Mesh();
             List<Vector3> vertices = new List<Vector3>();
             List<Vector3> normals = new List<Vector3>();
             List<Vector2> uvs = new List<Vector2>();
@@ -56,13 +55,14 @@ namespace Effects
                 });
             }
 
-            m.SetVertices(vertices);
-            m.SetNormals(normals);
-            m.SetUVs(0, uvs);
-            m.SetTriangles(triangles, 0);
+            mesh.SetVertices(vertices);
+            mesh.SetNormals(normals);
+            mesh.SetUVs(0, uvs);
+            mesh.SetTriangles(triangles, 0);
 
-            return m;
+            return mesh;
         }
+        
     }
 }
 
