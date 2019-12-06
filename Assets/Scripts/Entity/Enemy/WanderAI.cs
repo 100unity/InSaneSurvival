@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Constants;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,17 +51,17 @@ public class WanderAI
     /// <returns>The random point on the ground</returns>
     private Vector3 GetRandomWanderPoint(WanderArea wanderArea, int layermask)
     {
-        for (int i = 0; i < Constants.Enemy.MAPPING_ITERATIONS; i++)
+        for (int i = 0; i < Consts.Enemy.MAPPING_ITERATIONS; i++)
         {
             Vector3 randomPoint = GetRandomPoint(wanderArea);
             // try to map random point onto NavMesh
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, Constants.Enemy.MAX_NAVMESH_MAPPING_DISTANCE, layermask))
+            if (NavMesh.SamplePosition(randomPoint, out hit, Consts.Enemy.MAX_NAVMESH_MAPPING_DISTANCE, layermask))
             {
                 return hit.position;
             }
         }
-        throw new Exception("Could not map a point onto the NavMesh in " + Constants.Enemy.MAPPING_ITERATIONS + " random points.");
+        throw new Exception("Could not map a point onto the NavMesh in " + Consts.Enemy.MAPPING_ITERATIONS + " random points.");
     }
 
     /// <summary>

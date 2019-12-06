@@ -1,4 +1,4 @@
-﻿using Player;
+﻿using Entity.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

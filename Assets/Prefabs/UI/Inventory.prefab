@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 178465969607505438}
   m_Layer: 5
-  m_Name: InventoryContainer
+  m_Name: InventoryContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,4 +343,4 @@ MonoBehaviour:
   itemButtonPrefab: {fileID: 3948161127978455136, guid: 07adac03de9614757b9beb7aa55d39e3,
     type: 3}
   inventory: {fileID: 0}
-  inventoryUIContainer: {fileID: 2456554992891907293}
+  inventoryUIContent: {fileID: 2456554992891907293}

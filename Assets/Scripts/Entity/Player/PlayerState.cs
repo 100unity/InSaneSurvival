@@ -1,10 +1,8 @@
 ﻿using System;
 using Remote;
 using UnityEngine;
-using UnityEngine.Events;
-using Random = System.Random;
 
-namespace Player
+namespace Entity.Player
 {
     
     public class PlayerState : Damageable
@@ -24,15 +22,22 @@ namespace Player
         public static event PlayerStateChanged OnPlayerHealthUpdated;
         public static event PlayerStateChanged OnPlayerSaturationUpdated;
         public static event PlayerStateChanged OnPlayerHydrationUpdated;
+        
 
-        protected override void Awake()
+        private void OnEnable()
         {
-            base.Awake();
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
         }
-        
+
+        private void OnDisable()
+        {
+            RemoteStatusHandler.OnPlayerHealthRemoteUpdate -= ChangePlayerHealth;
+            RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
+            RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
+        }
+
         private void ChangePlayerHealth(int changeBy)
         {
             int updatedValue = health + changeBy;

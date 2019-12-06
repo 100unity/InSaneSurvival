@@ -8,7 +8,9 @@ namespace UI
         [SerializeField] private GameObject itemGrid;
         [SerializeField] private ItemButton itemButtonPrefab;
         [SerializeField] private InventoryController inventory;
-        [SerializeField] private GameObject inventoryUIContainer;
+
+        [Tooltip("Used for showing and hiding the inventory")] [SerializeField]
+        private GameObject inventoryUIContent;
 
         private Dictionary<Item, ItemButton> _itemStacks;
 
@@ -28,7 +30,7 @@ namespace UI
         public void ToggleInventory()
         {
             IsActive = !IsActive;
-            inventoryUIContainer.SetActive(IsActive);
+            inventoryUIContent.SetActive(IsActive);
         }
 
         /// <summary>
