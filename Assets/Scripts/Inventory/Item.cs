@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public class Item : ScriptableObject
+namespace Inventory
 {
-    [SerializeField] private Sprite icon;
-    [SerializeField] private int maxStackSize;
 
-    public Sprite Icon => icon;
-    public int MaxStackSize => maxStackSize;
-
-    public override bool Equals(object other)
+    [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+    public class Item : ScriptableObject
     {
-        return other is Item item && item.name == name;
+        [SerializeField] private Sprite icon;
+        [SerializeField] private int maxStackSize;
+
+        public Sprite Icon => icon;
+        public int MaxStackSize => maxStackSize;
+
+        public override bool Equals(object other)
+        {
+            return other is Item item && item.name == name;
+        }
     }
 }

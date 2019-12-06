@@ -1,4 +1,5 @@
-﻿using Managers;
+﻿using AbstractClasses;
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,9 +53,7 @@ namespace Entity.Enemy
         // component references
         private WanderAI _wanderAI;
         private AttackLogic _attackLogic;
-
-        // hold player object to check distance
-        private GameObject _player;
+        
         private float _timer;
         private bool _isChasing;
         private float _initialSpeed;
@@ -75,16 +74,11 @@ namespace Entity.Enemy
         /// </summary>
         private void OnEnable()
         {
-            // set target to player
-            _player = PlayerManager.Instance.GetPlayer();
-            if (_player == null)
-                Debug.LogError("No player found.");
-
             if (freezeArea)
                 wanderArea.FreezeArea();
             _timer = wanderTimer;
             // remember initial speed
-            _initialSpeed = _navMeshAgent.speed;
+            _initialSpeed = NavMeshAgent.speed;
         }
 
         /// <summary>
@@ -131,7 +125,7 @@ namespace Entity.Enemy
         private void StartChasing(GameObject target)
         {
             _isChasing = true;
-            _navMeshAgent.speed = runningSpeed;
+            NavMeshAgent.speed = runningSpeed;
             _attackLogic.StartAttack(target);
         }
 
@@ -140,8 +134,9 @@ namespace Entity.Enemy
         /// </summary>
         private void StopChasing()
         {
+            targetFinder.Targets.RemoveAt(0);
             _isChasing = false;
-            _navMeshAgent.speed = _initialSpeed;
+            NavMeshAgent.speed = _initialSpeed;
             _attackLogic.StopAttack();
         }
 
@@ -160,9 +155,9 @@ namespace Entity.Enemy
             else
             {
                 // don't use SetDestination but set calculated path
-                NavMeshPath wanderPath = _wanderAI.GetNextWanderPath(wanderArea, _navMeshAgent, moveLayer.value);
-                _navMeshAgent.SetPath(wanderPath);
-                _navMeshAgent.isStopped = false;
+                NavMeshPath wanderPath = _wanderAI.GetNextWanderPath(wanderArea, NavMeshAgent, moveLayer.value);
+                NavMeshAgent.SetPath(wanderPath);
+                NavMeshAgent.isStopped = false;
             }
         }
 

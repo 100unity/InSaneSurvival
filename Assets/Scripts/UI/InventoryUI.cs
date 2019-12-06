@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Inventory;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UI
