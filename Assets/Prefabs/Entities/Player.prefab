@@ -147,7 +147,6 @@ GameObject:
   - component: {fileID: 6126187403260861674}
   - component: {fileID: 6126187403260861679}
   - component: {fileID: 6126187403260861676}
-  - component: {fileID: 6126187403260861677}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -217,20 +216,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &6126187403260861677
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6126187403260861675}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6126187403334568244
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +322,8 @@ GameObject:
   - component: {fileID: 6126187404098910138}
   - component: {fileID: 6126187404098910140}
   - component: {fileID: 1535071274}
-  m_Layer: 0
+  - component: {fileID: 7791627838801124558}
+  m_Layer: 20
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -389,16 +375,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6a91b078b7a4160a20004863f86fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveClickLayers:
+  clickableLayers:
+    serializedVersion: 2
+    m_Bits: 257
+  groundLayer:
     serializedVersion: 2
     m_Bits: 256
   clickEffect: {fileID: 3687566934736743005, guid: 303d5b1eeeba949aca04be0bec872f12,
     type: 3}
   cameraRotationSpeed: 0.3
   invertRotation: 1
-  cameraDistance: {x: 10, y: 20}
+  cameraDistance: {x: 15, y: 20}
   cameraDistanceRange:
-    min: 5
+    min: 10
     max: 20
   rotationSpeed: 5
   rotationTolerance: 10
@@ -470,3 +459,17 @@ MonoBehaviour:
   attackTime: 3
   hitRotationTolerance: 40
   resetAfterHit: 1
+--- !u!136 &7791627838801124558
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126187404098910136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}

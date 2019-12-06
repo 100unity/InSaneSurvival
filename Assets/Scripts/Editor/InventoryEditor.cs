@@ -1,9 +1,10 @@
+using Inventory;
 using UnityEditor;
 using UnityEngine;
 
 namespace Editor
 {
-    [CustomEditor(typeof(Inventory))]
+    [CustomEditor(typeof(InventoryController))]
     public class InventoryEditor : UnityEditor.Editor
     {
         public AUsable item;
@@ -11,7 +12,7 @@ namespace Editor
         
         public override void OnInspectorGUI()
         {
-            Inventory inventory = (Inventory) target;
+            InventoryController inventory = (InventoryController) target;
 
             _showCustomInspector =
                 EditorGUILayout.BeginFoldoutHeaderGroup(_showCustomInspector,
