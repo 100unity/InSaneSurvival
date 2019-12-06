@@ -83,6 +83,7 @@ namespace Player
         /// <param name="damage">The damage dealt to player</param>
         public override void Hit(int damage)
         {
+            base.Hit(damage);
             ChangePlayerHealth(-damage);
         }
 
