@@ -20,10 +20,18 @@ namespace Entity.Player
         [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
         private int hydration;
 
-        public static event PlayerStateChanged OnPlayerHealthUpdated;
-        public static event PlayerStateChanged OnPlayerSaturationUpdated;
-        public static event PlayerStateChanged OnPlayerHydrationUpdated;
-        
+        public static event PlayerStateChanged OnPlayerHealthUpdate;
+        public static event PlayerStateChanged OnPlayerSaturationUpdate;
+        public static event PlayerStateChanged OnPlayerHydrationUpdate;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            OnPlayerHealthUpdate?.Invoke(health);
+            OnPlayerSaturationUpdate?.Invoke(saturation);
+            OnPlayerHydrationUpdate?.Invoke(hydration);
+        }
+
 
         private void OnEnable()
         {
@@ -50,9 +58,8 @@ namespace Entity.Player
             }
 
             health = updatedValue;
-            
             //throws an event with the new health value as a parameter
-            OnPlayerHealthUpdated?.Invoke(updatedValue);
+            OnPlayerHealthUpdate?.Invoke(updatedValue);
         }
 
         public void ChangePlayerSaturation(int changeBy)
@@ -66,7 +73,7 @@ namespace Entity.Player
             }
 
             saturation = updatedValue;
-            OnPlayerSaturationUpdated?.Invoke(updatedValue);
+            OnPlayerSaturationUpdate?.Invoke(updatedValue);
         }
 
         public void ChangePlayerHydration(int changeBy)
@@ -80,7 +87,7 @@ namespace Entity.Player
             }
 
             hydration = updatedValue;
-            OnPlayerHydrationUpdated?.Invoke(updatedValue);
+            OnPlayerHydrationUpdate?.Invoke(updatedValue);
         }
 
         /// <summary>

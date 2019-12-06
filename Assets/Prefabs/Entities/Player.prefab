@@ -318,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6126187404098910139}
   - component: {fileID: 4800914933927852534}
+  - component: {fileID: 8049901093428442674}
   - component: {fileID: 6126187404098910141}
   - component: {fileID: 6126187404098910138}
   - component: {fileID: 6126187404098910140}
@@ -363,6 +364,32 @@ MonoBehaviour:
   health: 100
   saturation: 100
   hydration: 100
+--- !u!114 &8049901093428442674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126187404098910136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e962a3e486bf84bb8321da94c7b25a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sanity: 100
+  severity: 0.000005
+  lowImpactSeverity: 0.4
+  gainFactor: 0.1
+  stats:
+  - Type: 0
+    Boundary: 75
+    Severity: 0.75
+  - Type: 1
+    Boundary: 60
+    Severity: 0.25
+  - Type: 2
+    Boundary: 60
+    Severity: 0.35
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,7 +436,7 @@ NavMeshAgent:
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
