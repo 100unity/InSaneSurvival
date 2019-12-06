@@ -1,5 +1,4 @@
-﻿using Interfaces;
-using Managers;
+﻿using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -97,7 +96,7 @@ public class EnemyController : Movable
             float distanceToTarget = Vector3.Distance(_player.transform.position, transform.position);
             if (distanceToTarget <= lookRadius && !_isChasing)
             {
-                IDamageable damageable = (IDamageable)_player.GetComponent<IDamageable>();
+                Damageable damageable = _player.GetComponent<Damageable>();
                 if (damageable != null)
                 {
                     StartChasing(_player);

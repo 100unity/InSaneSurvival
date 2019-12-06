@@ -1,5 +1,4 @@
-﻿using Interfaces;
-using Player;
+﻿using Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -130,7 +129,7 @@ public class AttackLogic : MonoBehaviour
         if (Status == AttackStatus.Hit)
         {
             // deal damage
-            IDamageable damageable = _target.GetComponent<IDamageable>();
+            Damageable damageable = _target.GetComponent<Damageable>();
             damageable.Hit(damage);
         }
 

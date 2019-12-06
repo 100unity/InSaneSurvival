@@ -1,5 +1,4 @@
 ﻿using System;
-using Interfaces;
 using Managers;
 using UI.Menus;
 using UI;
@@ -138,7 +137,7 @@ namespace Player
             if (Physics.Raycast(clickRay, out RaycastHit hit, 10000) && _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
-                IDamageable damageable = objectHit.GetComponent<IDamageable>();
+                Damageable damageable = objectHit.GetComponent<Damageable>();
                 if (damageable != null)
                 {
                     // implementation NOT capable of area damage
