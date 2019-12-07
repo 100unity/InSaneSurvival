@@ -17,33 +17,33 @@ namespace UI
         public TextMeshProUGUI NameLabel => nameLabel;
         
         
-        private AUsable item;
+        private AUsable _item;
 
-        private InventoryController inventory;
+        private InventoryController _inventory;
 
-        private Button button;
+        private Button _button;
 
         private void Awake()
         {
-            button = GetComponent<Button>();
-            button.onClick.AddListener(OnClick);
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(OnClick);
         }
 
         public AUsable Item
         {
-            get => item;
+            get => _item;
             set
             {
-                item = value;
+                _item = value;
             }
         }
 
         public InventoryController Inventory
         {
-            get => inventory;
+            get => _inventory;
             set
             {
-                inventory = value;
+                _inventory = value;
             }
         }
 
@@ -62,9 +62,9 @@ namespace UI
 
         public void OnClick() 
         {
-            if (item.Use()) 
+            if (_item.Use()) 
             {
-                if (item is Consumable) inventory.Remove(item);
+                if (_item is Consumable) _inventory.Remove(_item);
                 //else if (item is Equipable) 
             } 
         }
