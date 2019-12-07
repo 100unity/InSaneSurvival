@@ -39,6 +39,7 @@ namespace Entity.Player
         public static event PlayerStateChanged OnPlayerHealthUpdated;
         public static event PlayerStateChanged OnPlayerSaturationUpdated;
         public static event PlayerStateChanged OnPlayerHydrationUpdated;
+        public static event PlayerStateChanged OnPlayerDeath;
 
         private void Awake()
         {
@@ -143,7 +144,8 @@ namespace Entity.Player
         }
 
         public void Die()
-        {
+        {            
+            OnPlayerDeath?.Invoke(1);
             Debug.Log("Player is dead");
         }
     }

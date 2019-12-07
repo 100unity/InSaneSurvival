@@ -1,18 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using Constants;
+using Entity.Player;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadDeathScene : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    private Image _whitePanel;
         
+    private void Awake()
+    {
+        _whitePanel = gameObject.GetComponent<Image>();
+        PlayerState.OnPlayerDeath += value => LoadScene();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LoadScene()
     {
+        StartCoroutine( FadeThenLoad(2.5f));
+    }
         
+    private IEnumerator FadeThenLoad(float fadeDuration)
+    {
+        float currentTime = 0f;
+        Color color = _whitePanel.color;
+            
+        while (currentTime < fadeDuration)
+        {
+            float alpha = Mathf.Lerp(0f, 1f, currentTime / fadeDuration);
+            color = new Color(color.r, color.g, color.b, alpha);
+            _whitePanel.color = color;
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        yield return new WaitForSeconds(fadeDuration);
+        SceneManager.LoadScene(Consts.Scene.DEATH);
+        SceneManager.sceneLoaded += SceneLoadCompleted;
+    }
+        
+    private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex != Consts.Scene.DEATH) return;
+        SceneManager.sceneLoaded -= SceneLoadCompleted;
     }
 }
