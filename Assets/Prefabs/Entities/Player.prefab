@@ -380,7 +380,7 @@ MonoBehaviour:
   sanityMath:
     severity: 0.00005
     lowImpactSeverity: 0.4
-    gainFactor: 0.1
+    gainFactor: 0.3
     stats:
     - Type: 0
       Boundary: 80
