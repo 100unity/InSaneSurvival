@@ -1,22 +1,16 @@
-﻿using Remote;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using Utils;
 using static Utils.Enums;
 
-namespace Entity.Player
+namespace Entity.Player.Sanity
 {
-    public class SanityController : MonoBehaviour
+    /// <summary>
+    /// Handles the math for stats influencing the player's sanity.
+    /// </summary>
+    [Serializable]
+    public class SanityMath
     {
-        public delegate void PlayerStateChanged(int newValue);
-
-        [Tooltip("100: sane, 0: insane")]
-        [Range(0, 100)]
-        [SerializeField]
-        private int sanity;
-
         [Tooltip("The total severity at which sanity changes. Scales the change rate")]
         [SerializeField]
         private float severity;
@@ -32,74 +26,19 @@ namespace Entity.Player
         [Tooltip("Stats that have an impact on sanity.")]
         [SerializeField]
         private Stat[] stats;
-        
-        public static event PlayerStateChanged OnPlayerSanityUpdate;
-        
+
+
         // the total change rate
         private float _changeRate;
-        // builds up to 1 or -1 for the next tick
-        private float _nextTick;
-        
-
-        private void OnEnable()
-        {
-            RemoteStatusHandler.OnPlayerSanityRemoteUpdate += ChangePlayerSanity;
-
-            PlayerState.OnPlayerHealthUpdate += (int health) => InfluenceSanityByStat(StatType.Health, health);
-            PlayerState.OnPlayerSaturationUpdate += (int saturation) => InfluenceSanityByStat(StatType.Saturation, saturation);
-            PlayerState.OnPlayerHydrationUpdate += (int hydration) => InfluenceSanityByStat(StatType.Hydration, hydration);
-        }
-
-        private void OnDisable()
-        {
-            RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
-
-            PlayerState.OnPlayerHealthUpdate -= (int health) => InfluenceSanityByStat(StatType.Health, health);
-            PlayerState.OnPlayerSaturationUpdate -= (int saturation) => InfluenceSanityByStat(StatType.Saturation, saturation);
-            PlayerState.OnPlayerHydrationUpdate -= (int hydration) => InfluenceSanityByStat(StatType.Hydration, hydration);
-        }
 
         /// <summary>
-        /// Tick sanity.
+        /// Gets the current sanity change which should be added to the next tick.
         /// </summary>
-        private void Update()
+        public float GetCurrentChange()
         {
-            TickSanity();
+            return _changeRate * severity;
         }
 
-        private void ChangePlayerSanity(int changeBy)
-        {
-            sanity = Mathf.Clamp(sanity + changeBy, 0, 100);
-            OnPlayerSanityUpdate?.Invoke(sanity);
-        }
-
-        /// <summary>
-        /// Sums up a tick weighting the total change rate with <see cref="severity"/>. 
-        /// Only sums up a positive tick if player doesn't have full sanity. Ticks are either
-        /// positive or negative 1. If summed up tick, changes player sanity.
-        /// </summary>
-        private void TickSanity()
-        {
-            float change = _changeRate * severity;
-            _nextTick += change;
-            if (sanity == 100 && _nextTick > 0)
-            {
-                // don't build up a positive tick value when sanity == 100
-                _nextTick = 0;
-                return;
-            }
-            if (_nextTick >= 1)
-            {
-                ChangePlayerSanity(1);
-                _nextTick = 0;
-            }
-            else if (_nextTick <= -1)
-            {
-                ChangePlayerSanity(-1);
-                _nextTick = 0;
-            }
-        }
-        
         /// <summary>
         /// Influences sanity by stat and its current value. It changes the stat's rate. It will get negative
         /// as the current stat value gets below the stat boundary. If it's positive it is weighted with a
@@ -107,7 +46,7 @@ namespace Entity.Player
         /// </summary>
         /// <param name="statType">Type of stat</param>
         /// <param name="value">Current value of stat</param>
-        private void InfluenceSanityByStat(StatType statType, int value)
+        public void InfluenceSanityByStat(StatType statType, int value)
         {
             Stat stat = GetStatByType(statType);
             if (value < stat.Boundary)
@@ -139,7 +78,7 @@ namespace Entity.Player
                     _changeRate += stat.Rate * lowImpactSeverity;
             }
         }
-        
+
         /// <summary>
         /// Gets the stat from <see cref="stats"/>
         /// </summary>

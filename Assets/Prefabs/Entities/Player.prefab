@@ -377,19 +377,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sanity: 100
-  severity: 0.000005
-  lowImpactSeverity: 0.4
-  gainFactor: 0.1
-  stats:
-  - Type: 0
-    Boundary: 75
-    Severity: 0.75
-  - Type: 1
-    Boundary: 60
-    Severity: 0.25
-  - Type: 2
-    Boundary: 60
-    Severity: 0.35
+  sanityMath:
+    severity: 0.00005
+    lowImpactSeverity: 0.4
+    gainFactor: 0.1
+    stats:
+    - Type: 0
+      Boundary: 80
+      Severity: 0.75
+    - Type: 1
+      Boundary: 60
+      Severity: 0.25
+    - Type: 2
+      Boundary: 60
+      Severity: 0.35
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0

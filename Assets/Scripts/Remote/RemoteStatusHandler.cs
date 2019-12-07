@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using Entity.Player;
+using Entity.Player.Sanity;
 using UnityEngine;
 
 namespace Remote
