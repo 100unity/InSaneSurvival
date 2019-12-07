@@ -32,10 +32,8 @@ namespace Entity.Player
         [Tooltip("Stats that have an impact on sanity.")]
         [SerializeField]
         private Stat[] stats;
-
-        // I considered putting the sanity in player state, but it's just an unnecessary reference between playerstate and sanitycontroller
-        public static event PlayerStateChanged OnPlayerSanityUpdate;
         
+        public static event PlayerStateChanged OnPlayerSanityUpdate;
         
         // the total change rate
         private float _changeRate;
@@ -61,6 +59,9 @@ namespace Entity.Player
             PlayerState.OnPlayerHydrationUpdate -= (int hydration) => InfluenceSanityByStat(StatType.Hydration, hydration);
         }
 
+        /// <summary>
+        /// Tick sanity.
+        /// </summary>
         private void Update()
         {
             TickSanity();
@@ -109,7 +110,8 @@ namespace Entity.Player
         private void InfluenceSanityByStat(StatType statType, int value)
         {
             Stat stat = GetStatByType(statType);
-            if (value < stat.Boundary) stat.Rate = (value - stat.Boundary) * stat.Severity;
+            if (value < stat.Boundary)
+                stat.Rate = (value - stat.Boundary) * stat.Severity;
             else
                 // don't use - stat.Boundary because then if you have 100% of stat,
                 // you get a higher positive rate, the lower the boundary
@@ -117,8 +119,6 @@ namespace Entity.Player
 
             UpdateChangeRate();
         }
-
-        // je länger changeRate negativ, desto höher/niedriger wird sie?
 
         /// <summary>
         /// Updates the total change rate which influences sanity. If not all stat rates are positive, weights the positive
@@ -138,11 +138,6 @@ namespace Entity.Player
                     // --> use it, but with lower impact
                     _changeRate += stat.Rate * lowImpactSeverity;
             }
-        }
-
-        private void AffectGameplay(int sanity)
-        {
-            // implement impact on gameplay
         }
         
         /// <summary>

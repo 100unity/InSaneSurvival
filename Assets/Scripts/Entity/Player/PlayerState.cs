@@ -27,6 +27,7 @@ namespace Entity.Player
         protected override void Awake()
         {
             base.Awake();
+            // send event on initial values
             OnPlayerHealthUpdate?.Invoke(health);
             OnPlayerSaturationUpdate?.Invoke(saturation);
             OnPlayerHydrationUpdate?.Invoke(hydration);
