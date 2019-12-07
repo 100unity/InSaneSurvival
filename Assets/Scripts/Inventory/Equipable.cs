@@ -6,6 +6,9 @@ using Inventory;
 [CreateAssetMenu(fileName = "New Equipable", menuName = "Inventory/Item/Equipable")]
 public class Equipable : Item
 {
+    /// <summary>
+    /// Placeholder function for now.
+    /// </summary>
     public override bool Use()
     {
         Debug.Log("Equipping the item " + name);

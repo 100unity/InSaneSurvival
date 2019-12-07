@@ -60,6 +60,10 @@ namespace UI
             }
         }
 
+        /// <summary>
+        /// If the button is clicked, the item saved in the _item field is used. Consumables are going to be removed
+        /// from the inventory.
+        /// </summary>
         public void OnClick() 
         {
             if (_item.Use()) 

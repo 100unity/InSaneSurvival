@@ -15,6 +15,9 @@ public class Consumable : Item
     [SerializeField]
     private int hydrationValue;
 
+    /// <summary>
+    /// Gets the PlayerState of the player, and changes its values depending on the item values.
+    /// </summary>
     public override bool Use() 
     {
         PlayerState playerState = Singleton<PlayerManager>.Instance.GetPlayer().GetComponent<PlayerState>();
