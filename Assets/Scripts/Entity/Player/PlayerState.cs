@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Entity.Player
 {
-    
+     
     public class PlayerState : MonoBehaviour, IDamageable
     {
         public delegate void PlayerStateChanged(int newValue);
