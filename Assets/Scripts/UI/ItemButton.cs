@@ -1,3 +1,4 @@
+using Inventory;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ namespace UI
         
         private AUsable item;
 
-        private Inventory inventory;
+        private InventoryController inventory;
 
         private Button button;
 
@@ -37,7 +38,7 @@ namespace UI
             }
         }
 
-        public Inventory Inventory
+        public InventoryController Inventory
         {
             get => inventory;
             set

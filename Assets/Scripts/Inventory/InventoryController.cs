@@ -6,9 +6,9 @@ namespace Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private List<Item> items = new List<Item>();
+        [SerializeField] private List<AUsable> items = new List<AUsable>();
 
-        public delegate void InventoryUpdate(Item item);
+        public delegate void InventoryUpdate(AUsable item);
 
         public event InventoryUpdate OnItemAdded;
         public event InventoryUpdate OnItemRemoved;
@@ -17,7 +17,7 @@ namespace Inventory
         /// Adds an item to the player's inventory
         /// </summary>
         /// <param name="item">The item to add</param>
-        public void Add(Item item)
+        public void Add(AUsable item)
         {
             items.Add(item);
             OnItemAdded?.Invoke(item);
@@ -27,7 +27,7 @@ namespace Inventory
         /// Removes an item from the player's inventory
         /// </summary>
         /// <param name="item"></param>
-        public void Remove(Item item)
+        public void Remove(AUsable item)
         {
             items.Remove(item);
             OnItemRemoved?.Invoke(item);

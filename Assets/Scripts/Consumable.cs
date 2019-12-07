@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Entity.Player;
 using Managers;
 using UnityEngine;
-using Player;
 
 [CreateAssetMenu(fileName = "New Consumable", menuName = "Inventory/Consumable")]
 public class Consumable : AUsable
