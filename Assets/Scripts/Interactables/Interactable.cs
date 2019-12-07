@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
     [Tooltip("The radius around the object that stops character going inside it")]
-    [SerializeField] public float radius = 3f;
+    private float radius = 3f;
+
+    public float Radius => radius;
 
     [Tooltip("Is this interactable currently being focused?")]
-    bool isFocus = false;
+    private bool isFocus = false;
 
     [Tooltip("Have we already interacted with the object?")]
-    bool hasInteracted = false;
+    private bool hasInteracted = false;
 
-    Transform player;    // Reference to the player transform
+    private Transform player;    // Reference to the player transform
 
 
-    void Update()
+    private void Update()
     {
         if (isFocus)    // If currently being focused
         {
@@ -55,10 +57,7 @@ public class Interactable : MonoBehaviour
     /// This method is meant to be overwritten for each interactable objects 
     /// (for example: OPEN if it was a "crate" or CHOP if it was a "tree"...)
     /// </summary>
-    public virtual void Interact()
-    {
-        //Do something
-    }
+    public abstract void Interact();
 
     /// <summary>
     /// Draw a sphere around object

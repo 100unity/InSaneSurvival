@@ -8,8 +8,6 @@ public class Crate : Interactable
 
     [SerializeField] bool isOpen;
 
-    private TooltipDisplay tooltipdisplay;
-
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -17,12 +15,10 @@ public class Crate : Interactable
 
     public override void Interact()
     {
-        base.Interact();
         if (!isOpen)
         {
             isOpen = true;
             animator.SetBool("open", isOpen);
-            GetComponent<TooltipDisplay>().enabled = false;
         }
     }
 }

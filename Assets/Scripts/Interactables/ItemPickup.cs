@@ -1,25 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Managers;
 
 public class ItemPickup : Interactable
 {
-    [SerializeField] public Item item; //reference for items
-
-    [SerializeField] public Inventory inventory; // reference for the inventory
-
-    // Unity Events
-    private void Start()
-    {
-        inventory = GameObject.Find("Player").GetComponentInChildren<Inventory>(); //auto assign the Inventory to the component
-    }
+    [SerializeField] private Item item; //reference for items
 
     /// <summary>
     /// New function that override the Interact function from Interactable Class
     /// </summary>
     public override void Interact()
     {
-        base.Interact();
         PickUp();
     }
 
@@ -29,7 +21,7 @@ public class ItemPickup : Interactable
     public void PickUp()
     {
         //Add to inventory
-        inventory.Add(item); 
+        PlayerManager.Instance.GetInventory().Add(item); 
 
         //Destroy object
         Destroy(gameObject); 

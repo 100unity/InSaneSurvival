@@ -49,11 +49,13 @@ namespace Player
         [SerializeField]
         private InventoryUI inventoryUI;
 
-        [Tooltip("Showing the object player is focusing")] [SerializeField]
-        public Interactable focus;
+        [Tooltip("Showing the object player is focusing")]
+        [SerializeField]
+        private Interactable focus;
 
-        [Tooltip("Showing the object target player is following")] [SerializeField]
-        public Transform target;
+        [Tooltip("Showing the object target player is interacting")]
+        [SerializeField]
+        private Transform target;
 
         public delegate void PlayerPositionChanged(Vector3 newPosition);
 
@@ -120,7 +122,7 @@ namespace Player
             _camera.transform.LookAt(playerPosition);
 
             // Check and makes character facing the target object when moving toward it
-            if (target != null) FaceTarget();
+            if (target != null) FaceTarget(target.gameObject, true, out _);
         }
 
         /// <summary>
@@ -129,16 +131,16 @@ namespace Player
         /// </summary>
         #region Interactables Functions
         
-        // This will make character moving to the target object
-        public void MovingToTarget(Interactable newTarget)
+        // This will make character going to target object and stop when it is close enough
+        public void SetTarget(Interactable newTarget)
         {
-            _navMeshAgent.stoppingDistance = newTarget.radius * .8f;
+            _navMeshAgent.stoppingDistance = newTarget.Radius * .8f;
             _navMeshAgent.updateRotation = false;
             target = newTarget.transform;
         }
 
-        // Makes character stop moving to target object
-        public void StopMovingToTarget()
+        // Makes character not targeting the object anymore
+        public void StopTarget()
         {
             _navMeshAgent.stoppingDistance = 0f;
             _navMeshAgent.updateRotation = true;
@@ -152,7 +154,7 @@ namespace Player
             {
                 if(focus != null) focus.OnDefocused();
                 focus = newFocus;
-                MovingToTarget(newFocus);
+                SetTarget(newFocus);
             }
 
             newFocus.OnFocused(transform);
@@ -163,15 +165,7 @@ namespace Player
         {
             if (focus != null) focus.OnDefocused();
             focus = null;
-            StopMovingToTarget();
-        }
-
-        // Makes character facing the target when moving toward it
-        void FaceTarget()
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            StopTarget();
         }
         #endregion
 
