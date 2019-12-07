@@ -17,7 +17,7 @@ namespace UI
         public TextMeshProUGUI NameLabel => nameLabel;
         
         
-        private AUsable _item;
+        private Item _item;
 
         private InventoryController _inventory;
 
@@ -29,7 +29,7 @@ namespace UI
             _button.onClick.AddListener(OnClick);
         }
 
-        public AUsable Item
+        public Item Item
         {
             get => _item;
             set

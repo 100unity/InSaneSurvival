@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using Entity.Player;
 using Managers;
 using UnityEngine;
+using Inventory;
 
-[CreateAssetMenu(fileName = "New Consumable", menuName = "Inventory/Consumable")]
-public class Consumable : AUsable
+[CreateAssetMenu(fileName = "New Consumable", menuName = "Inventory/Item/Consumable")]
+public class Consumable : Item
 {
     [SerializeField]
     private int healthValue;

@@ -13,13 +13,13 @@ namespace UI
         [Tooltip("Used for showing and hiding the inventory")] [SerializeField]
         private GameObject inventoryUIContent;
 
-        private Dictionary<AUsable, ItemButton> _itemStacks;
+        private Dictionary<Item, ItemButton> _itemStacks;
 
         public bool IsActive { get; private set; }
 
         private void Awake()
         {
-            _itemStacks = new Dictionary<AUsable, ItemButton>();
+            _itemStacks = new Dictionary<Item, ItemButton>();
             // Subscribe to inventory events
             inventory.OnItemAdded += AddItem;
             inventory.OnItemRemoved += RemoveItem;
@@ -38,7 +38,7 @@ namespace UI
         /// Adds an item to the inventory UI or increases the stack size in case it already exists
         /// </summary>
         /// <param name="item">The item to add to the UI</param>
-        private void AddItem(AUsable item)
+        private void AddItem(Item item)
         {
             if (_itemStacks.ContainsKey(item))
             {
@@ -60,7 +60,7 @@ namespace UI
         /// by one if there are at least two items of the same type
         /// </summary>
         /// <param name="item">The item to remove from the UI</param>
-        private void RemoveItem(AUsable item)
+        private void RemoveItem(Item item)
         {
             if (!_itemStacks.ContainsKey(item)) return;
             _itemStacks[item].Count -= 1;

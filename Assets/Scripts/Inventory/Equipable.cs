@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Inventory;
 
-[CreateAssetMenu(fileName = "New Equipable", menuName = "Inventory/Equipable")]
-public class Equipable : AUsable
+[CreateAssetMenu(fileName = "New Equipable", menuName = "Inventory/Item/Equipable")]
+public class Equipable : Item
 {
     public override bool Use()
     {

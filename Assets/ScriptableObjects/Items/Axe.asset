@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b3c71767c72bce42af3a16b05e15489, type: 3}
+  m_Script: {fileID: 11500000, guid: 433a787e3a2a2404ca18409922208c86, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
+  maxStackSize: 0

@@ -7,7 +7,7 @@ namespace Editor
     [CustomEditor(typeof(InventoryController))]
     public class InventoryEditor : UnityEditor.Editor
     {
-        public AUsable item;
+        public Item item;
         private bool _showCustomInspector;
         
         public override void OnInspectorGUI()
@@ -20,7 +20,7 @@ namespace Editor
             
             if (_showCustomInspector)
             {
-                item = (AUsable) EditorGUILayout.ObjectField("Item to add", item, typeof(AUsable), true);
+                item = (Item) EditorGUILayout.ObjectField("Item to add", item, typeof(Item), true);
 
                 if (GUILayout.Button("Add Items"))
                     inventory.Add(item);
