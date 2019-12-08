@@ -1794,11 +1794,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1946647073}
     m_Modifications:
-    - target: {fileID: 5591446699292486299, guid: 30d40e39fc8e482418064821b11596d2,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: playerCharacter
       value: 
@@ -1807,6 +1802,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DeathMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591446699292486299, guid: 30d40e39fc8e482418064821b11596d2,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5432178566093181983, guid: 30d40e39fc8e482418064821b11596d2,
         type: 3}
@@ -1966,7 +1966,7 @@ PrefabInstance:
     - target: {fileID: 5799114557473636308, guid: 30d40e39fc8e482418064821b11596d2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3600359970751833494, guid: 30d40e39fc8e482418064821b11596d2,
         type: 3}

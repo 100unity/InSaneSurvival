@@ -13,7 +13,7 @@ namespace UI
 
         private void Start()
         {
-            StartCoroutine( FadeOut(2.5f, whitePanel));
+            StartCoroutine( FadeOut(2, whitePanel));
             playerCharacter.GetComponent<Animator>().SetBool ("isDead", true);
         }
 

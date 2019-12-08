@@ -14,7 +14,6 @@ namespace UI
         
         private void Awake()
         {
-            whitePanel = gameObject.GetComponent<Image>();
             PlayerState.OnPlayerDeath += value => LoadScene();
         }
 
