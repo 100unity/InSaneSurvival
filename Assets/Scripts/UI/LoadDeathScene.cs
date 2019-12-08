@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Constants;
 using Entity.Player;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace UI
         {
             PlayerState.OnPlayerDeath += value => LoadScene();
         }
-
+        
         private void LoadScene()
         {
             StartCoroutine( FadeThenLoad(2.5f, whitePanel));
@@ -37,7 +38,17 @@ namespace UI
                 yield return null;
             }
             yield return new WaitForSeconds(fadeDuration);
+
+            Load();
+        }
         
+        private void ResetPanelAlpha()
+        {
+            whitePanel.color = new Color(1, 1, 1, 0);
+        }
+
+        private void Load()
+        {
             SceneManager.LoadScene(Consts.Scene.DEATH);
             SceneManager.sceneLoaded += SceneLoadCompleted;
         }
@@ -46,6 +57,8 @@ namespace UI
         {
             if (scene.buildIndex != Consts.Scene.DEATH) return;
             SceneManager.sceneLoaded -= SceneLoadCompleted;
+
+            ResetPanelAlpha();
         }
     }
 }
