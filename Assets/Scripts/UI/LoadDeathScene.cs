@@ -20,19 +20,20 @@ namespace UI
 
         private void LoadScene()
         {
-            StartCoroutine( FadeThenLoad(2.5f));
+            StartCoroutine( FadeThenLoad(2.5f, whitePanel));
         }
         
-        private IEnumerator FadeThenLoad(float fadeDuration)
+        private IEnumerator FadeThenLoad(float fadeDuration,  Image elementToFade)
         {
+            Color color = elementToFade.color;
             float currentTime = 0f;
-            Color color = whitePanel.color;
+            
             
             while (currentTime < fadeDuration)
             {
                 float alpha = Mathf.Lerp(0f, 1f, currentTime / fadeDuration);
                 color = new Color(color.r, color.g, color.b, alpha);
-                whitePanel.color = color;
+                elementToFade.color = color;
                 currentTime += Time.deltaTime;
                 yield return null;
             }
