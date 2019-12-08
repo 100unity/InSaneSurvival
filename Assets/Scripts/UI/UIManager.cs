@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
-using Player;
+using Entity.Player;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace UI
 {
@@ -11,34 +9,23 @@ namespace UI
         [SerializeField] private StatBar healthBar;
         [SerializeField] private StatBar saturationBar;
         [SerializeField] private StatBar hydrationBar;
-        [SerializeField] private FadeElement whiteLight;
-        private void Awake()
-        {
-            PlayerState.OnPlayerHealthUpdated += value => healthBar.UpdateBar(value);
-            PlayerState.OnPlayerHydrationUpdated += value => hydrationBar.UpdateBar(value);
-            PlayerState.OnPlayerSaturationUpdated += value => saturationBar.UpdateBar(value);
-            PlayerState.OnPlayerDeath += value => LoadDeathScene();
-        }
 
-        private void LoadDeathScene()
+        private void OnEnable()
         {
-            StartCoroutine( WaitThenLoad(2.5f));
+            PlayerState.OnPlayerHealthUpdated += OnHealthUpdated;
+            PlayerState.OnPlayerHydrationUpdated += OnHydrationUpdated;
+            PlayerState.OnPlayerSaturationUpdated += OnSaturationUpdated;
         }
         
-        private IEnumerator WaitThenLoad(float fadeDuration)
+        private void OnDisable()
         {
-            whiteLight.FadeIn(fadeDuration);
-            yield return new WaitForSeconds(fadeDuration);
-            SceneManager.LoadScene(Consts.Scene.DEATH);
-            SceneManager.sceneLoaded += SceneLoadCompleted;
+            PlayerState.OnPlayerHealthUpdated -= OnHealthUpdated;
+            PlayerState.OnPlayerHydrationUpdated -= OnHydrationUpdated;
+            PlayerState.OnPlayerSaturationUpdated -= OnSaturationUpdated;
         }
         
-
-        
-        private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
-        {
-            if (scene.buildIndex != Consts.Scene.DEATH) return;
-            SceneManager.sceneLoaded -= SceneLoadCompleted;
-        }
+        private void OnHealthUpdated(int value) => healthBar.UpdateBar(value);
+        private void OnHydrationUpdated(int value) => hydrationBar.UpdateBar(value);
+        private void OnSaturationUpdated(int value) => saturationBar.UpdateBar(value);
     }
 }

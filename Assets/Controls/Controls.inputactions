@@ -6,7 +6,7 @@
             "id": "19d5d016-8713-4cd5-ba8e-767f73bb7513",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "Click",
                     "type": "Button",
                     "id": "6292ecd5-6dea-4f80-9a09-a998d8b10408",
                     "expectedControlType": "",
@@ -36,6 +36,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "07411ab1-7dfe-4b8c-8922-2910b73a8f47",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -46,7 +54,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -102,6 +110,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e09e4adb-7acf-44b6-ae83-f560131b058f",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
