@@ -1,41 +1,38 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Constants;
-using UI;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class DeathScene : MonoBehaviour
+namespace UI
 {
-    [SerializeField][Tooltip("White overlay that fades in the scene")] private Image whitePanel;
-    [SerializeField][Tooltip("Model of the players character")] private GameObject playerCharacter;
-
-    // Start is called before the first frame update
-
-    private void Start()
+    public class DeathScene : MonoBehaviour
     {
-        StartCoroutine( FadeOut(2.5f, whitePanel));
-        playerCharacter.GetComponent<Animator>().SetBool ("isDead", true);
-    }
+        [SerializeField][Tooltip("White overlay that fades in the scene")] private Image whitePanel;
+        [SerializeField][Tooltip("Model of the players character")] private GameObject playerCharacter;
 
-    // fade out UI Objects
-    private IEnumerator FadeOut(float fadeDuration, Image elementToFade)
-    {
-        Color color = elementToFade.color;
-        float currentTime = 0f;
+        // Start is called before the first frame update
 
-        while (currentTime < fadeDuration)
+        private void Start()
         {
-            float alpha = Mathf.Lerp(1f, 0f, currentTime / fadeDuration);
-            color = new Color(color.r, color.g, color.b, alpha);
-            elementToFade.color = color;
-            currentTime += Time.deltaTime;
-            yield return null;
+            StartCoroutine( FadeOut(2.5f, whitePanel));
+            playerCharacter.GetComponent<Animator>().SetBool ("isDead", true);
         }
-        // yield return new WaitForSeconds(fadeDuration);
-        elementToFade.enabled = false;
+
+        // fade out UI Objects
+        private IEnumerator FadeOut(float fadeDuration, Image elementToFade)
+        {
+            Color color = elementToFade.color;
+            float currentTime = 0f;
+
+            while (currentTime < fadeDuration)
+            {
+                float alpha = Mathf.Lerp(1f, 0f, currentTime / fadeDuration);
+                color = new Color(color.r, color.g, color.b, alpha);
+                elementToFade.color = color;
+                currentTime += Time.deltaTime;
+                yield return null;
+            }
+            // yield return new WaitForSeconds(fadeDuration);
+            elementToFade.enabled = false;
+        }
     }
 }
