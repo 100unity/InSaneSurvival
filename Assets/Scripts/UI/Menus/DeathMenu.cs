@@ -8,9 +8,6 @@ namespace UI.Menus
 {
     public class DeathMenu : MonoBehaviour
     {
-        [Tooltip("The content of the death menu")] [SerializeField]
-        private GameObject deathContent;
-        
         [Tooltip("The button for going back to the main menu")] [SerializeField]
         private Button mainMenuButton;
 

@@ -10,32 +10,32 @@ using UnityEngine.UI;
 
 public class DeathScene : MonoBehaviour
 {
-    [SerializeField] private Image whitePanel;
-    [SerializeField] private GameObject playerCharacter;
+    [SerializeField][Tooltip("White overlay that fades in the scene")] private Image whitePanel;
+    [SerializeField][Tooltip("Model of the players character")] private GameObject playerCharacter;
 
     // Start is called before the first frame update
 
-    void Start()
+    private void Start()
     {
-        StartCoroutine( FadeOut(2.5f));
+        StartCoroutine( FadeOut(2.5f, whitePanel));
         playerCharacter.GetComponent<Animator>().SetBool ("isDead", true);
     }
 
-    // fades out white panel
-    private IEnumerator FadeOut(float fadeDuration)
+    // fade out UI Objects
+    private IEnumerator FadeOut(float fadeDuration, Image elementToFade)
     {
+        Color color = elementToFade.color;
         float currentTime = 0f;
-        Color color = whitePanel.color;
-            
+
         while (currentTime < fadeDuration)
         {
             float alpha = Mathf.Lerp(1f, 0f, currentTime / fadeDuration);
             color = new Color(color.r, color.g, color.b, alpha);
-            whitePanel.color = color;
+            elementToFade.color = color;
             currentTime += Time.deltaTime;
             yield return null;
         }
-        yield return new WaitForSeconds(fadeDuration);
-        
+        // yield return new WaitForSeconds(fadeDuration);
+        elementToFade.enabled = false;
     }
 }
