@@ -9,9 +9,6 @@ namespace UI
         [SerializeField][Tooltip("White overlay that fades in the scene")] private Image whitePanel;
         [SerializeField][Tooltip("Model of the players character")] private Animator playerCharacterAnimator;
         
-
-        // Start is called before the first frame update
-
         private void Start()
         {
             StartCoroutine( FadeOut(2, whitePanel));
