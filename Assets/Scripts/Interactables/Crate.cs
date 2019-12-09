@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Crate : Interactable
 {
-    Animator animator;
+    private Animator animator;
 
     [SerializeField] bool isOpen;
 
-    void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
     }

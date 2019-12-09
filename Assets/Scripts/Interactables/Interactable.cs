@@ -5,18 +5,22 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     [Tooltip("The radius around the object that stops character going inside it")]
-    private float radius = 3f;
+    [SerializeField] private float radius;
 
     public float Radius => radius;
 
     [Tooltip("Is this interactable currently being focused?")]
-    private bool isFocus = false;
+    [SerializeField] private bool isFocus = false;
 
     [Tooltip("Have we already interacted with the object?")]
-    private bool hasInteracted = false;
+    [SerializeField] private bool hasInteracted = false;
 
-    private Transform player;    // Reference to the player transform
+    [SerializeField] private Transform player;    // Reference to the player transform
 
+    private void Start()
+    {
+        radius = 3f; //Default value for radius, can be tweaked later
+    }
 
     private void Update()
     {

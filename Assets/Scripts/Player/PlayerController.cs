@@ -49,14 +49,6 @@ namespace Player
         [SerializeField]
         private InventoryUI inventoryUI;
 
-        [Tooltip("Showing the object player is focusing")]
-        [SerializeField]
-        private Interactable focus;
-
-        [Tooltip("Showing the object target player is interacting")]
-        [SerializeField]
-        private Transform target;
-
         public delegate void PlayerPositionChanged(Vector3 newPosition);
 
         public static event PlayerPositionChanged OnPlayerPositionUpdated;
@@ -66,6 +58,7 @@ namespace Player
         private Camera _camera;
         private Controls _controls;
         private AttackLogic _attackLogic;
+        private InteractLogic _interactLogic;
 
         /// <summary>
         /// The current horizontal angle of the camera, relative to the player
@@ -84,6 +77,7 @@ namespace Player
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _attackLogic = GetComponent<AttackLogic>();
+            _interactLogic = GetComponent<InteractLogic>();
             SetUpControls();
             PauseMenu.OnPause += OnPause;
         }
@@ -122,52 +116,8 @@ namespace Player
             _camera.transform.LookAt(playerPosition);
 
             // Check and makes character facing the target object when moving toward it
-            if (target != null) FaceTarget(target.gameObject, true, out _);
+            //if (target != null) FaceTarget(target.gameObject, true, out _);
         }
-
-        /// <summary>
-        /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..) using raycast and _NavMeshAgent
-        /// (Won't conflict with character attacking enemy or moving on the map)
-        /// </summary>
-        #region Interactables Functions
-        
-        // This will make character going to target object and stop when it is close enough
-        public void SetTarget(Interactable newTarget)
-        {
-            _navMeshAgent.stoppingDistance = newTarget.Radius * .8f;
-            _navMeshAgent.updateRotation = false;
-            target = newTarget.transform;
-        }
-
-        // Makes character not targeting the object anymore
-        public void StopTarget()
-        {
-            _navMeshAgent.stoppingDistance = 0f;
-            _navMeshAgent.updateRotation = true;
-            target = null;
-        }
-
-        // Set focus when interact
-        public void SetFocus(Interactable newFocus)
-        {
-            if(newFocus != focus)
-            {
-                if(focus != null) focus.OnDefocused();
-                focus = newFocus;
-                SetTarget(newFocus);
-            }
-
-            newFocus.OnFocused(transform);
-        }
-
-        // Remove focus when not interact
-        public void RemoveFocus()
-        {
-            if (focus != null) focus.OnDefocused();
-            focus = null;
-            StopTarget();
-        }
-        #endregion
 
         /// <summary>
         /// This will set up all event for the player-controls
@@ -211,24 +161,24 @@ namespace Player
                     // implementation NOT capable of area damage
                     _attackLogic.StartAttack(objectHit);
                 }
+
+                else if (interactable != null)
+                {
+                    _attackLogic.StopAttack();
+                    //Set as focus
+                    _interactLogic.StartInteract(interactable);
+                }
+
                 // Get ground position from mouse click
                 else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, moveClickLayers))
                 {
                     // cancel possible ongoing attacks
                     _attackLogic.StopAttack();
+                    _interactLogic.RemoveFocus();
                     Move(groundHit);
                 }
         
-                if (interactable != null)
-                {
-                    //Set as focus
-                    SetFocus(interactable);
-                }
-
-                else
-                {
-                    RemoveFocus();
-                }          
+                
             }
         }
 
