@@ -8,6 +8,7 @@ namespace Entity.Player
     public class PlayerState : MonoBehaviour, IDamageable
     {
         public delegate void PlayerStateChanged(int newValue);
+        public delegate void PlayerIsDead();
         
         //Player State values
         [Tooltip("100 - full health, 0 - dead")] [SerializeField] [Range(0, 100)] 
@@ -39,7 +40,7 @@ namespace Entity.Player
         public static event PlayerStateChanged OnPlayerHealthUpdated;
         public static event PlayerStateChanged OnPlayerSaturationUpdated;
         public static event PlayerStateChanged OnPlayerHydrationUpdated;
-        public static event PlayerStateChanged OnPlayerDeath;
+        public static event PlayerIsDead OnPlayerDeath;
 
         private void Awake()
         {
@@ -145,7 +146,7 @@ namespace Entity.Player
 
         public void Die()
         {            
-            OnPlayerDeath?.Invoke(1);
+            OnPlayerDeath?.Invoke();
             Debug.Log("Player is dead");
         }
     }

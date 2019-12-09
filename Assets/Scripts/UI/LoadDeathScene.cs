@@ -15,7 +15,7 @@ namespace UI
         
         private void Awake()
         {
-            PlayerState.OnPlayerDeath += value => LoadScene();
+            PlayerState.OnPlayerDeath += LoadScene;
         }
         
         private void LoadScene()
@@ -23,6 +23,7 @@ namespace UI
             StartCoroutine( FadeThenLoad(2.5f, whitePanel));
         }
         
+        // Fades in the white overlay and when finished loads "DeathScene"
         private IEnumerator FadeThenLoad(float fadeDuration,  Image elementToFade)
         {
             Color color = elementToFade.color;
@@ -40,13 +41,16 @@ namespace UI
             yield return new WaitForSeconds(fadeDuration);
 
             Load();
+            PlayerState.OnPlayerDeath -= LoadScene;
         }
         
+        // sets alpha of the overlay back to 0
         private void ResetPanelAlpha()
         {
             whitePanel.color = new Color(1, 1, 1, 0);
         }
-
+        
+        // loads "DeathScene"
         private void Load()
         {
             SceneManager.LoadScene(Consts.Scene.DEATH);
@@ -56,9 +60,8 @@ namespace UI
         private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
         {
             if (scene.buildIndex != Consts.Scene.DEATH) return;
-            SceneManager.sceneLoaded -= SceneLoadCompleted;
-
             ResetPanelAlpha();
+            SceneManager.sceneLoaded -= SceneLoadCompleted;
         }
     }
 }
