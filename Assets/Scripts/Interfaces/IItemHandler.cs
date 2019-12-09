@@ -1,12 +1,19 @@
-﻿using Inventory;
+﻿using System;
+using Crafting;
+using Inventory;
 
 namespace Interfaces
 {
     /// <summary>
-    /// Everything that stores items. Especially used in <see cref="Crafting.ItemRecipe"/> for crafting.
+    /// Everything that stores items. Especially used in <see cref="CraftingRecipe"/> for crafting.
     /// </summary>
     public interface IItemHandler
     {
+        /// <summary>
+        /// Event that will be triggered after an item is changed/added/removed
+        /// </summary>
+        event Action ItemsUpdated;
+
         /// <summary>
         /// Checks if the given item is present (in given quantity)
         /// </summary>

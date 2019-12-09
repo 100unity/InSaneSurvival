@@ -1,4 +1,6 @@
-﻿namespace Constants
+﻿using UnityEngine;
+
+namespace Constants
 {
     public static class Consts
     {
@@ -7,15 +9,20 @@
             public const int MAIN_MENU = 0;
             public const int GAME = 1;
         }
-        
+
         public static class Enemy
         {
             // maxDistance for mapping random points onto the NavMesh
             public const float MAX_NAVMESH_MAPPING_DISTANCE = 1.0f;
 
             // just a high number to ensure random point generation for wandering
-            public const int MAPPING_ITERATIONS = 500; 
+            public const int MAPPING_ITERATIONS = 500;
+        }
+
+        public static class Colors
+        {
+            public static Color White = new Color(1, 1, 1, 1);
+            public static Color Red = new Color(1f, 0.4f, 0.4f);
         }
     }
 }
-

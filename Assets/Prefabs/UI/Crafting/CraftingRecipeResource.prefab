@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1765985470410477517}
   - component: {fileID: 7744087097054748611}
+  - component: {fileID: 4987473723129198034}
   - component: {fileID: 147181792391764921}
   m_Layer: 0
-  m_Name: CraftingResourcenListItem
+  m_Name: CraftingRecipeResource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +48,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5016249311720821687}
   m_CullTransparentMesh: 0
+--- !u!114 &4987473723129198034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5016249311720821687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b40d92893d49ed977db15462dc67d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtResource: {fileID: 3573079561407684069}
+  imgResource: {fileID: 1584825138944129426}
 --- !u!114 &147181792391764921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +177,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: 10
-  m_PreferredHeight: 10
+  m_PreferredHeight: 14
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -228,7 +243,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: 70
-  m_PreferredHeight: 10
+  m_PreferredHeight: 14
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -278,7 +293,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 8.95
+  m_fontSize: 1
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -295,7 +310,7 @@ MonoBehaviour:
   m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0

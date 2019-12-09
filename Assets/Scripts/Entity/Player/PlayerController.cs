@@ -1,4 +1,5 @@
 ﻿using System;
+using Crafting;
 using Interfaces;
 using Managers;
 using UI;
@@ -14,49 +15,46 @@ namespace Entity.Player
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour, IMovable
     {
-
         [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
         private LayerMask clickableLayers;
-        
+
         [Tooltip("Defines where the player can move")] [SerializeField]
         private LayerMask groundLayer;
 
 
-        [Tooltip("An effect that will be displayed whenever the player clicks to move")]
-        [SerializeField]
+        [Tooltip("An effect that will be displayed whenever the player clicks to move")] [SerializeField]
         private GameObject clickEffect;
 
-        [Tooltip("The speed with which the player can rotate the camera around the character")]
-        [SerializeField]
+        [Tooltip("The speed with which the player can rotate the camera around the character")] [SerializeField]
         private float cameraRotationSpeed;
 
-        [Tooltip("Whether the rotation of the camera with the mouse should be flipped")]
-        [SerializeField]
+        [Tooltip("Whether the rotation of the camera with the mouse should be flipped")] [SerializeField]
         private bool invertRotation;
 
-        [Tooltip("The distance of the camera to the user")]
-        [SerializeField]
+        [Tooltip("The distance of the camera to the user")] [SerializeField]
         private Vector2 cameraDistance;
 
-        [Tooltip("The min- and max-distance of the camera")]
-        [SerializeField]
+        [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
 
-        [Tooltip("The speed the player rotates with")]
-        [SerializeField]
+        [Tooltip("The speed the player rotates with")] [SerializeField]
         private int rotationSpeed;
 
-        [Tooltip("The maximum difference in degrees for the player between look direction and target direction in order to be facing the target.")]
+        [Tooltip(
+            "The maximum difference in degrees for the player between look direction and target direction in order to be facing the target.")]
         [SerializeField]
         private int rotationTolerance;
-        
-        [Tooltip("The inventory UI to toggle when pressing the inventory key")]
-        [SerializeField]
+
+        [Header("Player UI")] [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
         private InventoryUI inventoryUI;
-        
+
+        [Tooltip("The crafting UI to be toggled when pressing the crafting key")] [SerializeField]
+        private CraftingUI craftingUI;
+
         public delegate void PlayerPositionChanged(Vector3 newPosition);
+
         public static event PlayerPositionChanged OnPlayerPositionUpdated;
-        
+
         //Component references
         private NavMeshAgent _navMeshAgent;
         private Camera _camera;
@@ -72,7 +70,7 @@ namespace Entity.Player
         /// The current position of the camera, relative to the player
         /// </summary>
         private Vector3 _cameraPosition;
-        
+
         /// <summary>
         /// Gets references and sets up the controls.
         /// </summary>
@@ -90,14 +88,14 @@ namespace Entity.Player
         {
             _camera = Camera.main;
             if (_camera == null) Debug.LogError("No main camera found");
-            
+
             UpdateCameraAngle();
             _controls.PlayerControls.Enable();
             _controls.PauseMenuControls.Disable();
-            
+
             PauseMenu.OnPause += OnPause;
         }
-        
+
         /// <summary>
         /// Player disabled -> Disable all input
         /// </summary>
@@ -134,6 +132,7 @@ namespace Entity.Player
             _controls.PlayerControls.Zoom.performed += Zoom;
             _controls.PlayerControls.Pause.performed += TogglePause;
             _controls.PlayerControls.Inventory.performed += ctx => inventoryUI.ToggleInventory();
+            _controls.PlayerControls.Crafting.performed += ToggleCrafting;
 
             _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
@@ -154,7 +153,8 @@ namespace Entity.Player
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) && _attackLogic.Status == AttackLogic.AttackStatus.None)
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
+                _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
                 IDamageable damageable = objectHit.GetComponent<IDamageable>();
@@ -186,7 +186,7 @@ namespace Entity.Player
             // Create click point effect
             Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
 
-			OnPlayerPositionUpdated?.Invoke(transform.position);
+            OnPlayerPositionUpdated?.Invoke(transform.position);
         }
 
         // ----- Note: same in EnemyController --> make IMovable abstract class and inherit? ------
@@ -243,16 +243,21 @@ namespace Entity.Player
         private void Zoom(InputAction.CallbackContext obj) => UpdateCameraAngle(obj.ReadValue<float>());
 
         /// <summary>
+        /// Shows/Hides the crafting menu
+        /// </summary>
+        private void ToggleCrafting(InputAction.CallbackContext obj) => craftingUI.Toggle();
+
+        /// <summary>
         /// Sets the distance of the camera to the player
         /// </summary>
         /// <param name="cameraDistanceChange">The increase/decrease of the camera distance</param>
         private void UpdateCameraAngle(float cameraDistanceChange = 0)
         {
-            float radian = (float)Math.PI * _cameraAngleX / 180;
+            float radian = (float) Math.PI * _cameraAngleX / 180;
             cameraDistance.y = Mathf.Clamp(cameraDistance.y + cameraDistanceChange, cameraDistanceRange.min,
                 cameraDistanceRange.max);
-            _cameraPosition = new Vector3((float)Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
-                (float)-Math.Cos(radian) * cameraDistance.x);
+            _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
+                (float) -Math.Cos(radian) * cameraDistance.x);
         }
 
         /// <summary>
