@@ -7,14 +7,15 @@ namespace UI
     public class DeathScene : MonoBehaviour
     {
         [SerializeField][Tooltip("White overlay that fades in the scene")] private Image whitePanel;
-        [SerializeField][Tooltip("Model of the players character")] private GameObject playerCharacter;
+        [SerializeField][Tooltip("Model of the players character")] private Animator playerCharacterAnimator;
+        
 
         // Start is called before the first frame update
 
         private void Start()
         {
             StartCoroutine( FadeOut(2, whitePanel));
-            playerCharacter.GetComponent<Animator>().SetBool ("isDead", true);
+            playerCharacterAnimator.SetBool ("isDead", true);
         }
 
         // fade out UI Objects
@@ -31,7 +32,6 @@ namespace UI
                 currentTime += Time.deltaTime;
                 yield return null;
             }
-            // yield return new WaitForSeconds(fadeDuration);
             elementToFade.enabled = false;
         }
     }

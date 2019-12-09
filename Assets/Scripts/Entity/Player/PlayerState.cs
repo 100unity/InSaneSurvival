@@ -88,7 +88,7 @@ namespace Entity.Player
         {
             int updatedValue = health + changeBy;
             if (updatedValue > 100) updatedValue = 100;
-            else if (updatedValue < 0)
+            else if (updatedValue <= 0)
             {
                 updatedValue = 0;
                 Die();

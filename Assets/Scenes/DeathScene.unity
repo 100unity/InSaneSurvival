@@ -126,6 +126,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 482033825}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &227121208 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95857483032514940, guid: 54f08473df2a94348a95272458da3885,
+    type: 3}
+  m_PrefabInstance: {fileID: 482033825}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &482033825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2166,7 +2172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whitePanel: {fileID: 1484688122}
-  playerCharacter: {fileID: 227121202}
+  playerCharacterAnimator: {fileID: 227121208}
 --- !u!1 &2026808120
 GameObject:
   m_ObjectHideFlags: 0
