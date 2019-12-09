@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Interfaces;
+﻿using AbstractClasses;
+using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -23,7 +23,7 @@ namespace Entity.Enemy
         {
             if(!attackableLayers.Contains(other.gameObject.layer)) return;
             
-            if(other.gameObject.TryGetComponent(typeof(IDamageable), out _))
+            if(other.gameObject.TryGetComponent(typeof(Damageable), out _))
                 if(!Targets.Contains(other.gameObject))
                     Targets.Add(other.gameObject);
         }
