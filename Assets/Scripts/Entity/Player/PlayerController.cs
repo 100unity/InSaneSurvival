@@ -1,6 +1,7 @@
 ﻿using System;
 using Crafting;
 using Interfaces;
+using AbstractClasses;
 using Managers;
 using UI;
 using UI.Menus;
@@ -11,10 +12,11 @@ using Utils;
 
 namespace Entity.Player
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    
     [RequireComponent(typeof(PlayerInput))]
-    public class PlayerController : MonoBehaviour, IMovable
+    public class PlayerController : Movable
     {
+
         [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
         private LayerMask clickableLayers;
 
@@ -36,16 +38,9 @@ namespace Entity.Player
 
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
-
-        [Tooltip("The speed the player rotates with")] [SerializeField]
-        private int rotationSpeed;
-
-        [Tooltip(
-            "The maximum difference in degrees for the player between look direction and target direction in order to be facing the target.")]
+        
+        [Tooltip("The inventory UI to toggle when pressing the inventory key")]
         [SerializeField]
-        private int rotationTolerance;
-
-        [Header("Player UI")] [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
         private InventoryUI inventoryUI;
 
         [Tooltip("The crafting UI to be toggled when pressing the crafting key")] [SerializeField]
@@ -56,7 +51,6 @@ namespace Entity.Player
         public static event PlayerPositionChanged OnPlayerPositionUpdated;
 
         //Component references
-        private NavMeshAgent _navMeshAgent;
         private Camera _camera;
         private Controls _controls;
         private AttackLogic _attackLogic;
@@ -74,9 +68,9 @@ namespace Entity.Player
         /// <summary>
         /// Gets references and sets up the controls.
         /// </summary>
-        private void Awake()
+        protected override void Awake()
         {
-            _navMeshAgent = GetComponent<NavMeshAgent>();
+            base.Awake();
             _attackLogic = GetComponent<AttackLogic>();
             SetUpControls();
         }
@@ -153,11 +147,10 @@ namespace Entity.Player
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
-                _attackLogic.Status == AttackLogic.AttackStatus.None)
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) && _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
-                IDamageable damageable = objectHit.GetComponent<IDamageable>();
+                Damageable damageable = objectHit.GetComponent<Damageable>();
                 if (damageable != null)
                 {
                     // implementation NOT capable of area damage
@@ -174,58 +167,16 @@ namespace Entity.Player
         }
 
         /// <summary>
-        /// Player moves to the pressed location using the NavMeshAgent.
+        /// Player moves to the pressed location using the NavMeshAgent. Click effect is created.
         /// <param name="hit">The point on the ground the player should move to.</param>
         /// </summary>
         private void Move(RaycastHit hit)
         {
-            // Set destination for nav mesh agent
-            _navMeshAgent.SetDestination(hit.point);
-            _navMeshAgent.isStopped = false;
-
+            base.Move(hit.point);
             // Create click point effect
             Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
 
-            OnPlayerPositionUpdated?.Invoke(transform.position);
-        }
-
-        // ----- Note: same in EnemyController --> make IMovable abstract class and inherit? ------
-
-        /// <summary>
-        /// Faces the target. Returns true if facing the target.
-        /// </summary>
-        /// <param name="target">The target to face</param>
-        /// <param name="shouldTurn">Whether the object should turn to the target or not</param>
-        /// <param name="difference">The difference between object and target in degrees</param>
-        /// <returns>Whether the object is facing the target</returns>
-        public bool FaceTarget(GameObject target, bool shouldTurn, out float difference)
-        {
-            Vector3 direction = (target.transform.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            difference = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
-            bool facesTarget = difference < rotationTolerance;
-            if (!facesTarget && shouldTurn)
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-            return facesTarget;
-        }
-
-        /// <summary>
-        /// Move to a certain position.
-        /// </summary>
-        /// <param name="position">The position to move to</param>
-        public void Move(Vector3 position)
-        {
-            // Set destination for nav mesh agent
-            _navMeshAgent.SetDestination(position);
-            _navMeshAgent.isStopped = false;
-        }
-
-        /// <summary>
-        /// Stops moving.
-        /// </summary>
-        public void StopMoving()
-        {
-            _navMeshAgent.isStopped = true;
+			OnPlayerPositionUpdated?.Invoke(transform.position);
         }
 
         /// <summary>
@@ -253,11 +204,11 @@ namespace Entity.Player
         /// <param name="cameraDistanceChange">The increase/decrease of the camera distance</param>
         private void UpdateCameraAngle(float cameraDistanceChange = 0)
         {
-            float radian = (float) Math.PI * _cameraAngleX / 180;
+            float radian = (float)Math.PI * _cameraAngleX / 180;
             cameraDistance.y = Mathf.Clamp(cameraDistance.y + cameraDistanceChange, cameraDistanceRange.min,
                 cameraDistanceRange.max);
-            _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
-                (float) -Math.Cos(radian) * cameraDistance.x);
+            _cameraPosition = new Vector3((float)Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
+                (float)-Math.Cos(radian) * cameraDistance.x);
         }
 
         /// <summary>

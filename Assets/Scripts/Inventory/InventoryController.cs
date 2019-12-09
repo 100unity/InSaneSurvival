@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Inventory
 {
+
     public class InventoryController : MonoBehaviour
     {
         [SerializeField] private List<Item> items = new List<Item>();

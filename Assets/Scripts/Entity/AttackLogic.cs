@@ -1,9 +1,12 @@
-﻿using Interfaces;
+﻿using Entity.Player;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using AbstractClasses;
 
 namespace Entity
 {
-    [RequireComponent(typeof(IMovable))]
+    [RequireComponent(typeof(Movable))]
     public class AttackLogic : MonoBehaviour
     {
         [Tooltip("The base damage dealt")]
@@ -31,28 +34,28 @@ namespace Entity
         public AttackStatus Status { get; private set; }
 
         // component references
-        private IMovable _movable;
+        private Movable _movable;
 
         private float _timer;
         private GameObject _target;
         private float _distanceToTarget;
 
         // ----temporary as animation replacement------
-        private MeshRenderer _gameObjectRenderer;
-        private Material _prevMat;
-        private Material _attackAnimationMaterial;
+            private MeshRenderer _gameObjectRenderer;
+            private Material _prevMat;
+            private Material _attackAnimationMaterial;
         // ---------
 
         private void Awake()
         {
             // init components
-            _movable = GetComponent<IMovable>();
+            _movable = GetComponent<Movable>();
 
             // -----temp replacement for animation-----
-            _gameObjectRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
-            _prevMat = _gameObjectRenderer.material;
-            _attackAnimationMaterial = new Material(Shader.Find("Standard"));
-            _attackAnimationMaterial.color = Color.yellow;
+                _gameObjectRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+                _prevMat = _gameObjectRenderer.material;
+                _attackAnimationMaterial = new Material(Shader.Find("Standard"));
+                _attackAnimationMaterial.color = Color.yellow;
             // ----------
         }
 
@@ -128,7 +131,7 @@ namespace Entity
             if (Status == AttackStatus.Hit)
             {
                 // deal damage
-                IDamageable damageable = _target.GetComponent<IDamageable>();
+                Damageable damageable = _target.GetComponent<Damageable>();
                 damageable.Hit(damage);
             }
 
@@ -154,6 +157,7 @@ namespace Entity
         /// <param name="target">The target to be attacked</param>
         public void StartAttack(GameObject target)
         {
+            print("start attack");
             _target = target;
         }
 
