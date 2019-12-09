@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Inventory;
+﻿using Inventory;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UI

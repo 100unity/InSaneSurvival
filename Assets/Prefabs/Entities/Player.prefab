@@ -358,11 +358,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e825beb0ed384efe9610c64377c31bf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitMarkTime: 0.3
+  gameObjectRenderer: {fileID: 6126187403260861676}
   health: 100
   saturation: 100
   hydration: 100
-  hitMarkTime: 0.3
-  gameObjectRenderer: {fileID: 6126187403260861676}
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,6 +375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6a91b078b7a4160a20004863f86fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 5
+  rotationTolerance: 10
   clickableLayers:
     serializedVersion: 2
     m_Bits: 257
@@ -389,8 +391,6 @@ MonoBehaviour:
   cameraDistanceRange:
     min: 10
     max: 20
-  rotationSpeed: 5
-  rotationTolerance: 10
   inventoryUI: {fileID: 0}
 --- !u!195 &6126187404098910138
 NavMeshAgent:
