@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using Inventory;
 using UnityEngine;
 
 namespace Inventory
 {
+
     public class InventoryController : MonoBehaviour
     {
         [SerializeField] private List<Item> items = new List<Item>();
 
         public delegate void InventoryUpdate(Item item);
-
         public event InventoryUpdate OnItemAdded;
         public event InventoryUpdate OnItemRemoved;
 

@@ -2,12 +2,13 @@ using UnityEngine;
 
 namespace ControlEffects
 {
+
     public class ClickEffect : MonoBehaviour
     {
         [SerializeField] private float movementSpeed;
-     
+
         private bool _moveUp;
-     
+
         private void FixedUpdate()
         {
             if (_moveUp)
