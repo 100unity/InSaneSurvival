@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Crate : Interactable
 {
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
-    [SerializeField] bool isOpen;
+    [SerializeField] private bool isOpen;
 
     private void Awake()
     {
