@@ -154,7 +154,7 @@ namespace Entity.Player
             if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) && _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                Interactable interactable = objectHit.GetComponent<Interactable>();
                 Damageable damageable = objectHit.GetComponent<Damageable>();
                 if (damageable != null)
                 {

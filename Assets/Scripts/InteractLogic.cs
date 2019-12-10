@@ -22,12 +22,9 @@ public class InteractLogic : MonoBehaviour
 
     private Movable _movable;
 
-    private NavMeshAgent _navMeshAgent;
-
     private void Awake()
     {
         _movable = GetComponent<Movable>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
@@ -38,14 +35,14 @@ public class InteractLogic : MonoBehaviour
     // This will make character going to target object and stop when it is close enough
     private void SetTarget(Interactable newTarget)
     {
-        _navMeshAgent.stoppingDistance = newTarget.Radius * .8f;
+        _movable.SetStoppingDistance(newTarget.Radius);   
         target = newTarget.transform;
     }
 
     // Makes character not targeting the object anymore
     private void StopTarget()
     {
-        _navMeshAgent.stoppingDistance = 0f;
+        _movable.SetStoppingDistance(0f);
         target = null;
     }
 

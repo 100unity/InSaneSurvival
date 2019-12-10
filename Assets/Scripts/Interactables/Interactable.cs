@@ -19,7 +19,7 @@ public abstract class Interactable : MonoBehaviour
 
     private void Awake()
     {
-        radius = 3f;
+        radius = 3f; // Setting default value for radius, can be tweaked later.
     }
     private void Update()
     {
