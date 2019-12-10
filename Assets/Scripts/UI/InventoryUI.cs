@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Inventory;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UI
@@ -7,8 +8,10 @@ namespace UI
     {
         [SerializeField] private GameObject itemGrid;
         [SerializeField] private ItemButton itemButtonPrefab;
-        [SerializeField] private Inventory inventory;
-        [SerializeField] private GameObject inventoryUIContainer;
+        [SerializeField] private InventoryController inventory;
+
+        [Tooltip("Used for showing and hiding the inventory")] [SerializeField]
+        private GameObject inventoryUIContent;
 
         private Dictionary<Item, ItemButton> _itemStacks;
 
@@ -28,7 +31,7 @@ namespace UI
         public void ToggleInventory()
         {
             IsActive = !IsActive;
-            inventoryUIContainer.SetActive(IsActive);
+            inventoryUIContent.SetActive(IsActive);
         }
 
         /// <summary>
