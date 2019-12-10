@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using Utils;
 using static Utils.Enums;
@@ -70,7 +71,7 @@ namespace Entity.Player.Sanity
             foreach (Stat stat in stats)
             {
                 // only use negative rates or all if no stat is negative
-                if (!allPositive && stat.Rate < 0 || allPositive)
+                if (allPositive || stat.Rate < 0)
                     _changeRate += stat.Rate;
                 else
                     // found a positive rate between negative rates
@@ -84,12 +85,7 @@ namespace Entity.Player.Sanity
         /// </summary>
         private Stat GetStatByType(StatType statType)
         {
-            foreach (Stat stat in stats)
-            {
-                if (stat.Type == statType)
-                    return stat;
-            }
-            throw new Exception("Stat not found");
+            return stats.Where(s => s.Type == statType).FirstOrDefault();
         }
 
         /// <summary>
@@ -97,12 +93,7 @@ namespace Entity.Player.Sanity
         /// </summary>
         private bool AllRatesPositive()
         {
-            foreach (Stat stat in stats)
-            {
-                if (stat.Rate < 0)
-                    return false;
-            }
-            return true;
+            return stats.All(s => s.Rate >= 0);
         }
     }
 }

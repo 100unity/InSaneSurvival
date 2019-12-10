@@ -47,7 +47,7 @@ namespace Entity.Player
         private InventoryUI inventoryUI;
         
         public delegate void PlayerPositionChanged(Vector3 newPosition);
-        public static event PlayerPositionChanged OnPlayerPositionUpdated;
+        public static event PlayerPositionChanged OnPlayerPositionUpdate;
         
         //Component references
         private Camera _camera;
@@ -174,7 +174,7 @@ namespace Entity.Player
             // Create click point effect
             Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
 
-			OnPlayerPositionUpdated?.Invoke(transform.position);
+			OnPlayerPositionUpdate?.Invoke(transform.position);
         }
 
         /// <summary>

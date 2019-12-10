@@ -20,7 +20,7 @@ namespace Utils
         public float Severity;
 
         // the rate at which the stat influences sanity
-        public float Rate { get; set; }
+        public float Rate;
     }
 
 }
