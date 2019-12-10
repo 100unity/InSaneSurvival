@@ -1,12 +1,9 @@
-﻿using Interfaces;
-using Player;
+﻿using AbstractClasses;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-[RequireComponent(typeof(IMovable))]
 public class InteractLogic : MonoBehaviour
 {
     /// <summary>
@@ -23,13 +20,13 @@ public class InteractLogic : MonoBehaviour
     [SerializeField]
     private Transform target;
 
-    private IMovable _movable;
+    private Movable _movable;
 
     private NavMeshAgent _navMeshAgent;
 
     private void Awake()
     {
-        _movable = GetComponent<IMovable>();
+        _movable = GetComponent<Movable>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -42,7 +39,6 @@ public class InteractLogic : MonoBehaviour
     private void SetTarget(Interactable newTarget)
     {
         _navMeshAgent.stoppingDistance = newTarget.Radius * .8f;
-        //_navMeshAgent.updateRotation = false; 
         target = newTarget.transform;
     }
 
@@ -50,7 +46,6 @@ public class InteractLogic : MonoBehaviour
     private void StopTarget()
     {
         _navMeshAgent.stoppingDistance = 0f;
-        //_navMeshAgent.updateRotation = true;
         target = null;
     }
 

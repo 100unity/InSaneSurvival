@@ -17,11 +17,10 @@ public abstract class Interactable : MonoBehaviour
 
     [SerializeField] private Transform player;    // Reference to the player transform
 
-    private void Start()
+    private void Awake()
     {
-        radius = 3f; //Default value for radius, can be tweaked later
+        radius = 3f;
     }
-
     private void Update()
     {
         if (isFocus)    // If currently being focused

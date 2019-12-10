@@ -3,38 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using Managers;
 
-public class ItemPickup : Interactable
+namespace Inventory
 {
-    [SerializeField] private Item item; //reference for items
-    [SerializeField] private Inventory inventory;
-
-    private void Awake()
+    public class ItemPickup : Interactable
     {
-        GetInventory();
-    }
+        [SerializeField] private Item item; //reference for items
+        [SerializeField] private InventoryController inventory;
 
-    private Inventory GetInventory()
-    {
-        return inventory = PlayerManager.Instance.GetPlayer().GetComponentInChildren<Inventory>();
-    }
+        private void Start()
+        {
+            GetInventory();
+        }
 
-    /// <summary>
-    /// New function that override the Interact function from Interactable Class
-    /// </summary>
-    public override void Interact()
-    {
-        PickUp();
-    }
+        private InventoryController GetInventory()
+        {
+            return inventory = PlayerManager.Instance.GetPlayer().GetComponentInChildren<InventoryController>();
+        }
 
-    /// <summary>
-    /// Function for picking up item, add to inventory and then make item disappeared
-    /// </summary>
-    public void PickUp()
-    {
-        //Add to inventory
-        inventory.Add(item); 
+        /// <summary>
+        /// New function that override the Interact function from Interactable Class
+        /// </summary>
+        public override void Interact()
+        {
+            PickUp();
+        }
 
-        //Destroy object
-        Destroy(gameObject); 
+        /// <summary>
+        /// Function for picking up item, add to inventory and then make item disappeared
+        /// </summary>
+        public void PickUp()
+        {
+            //Add to inventory
+            inventory.Add(item);
+
+            //Destroy object
+            Destroy(gameObject);
+        }
     }
 }
+
