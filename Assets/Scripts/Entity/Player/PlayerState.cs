@@ -9,6 +9,7 @@ namespace Entity.Player
     public class PlayerState : Damageable
     {
         public delegate void PlayerStateChanged(int newValue);
+        public delegate void PlayerIsDead();
         
         //Player State values
         [Tooltip("100 - full health, 0 - dead")] [SerializeField] [Range(0, 100)] 
@@ -23,6 +24,7 @@ namespace Entity.Player
         public static event PlayerStateChanged OnPlayerHealthUpdated;
         public static event PlayerStateChanged OnPlayerSaturationUpdated;
         public static event PlayerStateChanged OnPlayerHydrationUpdated;
+        public static event PlayerIsDead OnPlayerDeath;
         
 
         private void OnEnable()
@@ -43,7 +45,7 @@ namespace Entity.Player
         {
             int updatedValue = health + changeBy;
             if (updatedValue > 100) updatedValue = 100;
-            else if (updatedValue < 0)
+            else if (updatedValue <= 0)
             {
                 updatedValue = 0;
                 Die();
@@ -94,7 +96,8 @@ namespace Entity.Player
         }
 
         public override void Die()
-        {
+        {            
+            OnPlayerDeath?.Invoke();
             Debug.Log("Player is dead");
         }
     }
