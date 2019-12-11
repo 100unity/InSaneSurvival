@@ -9,6 +9,7 @@ using UnityEngine.InputSystem.Utilities;
 public class @Controls : IInputActionCollection, IDisposable
 {
     private InputActionAsset asset;
+
     public @Controls()
     {
         asset = InputActionAsset.FromJson(@"{
@@ -54,6 +55,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""07411ab1-7dfe-4b8c-8922-2910b73a8f47"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Crafting"",
+                    ""type"": ""Button"",
+                    ""id"": ""872a902a-cbd6-4806-8c6c-0285b4acdfdf"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -136,6 +145,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""610d451f-7d0f-41cc-8de1-dcdc2081037f"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crafting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -176,6 +196,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_PlayerControls_Zoom = m_PlayerControls.FindAction("Zoom", throwIfNotFound: true);
         m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
         m_PlayerControls_Inventory = m_PlayerControls.FindAction("Inventory", throwIfNotFound: true);
+        m_PlayerControls_Crafting = m_PlayerControls.FindAction("Crafting", throwIfNotFound: true);
         // PauseMenuControls
         m_PauseMenuControls = asset.FindActionMap("PauseMenuControls", throwIfNotFound: true);
         m_PauseMenuControls_ExitPause = m_PauseMenuControls.FindAction("ExitPause", throwIfNotFound: true);
@@ -233,20 +254,46 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControls_Zoom;
     private readonly InputAction m_PlayerControls_Pause;
     private readonly InputAction m_PlayerControls_Inventory;
+    private readonly InputAction m_PlayerControls_Crafting;
+
     public struct PlayerControlsActions
     {
         private @Controls m_Wrapper;
-        public PlayerControlsActions(@Controls wrapper) { m_Wrapper = wrapper; }
+
+        public PlayerControlsActions(@Controls wrapper)
+        {
+            m_Wrapper = wrapper;
+        }
+
         public InputAction @Click => m_Wrapper.m_PlayerControls_Click;
         public InputAction @RotateCamera => m_Wrapper.m_PlayerControls_RotateCamera;
         public InputAction @Zoom => m_Wrapper.m_PlayerControls_Zoom;
         public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
         public InputAction @Inventory => m_Wrapper.m_PlayerControls_Inventory;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
+        public InputAction @Crafting => m_Wrapper.m_PlayerControls_Crafting;
+
+        public InputActionMap Get()
+        {
+            return m_Wrapper.m_PlayerControls;
+        }
+
+        public void Enable()
+        {
+            Get().Enable();
+        }
+
+        public void Disable()
+        {
+            Get().Disable();
+        }
+
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerControlsActions set) { return set.Get(); }
+
+        public static implicit operator InputActionMap(PlayerControlsActions set)
+        {
+            return set.Get();
+        }
+
         public void SetCallbacks(IPlayerControlsActions instance)
         {
             if (m_Wrapper.m_PlayerControlsActionsCallbackInterface != null)
@@ -266,7 +313,11 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Inventory.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
                 @Inventory.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
                 @Inventory.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnInventory;
+                @Crafting.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnCrafting;
+                @Crafting.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnCrafting;
+                @Crafting.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnCrafting;
             }
+
             m_Wrapper.m_PlayerControlsActionsCallbackInterface = instance;
             if (instance != null)
             {
@@ -285,25 +336,53 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
+                @Crafting.started += instance.OnCrafting;
+                @Crafting.performed += instance.OnCrafting;
+                @Crafting.canceled += instance.OnCrafting;
             }
         }
     }
+
     public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
 
     // PauseMenuControls
     private readonly InputActionMap m_PauseMenuControls;
     private IPauseMenuControlsActions m_PauseMenuControlsActionsCallbackInterface;
     private readonly InputAction m_PauseMenuControls_ExitPause;
+
     public struct PauseMenuControlsActions
     {
         private @Controls m_Wrapper;
-        public PauseMenuControlsActions(@Controls wrapper) { m_Wrapper = wrapper; }
+
+        public PauseMenuControlsActions(@Controls wrapper)
+        {
+            m_Wrapper = wrapper;
+        }
+
         public InputAction @ExitPause => m_Wrapper.m_PauseMenuControls_ExitPause;
-        public InputActionMap Get() { return m_Wrapper.m_PauseMenuControls; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
+
+        public InputActionMap Get()
+        {
+            return m_Wrapper.m_PauseMenuControls;
+        }
+
+        public void Enable()
+        {
+            Get().Enable();
+        }
+
+        public void Disable()
+        {
+            Get().Disable();
+        }
+
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PauseMenuControlsActions set) { return set.Get(); }
+
+        public static implicit operator InputActionMap(PauseMenuControlsActions set)
+        {
+            return set.Get();
+        }
+
         public void SetCallbacks(IPauseMenuControlsActions instance)
         {
             if (m_Wrapper.m_PauseMenuControlsActionsCallbackInterface != null)
@@ -312,6 +391,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ExitPause.performed -= m_Wrapper.m_PauseMenuControlsActionsCallbackInterface.OnExitPause;
                 @ExitPause.canceled -= m_Wrapper.m_PauseMenuControlsActionsCallbackInterface.OnExitPause;
             }
+
             m_Wrapper.m_PauseMenuControlsActionsCallbackInterface = instance;
             if (instance != null)
             {
@@ -321,7 +401,9 @@ public class @Controls : IInputActionCollection, IDisposable
             }
         }
     }
+
     public PauseMenuControlsActions @PauseMenuControls => new PauseMenuControlsActions(this);
+
     public interface IPlayerControlsActions
     {
         void OnClick(InputAction.CallbackContext context);
@@ -329,7 +411,9 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnZoom(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
+        void OnCrafting(InputAction.CallbackContext context);
     }
+
     public interface IPauseMenuControlsActions
     {
         void OnExitPause(InputAction.CallbackContext context);

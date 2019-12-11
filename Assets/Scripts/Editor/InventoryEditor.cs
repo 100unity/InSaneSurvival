@@ -23,7 +23,7 @@ namespace Editor
                 item = (Item) EditorGUILayout.ObjectField("Item to add", item, typeof(Item), true);
 
                 if (GUILayout.Button("Add Items"))
-                    inventory.Add(item);
+                    inventory.AddItem(item);
             }
             
             EditorGUILayout.EndFoldoutHeaderGroup();
