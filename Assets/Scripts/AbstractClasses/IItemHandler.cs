@@ -21,7 +21,7 @@ namespace Interfaces
         /// <param name="item">The item to be checked</param>
         /// <param name="amount">The amount of this item to be present</param>
         /// <returns>Whether the item and the given amount is present</returns>
-        bool ContainsItemAmount(Item item, int amount = 1);
+        bool ContainsItem(Item item, int amount = 1);
 
         /// <summary>
         /// Adds an item with a specified quantity

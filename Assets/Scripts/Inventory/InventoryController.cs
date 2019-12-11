@@ -35,8 +35,8 @@ namespace Inventory
             ItemsUpdated?.Invoke(item, -amount);
         }
 
-        /// <inheritdoc cref="IItemHandler.ContainsItemAmount"/>
-        public bool ContainsItemAmount(Item item, int amount = 1)
+        /// <inheritdoc cref="IItemHandler.ContainsItem"/>
+        public bool ContainsItem(Item item, int amount = 1)
         {
             int currentAmount = items.Count(currentItem => currentItem == item);
             return currentAmount >= amount;
