@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using Inventory;
 using Managers;
 using UI;
 using UnityEngine;
@@ -18,14 +19,14 @@ namespace Crafting
         private CraftingRecipeUI craftingRecipeUIPrefab;
 
         [Tooltip("The inventory of the player representing it's item handler")] [SerializeField]
-        private InventoryUI inventoryUI;
+        private InventoryController inventory;
 
         private bool _isShowing;
 
         /// <summary>
         /// The item handler of this crafting UI
         /// </summary>
-        public IItemHandler ItemHandler => inventoryUI;
+        public IItemHandler ItemHandler => inventory;
 
         /// <summary>
         /// Adds a crafting recipe UI for each recipe and sets their data

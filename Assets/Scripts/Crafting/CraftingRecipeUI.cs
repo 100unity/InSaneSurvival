@@ -1,4 +1,5 @@
 ﻿using Constants;
+using Inventory;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,7 +52,7 @@ namespace Crafting
             craftButton.onClick.RemoveAllListeners();
             craftButton.onClick.AddListener(() => _recipe.Craft(_craftingUI.ItemHandler));
 
-            _craftingUI.ItemHandler.ItemsUpdated += OnItemUpdate;
+            _craftingUI.ItemHandler.ItemsUpdated += (item, amount) => OnItemUpdate();
         }
 
         /// <summary>
