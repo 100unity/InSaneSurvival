@@ -37,7 +37,7 @@ namespace Crafting
         /// <param name="itemHandler">The object that holds the items</param>
         /// <returns>Whether all needed items are present</returns>
         public bool CanCraft(IItemHandler itemHandler) =>
-            neededItems.All(neededItem => itemHandler.ContainsItem(neededItem.item, neededItem.amount));
+            neededItems.All(neededItem => itemHandler.ContainsItemAmount(neededItem.item, neededItem.amount));
 
         /// <summary>
         /// Crafts the new item(s) ith this recipe

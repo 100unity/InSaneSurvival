@@ -10,9 +10,10 @@ namespace Interfaces
     public interface IItemHandler
     {
         /// <summary>
-        /// Event that will be triggered after an item is changed/added/removed
+        /// Event that will be triggered after an item is added/removed
+        /// <para>Int will be negative when removing an item</para>
         /// </summary>
-        event Action ItemsUpdated;
+        event Action<Item, int> ItemsUpdated;
 
         /// <summary>
         /// Checks if the given item is present (in given quantity)
@@ -20,14 +21,14 @@ namespace Interfaces
         /// <param name="item">The item to be checked</param>
         /// <param name="amount">The amount of this item to be present</param>
         /// <returns>Whether the item and the given amount is present</returns>
-        bool ContainsItem(Item item, int amount = 1);
+        bool ContainsItemAmount(Item item, int amount = 1);
 
         /// <summary>
         /// Adds an item with a specified quantity
         /// </summary>
         /// <param name="item">The item to be added</param>
         /// <param name="amount">The amount to be added</param>
-        void AddItem(Item item, int amount);
+        void AddItem(Item item, int amount = 1);
 
         /// <summary>
         /// Removes an item with a specified quantity
