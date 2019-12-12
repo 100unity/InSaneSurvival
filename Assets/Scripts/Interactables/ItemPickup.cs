@@ -8,17 +8,7 @@ namespace Inventory
     public class ItemPickup : Interactable
     {
         [SerializeField] private Item item; //reference for items
-        [SerializeField] private InventoryController inventory;
-
-        private void Start()
-        {
-            GetInventory();
-        }
-
-        private InventoryController GetInventory()
-        {
-            return inventory = PlayerManager.Instance.GetPlayer().GetComponentInChildren<InventoryController>();
-        }
+        [SerializeField] private InventoryController inventory; //reference for inventory - have to be manually assigned
 
         /// <summary>
         /// New function that override the Interact function from Interactable Class

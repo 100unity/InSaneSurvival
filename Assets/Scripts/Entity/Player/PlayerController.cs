@@ -154,15 +154,14 @@ namespace Entity.Player
             if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) && _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
-                Interactable interactable = objectHit.GetComponent<Interactable>();
-                Damageable damageable = objectHit.GetComponent<Damageable>();
-                if (damageable != null)
+
+                if (objectHit.GetComponent<Damageable>() is Damageable damageable)
                 {
                     // implementation NOT capable of area damage
                     _attackLogic.StartAttack(objectHit);
                 }
 
-                else if (interactable != null)
+                else if (objectHit.GetComponent<Interactable>() is Interactable interactable)
                 {
                     _attackLogic.StopAttack();
                     //Set as focus

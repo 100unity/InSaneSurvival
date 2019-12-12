@@ -7,17 +7,15 @@ using UnityEngine.AI;
 public class InteractLogic : MonoBehaviour
 {
     /// <summary>
-    /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..) using raycast and _NavMeshAgent
+    /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..)
     /// (Won't conflict with character attacking enemy or moving on the map)
     /// </summary>
     /// 
 
     [Tooltip("Showing the object player is focusing")]
-    [SerializeField]
     private Interactable focus;
 
     [Tooltip("Showing the object target player is interacting")]
-    [SerializeField]
     private Transform target;
 
     private Movable _movable;
