@@ -15,20 +15,21 @@ public class Consumable : Item
     [SerializeField]
     private int hydrationValue;
 
+    public int HealthValue => healthValue;
+
+    public int SaturationValue  => saturationValue;
+
+    public int HydrationValue => hydrationValue;
+
     /// <summary>
     /// Gets the PlayerState of the player, and changes its values depending on the item values.
     /// </summary>
     public new bool Use() 
     {
         PlayerState playerState = PlayerManager.Instance.GetPlayer().GetComponent<PlayerState>();
-        if (healthValue > 0)
-            playerState.Heal(healthValue);
-        if (saturationValue > 0)
-            playerState.ChangePlayerSaturation(saturationValue);
-        if (hydrationValue > 0)
-            playerState.ChangePlayerHydration(hydrationValue);
-        return true;
+        return playerState.Consume(this);
     }
+
     public override bool Equals(object other)
     {
         return other is Consumable item && item.name == name;

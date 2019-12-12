@@ -174,6 +174,17 @@ namespace Entity.Player
 
         }
 
+        public bool Consume(Consumable item)
+        {
+            if (item.HealthValue > 0)
+                Heal(item.HealthValue);
+            if (item.SaturationValue > 0)
+                ChangePlayerSaturation(item.SaturationValue);
+            if (item.HydrationValue > 0)
+                ChangePlayerHydration(item.HydrationValue);
+            return true;
+        }
+
         public void Die()
         {
             Debug.Log("Player is dead");

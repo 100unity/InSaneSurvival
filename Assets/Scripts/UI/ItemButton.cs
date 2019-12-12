@@ -60,6 +60,10 @@ namespace UI
             {
                 equipable.Use();
             }
+            else
+            {
+                _item.Use();
+            }
         }
     }
 }
