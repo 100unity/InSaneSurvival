@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Tree : Interactable
+namespace Interactables
 {
-    public override void Interact()
+    public class Tree : Interactable
     {
-        Debug.Log("Interact with tree");
+        public override void Interact()
+        {
+            Debug.Log("Interact with tree");
+        }
     }
 }

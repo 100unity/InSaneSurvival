@@ -1,24 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Crate : Interactable
+namespace Interactables
 {
-    [SerializeField] private Animator animator;
-
-    [SerializeField] private bool isOpen;
-
-    private void Awake()
+    public class Crate : Interactable
     {
-        animator = GetComponent<Animator>();
-    }
+        [SerializeField] private Animator animator;
 
-    public override void Interact()
-    {
-        if (!isOpen)
+        [SerializeField] private bool isOpen;
+        private static readonly int Open = Animator.StringToHash("open");
+
+        private void Awake()
         {
-            isOpen = true;
-            animator.SetBool("open", isOpen);
+            animator = GetComponent<Animator>();
+        }
+
+        public override void Interact()
+        {
+            if (!isOpen)
+            {
+                isOpen = true;
+                animator.SetBool(Open, isOpen);
+            }
         }
     }
 }

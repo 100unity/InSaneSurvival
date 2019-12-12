@@ -1,28 +1,24 @@
 ﻿using System;
 using Crafting;
-using Interfaces;
 using AbstractClasses;
+using Interactables;
 using Managers;
 using UI;
 using UI.Menus;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using Utils;
 
 namespace Entity.Player
 {
-    
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : Movable
     {
-
         [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
         private LayerMask clickableLayers;
 
         [Tooltip("Defines where the player can move")] [SerializeField]
         private LayerMask groundLayer;
-
 
         [Tooltip("An effect that will be displayed whenever the player clicks to move")] [SerializeField]
         private GameObject clickEffect;
@@ -38,9 +34,8 @@ namespace Entity.Player
 
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
-        
-        [Tooltip("The inventory UI to toggle when pressing the inventory key")]
-        [SerializeField]
+
+        [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
         private InventoryUI inventoryUI;
 
         [Tooltip("The crafting UI to be toggled when pressing the crafting key")] [SerializeField]
@@ -149,7 +144,8 @@ namespace Entity.Player
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) && _attackLogic.Status == AttackLogic.AttackStatus.None)
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
+                _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
                 GameObject objectHit = hit.collider.gameObject;
 
@@ -188,7 +184,7 @@ namespace Entity.Player
             // Create click point effect
             Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
 
-			OnPlayerPositionUpdated?.Invoke(transform.position);
+            OnPlayerPositionUpdated?.Invoke(transform.position);
         }
 
         /// <summary>
@@ -216,11 +212,11 @@ namespace Entity.Player
         /// <param name="cameraDistanceChange">The increase/decrease of the camera distance</param>
         private void UpdateCameraAngle(float cameraDistanceChange = 0)
         {
-            float radian = (float)Math.PI * _cameraAngleX / 180;
+            float radian = (float) Math.PI * _cameraAngleX / 180;
             cameraDistance.y = Mathf.Clamp(cameraDistance.y + cameraDistanceChange, cameraDistanceRange.min,
                 cameraDistanceRange.max);
-            _cameraPosition = new Vector3((float)Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
-                (float)-Math.Cos(radian) * cameraDistance.x);
+            _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
+                (float) -Math.Cos(radian) * cameraDistance.x);
         }
 
         /// <summary>

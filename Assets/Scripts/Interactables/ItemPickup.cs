@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Inventory;
 using UnityEngine;
-using Managers;
 
-namespace Inventory
+namespace Interactables
 {
     public class ItemPickup : Interactable
     {
@@ -21,10 +19,10 @@ namespace Inventory
         /// <summary>
         /// Function for picking up item, add to inventory and then make item disappeared
         /// </summary>
-        public void PickUp()
+        private void PickUp()
         {
             //Add to inventory
-            inventory.Add(item);
+            inventory.AddItem(item);
 
             //Destroy object
             Destroy(gameObject);
