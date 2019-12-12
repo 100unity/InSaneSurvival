@@ -18,7 +18,7 @@ public class Consumable : Item
     /// <summary>
     /// Gets the PlayerState of the player, and changes its values depending on the item values.
     /// </summary>
-    public override bool Use() 
+    public new bool Use() 
     {
         PlayerState playerState = Singleton<PlayerManager>.Instance.GetPlayer().GetComponent<PlayerState>();
         if (healthValue > 0)

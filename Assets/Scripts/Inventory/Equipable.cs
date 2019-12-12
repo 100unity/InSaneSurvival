@@ -9,7 +9,7 @@ public class Equipable : Item
     /// <summary>
     /// Placeholder function for now.
     /// </summary>
-    public override bool Use()
+    public new bool Use()
     {
         Debug.Log("Equipping the item " + name);
         return false;

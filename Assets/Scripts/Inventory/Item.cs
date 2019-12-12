@@ -4,14 +4,19 @@ using UnityEngine;
 
 namespace Inventory
 {
-    public abstract class Item : ScriptableObject
+    [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item/Item(General)")]
+    public class Item : ScriptableObject
     {
         [SerializeField] private Sprite icon;
         [SerializeField] private int maxStackSize;
         public Sprite Icon => icon;
         public int MaxStackSize => maxStackSize;
 
-        public abstract bool Use();
+        public bool Use()
+        {
+            Debug.Log("The item " + name + " can not be used.");
+            return false;
+        }
     }
 }
 
