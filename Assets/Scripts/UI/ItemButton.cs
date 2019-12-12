@@ -16,10 +16,11 @@ namespace UI
         public Image Icon => icon;
         public TextMeshProUGUI NameLabel => nameLabel;
         
-        
-        private Item _item;
+        [HideInInspector]
+        public Item _item;
 
-        private InventoryController _inventory;
+        [HideInInspector]
+        public InventoryController _inventory;
 
         private Button _button;
 
@@ -27,24 +28,6 @@ namespace UI
         {
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnClick);
-        }
-
-        public Item Item
-        {
-            get => _item;
-            set
-            {
-                _item = value;
-            }
-        }
-
-        public InventoryController Inventory
-        {
-            get => _inventory;
-            set
-            {
-                _inventory = value;
-            }
         }
 
         /// <summary>
@@ -66,16 +49,16 @@ namespace UI
         /// </summary>
         public void OnClick() 
         {
-            if (_item is Consumable)
+            if (_item is Consumable consumable)
             {
-                if (((Consumable)_item).Use())
+                if (consumable.Use())
                 {
                     _inventory.Remove(_item);
                 }
             }
-            else if (_item is Equipable)
+            else if (_item is Equipable equipable)
             {
-                ((Equipable)_item).Use();
+                equipable.Use();
             }
         }
     }
