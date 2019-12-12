@@ -3,17 +3,30 @@ using UnityEngine.EventSystems;
 
 namespace Utils.ElementInteraction
 {
+    /// <summary>
+    /// Allows snapping to a <see cref="SnapPoint"/>
+    /// </summary>
     [RequireComponent(typeof(Draggable))]
     public class Snappable : MonoBehaviour
     {
+        /// <summary>
+        /// The draggable component used for the dragging events
+        /// </summary>
         private Draggable _draggable;
 
+        /// <summary>
+        /// Subscribe to <see cref="Draggable.OnEndDrag"/> event
+        /// </summary>
         private void Awake()
         {
             _draggable = GetComponent<Draggable>();
             _draggable.OnEndDragging += Snap;
         }
 
+        /// <summary>
+        /// Try to find a <see cref="SnapPoint"/>. If found, snap to it, if taken or nothing found, snap to old position
+        /// </summary>
+        /// <param name="eventData">The EventData from the <see cref="Draggable.OnEndDrag"/> event</param>
         private void Snap(PointerEventData eventData)
         {
             // Reset position by default
@@ -27,7 +40,7 @@ namespace Utils.ElementInteraction
 
             // Get new position and set to current
             _draggable.UpdatePosition(snapPoint.transform.position);
-
+            // Remove default position-reset
             _draggable.executeOnLateUpdate = null;
         }
     }

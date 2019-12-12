@@ -32,7 +32,16 @@ namespace Utils
 
             return instances;
         }
-
+        
+        /// <summary>
+        /// RayCast on UI-Level.
+        /// <para>Finds the next element (of T) using the provided GraphicRaycaster and PointerEventData (position of it)</para>
+        /// </summary>
+        /// <param name="graphicRaycaster">The GraphicRaycaster used for casting the ray</param>
+        /// <param name="eventData">The EventData for the raycast e.g. mouse click</param>
+        /// <param name="elementToIgnore">An element to be ignored, can be null</param>
+        /// <typeparam name="T">The type to look for</typeparam>
+        /// <returns></returns>
         public static T FindUIElement<T>(this GraphicRaycaster graphicRaycaster, PointerEventData eventData,
             T elementToIgnore = null) where T : class
         {
