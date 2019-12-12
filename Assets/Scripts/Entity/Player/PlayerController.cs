@@ -1,4 +1,6 @@
 ﻿using System;
+using Crafting;
+using Interfaces;
 using AbstractClasses;
 using Managers;
 using UI;
@@ -17,39 +19,37 @@ namespace Entity.Player
 
         [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
         private LayerMask clickableLayers;
-        
+
         [Tooltip("Defines where the player can move")] [SerializeField]
         private LayerMask groundLayer;
 
 
-        [Tooltip("An effect that will be displayed whenever the player clicks to move")]
-        [SerializeField]
+        [Tooltip("An effect that will be displayed whenever the player clicks to move")] [SerializeField]
         private GameObject clickEffect;
 
-        [Tooltip("The speed with which the player can rotate the camera around the character")]
-        [SerializeField]
+        [Tooltip("The speed with which the player can rotate the camera around the character")] [SerializeField]
         private float cameraRotationSpeed;
 
-        [Tooltip("Whether the rotation of the camera with the mouse should be flipped")]
-        [SerializeField]
+        [Tooltip("Whether the rotation of the camera with the mouse should be flipped")] [SerializeField]
         private bool invertRotation;
 
-        [Tooltip("The distance of the camera to the user")]
-        [SerializeField]
+        [Tooltip("The distance of the camera to the user")] [SerializeField]
         private Vector2 cameraDistance;
 
-        [Tooltip("The min- and max-distance of the camera")]
-        [SerializeField]
+        [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
         
         [Tooltip("The inventory UI to toggle when pressing the inventory key")]
         [SerializeField]
         private InventoryUI inventoryUI;
 
+        [Tooltip("The crafting UI to be toggled when pressing the crafting key")] [SerializeField]
+        private CraftingUI craftingUI;
+
         public delegate void PlayerPositionChanged(Vector3 newPosition);
 
         public static event PlayerPositionChanged OnPlayerPositionUpdated;
-        
+
         //Component references
         private Camera _camera;
         private Controls _controls;
@@ -65,7 +65,7 @@ namespace Entity.Player
         /// The current position of the camera, relative to the player
         /// </summary>
         private Vector3 _cameraPosition;
-        
+
         /// <summary>
         /// Gets references and sets up the controls.
         /// </summary>
@@ -84,14 +84,14 @@ namespace Entity.Player
         {
             _camera = Camera.main;
             if (_camera == null) Debug.LogError("No main camera found");
-            
+
             UpdateCameraAngle();
             _controls.PlayerControls.Enable();
             _controls.PauseMenuControls.Disable();
-            
+
             PauseMenu.OnPause += OnPause;
         }
-        
+
         /// <summary>
         /// Player disabled -> Disable all input
         /// </summary>
@@ -115,9 +115,6 @@ namespace Entity.Player
             Vector3 playerPosition = transform.position;
             _camera.transform.position = playerPosition + _cameraPosition;
             _camera.transform.LookAt(playerPosition);
-
-            // Check and makes character facing the target object when moving toward it
-            //if (target != null) FaceTarget(target.gameObject, true, out _);
         }
 
         /// <summary>
@@ -131,6 +128,7 @@ namespace Entity.Player
             _controls.PlayerControls.Zoom.performed += Zoom;
             _controls.PlayerControls.Pause.performed += TogglePause;
             _controls.PlayerControls.Inventory.performed += ctx => inventoryUI.ToggleInventory();
+            _controls.PlayerControls.Crafting.performed += ToggleCrafting;
 
             _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
@@ -177,8 +175,6 @@ namespace Entity.Player
                     _interactLogic.RemoveFocus();
                     Move(groundHit);
                 }
-        
-                
             }
         }
 
@@ -208,6 +204,11 @@ namespace Entity.Player
         /// Allows the player to zoom in and out
         /// </summary>
         private void Zoom(InputAction.CallbackContext obj) => UpdateCameraAngle(obj.ReadValue<float>());
+
+        /// <summary>
+        /// Shows/Hides the crafting menu
+        /// </summary>
+        private void ToggleCrafting(InputAction.CallbackContext obj) => craftingUI.Toggle();
 
         /// <summary>
         /// Sets the distance of the camera to the player
