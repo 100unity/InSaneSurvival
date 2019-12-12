@@ -20,9 +20,9 @@ public class Consumable : Item
     /// </summary>
     public new bool Use() 
     {
-        PlayerState playerState = Singleton<PlayerManager>.Instance.GetPlayer().GetComponent<PlayerState>();
+        PlayerState playerState = PlayerManager.Instance.GetPlayer().GetComponent<PlayerState>();
         if (healthValue > 0)
-            playerState.Hit(-healthValue);
+            playerState.Heal(healthValue);
         if (saturationValue > 0)
             playerState.ChangePlayerSaturation(saturationValue);
         if (hydrationValue > 0)

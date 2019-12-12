@@ -31,8 +31,11 @@ namespace Entity.Player
 
         private Material _prevMat;
         private Material _hitMarkerMaterial;
+        private Material _healMarkerMaterial;
         private float _timer;
         private bool _hit;
+        private bool _healed;
+        private float _healTimer;
         // ----------
 
 
@@ -45,6 +48,8 @@ namespace Entity.Player
             // ------------
             _hitMarkerMaterial = new Material(Shader.Find("Standard"));
             _hitMarkerMaterial.color = Color.red;
+            _healMarkerMaterial = new Material(Shader.Find("Standard"));
+            _healMarkerMaterial.color = Color.magenta;
             // just put initial mat here
             _prevMat = gameObjectRenderer.material;
             // ------------
@@ -77,6 +82,17 @@ namespace Entity.Player
                 {
                     _hit = false;
                     _timer = 0;
+                    gameObjectRenderer.material = _prevMat;
+                }
+            }
+            if (_healed)
+            {
+                _healTimer += Time.deltaTime;
+
+                if (_healTimer > hitMarkTime)
+                {
+                    _healed = false;
+                    _healTimer = 0;
                     gameObjectRenderer.material = _prevMat;
                 }
             }
@@ -140,6 +156,22 @@ namespace Entity.Player
             _hit = true;
             gameObjectRenderer.material = _hitMarkerMaterial;
             //-------
+        }
+
+        /// <summary>
+        /// Heals the player by a specific amount.
+        /// Marks the player as healed after being healed.
+        /// </summary>
+        /// <param name="amount">The amount the player gets healed by</param>
+        public void Heal(int amount)
+        {
+            ChangePlayerHealth(amount);
+
+            //-------
+            _healed = true;
+            gameObjectRenderer.material = _healMarkerMaterial;
+            //-------
+
         }
 
         public void Die()

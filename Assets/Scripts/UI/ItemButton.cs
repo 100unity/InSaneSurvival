@@ -66,11 +66,17 @@ namespace UI
         /// </summary>
         public void OnClick() 
         {
-            if (_item.Use()) 
+            if (_item is Consumable)
             {
-                if (_item is Consumable) _inventory.Remove(_item);
-                //else if (item is Equipable) 
-            } 
+                if (((Consumable)_item).Use())
+                {
+                    _inventory.Remove(_item);
+                }
+            }
+            else if (_item is Equipable)
+            {
+                ((Equipable)_item).Use();
+            }
         }
     }
 }
