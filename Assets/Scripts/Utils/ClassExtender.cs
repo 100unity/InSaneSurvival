@@ -1,5 +1,8 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Utils
 {
@@ -28,6 +31,24 @@ namespace Utils
                 instances[i] = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guids[i]));
 
             return instances;
+        }
+
+        public static T FindUIElement<T>(this GraphicRaycaster graphicRaycaster, PointerEventData eventData,
+            T elementToIgnore = null) where T : class
+        {
+            List<RaycastResult> results = new List<RaycastResult>();
+            graphicRaycaster.Raycast(eventData, results);
+            foreach (RaycastResult result in results)
+            {
+                if (!result.gameObject.TryGetComponent(out T element))
+                    continue;
+                // Ignore elementToIgnore
+                if (elementToIgnore == element)
+                    continue;
+                return element;
+            }
+
+            return null;
         }
     }
 }

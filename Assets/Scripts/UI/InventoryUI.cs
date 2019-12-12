@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Interfaces;
 using Inventory;
 using UnityEngine;
 
@@ -28,7 +25,7 @@ namespace UI
         /// <param name="amount">The amount to be added/removed</param>
         private void ItemsUpdated(Item item, int amount)
         {
-            if(amount > 0)
+            if (amount > 0)
                 AddItem(item, amount);
             else
                 RemoveItem(item, -amount);
