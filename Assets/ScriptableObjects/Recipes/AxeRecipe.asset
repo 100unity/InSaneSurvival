@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: AxeRecipe
   m_EditorClassIdentifier: 
   neededItems:
-  - item: {fileID: 11400000, guid: d8fe35b57543744269d9b1baf2f0ba8a, type: 2}
-    amount: 3
   - item: {fileID: 11400000, guid: 1c830d87ada9ca948b1dbff397196818, type: 2}
+    amount: 3
+  - item: {fileID: 11400000, guid: d8fe35b57543744269d9b1baf2f0ba8a, type: 2}
     amount: 2
   createdItems:
-  - item: {fileID: 11400000, guid: 5c29c6abe05d143f192281d45d0292e3, type: 2}
+  - item: {fileID: 11400000, guid: b4c5c309ebbae274aa3f6dd850867d62, type: 2}
     amount: 1
   recipeName: 

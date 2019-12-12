@@ -182,7 +182,7 @@ namespace Entity.Player
         {
             base.Move(hit.point);
             // Create click point effect
-            Instantiate(clickEffect, hit.point + Vector3.up * 5, Quaternion.identity);
+            Instantiate(clickEffect, hit.point, Quaternion.identity);
 
             OnPlayerPositionUpdated?.Invoke(transform.position);
         }
