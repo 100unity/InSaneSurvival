@@ -14,11 +14,6 @@ namespace Utils.ElementInteraction
     public class Draggable : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         /// <summary>
-        /// An event to be executed on <see cref="LateUpdate"/>
-        /// </summary>
-        public UnityAction executeOnLateUpdate;
-
-        /// <summary>
         /// Will be triggered when the user stops dragging
         /// </summary>
         public event DragDelegate OnEndDragging;
@@ -35,6 +30,11 @@ namespace Utils.ElementInteraction
         /// </summary>
         public GraphicRaycaster GraphicRaycaster { get; private set; }
 
+        /// <summary>
+        /// An event to be executed on <see cref="LateUpdate"/>
+        /// </summary>
+        private UnityAction _executeOnLateUpdate;
+        
         /// <summary>
         /// Gets the GraphicRayCaster from the canvas
         /// </summary>
@@ -56,8 +56,8 @@ namespace Utils.ElementInteraction
         /// </summary>
         private void LateUpdate()
         {
-            executeOnLateUpdate?.Invoke();
-            executeOnLateUpdate = null;
+            _executeOnLateUpdate?.Invoke();
+            _executeOnLateUpdate = null;
         }
 
         /// <summary>
@@ -72,6 +72,8 @@ namespace Utils.ElementInteraction
         /// <param name="eventData"></param>
         public void OnEndDrag(PointerEventData eventData) => OnEndDragging?.Invoke(eventData);
 
+        public void SetExecuteOnLateUpdateAction(UnityAction onLateUpdate) => this._executeOnLateUpdate = onLateUpdate;
+        
         /// <summary>
         /// Reset the elements position to the old position
         /// </summary>

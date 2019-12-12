@@ -30,7 +30,7 @@ namespace Utils.ElementInteraction
         private void Swap(PointerEventData eventData)
         {
             // Reset position by default
-            _draggable.executeOnLateUpdate = _draggable.ResetPosition;
+            _draggable.SetExecuteOnLateUpdateAction(_draggable.ResetPosition);
 
             Swappable otherSwappable = _draggable.GraphicRaycaster.FindUIElement(eventData, this);
             // No swappable, nothing to do
@@ -42,7 +42,7 @@ namespace Utils.ElementInteraction
             otherSwappable._draggable.UpdatePosition(_draggable.OldPosition);
             _draggable.UpdatePosition(otherPosition);
             // Remove default position-reset
-            _draggable.executeOnLateUpdate = null;
+            _draggable.SetExecuteOnLateUpdateAction(null);
         }
     }
 }

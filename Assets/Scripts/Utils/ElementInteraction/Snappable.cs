@@ -30,7 +30,7 @@ namespace Utils.ElementInteraction
         private void Snap(PointerEventData eventData)
         {
             // Reset position by default
-            _draggable.executeOnLateUpdate = _draggable.ResetPosition;
+            _draggable.SetExecuteOnLateUpdateAction(_draggable.ResetPosition);
 
             SnapPoint snapPoint = _draggable.GraphicRaycaster.FindUIElement<SnapPoint>(eventData);
             Draggable otherDraggable = _draggable.GraphicRaycaster.FindUIElement(eventData, _draggable);
@@ -41,7 +41,7 @@ namespace Utils.ElementInteraction
             // Get new position and set to current
             _draggable.UpdatePosition(snapPoint.transform.position);
             // Remove default position-reset
-            _draggable.executeOnLateUpdate = null;
+            _draggable.SetExecuteOnLateUpdateAction(null);
         }
     }
 }
