@@ -57,8 +57,8 @@ namespace UI
             itemButton.Icon.sprite = item.Icon;
             itemButton.NameLabel.text = item.name;
             itemButton.Count = 1;
-            itemButton._item = item;
-            itemButton._inventory = inventory;
+            itemButton.item = item;
+            itemButton.inventory = inventory;
             _itemStacks[item] = itemButton;
         }
 

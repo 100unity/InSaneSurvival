@@ -17,10 +17,10 @@ namespace UI
         public TextMeshProUGUI NameLabel => nameLabel;
         
         [HideInInspector]
-        public Item _item;
+        public Item item;
 
         [HideInInspector]
-        public InventoryController _inventory;
+        public InventoryController inventory;
 
         private Button _button;
 
@@ -47,22 +47,25 @@ namespace UI
         /// If the button is clicked, the item saved in the _item field is used. Consumables are going to be removed
         /// from the inventory.
         /// </summary>
-        public void OnClick() 
+        public void OnClick()
         {
-            if (_item is Consumable consumable)
+            switch (item)
             {
-                if (consumable.Use())
+                case Consumable consumable:
                 {
-                    _inventory.Remove(_item);
+                    if (consumable.Use())
+                    {
+                        inventory.RemoveItem(item);
+                    }
+
+                    break;
                 }
-            }
-            else if (_item is Equipable equipable)
-            {
-                equipable.Use();
-            }
-            else
-            {
-                _item.Use();
+                case Equipable equipable:
+                    equipable.Use();
+                    break;
+                default:
+                    item.Use();
+                    break;
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using AbstractClasses;
+﻿using AbstractClasses;
 using Remote;
 using UnityEngine;
 
@@ -29,17 +28,14 @@ namespace Entity.Player
         // ------temp for hit animation------
         [Tooltip("The time the object should be marked as hit after being hit")]
         [SerializeField]
-        private float hitMarkTime;
+        private float healMarkTime;
         
         [Tooltip("The MeshRenderer of the graphics object of the player")]
         [SerializeField]
-        private MeshRenderer gameObjectRenderer;
+        private MeshRenderer meshRenderer;
 
         private Material _prevMat;
-        private Material _hitMarkerMaterial;
         private Material _healMarkerMaterial;
-        private float _timer;
-        private bool _hit;
         private bool _healed;
         private float _healTimer;
         // ----------
@@ -61,12 +57,9 @@ namespace Entity.Player
             OnPlayerHydrationUpdate?.Invoke(hydration);
             OnPlayerHydrationUpdate?.Invoke(sanity);
             // ------------
-            _hitMarkerMaterial = new Material(Shader.Find("Standard"));
-            _hitMarkerMaterial.color = Color.red;
-            _healMarkerMaterial = new Material(Shader.Find("Standard"));
-            _healMarkerMaterial.color = Color.magenta;
+            _healMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.magenta};
             // just put initial mat here
-            _prevMat = gameObjectRenderer.material;
+            _prevMat = meshRenderer.material;
             // ------------
         }
 
@@ -89,16 +82,17 @@ namespace Entity.Player
         /// <summary>
         /// Changes the objects color back to normal after being healed.
         /// </summary>
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             if (!_healed) return;
             _healTimer += Time.deltaTime;
 
-            if (_healTimer > hitMarkTime)
+            if (_healTimer > healMarkTime)
             {
                 _healed = false;
                 _healTimer = 0;
-                gameObjectRenderer.material = _prevMat;
+                meshRenderer.material = _prevMat;
             }
         }
 
@@ -173,7 +167,7 @@ namespace Entity.Player
 
             //-------
             _healed = true;
-            gameObjectRenderer.material = _healMarkerMaterial;
+            meshRenderer.material = _healMarkerMaterial;
             //-------
 
         }
