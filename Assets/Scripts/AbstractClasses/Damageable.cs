@@ -48,7 +48,6 @@ namespace AbstractClasses
         }
 
         /// <summary>
-        /// Deals damage.
         /// Marks the player as hit after being hit.
         /// </summary>
         /// <param name="damage">The damage dealt to player</param>

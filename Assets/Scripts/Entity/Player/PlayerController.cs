@@ -43,7 +43,7 @@ namespace Entity.Player
 
         public delegate void PlayerPositionChanged(Vector3 newPosition);
 
-        public static event PlayerPositionChanged OnPlayerPositionUpdated;
+        public static event PlayerPositionChanged OnPlayerPositionUpdate;
 
         //Component references
         private Camera _camera;
@@ -184,7 +184,7 @@ namespace Entity.Player
             // Create click point effect
             Instantiate(clickEffect, hit.point, Quaternion.identity);
 
-            OnPlayerPositionUpdated?.Invoke(transform.position);
+			OnPlayerPositionUpdate?.Invoke(transform.position);
         }
 
         /// <summary>

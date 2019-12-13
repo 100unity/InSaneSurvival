@@ -21,17 +21,36 @@ namespace Entity.Player
         [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
         private int hydration;
 
-        public static event PlayerStateChanged OnPlayerHealthUpdated;
-        public static event PlayerStateChanged OnPlayerSaturationUpdated;
-        public static event PlayerStateChanged OnPlayerHydrationUpdated;
+        [Tooltip("100: sane, 0: insane")]
+        [Range(0, 100)]
+        [SerializeField]
+        private int sanity;
+
+        public int Sanity { get { return sanity; } }
+
+        public static event PlayerStateChanged OnPlayerHealthUpdate;
+        public static event PlayerStateChanged OnPlayerSaturationUpdate;
+        public static event PlayerStateChanged OnPlayerHydrationUpdate;
+        public static event PlayerStateChanged OnPlayerSanityUpdate;
         public static event PlayerIsDead OnPlayerDeath;
-        
+
+        protected override void Awake()
+        {
+            base.Awake();
+            // send event on initial values
+            OnPlayerHealthUpdate?.Invoke(health);
+            OnPlayerSaturationUpdate?.Invoke(saturation);
+            OnPlayerHydrationUpdate?.Invoke(hydration);
+            OnPlayerHydrationUpdate?.Invoke(sanity);
+        }
+
 
         private void OnEnable()
         {
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
+            RemoteStatusHandler.OnPlayerSanityRemoteUpdate += ChangePlayerSanity;
         }
 
         private void OnDisable()
@@ -39,6 +58,7 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate -= ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
+            RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
         }
 
         private void ChangePlayerHealth(int changeBy)
@@ -52,9 +72,8 @@ namespace Entity.Player
             }
 
             health = updatedValue;
-            
             //throws an event with the new health value as a parameter
-            OnPlayerHealthUpdated?.Invoke(updatedValue);
+            OnPlayerHealthUpdate?.Invoke(updatedValue);
         }
 
         public void ChangePlayerSaturation(int changeBy)
@@ -68,7 +87,7 @@ namespace Entity.Player
             }
 
             saturation = updatedValue;
-            OnPlayerSaturationUpdated?.Invoke(updatedValue);
+            OnPlayerSaturationUpdate?.Invoke(updatedValue);
         }
 
         public void ChangePlayerHydration(int changeBy)
@@ -82,7 +101,13 @@ namespace Entity.Player
             }
 
             hydration = updatedValue;
-            OnPlayerHydrationUpdated?.Invoke(updatedValue);
+            OnPlayerHydrationUpdate?.Invoke(updatedValue);
+        }
+
+        public void ChangePlayerSanity(int changeBy)
+        {
+            sanity = Mathf.Clamp(sanity + changeBy, 0, 100);
+            OnPlayerSanityUpdate?.Invoke(sanity);
         }
 
         /// <summary>

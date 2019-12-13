@@ -318,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6126187404098910139}
   - component: {fileID: 4800914933927852534}
+  - component: {fileID: 8049901093428442674}
   - component: {fileID: 6126187404098910141}
   - component: {fileID: 6126187404098910138}
   - component: {fileID: 6126187404098910140}
@@ -365,6 +366,36 @@ MonoBehaviour:
   health: 100
   saturation: 100
   hydration: 100
+  sanity: 100
+--- !u!114 &8049901093428442674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6126187404098910136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e962a3e486bf84bb8321da94c7b25a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sanityMath:
+    severity: 0.00005
+    lowImpactSeverity: 0.4
+    gainFactor: 0.3
+    stats:
+    - Type: 0
+      Boundary: 80
+      Severity: 0.75
+      Rate: 0
+    - Type: 1
+      Boundary: 60
+      Severity: 0.25
+      Rate: 0
+    - Type: 2
+      Boundary: 60
+      Severity: 0.35
+      Rate: 0
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,7 +443,7 @@ NavMeshAgent:
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
@@ -768,11 +799,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
-    - target: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 8160492536199500296, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_Name
@@ -883,6 +909,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 2456554992891907293, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_IsActive
@@ -935,6 +966,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
+    - target: {fileID: 6367347880368899950, guid: d04fb0230baa9d84fb848b4b92f33456,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerGUI
+      objectReference: {fileID: 0}
     - target: {fileID: 6367347880368899858, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1039,11 +1075,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6367347880368899950, guid: d04fb0230baa9d84fb848b4b92f33456,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerGUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d04fb0230baa9d84fb848b4b92f33456, type: 3}
