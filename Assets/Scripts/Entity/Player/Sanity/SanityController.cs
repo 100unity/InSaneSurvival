@@ -4,33 +4,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
-using static Utils.Enums;
 
 namespace Entity.Player.Sanity
 {
+    [RequireComponent(typeof(PlayerState))]
     public class SanityController : MonoBehaviour
     {
+        public enum StatType { Health, Saturation, Hydration };
         public delegate void PlayerStateChanged(int newValue);
-
-        [Tooltip("100: sane, 0: insane")]
-        [Range(0, 100)]
-        [SerializeField]
-        private int sanity;
 
         [Tooltip("Handles the math and holds stats influencing the player's sanity.")]
         [SerializeField]
         private SanityMath sanityMath;
-        
-        public static event PlayerStateChanged OnPlayerSanityUpdate;
-        
+                
         // builds up to 1 or -1 for the next tick
         private float _nextTick;
-        
+        private PlayerState _playerState;
 
+        private void Awake()
+        {
+            _playerState = GetComponent<PlayerState>();
+        }
+        
         private void OnEnable()
         {
-            RemoteStatusHandler.OnPlayerSanityRemoteUpdate += ChangePlayerSanity;
-
             PlayerState.OnPlayerHealthUpdate += (int health) => sanityMath.InfluenceSanityByStat(StatType.Health, health);
             PlayerState.OnPlayerSaturationUpdate += (int saturation) => sanityMath.InfluenceSanityByStat(StatType.Saturation, saturation);
             PlayerState.OnPlayerHydrationUpdate += (int hydration) => sanityMath.InfluenceSanityByStat(StatType.Hydration, hydration);
@@ -38,8 +35,6 @@ namespace Entity.Player.Sanity
 
         private void OnDisable()
         {
-            RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
-
             PlayerState.OnPlayerHealthUpdate -= (int health) => sanityMath.InfluenceSanityByStat(StatType.Health, health);
             PlayerState.OnPlayerSaturationUpdate -= (int saturation) => sanityMath.InfluenceSanityByStat(StatType.Saturation, saturation);
             PlayerState.OnPlayerHydrationUpdate -= (int hydration) => sanityMath.InfluenceSanityByStat(StatType.Hydration, hydration);
@@ -53,11 +48,7 @@ namespace Entity.Player.Sanity
             TickSanity();
         }
 
-        private void ChangePlayerSanity(int changeBy)
-        {
-            sanity = Mathf.Clamp(sanity + changeBy, 0, 100);
-            OnPlayerSanityUpdate?.Invoke(sanity);
-        }
+        
 
         /// <summary>
         /// Sums up a tick weighting the total change rate with <see cref="severity"/>. 
@@ -67,7 +58,7 @@ namespace Entity.Player.Sanity
         private void TickSanity()
         {
             _nextTick += sanityMath.GetCurrentChange();
-            if (sanity == 100 && _nextTick > 0)
+            if (_playerState.Sanity == 100 && _nextTick > 0)
             {
                 // don't build up a positive tick value when sanity == 100
                 _nextTick = 0;
@@ -75,16 +66,14 @@ namespace Entity.Player.Sanity
             }
             if (_nextTick >= 1)
             {
-                ChangePlayerSanity(1);
+                _playerState.ChangePlayerSanity(1);
                 _nextTick = 0;
             }
             else if (_nextTick <= -1)
             {
-                ChangePlayerSanity(-1);
+                _playerState.ChangePlayerSanity(-1);
                 _nextTick = 0;
             }
         }
-        
-        
     }
 }

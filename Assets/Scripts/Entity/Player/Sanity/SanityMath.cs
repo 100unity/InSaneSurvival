@@ -2,7 +2,6 @@
 using System.Linq;
 using UnityEngine;
 using Utils;
-using static Utils.Enums;
 
 namespace Entity.Player.Sanity
 {
@@ -47,7 +46,7 @@ namespace Entity.Player.Sanity
         /// </summary>
         /// <param name="statType">Type of stat</param>
         /// <param name="value">Current value of stat</param>
-        public void InfluenceSanityByStat(StatType statType, int value)
+        public void InfluenceSanityByStat(SanityController.StatType statType, int value)
         {
             Stat stat = GetStatByType(statType);
             if (value < stat.Boundary)
@@ -83,7 +82,7 @@ namespace Entity.Player.Sanity
         /// <summary>
         /// Gets the stat from <see cref="stats"/>
         /// </summary>
-        private Stat GetStatByType(StatType statType)
+        private Stat GetStatByType(SanityController.StatType statType)
         {
             return stats.Where(s => s.Type == statType).FirstOrDefault();
         }

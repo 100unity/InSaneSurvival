@@ -4,10 +4,5 @@ using UnityEngine;
 
 namespace Utils
 {
-    public class Enums : MonoBehaviour
-    {
-        public enum StatType { Health, Saturation, Hydration };
-    
-    }
 }
 

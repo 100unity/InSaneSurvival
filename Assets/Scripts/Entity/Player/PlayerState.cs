@@ -21,9 +21,17 @@ namespace Entity.Player
         [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
         private int hydration;
 
+        [Tooltip("100: sane, 0: insane")]
+        [Range(0, 100)]
+        [SerializeField]
+        private int sanity;
+
+        public int Sanity { get { return sanity; } }
+
         public static event PlayerStateChanged OnPlayerHealthUpdate;
         public static event PlayerStateChanged OnPlayerSaturationUpdate;
         public static event PlayerStateChanged OnPlayerHydrationUpdate;
+        public static event PlayerStateChanged OnPlayerSanityUpdate;
         public static event PlayerIsDead OnPlayerDeath;
 
         protected override void Awake()
@@ -33,6 +41,7 @@ namespace Entity.Player
             OnPlayerHealthUpdate?.Invoke(health);
             OnPlayerSaturationUpdate?.Invoke(saturation);
             OnPlayerHydrationUpdate?.Invoke(hydration);
+            OnPlayerHydrationUpdate?.Invoke(sanity);
         }
 
 
@@ -41,6 +50,7 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
+            RemoteStatusHandler.OnPlayerSanityRemoteUpdate += ChangePlayerSanity;
         }
 
         private void OnDisable()
@@ -48,6 +58,7 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate -= ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
+            RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
         }
 
         private void ChangePlayerHealth(int changeBy)
@@ -91,6 +102,12 @@ namespace Entity.Player
 
             hydration = updatedValue;
             OnPlayerHydrationUpdate?.Invoke(updatedValue);
+        }
+
+        public void ChangePlayerSanity(int changeBy)
+        {
+            sanity = Mathf.Clamp(sanity + changeBy, 0, 100);
+            OnPlayerSanityUpdate?.Invoke(sanity);
         }
 
         /// <summary>

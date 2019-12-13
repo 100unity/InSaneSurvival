@@ -27,7 +27,7 @@ namespace Remote
             PlayerState.OnPlayerHealthUpdate += HealthUpdated;
             PlayerState.OnPlayerSaturationUpdate += SaturationUpdated;
             PlayerState.OnPlayerHydrationUpdate += HydrationUpdated;
-            SanityController.OnPlayerSanityUpdate += SanityUpdated;
+            PlayerState.OnPlayerSanityUpdate += SanityUpdated;
             PlayerController.OnPlayerPositionUpdate += PositionUpdated;
         }
         
@@ -36,7 +36,7 @@ namespace Remote
             PlayerState.OnPlayerHealthUpdate -= HealthUpdated;
             PlayerState.OnPlayerSaturationUpdate -= SaturationUpdated;
             PlayerState.OnPlayerHydrationUpdate -= HydrationUpdated;
-            SanityController.OnPlayerSanityUpdate -= SanityUpdated;
+            PlayerState.OnPlayerSanityUpdate -= SanityUpdated;
             PlayerController.OnPlayerPositionUpdate -= PositionUpdated;
         }
 
