@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Wood
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  maxStackSize: 0
+  maxStackSize: 64

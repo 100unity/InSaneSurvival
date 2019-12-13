@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Inventory
 {
@@ -9,6 +7,7 @@ namespace Inventory
     {
         [SerializeField] private Sprite icon;
         [SerializeField] private int maxStackSize;
+
         public Sprite Icon => icon;
         public int MaxStackSize => maxStackSize;
 
@@ -19,5 +18,3 @@ namespace Inventory
         }
     }
 }
-
-

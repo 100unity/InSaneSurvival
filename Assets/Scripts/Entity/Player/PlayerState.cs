@@ -1,13 +1,15 @@
-﻿using Interfaces;
+﻿using System;
+using AbstractClasses;
 using Remote;
 using UnityEngine;
 
 namespace Entity.Player
 {
     
-    public class PlayerState : MonoBehaviour, IDamageable
+    public class PlayerState : Damageable
     {
         public delegate void PlayerStateChanged(int newValue);
+        public delegate void PlayerIsDead();
         
         //Player State values
         [Tooltip("100 - full health, 0 - dead")] [SerializeField] [Range(0, 100)] 
@@ -19,12 +21,16 @@ namespace Entity.Player
         [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
         private int hydration;
 
-
+        [Tooltip("100: sane, 0: insane")]
+        [Range(0, 100)]
+        [SerializeField]
+        private int sanity;
+        
         // ------temp for hit animation------
         [Tooltip("The time the object should be marked as hit after being hit")]
         [SerializeField]
         private float hitMarkTime;
-
+        
         [Tooltip("The MeshRenderer of the graphics object of the player")]
         [SerializeField]
         private MeshRenderer gameObjectRenderer;
@@ -38,13 +44,22 @@ namespace Entity.Player
         private float _healTimer;
         // ----------
 
+        public int Sanity => sanity;
 
-        public static event PlayerStateChanged OnPlayerHealthUpdated;
-        public static event PlayerStateChanged OnPlayerSaturationUpdated;
-        public static event PlayerStateChanged OnPlayerHydrationUpdated;
+        public static event PlayerStateChanged OnPlayerHealthUpdate;
+        public static event PlayerStateChanged OnPlayerSaturationUpdate;
+        public static event PlayerStateChanged OnPlayerHydrationUpdate;
+        public static event PlayerStateChanged OnPlayerSanityUpdate;
+        public static event PlayerIsDead OnPlayerDeath;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            // send event on initial values
+            OnPlayerHealthUpdate?.Invoke(health);
+            OnPlayerSaturationUpdate?.Invoke(saturation);
+            OnPlayerHydrationUpdate?.Invoke(hydration);
+            OnPlayerHydrationUpdate?.Invoke(sanity);
             // ------------
             _hitMarkerMaterial = new Material(Shader.Find("Standard"));
             _hitMarkerMaterial.color = Color.red;
@@ -60,6 +75,7 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
+            RemoteStatusHandler.OnPlayerSanityRemoteUpdate += ChangePlayerSanity;
         }
 
         private void OnDisable()
@@ -67,34 +83,22 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate -= ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
+            RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
         }
 
         /// <summary>
-        /// Changes the objects color back to normal after being hit.
+        /// Changes the objects color back to normal after being healed.
         /// </summary>
         private void Update()
         {
-            if (_hit)
-            {
-                _timer += Time.deltaTime;
+            if (!_healed) return;
+            _healTimer += Time.deltaTime;
 
-                if (_timer > hitMarkTime)
-                {
-                    _hit = false;
-                    _timer = 0;
-                    gameObjectRenderer.material = _prevMat;
-                }
-            }
-            if (_healed)
+            if (_healTimer > hitMarkTime)
             {
-                _healTimer += Time.deltaTime;
-
-                if (_healTimer > hitMarkTime)
-                {
-                    _healed = false;
-                    _healTimer = 0;
-                    gameObjectRenderer.material = _prevMat;
-                }
+                _healed = false;
+                _healTimer = 0;
+                gameObjectRenderer.material = _prevMat;
             }
         }
 
@@ -103,16 +107,15 @@ namespace Entity.Player
         {
             int updatedValue = health + changeBy;
             if (updatedValue > 100) updatedValue = 100;
-            else if (updatedValue < 0)
+            else if (updatedValue <= 0)
             {
                 updatedValue = 0;
                 Die();
             }
 
             health = updatedValue;
-            
             //throws an event with the new health value as a parameter
-            OnPlayerHealthUpdated?.Invoke(updatedValue);
+            OnPlayerHealthUpdate?.Invoke(updatedValue);
         }
 
         public void ChangePlayerSaturation(int changeBy)
@@ -126,7 +129,7 @@ namespace Entity.Player
             }
 
             saturation = updatedValue;
-            OnPlayerSaturationUpdated?.Invoke(updatedValue);
+            OnPlayerSaturationUpdate?.Invoke(updatedValue);
         }
 
         public void ChangePlayerHydration(int changeBy)
@@ -140,24 +143,25 @@ namespace Entity.Player
             }
 
             hydration = updatedValue;
-            OnPlayerHydrationUpdated?.Invoke(updatedValue);
+            OnPlayerHydrationUpdate?.Invoke(updatedValue);
+        }
+
+        public void ChangePlayerSanity(int changeBy)
+        {
+            sanity = Mathf.Clamp(sanity + changeBy, 0, 100);
+            OnPlayerSanityUpdate?.Invoke(sanity);
         }
 
         /// <summary>
         /// Does damage to the player.
-        /// Marks the player as hit after being hit.
         /// </summary>
         /// <param name="damage">The damage dealt to player</param>
-        public void Hit(int damage)
+        public override void Hit(int damage)
         {
+            base.Hit(damage);
             ChangePlayerHealth(-damage);
-
-            //-------
-            _hit = true;
-            gameObjectRenderer.material = _hitMarkerMaterial;
-            //-------
         }
-
+        
         /// <summary>
         /// Heals the player by a specific amount.
         /// Marks the player as healed after being healed.
@@ -185,8 +189,9 @@ namespace Entity.Player
             return true;
         }
 
-        public void Die()
-        {
+        public override void Die()
+        {            
+            OnPlayerDeath?.Invoke();
             Debug.Log("Player is dead");
         }
     }
