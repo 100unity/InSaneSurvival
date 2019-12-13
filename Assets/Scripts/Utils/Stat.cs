@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Entity.Player.Sanity;
+using System;
 using UnityEngine;
-using static Utils.Enums;
 
 namespace Utils
 {
@@ -9,7 +9,7 @@ namespace Utils
     {
         [Tooltip("The type of the stat")]
         [SerializeField]
-        public StatType Type;
+        public SanityController.StatType Type;
 
         [Tooltip("The stat boundary for sanity impact. At this value, the stat doesn't influence sanity (neither positively nor negatively)")]
         [SerializeField]
@@ -20,6 +20,7 @@ namespace Utils
         public float Severity;
 
         // the rate at which the stat influences sanity
+        [HideInInspector]
         public float Rate;
     }
 
