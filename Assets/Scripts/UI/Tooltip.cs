@@ -6,23 +6,23 @@ namespace UI
 {
     public class Tooltip : MonoBehaviour
     {
-        [Tooltip("Color change of the interacted object.")]
-        public Color interactionColor = new Color(0.38f, 0.97f, 0.44f);
+        [Tooltip("Highlight color when hover over object.")]
+        public Color highlightColor = new Color(0.38f, 0.97f, 0.44f);
 
         [Tooltip("Fade speed of the color change (slow -> quick)")]
-        public float interactionSpeed = 4f;
+        public float highlightSpeed = 4f;
 
         [Tooltip("Show a text over the interacted object.")]
         public bool showTooltip = true;
 
-        [Tooltip("Show a predefined UI Panel over the interacted object.")]
+        [Tooltip("Show a predefined UI Panel over the interacted object (intend to use for items in inventory)")]
         public GameObject tooltipUIPanel;
 
-        [Tooltip("Show the tooltip over the object instead of over the mouse.")]
+        [Tooltip("Show the tooltip fixed the object instead of following the mouse.")]
         public bool fixedToTheObject = true;
 
         [Tooltip("Position of the tooltip showed over the interacted object.")]
-        public Vector2 tooltipPosition = new Vector2(-50f, 30f);
+        public Vector2 tooltipPosition = new Vector2(-50f, -80f);
 
         [Tooltip("Text to show over the interacted object.")]
         public string tooltipText = "";
@@ -115,9 +115,9 @@ namespace UI
             { // Fade of the interaction enter color
                 foreach (Material material in allMaterials)
                 {
-                    material.color = Color.Lerp(material.color, interactionColor, t);
+                    material.color = Color.Lerp(material.color, highlightColor, t);
                 }
-                t += interactionSpeed * Time.deltaTime;
+                t += highlightSpeed * Time.deltaTime;
             }
             else if (!over && t < 1f)
             { // Fade of the interaction exit color
@@ -125,20 +125,20 @@ namespace UI
                 {
                     material.color = Color.Lerp(material.color, baseColor[System.Array.IndexOf(allMaterials, material)], t);
                 }
-                t += interactionSpeed * Time.deltaTime;
+                t += highlightSpeed * Time.deltaTime;
             }
         }
 
         // Called when mouse over this object
         private void OnMouseEnter()
         {
-            interaction_enter();
+            beginTooltip();
         }
 
         // Called when mouse exit this object
         private void OnMouseExit()
         {
-            interaction_exit();
+            endTooltip();
         }
 
         // Tooltip creation
@@ -180,8 +180,8 @@ namespace UI
             }
         }
 
-        // Begin the interaction system (show tooltip and focus color of this object)
-        public void interaction_enter()
+        // Show tooltip and focus color of this object
+        public void beginTooltip()
         {
             t = 0f;
             over = true;
@@ -193,8 +193,8 @@ namespace UI
             }
         }
 
-        // End the interaction system (hide tooltip and focus color of this object)
-        public void interaction_exit()
+        // Hide tooltip and focus color of this object
+        public void endTooltip()
         {
             t = 0f;
             over = false;
