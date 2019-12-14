@@ -12,7 +12,7 @@ namespace Entity.Enemy
     {
         [Tooltip("The area the enemy wanders in.")]
         [SerializeField]
-        private WanderArea wanderArea;
+        private Area wanderArea;
 
         [Tooltip("The frequency at which the NPC walks to a new point in the wander area.")]
         [SerializeField]
@@ -20,7 +20,7 @@ namespace Entity.Enemy
 
         [Tooltip("Whether the area should be fixed on enable.")]
         [SerializeField]
-        public bool freezeArea;
+        private bool freezeArea;
 
         [Tooltip("The ground the NPC should walk on.")]
         [SerializeField]
@@ -70,7 +70,7 @@ namespace Entity.Enemy
         }
 
         /// <summary>
-        /// Gets the player object and freezes wander area if necessary.
+        /// Freezes wander area if necessary.
         /// </summary>
         private void OnEnable()
         {

@@ -11,7 +11,7 @@ namespace Constants
             public const int DEATH = 2;
         }
 
-        public static class Enemy
+        public static class Utils
         {
             // maxDistance for mapping random points onto the NavMesh
             public const float MAX_NAVMESH_MAPPING_DISTANCE = 1.0f;

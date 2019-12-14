@@ -59,5 +59,17 @@ namespace Utils
 
             return null;
         }
+
+        /// <summary>
+        /// Checks if an object is visible from camera's perspective.
+        /// </summary>
+        /// <param name="renderer">The renderer of the gameobject to be checked</param>
+        /// <param name="camera">The camera to use</param>
+        /// <returns></returns>
+        public static bool InFrustum(this Renderer renderer, Camera camera)
+        {
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
+            return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
+        }        
     }
 }
