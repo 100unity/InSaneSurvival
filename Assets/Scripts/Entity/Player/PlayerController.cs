@@ -151,7 +151,6 @@ namespace Entity.Player
 
                 if (objectHit.GetComponent<Damageable>() is Damageable damageable)
                 {
-                    Debug.Log("ATTACK");
                     _interactLogic.RemoveFocus();
                     // implementation NOT capable of area damage
                     _attackLogic.StartAttack(objectHit);
