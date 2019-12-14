@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 namespace Utils
 {
+    /// <summary>
+    /// Can map random points onto the NavMesh.
+    /// </summary>
     public class NavMeshMapper
     {
         /// <summary>

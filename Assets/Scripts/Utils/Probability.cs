@@ -2,14 +2,14 @@
 
 namespace Utils
 {
+    /// <summary>
+    /// Utility class capable of dealing with small probabilities.
+    /// </summary>
     public class Probability
     {
         private Random _random;
 
-        public Probability()
-        {
-            _random = new Random();
-        }
+        public Probability() => _random = new Random();
 
         /// <summary>
         /// Returns true with a certain probability.
@@ -31,7 +31,7 @@ namespace Utils
             {
                 return temp < percentage;
             }
-            else // < 1% -----> min: 0.01%
+            else // < 1% -----> new min: 0.01%
             {
                 if (temp == 0) // hit the one percent
                 {
