@@ -17,11 +17,6 @@ namespace Interactables
 
         [SerializeField] private Transform player;    // Reference to the player transform
 
-        private void Start()
-        {
-            radius = 3f;
-        }
-
         private void Update()
         {
             if (isFocus)    // If currently being focused

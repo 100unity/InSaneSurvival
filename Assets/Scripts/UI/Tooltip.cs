@@ -7,54 +7,54 @@ namespace UI
     public class Tooltip : MonoBehaviour
     {
         [Tooltip("Highlight color when hover over object.")]
-        public Color highlightColor = new Color(0.38f, 0.97f, 0.44f);
+        [SerializeField] private Color highlightColor = new Color(0.38f, 0.97f, 0.44f);
 
         [Tooltip("Fade speed of the color change (slow -> quick)")]
-        public float highlightSpeed = 4f;
+        [SerializeField] private float highlightSpeed = 4f;
 
         [Tooltip("Show a text over the interacted object.")]
-        public bool showTooltip = true;
+        [SerializeField] private bool hideTooltip;
 
         [Tooltip("Show a predefined UI Panel over the interacted object (intend to use for items in inventory)")]
-        public GameObject tooltipUIPanel;
+        [SerializeField] private GameObject tooltipUIPanel;
 
         [Tooltip("Show the tooltip fixed the object instead of following the mouse.")]
-        public bool fixedToTheObject = true;
+        [SerializeField] private bool fixedToTheObject = true;
 
         [Tooltip("Position of the tooltip showed over the interacted object.")]
-        public Vector2 tooltipPosition = new Vector2(-50f, -80f);
+        [SerializeField] private Vector2 tooltipPosition = new Vector2(-50f, -80f);
 
         [Tooltip("Text to show over the interacted object.")]
-        public string tooltipText = "";
+        [SerializeField] private string tooltipText;
 
         [Tooltip("Color of the text showed over the interacted object.")]
-        public Color tooltipColor = new Color(0.9f, 0.9f, 0.9f);
+        [SerializeField] private Color tooltipColor = new Color(0.9f, 0.9f, 0.9f);
 
         [Tooltip("Size of the text showed over the interacted object.")]
-        public int tooltipSize = 20;
+        [SerializeField] private int tooltipSize = 20;
 
         [Tooltip("Resize the text, relative to the distance between the object and the camera.")]
-        public bool textResized = false;
+        [SerializeField] private bool textResized;
 
         [Tooltip("Font of the text showed over the interacted object.")]
-        public Font tooltipFont;
+        [SerializeField] private Font tooltipFont;
 
-        public enum TooltipAlignment { Center, Left, Right }
+        [SerializeField] private enum TooltipAlignment { Center, Left, Right }
 
         [Tooltip("Alignment of the text showed over the interacted object.")]
-        public TooltipAlignment tooltipAlignment;
+        [SerializeField] private TooltipAlignment tooltipAlignment;
 
         [Tooltip("Color of the text shadow showed over the interacted object.")]
-        public Color tooltipShadowColor = new Color(0.1f, 0.1f, 0.1f);
+        [SerializeField] private Color tooltipShadowColor = new Color(0.1f, 0.1f, 0.1f);
 
         [Tooltip("Position of the text shadow showed over the interacted object.")]
-        public Vector2 tooltipShadowPosition = new Vector2(-2f, -2f);
+        [SerializeField] private Vector2 tooltipShadowPosition = new Vector2(-2f, -2f);
 
         [Tooltip("Texture for the icon beside tooltip")]
-        public Texture image;
+        [SerializeField] private Texture image;
 
         // Reference Components
-        private Renderer render;
+        private Renderer _renderer;
         private Material[] allMaterials;
         private Color[] baseColor;
         private float t = 0f;
@@ -65,13 +65,16 @@ namespace UI
         private Vector3 positionToScreen;
         private float cameraDistance;
 
+        private void Awake()
+        {
+            _renderer = GetComponent<Renderer>();
+        }
 
         // Initialization
         private void Start()
         {
             // Get all materials and all colors for supporting multi-materials object
-            render = GetComponent<Renderer>();
-            allMaterials = render.materials;
+            allMaterials = _renderer.materials;
             baseColor = new Color[allMaterials.Length];
             int temp_length = baseColor.Length;
             for (int i = 0; i < temp_length; i++)
@@ -80,7 +83,7 @@ namespace UI
             }
 
             // Start settings of the tooltip
-            if (showTooltip)
+            if (!hideTooltip)
             { // Tooltip text style customization
                 if (tooltipUIPanel != null)
                 { // Initialization of the UI Panel
@@ -111,7 +114,7 @@ namespace UI
         // Update once per frame
         private void Update()
         {
-            if (over && t < 1)
+            if (over && t < 1f)
             { // Fade in hightlight color
                 foreach (Material material in allMaterials)
                 {
@@ -145,7 +148,7 @@ namespace UI
         private void OnGUI()
         {
             // Display of text/tooltip that follows the mouse
-            if (showTooltip && !fixedToTheObject && over)
+            if (!hideTooltip && !fixedToTheObject && over)
             {
                 if (textResized)
                 {
@@ -161,7 +164,7 @@ namespace UI
                 }
             }
             // Display of text/tooltip that fixed to the object
-            else if (showTooltip && fixedToTheObject && over)
+            else if (!hideTooltip && fixedToTheObject && over)
             {
                 positionToScreen = Camera.main.WorldToScreenPoint(transform.position);
                 cameraDistance = Vector3.Distance(Camera.main.transform.position, this.transform.position);
