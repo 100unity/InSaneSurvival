@@ -112,7 +112,7 @@ namespace UI
         private void Update()
         {
             if (over && t < 1)
-            { // Fade of the interaction enter color
+            { // Fade in hightlight color
                 foreach (Material material in allMaterials)
                 {
                     material.color = Color.Lerp(material.color, highlightColor, t);
@@ -120,7 +120,7 @@ namespace UI
                 t += highlightSpeed * Time.deltaTime;
             }
             else if (!over && t < 1f)
-            { // Fade of the interaction exit color
+            { // Fade out highlight color
                 foreach (Material material in allMaterials)
                 {
                     material.color = Color.Lerp(material.color, baseColor[System.Array.IndexOf(allMaterials, material)], t);
