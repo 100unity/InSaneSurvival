@@ -37,7 +37,7 @@ public class RenderChecker : MonoBehaviour
             _isNew = false;
             if (_spawnRenderTimer < 0.1)
             {
-                Destroy(transform.gameObject);
+                Destroy(gameObject);
             }
             else
             {

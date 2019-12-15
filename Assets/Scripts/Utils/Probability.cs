@@ -14,7 +14,7 @@ namespace Utils
         /// <summary>
         /// Returns true with a certain probability.
         /// </summary>
-        /// <param name="probability">The probability to return true</param>
+        /// <param name="probability">The probability between 0 and 1 to return true</param>
         /// <returns></returns>
         public bool GetProbability(float probability)
         {
