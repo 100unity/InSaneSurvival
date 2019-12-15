@@ -20,7 +20,7 @@ namespace UI
         [SerializeField] private GameObject tooltipUIPanel;
 
         [Tooltip("Show the tooltip fixed the object instead of following the mouse.")]
-        [SerializeField] private bool fixedToTheObject = true;
+        [SerializeField] private bool followingMouseCursor;
 
         [Tooltip("Position of the tooltip showed over the interacted object.")]
         [SerializeField] private Vector2 tooltipPosition = new Vector2(-50f, -80f);
@@ -73,7 +73,9 @@ namespace UI
             }
         }
 
-        // Initialization
+        /// <summary>
+        /// Setting up the tooltip at start with color, shadow, text, size, font and alignment
+        /// </summary>
         private void Start()
         {
             // Start settings of the tooltip
@@ -105,7 +107,10 @@ namespace UI
             }
         }
 
-        // Update once per frame
+        /// <summary>
+        /// Checking if the mouse cursor is over the object and start fading the color in
+        /// and fading out when the cursor exit the object.
+        /// </summary>
         private void Update()
         {
             if (over && t < 1f)
@@ -138,11 +143,13 @@ namespace UI
             hide_Tooltip();
         }
 
-        // Tooltip creation
+        /// <summary>
+        /// Tooltip creation. This will automatically draw a Tooltip on position depends on what style we want.
+        /// </summary>
         private void OnGUI()
         {
             // Display of text/tooltip that follows the mouse
-            if (!hideTooltip && !fixedToTheObject && over)
+            if (!hideTooltip && followingMouseCursor && over)
             {
                 if (textResized)
                 {
@@ -158,7 +165,7 @@ namespace UI
                 }
             }
             // Display of text/tooltip that fixed to the object
-            else if (!hideTooltip && fixedToTheObject && over)
+            else if (!hideTooltip && !followingMouseCursor && over)
             {
                 positionToScreen = Camera.main.WorldToScreenPoint(transform.position);
                 cameraDistance = Vector3.Distance(Camera.main.transform.position, this.transform.position);
@@ -177,7 +184,9 @@ namespace UI
             }
         }
 
-        // Show tooltip and focus color of this object
+        /// <summary>
+        /// Show tooltip and focus color of this object
+        /// </summary>
         public void show_Tooltip()
         {
             t = 0f;
@@ -186,11 +195,13 @@ namespace UI
 
             if (tooltipUIPanel != null)
             {
-                Invoke("tooltipDelayOn", 0.05f);
+                Invoke(nameof(tooltipDelayOn), 0.05f);
             }
         }
 
-        // Hide tooltip and focus color of this object
+        /// <summary>
+        /// Hide tooltip and focus color of this object
+        /// </summary>
         public void hide_Tooltip()
         {
             t = 0f;
@@ -199,17 +210,21 @@ namespace UI
 
             if (tooltipUIPanel != null)
             {
-                Invoke("tooltipDelayOff", 0.05f);
+                Invoke(nameof(tooltipDelayOff), 0.05f);
             }
         }
 
-        // Delay for the tooltip display (on)
+        /// <summary>
+        /// Delay for the tooltip display (on)
+        /// </summary>
         private void tooltipDelayOn()
         {
             tooltipUIPanel.SetActive(true);
         }
 
-        // Delay for the tooltip display (off)
+        /// <summary>
+        /// Delay for the tooltip display (off)
+        /// </summary>
         void tooltipDelayOff()
         {
             tooltipUIPanel.SetActive(false);
