@@ -25,5 +25,14 @@ namespace Constants
             public static Color White = new Color(1, 1, 1, 1);
             public static Color Red = new Color(1f, 0.4f, 0.4f);
         }
+
+        public static class Tooltip
+        {
+            // Position of the text shadow
+            public static Vector2 TOOLTIP_SHADOW_POSITION = new Vector2(-2f, -2f);
+
+            // Color of the text shadow
+            public static Color TOOLTIP_SHADOW_COLOR = new Color(0.1f, 0.1f, 0.1f);
+        }
     }
 }

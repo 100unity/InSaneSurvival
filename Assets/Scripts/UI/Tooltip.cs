@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Constants;
 
 namespace UI
 {
@@ -28,7 +29,7 @@ namespace UI
         [SerializeField] private string tooltipText;
 
         [Tooltip("Color of the text showed over the interacted object.")]
-        [SerializeField] private Color tooltipColor = new Color(0.9f, 0.9f, 0.9f);
+        [SerializeField] private Color tooltipColor = Consts.Colors.White;
 
         [Tooltip("Size of the text showed over the interacted object.")]
         [SerializeField] private int tooltipSize = 20;
@@ -44,22 +45,16 @@ namespace UI
         [Tooltip("Alignment of the text showed over the interacted object.")]
         [SerializeField] private TooltipAlignment tooltipAlignment;
 
-        [Tooltip("Color of the text shadow showed over the interacted object.")]
-        [SerializeField] private Color tooltipShadowColor = new Color(0.1f, 0.1f, 0.1f);
-
-        [Tooltip("Position of the text shadow showed over the interacted object.")]
-        [SerializeField] private Vector2 tooltipShadowPosition = new Vector2(-2f, -2f);
-
-        [Tooltip("Texture for the icon beside tooltip")]
+        [Tooltip("Texture for the icon beside text tooltip")]
         [SerializeField] private Texture image;
 
         // Reference Components
         private Renderer _renderer;
         private Material[] allMaterials;
         private Color[] baseColor;
-        private float t = 0f;
-        private bool over = false;
-        private string currentText = "";
+        private float t; // Time for fading the highlight color
+        private bool over; // Indicate when the mouse cursor is over the object
+        private string currentText;
         private GUIStyle tooltipStyle = new GUIStyle();
         private GUIStyle tooltipStyleShadow = new GUIStyle();
         private Vector3 positionToScreen;
@@ -67,13 +62,8 @@ namespace UI
 
         private void Awake()
         {
-            _renderer = GetComponent<Renderer>();
-        }
-
-        // Initialization
-        private void Start()
-        {
             // Get all materials and all colors for supporting multi-materials object
+            _renderer = GetComponent<Renderer>();
             allMaterials = _renderer.materials;
             baseColor = new Color[allMaterials.Length];
             int temp_length = baseColor.Length;
@@ -81,7 +71,11 @@ namespace UI
             {
                 baseColor[i] = allMaterials[i].color;
             }
+        }
 
+        // Initialization
+        private void Start()
+        {
             // Start settings of the tooltip
             if (!hideTooltip)
             { // Tooltip text style customization
@@ -90,7 +84,7 @@ namespace UI
                     tooltipUIPanel.SetActive(false);
                 }
                 tooltipStyle.normal.textColor = tooltipColor; // Color of the tooltip text
-                tooltipStyleShadow.normal.textColor = tooltipShadowColor; // Color of the tooltip shadow
+                tooltipStyleShadow.normal.textColor = Consts.Tooltip.TOOLTIP_SHADOW_COLOR; // Color of the tooltip shadow
                 tooltipStyle.fontSize = tooltipStyleShadow.fontSize = tooltipSize; // Size of the tooltip font
                 tooltipStyle.fontStyle = tooltipStyleShadow.fontStyle = FontStyle.Bold; // Style of the tooltip font
                 tooltipStyle.font = tooltipStyleShadow.font = tooltipFont;
@@ -135,13 +129,13 @@ namespace UI
         // Called when mouse over this object
         private void OnMouseEnter()
         {
-            beginTooltip();
+            show_Tooltip();
         }
 
         // Called when mouse exit this object
         private void OnMouseExit()
         {
-            endTooltip();
+            hide_Tooltip();
         }
 
         // Tooltip creation
@@ -155,8 +149,8 @@ namespace UI
                     cameraDistance = Vector3.Distance(Camera.main.transform.position, this.transform.position);
                     tooltipStyle.fontSize = tooltipStyleShadow.fontSize = Mathf.RoundToInt(tooltipSize - (cameraDistance / 3));
                 }
-                GUI.Label(new Rect(Event.current.mousePosition.x + tooltipPosition.x - 40, Event.current.mousePosition.y + tooltipPosition.y, 100f, 20f), image, tooltipStyle);
-                GUI.Label(new Rect(Event.current.mousePosition.x + tooltipPosition.x - tooltipShadowPosition.x, Event.current.mousePosition.y + tooltipPosition.y - tooltipShadowPosition.y, 100f, 20f), currentText, tooltipStyleShadow);
+                GUI.Label(new Rect(Event.current.mousePosition.x + tooltipPosition.x - 40f, Event.current.mousePosition.y + tooltipPosition.y, 100f, 20f), image, tooltipStyle);
+                GUI.Label(new Rect(Event.current.mousePosition.x + tooltipPosition.x - Consts.Tooltip.TOOLTIP_SHADOW_POSITION.x, Event.current.mousePosition.y + tooltipPosition.y - Consts.Tooltip.TOOLTIP_SHADOW_POSITION.y, 100f, 20f), currentText, tooltipStyleShadow);
                 GUI.Label(new Rect(Event.current.mousePosition.x + tooltipPosition.x, Event.current.mousePosition.y + tooltipPosition.y, 100f, 20f), currentText, tooltipStyle);
                 if (tooltipUIPanel != null)
                 {
@@ -173,8 +167,8 @@ namespace UI
                     tooltipStyle.fontSize = tooltipStyleShadow.fontSize = Mathf.RoundToInt(tooltipSize - (cameraDistance / 3));
                 }
                 //GUI.DrawTexture(new Rect((positionToScreen.x + tooltipPosition.x) - 40f, -positionToScreen.y + Screen.height + tooltipPosition.y / (cameraDistance / 10), 100f, 20f), image, ScaleMode.ScaleToFit);
-                GUI.Label(new Rect(positionToScreen.x + tooltipPosition.x - 40, -positionToScreen.y + Screen.height + tooltipPosition.y / (cameraDistance / 10), 100f, 20f), image, tooltipStyle);
-                GUI.Label(new Rect(positionToScreen.x + tooltipPosition.x - tooltipShadowPosition.x, -positionToScreen.y + Screen.height + tooltipPosition.y / (cameraDistance / 10) - tooltipShadowPosition.y, 100f, 20f), currentText, tooltipStyleShadow);
+                GUI.Label(new Rect(positionToScreen.x + tooltipPosition.x - 40f, -positionToScreen.y + Screen.height + tooltipPosition.y / (cameraDistance / 10), 100f, 20f), image, tooltipStyle);
+                GUI.Label(new Rect(positionToScreen.x + tooltipPosition.x - Consts.Tooltip.TOOLTIP_SHADOW_POSITION.x, -positionToScreen.y + Screen.height + tooltipPosition.y / (cameraDistance / 10) - Consts.Tooltip.TOOLTIP_SHADOW_POSITION.y, 100f, 20f), currentText, tooltipStyleShadow);
                 GUI.Label(new Rect(positionToScreen.x + tooltipPosition.x, -positionToScreen.y + Screen.height + tooltipPosition.y / (cameraDistance / 10), 100f, 20f), currentText, tooltipStyle);
                 if (tooltipUIPanel != null)
                 {
@@ -184,7 +178,7 @@ namespace UI
         }
 
         // Show tooltip and focus color of this object
-        public void beginTooltip()
+        public void show_Tooltip()
         {
             t = 0f;
             over = true;
@@ -197,7 +191,7 @@ namespace UI
         }
 
         // Hide tooltip and focus color of this object
-        public void endTooltip()
+        public void hide_Tooltip()
         {
             t = 0f;
             over = false;
