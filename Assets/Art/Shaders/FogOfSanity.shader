@@ -10,7 +10,7 @@ Shader "Custom/FogOfSanity"
         _Metallic ("Metallic", Range(0,1)) = 0.0
         
         // Custom Properties
-        _FogRadius ("FogRadius", Range(1,50)) = 1.0
+        _FogRadius ("FogRadius", Range(1,500)) = 1.0
         _FogMaxRadius ("FogMaxRadius", Range(0.1,10)) = 0.5
         _PlayerPosition ("PlayerPostion", Vector) = (0,0,0,1)
     }

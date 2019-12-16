@@ -1,28 +1,63 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.XR.WSA.Input;
 
 public class FogOfSanity : MonoBehaviour
 {
-    [SerializeField][Tooltip("Reference to the fog generating mesh")]private Transform fogOfSanityMesh;
-    
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField][Tooltip("Reference to the fog generating mesh")]private Renderer fogOfSanityMesh;
+    [SerializeField][Tooltip("Reference to the fog generating mesh")]private Camera mainCamera;
+   
+    private static readonly int PlayerPosition = Shader.PropertyToID("_PlayerPosition");
+    private static readonly int FogRadius = Shader.PropertyToID("_FogRadius");
+
+    private void Awake()
     {
         
     }
 
-    // Update is called once per frame
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
-        Vector3 cameraPosition = Camera.main.WorldToScreenPoint(transform.position);
-        Ray rayToPlayerPosition = Camera.main.ScreenPointToRay(cameraPosition);
+        Vector3 cameraPosition = mainCamera.WorldToScreenPoint(transform.position);
+        Ray rayToPlayer = mainCamera.ScreenPointToRay(cameraPosition);
 
-        RaycastHit hit;
-        if (Physics.Raycast(rayToPlayerPosition, out hit, 1000))
+        if (Physics.Raycast(rayToPlayer, out RaycastHit hit, 1000))
         {
-            fogOfSanityMesh.GetComponent<Renderer>().material.SetVector("_PlayerPosition", hit.point);
+            fogOfSanityMesh.material.SetVector(PlayerPosition, hit.point);
         }
+        
+        Pulse(20);
 
+    }
+
+    private void Pulse(float intensity)
+    {
+        float baseRadius = fogOfSanityMesh.material.GetFloat(FogRadius);
+        float currentRadius = fogOfSanityMesh.material.GetFloat(FogRadius);
+        bool grow = true;
+
+        while (true)
+        {
+            if (grow && currentRadius <= baseRadius + intensity)
+            {
+                fogOfSanityMesh.material.SetFloat(FogRadius, currentRadius);
+                currentRadius += 0.1F;
+            }
+            else grow = false;
+
+            if (!grow && currentRadius >= baseRadius)
+            {
+                fogOfSanityMesh.material.SetFloat(FogRadius, currentRadius);
+                currentRadius-= 0.1F;
+            }
+            else grow = true;
+        }
     }
 }
