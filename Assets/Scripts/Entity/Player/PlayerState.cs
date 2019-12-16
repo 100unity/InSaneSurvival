@@ -101,6 +101,31 @@ namespace Entity.Player
         public int GetHealth() => health;
         public int GetSaturation() => saturation;
         public int GetHydration() => hydration;
+        public int GetSanity() => sanity;
+
+        public void SetHealth(int value)
+        {
+            health = value;
+            OnPlayerHealthUpdate?.Invoke(value);
+        }
+
+        public void SetSaturation(int value)
+        {
+            saturation = value;
+            OnPlayerSaturationUpdate?.Invoke(value);
+        }
+
+        public void SetHydration(int value)
+        {
+            hydration = value;
+            OnPlayerHydrationUpdate?.Invoke(value);
+        }
+
+        public void SetSanity(int value)
+        {
+            sanity = value;
+            OnPlayerSanityUpdate?.Invoke(value);
+        }
 
         //Interface
         private void ChangePlayerHealth(int changeBy)

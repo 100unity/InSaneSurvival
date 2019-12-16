@@ -44,6 +44,13 @@ namespace Inventory
 
         public List<Item> GetItems() => items;
 
-        public void SetItems(List<Item> itemList) => items = itemList;
+        public void SetItems(List<Item> itemList)
+        {
+            items = itemList;
+            foreach (var item in items)
+            {
+                ItemsUpdated?.Invoke(item, 1);
+            }
+        }
     }
 }

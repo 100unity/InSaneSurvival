@@ -108,7 +108,10 @@ namespace Remote
                     case "SNT": OnPlayerSanityRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
                     case "SAVE":
-                        var saveManager = SaveManager.Instance; saveManager.Save();
+                        SaveManager.Instance.Save();
+                        break;
+                    case "LOAD":
+                        SaveManager.Instance.Load();
                         break;
                 }
                     

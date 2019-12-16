@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Entity.Player;
 using Inventory;
 using UnityEngine;
+using UnityEngine.AI;
 using Utils.Saves;
 
 namespace Managers
@@ -30,7 +31,7 @@ namespace Managers
                 // build a JSON-Object
                 Save save = new Save();
 
-                save.SetPlayerState(playerPosition, state.GetHealth(), state.GetSaturation(), state.GetHydration(), 0);
+                save.SetPlayerState(playerPosition, state.GetHealth(), state.GetSaturation(), state.GetHydration(), state.GetSanity());
                 save.SetInventory(inventoryData);
 
                 Write(save);
@@ -44,6 +45,35 @@ namespace Managers
 
         public void Load()
         {
+            Debug.Log("loading initiated");
+            try
+            {
+                // get save object
+                Save save = Read();
+                
+                // get game components
+                GameObject player = PlayerManager.Instance.GetPlayer();
+                InventoryController inventoryController = player.GetComponentInChildren<InventoryController>();
+
+                // set player position
+                player.GetComponent<NavMeshAgent>().Warp(save.playerPosition);
+                
+                // set player state
+                PlayerState state = player.GetComponent<PlayerState>();
+                state.SetHealth(save.playerHealth);
+                state.SetHydration(save.playerHydration);
+                state.SetSanity(save.playerSanity);
+                state.SetSaturation(save.playerSaturation);
+                
+                inventoryController.SetItems(save.items);
+                
+                Debug.Log("save recreated");
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
+            
             
         }
         
@@ -59,7 +89,8 @@ namespace Managers
 
         private Save Read()
         {
-            return null;
+            string json = System.IO.File.ReadAllText(@"C:\Users\Public\save.json");
+            return JsonUtility.FromJson<Save>(json);
         }
     }
 }
