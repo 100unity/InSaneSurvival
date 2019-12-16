@@ -22,8 +22,7 @@ namespace AbstractClasses
         protected virtual void Awake()
         {
             // ------------
-            _hitMarkerMaterial = new Material(Shader.Find("Standard"));
-            _hitMarkerMaterial.color = Color.red;
+            _hitMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.red};
             // just put initial mat here
             _prevMat = gameObjectRenderer.material;
             // ------------
@@ -32,7 +31,7 @@ namespace AbstractClasses
         /// <summary>
         /// Changes the objects color back to normal after being hit.
         /// </summary>
-        protected void Update()
+        protected virtual void Update()
         {
             if (_hit)
             {
@@ -48,7 +47,6 @@ namespace AbstractClasses
         }
 
         /// <summary>
-        /// Deals damage.
         /// Marks the player as hit after being hit.
         /// </summary>
         /// <param name="damage">The damage dealt to player</param>

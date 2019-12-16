@@ -130,7 +130,7 @@ namespace Entity.Enemy
         }
 
         /// <summary>
-        /// Stops chasing and attack the current target.
+        /// Stops chasing the current target.
         /// </summary>
         private void StopChasing()
         {

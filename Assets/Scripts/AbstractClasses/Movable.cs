@@ -60,5 +60,10 @@ namespace AbstractClasses
         {
             NavMeshAgent.isStopped = true;
         }
+
+        public void SetStoppingDistance(float distance)
+        {
+            NavMeshAgent.stoppingDistance = distance;
+        }
     }
 }

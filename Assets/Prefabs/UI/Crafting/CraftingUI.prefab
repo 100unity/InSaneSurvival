@@ -245,6 +245,7 @@ MonoBehaviour:
   craftingRecipeGrid: {fileID: 4820939796099188668}
   craftingRecipeUIPrefab: {fileID: 5330057578649661358, guid: a4ee6b71c293595438692fd50260cca9,
     type: 3}
+  inventory: {fileID: 0}
 --- !u!1 &9165822422250600217
 GameObject:
   m_ObjectHideFlags: 0

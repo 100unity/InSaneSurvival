@@ -1,10 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Inventory
 {
-
-    [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")][System.Serializable]
+    [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item/Item(General)")][System.Serializable]
     public class Item : ScriptableObject
     {
         [SerializeField] private Sprite icon;
