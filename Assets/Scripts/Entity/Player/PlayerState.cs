@@ -1,5 +1,6 @@
 using System;
 using AbstractClasses;
+using Inventory;
 using Remote;
 using UnityEngine;
 
@@ -177,7 +178,7 @@ namespace Entity.Player
 
         }
 
-        public bool Consume(Consumable item)
+        public bool Consume(Inventory.Consumable item)
         {
             if (item.HealthValue > 0)
                 Heal(item.HealthValue);

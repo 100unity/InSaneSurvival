@@ -11,9 +11,10 @@ namespace Inventory
         public Sprite Icon => icon;
         public int MaxStackSize => maxStackSize;
 
-        public override bool Equals(object other)
+        public bool Use()
         {
-            return other is Item item && item.name == name;
+            Debug.Log("The item " + name + " can not be used.");
+            return false;
         }
     }
 }
