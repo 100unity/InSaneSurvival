@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using Entity.Player;
+using Managers;
 using UnityEngine;
 
 namespace Remote
@@ -75,7 +76,7 @@ namespace Remote
             catch (Exception e)
             {
                 use = false;
-                Debug.Log("Connection to Remote Server failed");
+                Debug.Log("Connection to Remote Server failed because: "+e.Message);
             }
         }
 
@@ -100,6 +101,9 @@ namespace Remote
                     case "HNG": OnPlayerSaturationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
                     case "THR": OnPlayerHydrationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
+                        break;
+                    case "SAVE":
+                        var saveManager = SaveManager.Instance; saveManager.Save();
                         break;
                 }
                     

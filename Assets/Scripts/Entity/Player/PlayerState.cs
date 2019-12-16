@@ -1,5 +1,6 @@
 ﻿using System;
 using AbstractClasses;
+using Interfaces;
 using Remote;
 using UnityEngine;
 
@@ -40,6 +41,10 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
         }
+
+        public int GetHealth() => health;
+        public int GetSaturation() => saturation;
+        public int GetHydration() => hydration;
 
         private void ChangePlayerHealth(int changeBy)
         {
