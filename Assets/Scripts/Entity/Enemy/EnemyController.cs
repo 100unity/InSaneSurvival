@@ -50,6 +50,12 @@ namespace Entity.Enemy
         [SerializeField]
         private TargetFinder targetFinder;
 
+        [Tooltip("The renderer that renders the graphics of this object.")]
+        [SerializeField]
+        private Renderer graphicsRenderer;
+
+        public Renderer Renderer => graphicsRenderer;
+
         // component references
         private WanderAI _wanderAI;
         private AttackLogic _attackLogic;

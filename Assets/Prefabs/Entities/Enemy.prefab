@@ -67,6 +67,7 @@ MonoBehaviour:
   escapeRadius: 12
   showEscapeRadius: 1
   targetFinder: {fileID: 6970089841446486794}
+  graphicsRenderer: {fileID: 1510608199636081249}
 --- !u!114 &4583121872170788062
 MonoBehaviour:
   m_ObjectHideFlags: 0
