@@ -11,6 +11,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI nameLabel;
         [SerializeField] private TextMeshProUGUI countLabel;
 
+        [SerializeField] private Image imgIsEquipped;
+
         private int _count;
 
         public Image Icon => icon;
@@ -47,24 +49,20 @@ namespace UI
         /// </summary>
         private void OnClick()
         {
+            if (!item.Use()) return;
             switch (item)
             {
                 case Consumable consumable:
-                {
-                    if (consumable.Use())
-                    {
-                        inventory.RemoveItem(item);
-                    }
-
+                    inventory.RemoveItem(item);
                     break;
-                }
                 case Equipable equipable:
-                    equipable.Use();
-                    break;
-                default:
-                    item.Use();
-                    break;
             }
+        }
+
+        private void EquipItem(Equipable equipable)
+        {
+            if (inventory.CurrentlyEquippedItem)
+                inventory.CurrentlyEquippedItem.
         }
     }
 }

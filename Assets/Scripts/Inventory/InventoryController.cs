@@ -6,12 +6,13 @@ using UnityEngine;
 
 namespace Inventory
 {
-
     public class InventoryController : MonoBehaviour, IItemHandler
     {
         [SerializeField] private List<Item> items = new List<Item>();
-        
+
         public event Action<Item, int> ItemsUpdated;
+
+        public Item CurrentlyEquippedItem { get; private set; }
 
         /// <summary>
         /// Adds an item to the player's inventory
@@ -41,6 +42,10 @@ namespace Inventory
             int currentAmount = items.Count(currentItem => currentItem == item);
             return currentAmount >= amount;
         }
-            
+
+        public void EquipItem(Equipable equipable)
+        {
+            equipable.isEquipped = true;
+        }
     }
 }

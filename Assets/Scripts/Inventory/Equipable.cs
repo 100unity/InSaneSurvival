@@ -16,11 +16,17 @@ namespace Inventory
 
         [EnumMultiSelect] [SerializeField] private EquipableAbility equipableAbility;
 
+        public bool isEquipped;
 
         /// <summary>
         /// Returns a list of all abilities
         /// </summary>
-        public List<int> Abilities => GetSelectedElements();
+        public List<EquipableAbility> Abilities { get; private set; }
+
+        private void Awake() => Abilities = GetSelectedElements();
+
+
+        public bool HasAbility(EquipableAbility ability) => Abilities.Contains(ability);
 
         /// <summary>
         /// Placeholder function for now.
@@ -28,7 +34,8 @@ namespace Inventory
         public new bool Use()
         {
             Debug.Log("Equipping the item " + name);
-            return false;
+            isEquipped = true;
+            return true;
         }
 
         public override bool Equals(object other)
@@ -36,15 +43,15 @@ namespace Inventory
             return other is Equipable item && item.name == name;
         }
 
-        private List<int> GetSelectedElements()
+        private List<EquipableAbility> GetSelectedElements()
         {
-            List<int> selectedElements = new List<int>();
+            List<EquipableAbility> selectedElements = new List<EquipableAbility>();
             for (int i = 0; i < Enum.GetValues(typeof(EquipableAbility)).Length; i++)
             {
                 int layer = 1 << i;
                 if (((int) equipableAbility & layer) != 0)
                 {
-                    selectedElements.Add(i);
+                    selectedElements.Add((EquipableAbility) i);
                 }
             }
 
