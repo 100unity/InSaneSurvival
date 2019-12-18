@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Entity.Player;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.XR.WSA.Input;
+
 
 public class FogOfSanity : MonoBehaviour
 {
@@ -19,14 +16,17 @@ public class FogOfSanity : MonoBehaviour
     [SerializeField] [Tooltip("Determines how fast pulse animation is")]
     private float pulseFrequency;
 
-    private float _currentRadius;
+    // radius of the Fog
     private float _baseRadius;
+    
+    // properties needed for the pulse animation
+    private float _currentRadius;
     private bool _isGrowing;
    
+    // shader properties
     private static readonly int PlayerPosition = Shader.PropertyToID("_PlayerPosition");
     private static readonly int FogRadius = Shader.PropertyToID("_FogRadius");
 
-   
     // Sets initial values for the fog animation 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class FogOfSanity : MonoBehaviour
         _isGrowing = true;
     }
 
-    // fog center sticks to player
+    // fog center point sticks to player
     private void Update()
     {
         Vector3 cameraPosition = mainCamera.WorldToScreenPoint(transform.position);
@@ -64,5 +64,24 @@ public class FogOfSanity : MonoBehaviour
             _currentRadius -= Time.deltaTime / (pulseFrequency / 2);
             if (_currentRadius <= _baseRadius) _isGrowing = true;
         }
+    }
+    
+    private void OnEnable()
+    {
+        PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
+
+    }
+        
+    private void OnDisable()
+    {
+        PlayerState.OnPlayerSanityUpdate -= OnSanityUpdated;
+
+    }
+    
+    private void OnSanityUpdated(int value) => updateFogRadius();
+
+    private void updateFogRadius()
+    {
+        
     }
 }

@@ -55,7 +55,7 @@ namespace Entity.Player
             OnPlayerHealthUpdate?.Invoke(health);
             OnPlayerSaturationUpdate?.Invoke(saturation);
             OnPlayerHydrationUpdate?.Invoke(hydration);
-            OnPlayerHydrationUpdate?.Invoke(sanity);
+            OnPlayerSanityUpdate?.Invoke(sanity);
             // ------------
             _healMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.magenta};
             // just put initial mat here

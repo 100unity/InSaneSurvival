@@ -60,8 +60,8 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
-    - _FogMaxRadius: 0.99
-    - _FogRadius: 15
+    - _FogMaxRadius: 1
+    - _FogRadius: 20
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
