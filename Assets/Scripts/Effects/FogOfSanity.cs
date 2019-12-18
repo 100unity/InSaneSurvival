@@ -16,7 +16,7 @@ public class FogOfSanity : MonoBehaviour
     [SerializeField] [Tooltip("Determines how fast pulse animation is")]
     private float pulseFrequency;
 
-    // radius of the Fog
+    // radius of the fog
     private float _baseRadius;
     
     // properties needed for the pulse animation
@@ -27,16 +27,23 @@ public class FogOfSanity : MonoBehaviour
     private static readonly int PlayerPosition = Shader.PropertyToID("_PlayerPosition");
     private static readonly int FogRadius = Shader.PropertyToID("_FogRadius");
 
-    // Sets initial values for the fog animation 
     private void Awake()
     {
         _baseRadius = 500;
         _currentRadius = _baseRadius;
         _isGrowing = true;
     }
-
-    // fog center point sticks to player
+    
     private void Update()
+    {
+        CenterFog();
+        Pulse(pulseIntensity);
+    }
+
+    /// <summary>
+    /// Attaches the center of the fog to the player position
+    /// </summary>
+    private void CenterFog()
     {
         Vector3 cameraPosition = mainCamera.WorldToScreenPoint(transform.position);
         Ray rayToPlayer = mainCamera.ScreenPointToRay(cameraPosition);
@@ -45,11 +52,12 @@ public class FogOfSanity : MonoBehaviour
         {
             fogOfSanityMesh.material.SetVector(PlayerPosition, hit.point);
         }
-        
-        Pulse(pulseIntensity);
     }
 
-    // animates the fog radius
+    /// <summary>
+    /// Scales the fog radius up and down
+    /// </summary>
+    /// <param name="intensity">Distance between min and max size of the radius</param>
     private void Pulse(float intensity)
     {
         fogOfSanityMesh.material.SetFloat(FogRadius, _currentRadius);
@@ -69,13 +77,11 @@ public class FogOfSanity : MonoBehaviour
     private void OnEnable()
     {
         PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
-
     }
         
     private void OnDisable()
     {
         PlayerState.OnPlayerSanityUpdate -= OnSanityUpdated;
-
     }
     
     private void OnSanityUpdated(int value) => UpdateFogRadius(value);
