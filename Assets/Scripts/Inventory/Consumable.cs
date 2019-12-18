@@ -20,8 +20,9 @@ namespace Inventory
         /// <summary>
         /// Gets the PlayerState of the player, and changes its values depending on the item values.
         /// </summary>
-        public new bool Use()
+        public override bool Use()
         {
+            InventoryManager.Instance.RemoveItem(this);
             PlayerState playerState = PlayerManager.Instance.GetPlayer().GetComponent<PlayerState>();
             return playerState.Consume(this);
         }

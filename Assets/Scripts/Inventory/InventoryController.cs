@@ -8,14 +8,16 @@ namespace Inventory
 {
     public class InventoryController : MonoBehaviour, IItemHandler
     {
+        /// <summary>
+        /// Every item the player currently has
+        /// </summary>
         [SerializeField] private List<Item> items = new List<Item>();
 
+        /// <inheritdoc cref="IItemHandler.ItemsUpdated"/>
         public event Action<Item, int> ItemsUpdated;
 
-        public Item CurrentlyEquippedItem { get; private set; }
-
         /// <summary>
-        /// Adds an item to the player's inventory
+        /// Adds an item to the player's inventory and invokes <see cref="ItemsUpdated"/>.
         /// </summary>
         /// <param name="item">The item to add</param>
         /// <param name="amount">The amount to be added</param>
@@ -26,7 +28,7 @@ namespace Inventory
         }
 
         /// <summary>
-        /// Removes an item from the player's inventory
+        /// Removes an item from the player's inventory and invokes <see cref="ItemsUpdated"/>.
         /// </summary>
         /// <param name="item">The item to be removed</param>
         /// <param name="amount">The amount to be removed</param>
@@ -41,11 +43,6 @@ namespace Inventory
         {
             int currentAmount = items.Count(currentItem => currentItem == item);
             return currentAmount >= amount;
-        }
-
-        public void EquipItem(Equipable equipable)
-        {
-            equipable.isEquipped = true;
         }
     }
 }

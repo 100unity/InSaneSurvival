@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 using Utils;
 
@@ -8,41 +9,40 @@ namespace Inventory
     [CreateAssetMenu(fileName = "New Equipable", menuName = "Inventory/Item/Equipable")]
     public class Equipable : Item
     {
-        public enum EquipableAbility
-        {
-            Chop,
-            Mine
-        }
-
-        [EnumMultiSelect] [SerializeField] private EquipableAbility equipableAbility;
-
-        public bool isEquipped;
+        [Tooltip("All abilities this item has")] [EnumMultiSelect] [SerializeField]
+        private EquipableAbility equipableAbility;
 
         /// <summary>
-        /// Returns a list of all abilities
+        /// A list of all abilities this equipable has
         /// </summary>
-        public List<EquipableAbility> Abilities { get; private set; }
+        private List<EquipableAbility> _abilities;
 
-        private void Awake() => Abilities = GetSelectedElements();
+        /// <summary>
+        /// Get all abilities from the MultiSelect
+        /// </summary>
+        private void Awake() => _abilities = GetSelectedElements();
 
-
-        public bool HasAbility(EquipableAbility ability) => Abilities.Contains(ability);
+        /// <summary>
+        /// Checks if this item has the given ability
+        /// </summary>
+        /// <param name="ability">The ability to check</param>
+        /// <returns>Whether it has the given ability or not</returns>
+        public bool HasAbility(EquipableAbility ability) => _abilities.Contains(ability);
 
         /// <summary>
         /// Placeholder function for now.
         /// </summary>
-        public new bool Use()
+        public override bool Use()
         {
+            InventoryManager.Instance.ToggleEquipableItem(this);
             Debug.Log("Equipping the item " + name);
-            isEquipped = true;
             return true;
         }
 
-        public override bool Equals(object other)
-        {
-            return other is Equipable item && item.name == name;
-        }
-
+        /// <summary>
+        /// Gets all Abilities selected in the MultiSelect
+        /// </summary>
+        /// <returns>A list of all selected abilities</returns>
         private List<EquipableAbility> GetSelectedElements()
         {
             List<EquipableAbility> selectedElements = new List<EquipableAbility>();
@@ -57,5 +57,19 @@ namespace Inventory
 
             return selectedElements;
         }
+
+
+        #region Inner-Class
+
+        /// <summary>
+        /// All abilities a equipable could have
+        /// </summary>
+        public enum EquipableAbility
+        {
+            Chop,
+            Mine
+        }
+
+        #endregion
     }
 }

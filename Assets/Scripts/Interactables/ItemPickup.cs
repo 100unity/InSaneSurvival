@@ -1,4 +1,5 @@
 ﻿using Inventory;
+using Managers;
 using UnityEngine;
 
 namespace Interactables
@@ -6,7 +7,6 @@ namespace Interactables
     public class ItemPickup : Interactable
     {
         [SerializeField] private Item item; //reference for items
-        [SerializeField] private InventoryController inventory; //reference for inventory - have to be manually assigned
 
         /// <summary>
         /// New function that override the Interact function from Interactable Class
@@ -22,11 +22,10 @@ namespace Interactables
         private void PickUp()
         {
             //Add to inventory
-            inventory.AddItem(item);
+            InventoryManager.Instance.AddItem(item);
 
             //Destroy object
             Destroy(gameObject);
         }
     }
 }
-

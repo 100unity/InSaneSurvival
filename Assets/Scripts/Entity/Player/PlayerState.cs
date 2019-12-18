@@ -28,10 +28,6 @@ namespace Entity.Player
         [Tooltip("The time the object should be marked as hit after being hit")] [SerializeField]
         private float healMarkTime;
 
-        [Tooltip("The MeshRenderer of the graphics object of the player")] [SerializeField]
-        private MeshRenderer meshRenderer;
-
-        private Material _prevMat;
         private Material _healMarkerMaterial;
         private bool _healed;
 
@@ -56,9 +52,6 @@ namespace Entity.Player
             OnPlayerHydrationUpdate?.Invoke(sanity);
             // ------------
             _healMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.magenta};
-            // just put initial mat here
-            _prevMat = meshRenderer.material;
-            // ------------
         }
 
         private void OnEnable()
@@ -90,7 +83,7 @@ namespace Entity.Player
             {
                 _healed = false;
                 _healTimer = 0;
-                meshRenderer.material = _prevMat;
+                gameObjectRenderer.material = PrevMat;
             }
         }
 
@@ -165,7 +158,7 @@ namespace Entity.Player
 
             //-------
             _healed = true;
-            meshRenderer.material = _healMarkerMaterial;
+            gameObjectRenderer.material = _healMarkerMaterial;
             //-------
         }
 
