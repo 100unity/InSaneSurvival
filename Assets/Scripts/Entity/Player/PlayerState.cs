@@ -1,5 +1,4 @@
-﻿using System;
-using AbstractClasses;
+﻿using AbstractClasses;
 using Remote;
 using UnityEngine;
 
@@ -21,17 +20,55 @@ namespace Entity.Player
         [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
         private int hydration;
 
-        public static event PlayerStateChanged OnPlayerHealthUpdated;
-        public static event PlayerStateChanged OnPlayerSaturationUpdated;
-        public static event PlayerStateChanged OnPlayerHydrationUpdated;
-        public static event PlayerIsDead OnPlayerDeath;
+        [Tooltip("100: sane, 0: insane")]
+        [Range(0, 100)]
+        [SerializeField]
+        private int sanity;
         
+        // ------temp for hit animation------
+        [Tooltip("The time the object should be marked as hit after being hit")]
+        [SerializeField]
+        private float healMarkTime;
+        
+        [Tooltip("The MeshRenderer of the graphics object of the player")]
+        [SerializeField]
+        private MeshRenderer meshRenderer;
+
+        private Material _prevMat;
+        private Material _healMarkerMaterial;
+        private bool _healed;
+        private float _healTimer;
+        // ----------
+
+        public int Sanity => sanity;
+
+        public static event PlayerStateChanged OnPlayerHealthUpdate;
+        public static event PlayerStateChanged OnPlayerSaturationUpdate;
+        public static event PlayerStateChanged OnPlayerHydrationUpdate;
+        public static event PlayerStateChanged OnPlayerSanityUpdate;
+        public static event PlayerIsDead OnPlayerDeath;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            // send event on initial values
+            OnPlayerHealthUpdate?.Invoke(health);
+            OnPlayerSaturationUpdate?.Invoke(saturation);
+            OnPlayerHydrationUpdate?.Invoke(hydration);
+            OnPlayerHydrationUpdate?.Invoke(sanity);
+            // ------------
+            _healMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.magenta};
+            // just put initial mat here
+            _prevMat = meshRenderer.material;
+            // ------------
+        }
 
         private void OnEnable()
         {
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate += ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate += ChangePlayerSaturation;
+            RemoteStatusHandler.OnPlayerSanityRemoteUpdate += ChangePlayerSanity;
         }
 
         private void OnDisable()
@@ -39,8 +76,27 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate -= ChangePlayerHealth;
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
+            RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
         }
 
+        /// <summary>
+        /// Changes the objects color back to normal after being healed.
+        /// </summary>
+        protected override void Update()
+        {
+            base.Update();
+            if (!_healed) return;
+            _healTimer += Time.deltaTime;
+
+            if (_healTimer > healMarkTime)
+            {
+                _healed = false;
+                _healTimer = 0;
+                meshRenderer.material = _prevMat;
+            }
+        }
+
+        //Interface
         private void ChangePlayerHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
@@ -52,9 +108,8 @@ namespace Entity.Player
             }
 
             health = updatedValue;
-            
             //throws an event with the new health value as a parameter
-            OnPlayerHealthUpdated?.Invoke(updatedValue);
+            OnPlayerHealthUpdate?.Invoke(updatedValue);
         }
 
         public void ChangePlayerSaturation(int changeBy)
@@ -68,7 +123,7 @@ namespace Entity.Player
             }
 
             saturation = updatedValue;
-            OnPlayerSaturationUpdated?.Invoke(updatedValue);
+            OnPlayerSaturationUpdate?.Invoke(updatedValue);
         }
 
         public void ChangePlayerHydration(int changeBy)
@@ -82,7 +137,13 @@ namespace Entity.Player
             }
 
             hydration = updatedValue;
-            OnPlayerHydrationUpdated?.Invoke(updatedValue);
+            OnPlayerHydrationUpdate?.Invoke(updatedValue);
+        }
+
+        public void ChangePlayerSanity(int changeBy)
+        {
+            sanity = Mathf.Clamp(sanity + changeBy, 0, 100);
+            OnPlayerSanityUpdate?.Invoke(sanity);
         }
 
         /// <summary>
@@ -93,6 +154,33 @@ namespace Entity.Player
         {
             base.Hit(damage);
             ChangePlayerHealth(-damage);
+        }
+        
+        /// <summary>
+        /// Heals the player by a specific amount.
+        /// Marks the player as healed after being healed.
+        /// </summary>
+        /// <param name="amount">The amount the player gets healed by</param>
+        public void Heal(int amount)
+        {
+            ChangePlayerHealth(amount);
+
+            //-------
+            _healed = true;
+            meshRenderer.material = _healMarkerMaterial;
+            //-------
+
+        }
+
+        public bool Consume(Consumable item)
+        {
+            if (item.HealthValue > 0)
+                Heal(item.HealthValue);
+            if (item.SaturationValue > 0)
+                ChangePlayerSaturation(item.SaturationValue);
+            if (item.HydrationValue > 0)
+                ChangePlayerHydration(item.HydrationValue);
+            return true;
         }
 
         public override void Die()

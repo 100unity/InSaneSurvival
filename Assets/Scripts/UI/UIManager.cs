@@ -12,16 +12,16 @@ namespace UI
 
         private void OnEnable()
         {
-            PlayerState.OnPlayerHealthUpdated += OnHealthUpdated;
-            PlayerState.OnPlayerHydrationUpdated += OnHydrationUpdated;
-            PlayerState.OnPlayerSaturationUpdated += OnSaturationUpdated;
+            PlayerState.OnPlayerHealthUpdate += OnHealthUpdated;
+            PlayerState.OnPlayerHydrationUpdate += OnHydrationUpdated;
+            PlayerState.OnPlayerSaturationUpdate += OnSaturationUpdated;
         }
         
         private void OnDisable()
         {
-            PlayerState.OnPlayerHealthUpdated -= OnHealthUpdated;
-            PlayerState.OnPlayerHydrationUpdated -= OnHydrationUpdated;
-            PlayerState.OnPlayerSaturationUpdated -= OnSaturationUpdated;
+            PlayerState.OnPlayerHealthUpdate -= OnHealthUpdated;
+            PlayerState.OnPlayerHydrationUpdate -= OnHydrationUpdated;
+            PlayerState.OnPlayerSaturationUpdate -= OnSaturationUpdated;
         }
         
         private void OnHealthUpdated(int value) => healthBar.UpdateBar(value);

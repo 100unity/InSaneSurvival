@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using Entity.Player;
+using Entity.Player.Sanity;
 using UnityEngine;
 
 namespace Remote
@@ -19,21 +20,24 @@ namespace Remote
         public static event PlayerStateChanged OnPlayerHealthRemoteUpdate;
         public static event PlayerStateChanged OnPlayerSaturationRemoteUpdate;
         public static event PlayerStateChanged OnPlayerHydrationRemoteUpdate;
+        public static event PlayerStateChanged OnPlayerSanityRemoteUpdate;
 
         private void OnEnable()
         {
-            PlayerState.OnPlayerHealthUpdated += HealthUpdated;
-            PlayerState.OnPlayerSaturationUpdated += SaturationUpdated;
-            PlayerState.OnPlayerHydrationUpdated += HydrationUpdated;
-            PlayerController.OnPlayerPositionUpdated += PositionUpdated;
+            PlayerState.OnPlayerHealthUpdate += HealthUpdated;
+            PlayerState.OnPlayerSaturationUpdate += SaturationUpdated;
+            PlayerState.OnPlayerHydrationUpdate += HydrationUpdated;
+            PlayerState.OnPlayerSanityUpdate += SanityUpdated;
+            PlayerController.OnPlayerPositionUpdate += PositionUpdated;
         }
         
         private void OnDisable()
         {
-            PlayerState.OnPlayerHealthUpdated -= HealthUpdated;
-            PlayerState.OnPlayerSaturationUpdated -= SaturationUpdated;
-            PlayerState.OnPlayerHydrationUpdated -= HydrationUpdated;
-            PlayerController.OnPlayerPositionUpdated -= PositionUpdated;
+            PlayerState.OnPlayerHealthUpdate -= HealthUpdated;
+            PlayerState.OnPlayerSaturationUpdate -= SaturationUpdated;
+            PlayerState.OnPlayerHydrationUpdate -= HydrationUpdated;
+            PlayerState.OnPlayerSanityUpdate -= SanityUpdated;
+            PlayerController.OnPlayerPositionUpdate -= PositionUpdated;
         }
 
         private void Start()
@@ -101,6 +105,8 @@ namespace Remote
                         break;
                     case "THR": OnPlayerHydrationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
+                    case "SNT": OnPlayerSanityRemoteUpdate?.Invoke(int.Parse(parameters[1]));
+                        break;
                 }
                     
             }
@@ -126,6 +132,11 @@ namespace Remote
         private void HydrationUpdated(int newValue)
         {
             SendString("THR/"+newValue);
+        }
+
+        private void SanityUpdated(int newValue)
+        {
+            SendString("SNT/" + newValue);
         }
 
         private void PositionUpdated(Vector3 newPosition)
