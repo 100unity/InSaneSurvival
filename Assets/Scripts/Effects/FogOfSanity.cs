@@ -56,12 +56,12 @@ public class FogOfSanity : MonoBehaviour
         
         if (_isGrowing)
         {
-            _currentRadius += Time.deltaTime * pulseFrequency; 
+            _currentRadius += Time.deltaTime / pulseFrequency; 
             if (_currentRadius >= _baseRadius + intensity) _isGrowing = false;
         }
         else
         {
-            _currentRadius -= Time.deltaTime * pulseFrequency;
+            _currentRadius -= Time.deltaTime / (pulseFrequency / 2);
             if (_currentRadius <= _baseRadius) _isGrowing = true;
         }
     }
