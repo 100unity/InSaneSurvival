@@ -30,7 +30,7 @@ public class FogOfSanity : MonoBehaviour
     // Sets initial values for the fog animation 
     private void Awake()
     {
-        _baseRadius = fogOfSanityMesh.material.GetFloat(FogRadius);
+        _baseRadius = 500;
         _currentRadius = _baseRadius;
         _isGrowing = true;
     }
@@ -78,10 +78,17 @@ public class FogOfSanity : MonoBehaviour
 
     }
     
-    private void OnSanityUpdated(int value) => updateFogRadius();
+    private void OnSanityUpdated(int value) => UpdateFogRadius(value);
 
-    private void updateFogRadius()
+    private void UpdateFogRadius(int sanityLevel)
     {
-        
+        if (sanityLevel > 50)
+        {
+            _baseRadius = 500;
+        }
+        else
+        {
+            _baseRadius = sanityLevel * 2;
+        }
     }
 }
