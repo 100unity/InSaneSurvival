@@ -23,7 +23,7 @@ namespace Inventory
         /// <param name="amount">The amount to be added</param>
         public void AddItem(Item item, int amount = 1)
         {
-            items.Add(item);
+            for (int i = 0; i < amount; i++) items.Add(item);
             ItemsUpdated?.Invoke(item, amount);
         }
 
@@ -34,7 +34,7 @@ namespace Inventory
         /// <param name="amount">The amount to be removed</param>
         public void RemoveItem(Item item, int amount = 1)
         {
-            items.Remove(item);
+            for (int i = 0; i < amount; i++) items.Remove(item);
             ItemsUpdated?.Invoke(item, -amount);
         }
 
