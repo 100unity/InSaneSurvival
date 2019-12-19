@@ -4,15 +4,15 @@ using UnityEngine;
 namespace Utils
 {
     /// <summary>
-    /// Defines the area an NPC can wander in.
+    /// Defines an area.
     /// </summary>
     [Serializable]
-    public struct WanderArea
+    public struct Area
     {
-        [Tooltip("The center of the wander area.")]
+        [Tooltip("The center of the area.")]
         public Transform center;
 
-        [Tooltip("The radius of the wander area.")]
+        [Tooltip("The radius of the area.")]
         public float radius;
 
         private Vector3 _centerFrozen;
@@ -20,7 +20,7 @@ namespace Utils
         /// <summary>
         /// Returns the position of a fixed center if FreezeArea was called, or a mobile center.
         /// </summary>
-        /// <returns>The center of the wander area</returns>
+        /// <returns>The center of the area</returns>
         public Vector3 GetCenterPosition()
         {
             if (_centerFrozen.Equals(Vector3.zero))
