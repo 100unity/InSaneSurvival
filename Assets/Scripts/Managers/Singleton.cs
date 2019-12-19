@@ -15,13 +15,10 @@ namespace Managers
         /// </summary>
         protected virtual void Awake()
         {
-            if (Instance != null && Instance != this as T)
+            if (Instance != null)
                 Destroy(gameObject);
             else
-            {
                 Instance = this as T;
-                DontDestroyOnLoad(gameObject);
-            }
         }
     }
 }

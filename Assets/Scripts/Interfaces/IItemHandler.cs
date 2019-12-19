@@ -10,7 +10,7 @@ namespace Interfaces
     public interface IItemHandler
     {
         /// <summary>
-        /// Event that will be triggered after an item is added/removed
+        /// Event that will be triggered after an item is added/removed.
         /// <para>Int will be negative when removing an item</para>
         /// </summary>
         event Action<Item, int> ItemsUpdated;

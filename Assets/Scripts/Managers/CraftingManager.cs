@@ -1,31 +1,23 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Crafting;
-using Utils;
+using UnityEngine;
 
 namespace Managers
 {
     /// <summary>
-    /// Used for crafting new items with recipes.
+    /// ATM used for storing the recipes
     /// </summary>
     public class CraftingManager : Singleton<CraftingManager>
     {
         /// <summary>
         /// All recipes in the game
         /// </summary>
-        public List<CraftingRecipe> Recipes => _recipes;
-
-        private List<CraftingRecipe> _recipes;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            GetRecipes();
-        }
+        [Tooltip("All crafting recipes the player can craft")] [SerializeField]
+        private List<CraftingRecipe> recipes;
 
         /// <summary>
-        /// Gets all recipes in the project
+        /// All recipes in the game
         /// </summary>
-        private void GetRecipes() => _recipes = this.GetAllInstances<CraftingRecipe>().ToList();
+        public List<CraftingRecipe> Recipes => recipes;
     }
 }
