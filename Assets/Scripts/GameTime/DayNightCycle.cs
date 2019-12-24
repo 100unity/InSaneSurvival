@@ -42,7 +42,7 @@ namespace GameTime
         }
 
         /// <summary>
-        /// Scales the light intensity of the sun based on the projection of its normal onto the y-axis
+        /// Scales the light intensity of the sun based on the projection of its normal/ray onto the y-axis
         /// </summary>
         private void SunIntensity()
         {
