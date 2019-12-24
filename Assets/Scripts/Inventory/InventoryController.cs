@@ -38,6 +38,9 @@ namespace Inventory
             ItemsUpdated?.Invoke(item, -amount);
         }
 
+        /// <summary>
+        /// Refreshes the items by invoking the <see cref="ItemsUpdated"/> event with default and 0.
+        /// </summary>
         public void RefreshItems() => ItemsUpdated?.Invoke(default, 0);
 
         /// <inheritdoc cref="IItemHandler.ContainsItem"/>
