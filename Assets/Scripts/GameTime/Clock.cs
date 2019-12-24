@@ -12,33 +12,19 @@ namespace GameTime
         [SerializeField][Tooltip("Year length in days")]
         private int yearLength;
 
-        public int YearLength
-        {
-            get { return yearLength; }
-        }
-
         [SerializeField] [Tooltip("Current time")] [Range(0f, 1f)]
         private float timeOfDay;
-        public float TimeOfDay
-        {
-            get { return timeOfDay; }
-        }
+        public float TimeOfDay => timeOfDay;
 
         private int _days;
-        public int Days
-        {
-            get { return _days; }
-        }
-        
-        private int _years;
+        public int Days => _days;
 
-        public int Years
-        {
-            get { return _years; }
-        }
+        private int _years;
+        public int Years => _years;
+        
         private float _timeScale;
         
-        [SerializeField]
+        [SerializeField][Tooltip("Controls timeScale so certain time periods (night) can pass faster than others (day)")]
         private AnimationCurve timeCurve;
 
         private float _timeCurveNormalization;
@@ -54,6 +40,9 @@ namespace GameTime
             UpdateTime();
         }
 
+        /// <summary>
+        /// Updates the current timeScale; Varies depending on the current time of day (=> timeCurve)
+        /// </summary>
         private void UpdateTimeScale()
         {
             _timeScale = 24 / (dayLength / 60);
@@ -61,9 +50,12 @@ namespace GameTime
             _timeScale /= _timeCurveNormalization;
         }
 
+        /// <summary>
+        /// Updates the current time based on FPS and timeScale
+        /// </summary>
         private void UpdateTime()
         {
-            timeOfDay += Time.deltaTime * _timeScale / 86400; // current day time in seconds
+            timeOfDay += Time.deltaTime * _timeScale / 86400;
             if (timeOfDay >= 1)
             {
                 timeOfDay = 0;
@@ -76,6 +68,9 @@ namespace GameTime
             }
         }
 
+        /// <summary>
+        /// Calculates the mean of timeCurve
+        /// </summary>
         private void NormalizeTimeCurve()
         {
             float stepSize = 0.01f;

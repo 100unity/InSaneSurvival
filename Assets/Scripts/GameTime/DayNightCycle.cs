@@ -20,16 +20,10 @@ namespace GameTime
         [SerializeField][Tooltip("A gradient that changes the sun color depending of day time")]
         private Gradient sunColor;
 
-        [SerializeField][Tooltip("tilt of the sun")] [Range(-45f, 45f)]
-        private float sunTilt;
-        
+        [SerializeField][Tooltip("tilt of the sun (and moon)")] [Range(-45f, 45f)]
+        private float tilt; // could vary depending seasons in the future
         
         private float _intensity;
-
-        
-        private void Awake()
-        {
-        }
 
         void Update()
         {
@@ -38,12 +32,18 @@ namespace GameTime
             AdjustSunColor();
         }
         
+        /// <summary>
+        /// Rotates sun/moon based on the current time of the day
+        /// </summary>
         private void RotateSun()
         {
-            float sunAngle = clock.TimeOfDay * 360f;
-            dayNightCycle.transform.localRotation = Quaternion.Euler(new Vector3(sunTilt,0f, sunAngle));
+            float zAngle = clock.TimeOfDay * 360f;
+            dayNightCycle.transform.localRotation = Quaternion.Euler(new Vector3(tilt,0f, zAngle));
         }
 
+        /// <summary>
+        /// Scales the light intensity of the sun based on the projection of its normal onto the y-axis
+        /// </summary>
         private void SunIntensity()
         {
             _intensity = Mathf.Clamp01(Vector3.Dot(sunLight.transform.forward, Vector3.down));
@@ -51,10 +51,12 @@ namespace GameTime
             sunLight.intensity = _intensity + sunBaseIntensity;
         }
 
+        /// <summary>
+        /// Picks a color from sunColor gradient depending on the current value of intensity
+        /// </summary>
         private void AdjustSunColor()
         {
             sunLight.color = sunColor.Evaluate(_intensity);
         }
-        
     }
 }
