@@ -10,6 +10,14 @@ namespace Utils.ElementInteraction
     public class Swappable : MonoBehaviour
     {
         /// <summary>
+        /// Event that will be executed when another swappable was found.
+        /// If the returned boolean is false, the swap will be skipped.
+        /// </summary>
+        public event SwapDelegate OnSwap;
+
+        public delegate bool SwapDelegate(Swappable otherSwappable);
+
+        /// <summary>
         /// The draggable component used for the dragging events
         /// </summary>
         private Draggable _draggable;
@@ -35,6 +43,10 @@ namespace Utils.ElementInteraction
             Swappable otherSwappable = _draggable.GraphicRaycaster.FindUIElement(eventData, this);
             // No swappable, nothing to do
             if (otherSwappable == null)
+                return;
+
+            // Invoke OnSwap event before swapping
+            if (OnSwap != null && !OnSwap.Invoke(otherSwappable))
                 return;
 
             //Switch positions

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6335045012732210339}
   - component: {fileID: 5839860969752119506}
   - component: {fileID: 6289240374141218549}
+  - component: {fileID: 5742499274627984195}
   - component: {fileID: 5863052565743500192}
   - component: {fileID: 8219049468974369920}
   m_Layer: 5
@@ -79,6 +80,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1fc3a4e47004de882d67746361c1a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5742499274627984195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893228938708651860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5b367442614734939d9cfbbbb669b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemButton: {fileID: 3948161127978455136}
 --- !u!222 &5863052565743500192
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -553,6 +567,8 @@ MonoBehaviour:
   nameLabel: {fileID: 967714900044316469}
   countLabel: {fileID: 3207379365829779667}
   imgIsEquipped: {fileID: 4154406761875660684}
+  stackable: 0
+  swappable: {fileID: 6289240374141218549}
 --- !u!114 &6423204628568844079
 MonoBehaviour:
   m_ObjectHideFlags: 0

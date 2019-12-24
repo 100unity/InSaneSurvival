@@ -39,6 +39,8 @@ namespace Managers
         /// <param name="amount">The amount</param>
         public void RemoveItem(Item item, int amount = 1) => playerInventory.RemoveItem(item, amount);
 
+        public void RefreshItems() => playerInventory.RefreshItems();
+
         /// <summary>
         /// Equips/Unequips the provided item.
         /// </summary>

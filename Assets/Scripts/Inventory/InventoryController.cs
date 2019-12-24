@@ -38,6 +38,8 @@ namespace Inventory
             ItemsUpdated?.Invoke(item, -amount);
         }
 
+        public void RefreshItems() => ItemsUpdated?.Invoke(default, 0);
+
         /// <inheritdoc cref="IItemHandler.ContainsItem"/>
         public bool ContainsItem(Item item, int amount = 1)
         {

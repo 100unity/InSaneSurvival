@@ -19,7 +19,7 @@ namespace UI
         /// <summary>
         /// All items and the corresponding ItemButtons
         /// </summary>
-        private readonly Dictionary<Item, ItemButton> _itemStacks = new Dictionary<Item, ItemButton>();
+        private readonly List<KeyValuePair<Item, ItemButton>> _items = new List<KeyValuePair<Item, ItemButton>>();
 
         /// <summary>
         /// Whether the inventory is currently showing
@@ -46,18 +46,34 @@ namespace UI
         private void ItemEquipped(Equipable oldItem, Equipable newItem)
         {
             if (oldItem != null)
-                _itemStacks[oldItem]?.ToggleIsEquipped(false);
+            {
+                ItemButton itemButton = _items.Find(pair => pair.Key == oldItem).Value;
+                if (itemButton != null)
+                    itemButton.ToggleIsEquipped(false);
+            }
+
             if (newItem != null)
-                _itemStacks[newItem]?.ToggleIsEquipped(true);
+            {
+                ItemButton itemButton = _items.Find(pair => pair.Key == newItem).Value;
+                if (itemButton != null)
+                    itemButton.ToggleIsEquipped(true);
+            }
         }
 
         /// <summary>
-        /// Checks if the amount is negative or positive and removes or adds respectively
+        /// Checks if the amount is negative or positive and removes or adds respectively.
+        /// If the amount is 0, it will check all item buttons instead.
         /// </summary>
         /// <param name="item">The item to be added/removed</param>
         /// <param name="amount">The amount to be added/removed</param>
         private void ItemsUpdated(Item item, int amount)
         {
+            if (amount == 0)
+            {
+                UpdateItemButtons();
+                return;
+            }
+
             if (amount > 0)
                 AddItem(item, amount);
             else
@@ -74,36 +90,56 @@ namespace UI
         }
 
         /// <summary>
-        /// Adds an item to the inventory UI or increases the stack size in case it already exists
+        /// Adds an item to the inventory UI or increases the stack size in case it already exists.
+        /// Creates a new item button if the previous ones are full.
         /// </summary>
         /// <param name="item">The item to add to the UI</param>
         /// <param name="amount">The amount to be added</param>
         private void AddItem(Item item, int amount)
         {
-            if (_itemStacks.ContainsKey(item))
+            for (int i = 0; i < amount; i++)
             {
-                _itemStacks[item].Count += amount;
-                return;
+                KeyValuePair<Item, ItemButton> itemPair =
+                    _items.Find(pair => pair.Key == item && pair.Value.CanAddOne());
+                // Only full stacks or no stack yet
+                if (itemPair.Equals(default(KeyValuePair<Item, ItemButton>)))
+                {
+                    ItemButton itemButton = Instantiate(itemButtonPrefab, itemGrid.transform);
+                    itemButton.Init(item, amount);
+                    _items.Add(new KeyValuePair<Item, ItemButton>(item, itemButton));
+                }
+                else // Add to first one found
+                    itemPair.Value.Count++;
             }
-
-            ItemButton itemButton = Instantiate(itemButtonPrefab, itemGrid.transform);
-            itemButton.Init(item, amount);
-            _itemStacks[item] = itemButton;
         }
 
         /// <summary>
-        /// Removes an item from the inventory UI or decreases the stack size
-        /// by one if there are at least two items of the same type
+        /// Removes an item from the inventory UI or decreases the stack size by one.
+        /// Deletes a item button if the count is 0.
         /// </summary>
         /// <param name="item">The item to remove from the UI</param>
         /// <param name="amount">The amount to be removed</param>
         private void RemoveItem(Item item, int amount)
         {
-            if (!_itemStacks.ContainsKey(item)) return;
-            _itemStacks[item].Count -= amount;
-            if (_itemStacks[item].Count > 0) return;
-            Destroy(_itemStacks[item].gameObject);
-            _itemStacks.Remove(item);
+            for (int i = 0; i < amount; i++)
+            {
+                KeyValuePair<Item, ItemButton> itemPair = _items.Find(pair => pair.Key == item);
+                if (itemPair.Equals(default(KeyValuePair<Item, ItemButton>))) return;
+                itemPair.Value.Count--;
+                if (itemPair.Value.Count > 0) continue;
+                Destroy(itemPair.Value.gameObject);
+                _items.Remove(itemPair);
+            }
+        }
+
+        private void UpdateItemButtons()
+        {
+            List<KeyValuePair<Item,ItemButton>> itemPairs = _items.FindAll(pair => pair.Value.Count <= 0);
+            foreach (KeyValuePair<Item,ItemButton> itemPair in itemPairs)
+            {
+                Destroy(itemPair.Value.gameObject);
+                _items.Remove(itemPair);
+            }
         }
     }
 }

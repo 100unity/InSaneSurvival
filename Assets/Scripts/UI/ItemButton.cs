@@ -1,7 +1,10 @@
+using Interfaces;
 using Inventory;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils.ElementInteraction;
 
 namespace UI
 {
@@ -18,6 +21,9 @@ namespace UI
 
         [Tooltip("The image for showing the user which item is equipped")] [SerializeField]
         private Image imgIsEquipped;
+
+        [Header("Stacking")] [Tooltip("The swappable component used for the stacking")] [SerializeField]
+        private Swappable swappable;
 
         /// <summary>
         /// The number of items on the item stack. Also updates the label in the inventory UI when changed.
@@ -51,6 +57,34 @@ namespace UI
         {
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnClick);
+            swappable.OnSwap += Swap;
+        }
+
+        private bool Swap(Swappable otherSwappable)
+        {
+            // If full stack or not a stackable, skip
+            if (!otherSwappable.TryGetComponent(out Stackable otherStackable) ||
+                !otherStackable.ItemButton.CanAddOne() || !CanAddOne())
+                return true;
+            // If not the same, skip
+            if (!Item.Equals(otherStackable.ItemButton.Item))
+                return true;
+
+            int freeSpace = otherStackable.ItemButton.GetFreeSpace();
+
+            // Move everything to the other stack
+            if (freeSpace >= Count)
+            {
+                otherStackable.ItemButton.Count += Count;
+                Count = 0;
+                InventoryManager.Instance.RefreshItems();
+                return false;
+            }
+
+            // Move as much as possible
+            otherStackable.ItemButton.Count += freeSpace;
+            Count -= freeSpace;
+            return false;
         }
 
         /// <summary>
@@ -67,6 +101,11 @@ namespace UI
             // TODO: Remove this if we have icons for all items
             nameLabel.SetText(Item.name);
         }
+
+        public bool CanAddOne() => _count + 1 <= Item.MaxStackSize;
+
+        public int GetFreeSpace() => Item.MaxStackSize - _count;
+
 
         public void ToggleIsEquipped(bool show)
         {
