@@ -1,3 +1,4 @@
+using System;
 using Interfaces;
 using Inventory;
 using Managers;
@@ -57,10 +58,62 @@ namespace UI
         {
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnClick);
-            swappable.OnSwap += Swap;
         }
 
-        private bool Swap(Swappable otherSwappable)
+        private void OnEnable() => swappable.OnSwap += Stack;
+
+        private void OnDisable() => swappable.OnSwap -= Stack;
+
+        /// <summary>
+        /// Sets all needed values for the UI element
+        /// </summary>
+        /// <param name="item">The item for this ItemButton</param>
+        /// <param name="amount">The quantity to be displayed</param>
+        public void Init(Item item, int amount)
+        {
+            Item = item;
+            icon.sprite = Item.Icon;
+            Count = amount;
+
+            // TODO: Remove this if we have icons for all items
+            nameLabel.SetText(Item.name);
+        }
+
+        /// <summary>
+        /// Checks if there is space left on the stack
+        /// </summary>
+        /// <returns>Whether this stack is full or not</returns>
+        public bool CanAddOne() => GetFreeSpace() > 0;
+
+        /// <summary>
+        /// Shows/Hides the "isEquipped" status
+        /// </summary>
+        /// <param name="show">Whether to show or hide it</param>
+        public void ToggleIsEquipped(bool show)
+        {
+            imgIsEquipped.gameObject.SetActive(show);
+        }
+
+        /// <summary>
+        /// If the button is clicked, the item saved in the _item field is used.
+        /// Consumables are going to be removed from the inventory and equipable items will be equipped un-equipped.
+        /// <para>Also shows/hides the "isEquipped" image.</para>
+        /// </summary>
+        private void OnClick() => Item.Use();
+        
+        /// <summary>
+        /// Gets the free space of the stack
+        /// </summary>
+        /// <returns>Free space as an integer</returns>
+        private int GetFreeSpace() => Item.MaxStackSize - _count;
+        
+        /// <summary>
+        /// Tries to stack the current item button into the other.
+        /// If it is the wrong item or one of the two stacks is already full, it will do nothing
+        /// </summary>
+        /// <param name="otherSwappable">The other element the user dragged this element over</param>
+        /// <returns>True: Swaps the elements, False: Stacks them</returns>
+        private bool Stack(Swappable otherSwappable)
         {
             // If full stack or not a stackable, skip
             if (!otherSwappable.TryGetComponent(out Stackable otherStackable) ||
@@ -86,37 +139,5 @@ namespace UI
             Count -= freeSpace;
             return false;
         }
-
-        /// <summary>
-        /// Sets all needed values for the UI element
-        /// </summary>
-        /// <param name="item">The item for this ItemButton</param>
-        /// <param name="amount">The quantity to be displayed</param>
-        public void Init(Item item, int amount)
-        {
-            Item = item;
-            icon.sprite = Item.Icon;
-            Count = amount;
-
-            // TODO: Remove this if we have icons for all items
-            nameLabel.SetText(Item.name);
-        }
-
-        public bool CanAddOne() => _count + 1 <= Item.MaxStackSize;
-
-        public int GetFreeSpace() => Item.MaxStackSize - _count;
-
-
-        public void ToggleIsEquipped(bool show)
-        {
-            imgIsEquipped.gameObject.SetActive(show);
-        }
-
-        /// <summary>
-        /// If the button is clicked, the item saved in the _item field is used.
-        /// Consumables are going to be removed from the inventory and equipable items will be equipped un-equipped.
-        /// <para>Also shows/hides the "isEquipped" image.</para>
-        /// </summary>
-        private void OnClick() => Item.Use();
     }
 }
