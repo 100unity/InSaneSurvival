@@ -15,6 +15,8 @@ namespace Interactables
         [Tooltip("Have we already interacted with the object?")]
         [SerializeField] private bool hasInteracted;
 
+        public bool HasInteracted => hasInteracted;
+
         [SerializeField] private Transform player;    // Reference to the player transform
         
         private void Update()
