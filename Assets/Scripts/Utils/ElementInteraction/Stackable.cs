@@ -8,9 +8,12 @@ namespace Utils.ElementInteraction
     /// </summary>
     public class Stackable : MonoBehaviour
     {
-        [Tooltip("The item button for data")] [SerializeField]
+        [Tooltip("The ItemButton for data")] [SerializeField]
         private ItemButton itemButton;
 
+        /// <summary>
+        /// ItemButton component reference
+        /// </summary>
         public ItemButton ItemButton => itemButton;
     }
 }

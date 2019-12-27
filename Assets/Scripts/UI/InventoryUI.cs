@@ -2,13 +2,15 @@
 using Inventory;
 using Managers;
 using UnityEngine;
+using UnityEngine.UI;
+using Utils.ElementInteraction;
 
 namespace UI
 {
     public class InventoryUI : MonoBehaviour
     {
         [Tooltip("The grid in which the ItemButtons will be spawned")] [SerializeField]
-        private GameObject itemGrid;
+        private GridLayout itemGrid;
 
         [Tooltip("The ItemButtonPrefab for spawning")] [SerializeField]
         private ItemButton itemButtonPrefab;
@@ -19,7 +21,7 @@ namespace UI
         /// <summary>
         /// All items and the corresponding ItemButtons
         /// </summary>
-        private readonly List<KeyValuePair<Item, ItemButton>> _items = new List<KeyValuePair<Item, ItemButton>>();
+        private readonly List<ItemButton> _items = new List<ItemButton>();
 
         /// <summary>
         /// Whether the inventory is currently showing
@@ -29,35 +31,13 @@ namespace UI
         private void OnEnable()
         {
             InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
-            InventoryManager.Instance.OnItemEquipped += ItemEquipped;
+            Swappable.OnAfterSwap += SwapCompleted;
         }
 
         private void OnDisable()
         {
             InventoryManager.Instance.ItemHandler.ItemsUpdated -= ItemsUpdated;
-            InventoryManager.Instance.OnItemEquipped -= ItemEquipped;
-        }
-
-        /// <summary>
-        /// Enables/Disables the <see cref="ItemButton.imgIsEquipped"/> for the given items.
-        /// </summary>
-        /// <param name="oldItem">The item that WAS equipped</param>
-        /// <param name="newItem">The item that IS equipped</param>
-        private void ItemEquipped(Equipable oldItem, Equipable newItem)
-        {
-            if (oldItem != null)
-            {
-                ItemButton itemButton = _items.Find(pair => pair.Key == oldItem).Value;
-                if (itemButton != null)
-                    itemButton.ToggleIsEquipped(false);
-            }
-
-            if (newItem != null)
-            {
-                ItemButton itemButton = _items.Find(pair => pair.Key == newItem).Value;
-                if (itemButton != null)
-                    itemButton.ToggleIsEquipped(true);
-            }
+            Swappable.OnAfterSwap -= SwapCompleted;
         }
 
         /// <summary>
@@ -99,17 +79,16 @@ namespace UI
         {
             for (int i = 0; i < amount; i++)
             {
-                KeyValuePair<Item, ItemButton> itemPair =
-                    _items.Find(pair => pair.Key == item && pair.Value.CanAddOne());
+                ItemButton itemButtonInList = _items.Find(button => button.Item == item && button.CanAddOne());
                 // Only full stacks or no stack yet
-                if (itemPair.Equals(default(KeyValuePair<Item, ItemButton>)))
+                if (itemButtonInList == default(ItemButton))
                 {
                     ItemButton itemButton = Instantiate(itemButtonPrefab, itemGrid.transform);
                     itemButton.Init(item, amount);
-                    _items.Add(new KeyValuePair<Item, ItemButton>(item, itemButton));
+                    _items.Add(itemButton);
                 }
                 else // Add to first one found
-                    itemPair.Value.Count++;
+                    itemButtonInList.Count++;
             }
         }
 
@@ -123,23 +102,34 @@ namespace UI
         {
             for (int i = 0; i < amount; i++)
             {
-                KeyValuePair<Item, ItemButton> itemPair = _items.Find(pair => pair.Key == item);
-                if (itemPair.Equals(default(KeyValuePair<Item, ItemButton>))) return;
-                itemPair.Value.Count--;
-                if (itemPair.Value.Count > 0) continue;
-                Destroy(itemPair.Value.gameObject);
-                _items.Remove(itemPair);
+                ItemButton itemButtonInList = _items.Find(button => button.Item == item);
+                if (itemButtonInList == default(ItemButton)) return;
+                itemButtonInList.Count--;
+                if (itemButtonInList.Count > 0) continue;
+                Destroy(itemButtonInList.gameObject);
+                _items.Remove(itemButtonInList);
             }
         }
 
+        /// <summary>
+        /// Goes through all ItemButtons and deletes all buttons that have a Count of 0.
+        /// </summary>
         private void UpdateItemButtons()
         {
-            List<KeyValuePair<Item,ItemButton>> itemPairs = _items.FindAll(pair => pair.Value.Count <= 0);
-            foreach (KeyValuePair<Item,ItemButton> itemPair in itemPairs)
+            List<ItemButton> itemButtonInList = _items.FindAll(button => button.Count <= 0);
+            foreach (ItemButton currentButton in itemButtonInList)
             {
-                Destroy(itemPair.Value.gameObject);
-                _items.Remove(itemPair);
+                Destroy(currentButton.gameObject);
+                _items.Remove(currentButton);
             }
         }
+
+        /// <summary>
+        /// Switches the elements in the Grid to make sure that they are ordered and displayed correctly
+        /// </summary>
+        /// <param name="swappable">The first swappable</param>
+        /// <param name="otherSwappable">The second swappable</param>
+        private void SwapCompleted(Swappable swappable, Swappable otherSwappable) =>
+            itemGrid.SwitchElements(swappable.Parent, otherSwappable.Parent);
     }
 }

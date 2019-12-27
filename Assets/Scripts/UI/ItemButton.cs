@@ -1,5 +1,3 @@
-using System;
-using Interfaces;
 using Inventory;
 using Managers;
 using TMPro;
@@ -54,15 +52,20 @@ namespace UI
         /// </summary>
         private int _count;
 
+        /// <summary>
+        /// Checks if the item is visually equipped
+        /// </summary>
+        private bool IsEquipped => imgIsEquipped.gameObject.activeSelf;
+
         private void Awake()
         {
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnClick);
         }
 
-        private void OnEnable() => swappable.OnSwap += Stack;
+        private void OnEnable() => swappable.OnBeforeSwap += Stack;
 
-        private void OnDisable() => swappable.OnSwap -= Stack;
+        private void OnDisable() => swappable.OnBeforeSwap -= Stack;
 
         /// <summary>
         /// Sets all needed values for the UI element
@@ -86,12 +89,17 @@ namespace UI
         public bool CanAddOne() => GetFreeSpace() > 0;
 
         /// <summary>
-        /// Shows/Hides the "isEquipped" status
+        /// Visually unequips the item
         /// </summary>
-        /// <param name="show">Whether to show or hide it</param>
-        public void ToggleIsEquipped(bool show)
+        public void Unequip() => imgIsEquipped.gameObject.SetActive(false);
+
+        /// <summary>
+        /// Shows/Hides the "isEquipped" status and updates the equipable in the <see cref="InventoryManager"/>
+        /// </summary>
+        private void ToggleIsEquipped()
         {
-            imgIsEquipped.gameObject.SetActive(show);
+            imgIsEquipped.gameObject.SetActive(!IsEquipped);
+            InventoryManager.Instance.SetCurrentlyEquipped(IsEquipped ? this : null);
         }
 
         /// <summary>
@@ -99,14 +107,19 @@ namespace UI
         /// Consumables are going to be removed from the inventory and equipable items will be equipped un-equipped.
         /// <para>Also shows/hides the "isEquipped" image.</para>
         /// </summary>
-        private void OnClick() => Item.Use();
-        
+        private void OnClick()
+        {
+            Item.Use();
+            if (Item is Equipable)
+                ToggleIsEquipped();
+        }
+
         /// <summary>
         /// Gets the free space of the stack
         /// </summary>
         /// <returns>Free space as an integer</returns>
         private int GetFreeSpace() => Item.MaxStackSize - _count;
-        
+
         /// <summary>
         /// Tries to stack the current item button into the other.
         /// If it is the wrong item or one of the two stacks is already full, it will do nothing
@@ -115,12 +128,12 @@ namespace UI
         /// <returns>True: Swaps the elements, False: Stacks them</returns>
         private bool Stack(Swappable otherSwappable)
         {
-            // If full stack or not a stackable, skip
+            // If full stack or not an itemButton, skip
             if (!otherSwappable.TryGetComponent(out Stackable otherStackable) ||
                 !otherStackable.ItemButton.CanAddOne() || !CanAddOne())
                 return true;
             // If not the same, skip
-            if (!Item.Equals(otherStackable.ItemButton.Item))
+            if (!Item == otherStackable.ItemButton.Item)
                 return true;
 
             int freeSpace = otherStackable.ItemButton.GetFreeSpace();
