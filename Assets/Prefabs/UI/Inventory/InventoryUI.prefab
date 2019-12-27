@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 818708872121858167}
   - component: {fileID: 4849919765790493365}
   - component: {fileID: 6034667222920130781}
-  - component: {fileID: 1580445365101392494}
+  - component: {fileID: 4034868590408327448}
   m_Layer: 5
   m_Name: ItemGrid
   m_TagString: Untagged
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1580445365101392494
+--- !u!114 &4034868590408327448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4694291416480752844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cc28f8876b04ae8a8678247f736cf79, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea2e7a63edc94cea9c77f7b0d5b65de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemGrid: {fileID: 1580445365101392494}
+  itemGrid: {fileID: 4034868590408327448}
   itemButtonPrefab: {fileID: 3948161127978455136, guid: 07adac03de9614757b9beb7aa55d39e3,
     type: 3}
   inventoryUIContent: {fileID: 2456554992891907293}

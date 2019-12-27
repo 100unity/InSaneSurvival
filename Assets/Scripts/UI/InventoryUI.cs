@@ -3,6 +3,7 @@ using Inventory;
 using Managers;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 using Utils.ElementInteraction;
 
 namespace UI
@@ -10,7 +11,7 @@ namespace UI
     public class InventoryUI : MonoBehaviour
     {
         [Tooltip("The grid in which the ItemButtons will be spawned")] [SerializeField]
-        private GridLayout itemGrid;
+        private GridLayoutGroup itemGrid;
 
         [Tooltip("The ItemButtonPrefab for spawning")] [SerializeField]
         private ItemButton itemButtonPrefab;
