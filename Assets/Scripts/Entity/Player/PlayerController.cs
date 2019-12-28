@@ -153,14 +153,14 @@ namespace Entity.Player
             {
                 GameObject objectHit = hit.collider.gameObject;
 
-                if (objectHit.GetComponent<Damageable>() is Damageable damageable)
+                if (objectHit.TryGetComponent(out Damageable damageable))
                 {
                     _interactLogic.RemoveFocus();
                     // implementation NOT capable of area damage
                     _attackLogic.StartAttack(damageable);
                 }
 
-                else if (objectHit.GetComponent<Interactable>() is Interactable interactable)
+                else if (objectHit.TryGetComponent(out Interactable interactable))
                 {
                     _attackLogic.StopAttack();
                     //Set as focus
