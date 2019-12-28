@@ -1,42 +1,36 @@
 ﻿using AbstractClasses;
+using Inventory;
 using Remote;
 using UnityEngine;
 
 namespace Entity.Player
 {
-    
     public class PlayerState : Damageable
     {
         public delegate void PlayerStateChanged(int newValue);
+
         public delegate void PlayerIsDead();
-        
+
         //Player State values
-        [Tooltip("100 - full health, 0 - dead")] [SerializeField] [Range(0, 100)] 
+        [Tooltip("100 - full health, 0 - dead")] [SerializeField] [Range(0, 100)]
         private int health;
 
-        [Tooltip("100: no hunger, 0: the player is in desperate need for food")] [SerializeField] [Range(0, 100)] 
+        [Tooltip("100: no hunger, 0: the player is in desperate need for food")] [SerializeField] [Range(0, 100)]
         private int saturation;
 
-        [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)] 
+        [Tooltip("100: not thirsty, 0: gazing for a sip of water")] [SerializeField] [Range(0, 100)]
         private int hydration;
 
-        [Tooltip("100: sane, 0: insane")]
-        [Range(0, 100)]
-        [SerializeField]
+        [Tooltip("100: sane, 0: insane")] [Range(0, 100)] [SerializeField]
         private int sanity;
-        
-        // ------temp for hit animation------
-        [Tooltip("The time the object should be marked as hit after being hit")]
-        [SerializeField]
-        private float healMarkTime;
-        
-        [Tooltip("The MeshRenderer of the graphics object of the player")]
-        [SerializeField]
-        private MeshRenderer meshRenderer;
 
-        private Material _prevMat;
+        // ------temp for hit animation------
+        [Tooltip("The time the object should be marked as hit after being hit")] [SerializeField]
+        private float healMarkTime;
+
         private Material _healMarkerMaterial;
         private bool _healed;
+
         private float _healTimer;
         // ----------
 
@@ -58,9 +52,6 @@ namespace Entity.Player
             OnPlayerSanityUpdate?.Invoke(sanity);
             // ------------
             _healMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.magenta};
-            // just put initial mat here
-            _prevMat = meshRenderer.material;
-            // ------------
         }
 
         private void OnEnable()
@@ -92,7 +83,7 @@ namespace Entity.Player
             {
                 _healed = false;
                 _healTimer = 0;
-                meshRenderer.material = _prevMat;
+                gameObjectRenderer.material = PrevMat;
             }
         }
 
@@ -155,7 +146,7 @@ namespace Entity.Player
             base.Hit(damage);
             ChangePlayerHealth(-damage);
         }
-        
+
         /// <summary>
         /// Heals the player by a specific amount.
         /// Marks the player as healed after being healed.
@@ -167,9 +158,8 @@ namespace Entity.Player
 
             //-------
             _healed = true;
-            meshRenderer.material = _healMarkerMaterial;
+            gameObjectRenderer.material = _healMarkerMaterial;
             //-------
-
         }
 
         public bool Consume(Consumable item)
@@ -184,7 +174,7 @@ namespace Entity.Player
         }
 
         public override void Die()
-        {            
+        {
             OnPlayerDeath?.Invoke();
             Debug.Log("Player is dead");
         }

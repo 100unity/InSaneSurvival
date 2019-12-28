@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Pickaxe
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  maxStackSize: 0
+  maxStackSize: 1
+  equipableAbility: 0

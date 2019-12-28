@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,23 +15,6 @@ namespace Utils
         /// <returns>Whether the layer mask has the layer checked</returns>
         public static bool Contains(this LayerMask layerMask, int layer) => layerMask == (layerMask | (1 << layer));
 
-        /// <summary>
-        /// Finds all instances of the given type in the project
-        /// </summary>
-        /// <typeparam name="T">The type of the instance to be searched for</typeparam>
-        /// <returns>All found instances</returns>
-        public static T[] GetAllInstances<T>(this Object _) where T : Object
-        {
-            //All globally unique identifiers of the instances
-            string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name);
-
-            T[] instances = new T[guids.Length];
-            for (int i = 0; i < instances.Length; i++)
-                instances[i] = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guids[i]));
-
-            return instances;
-        }
-        
         /// <summary>
         /// RayCast on UI-Level.
         /// <para>Finds the next element (of T) using the provided GraphicRaycaster and PointerEventData (position of it)</para>
@@ -59,5 +41,17 @@ namespace Utils
 
             return null;
         }
+
+        /// <summary>
+        /// Checks if an object is visible from camera's perspective.
+        /// </summary>
+        /// <param name="renderer">The renderer of the gameobject to be checked</param>
+        /// <param name="camera">The camera to use</param>
+        /// <returns></returns>
+        public static bool InFrustum(this Renderer renderer, Camera camera)
+        {
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
+            return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
+        }        
     }
 }

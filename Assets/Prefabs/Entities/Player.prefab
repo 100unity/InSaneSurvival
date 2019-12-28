@@ -414,7 +414,7 @@ MonoBehaviour:
   rotationTolerance: 10
   clickableLayers:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 524545
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
