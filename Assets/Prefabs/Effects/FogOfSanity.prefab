@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6112913262769956337}
-  m_Layer: 0
+  - component: {fileID: 5879607462033449367}
+  m_Layer: 9
   m_Name: FogOfSanity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,6 +32,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5879607462033449367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6112913262769956336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc518ed0af64b542abe2ae6a5f7bbbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogOfSanityMesh: {fileID: 6112913263723783040}
+  mainCamera: {fileID: 0}
+  pulseIntensity: 3
+  pulseFrequency: 0.6
 --- !u!1 &6112913263723783042
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +60,7 @@ GameObject:
   - component: {fileID: 6112913263723783041}
   - component: {fileID: 6112913263723783040}
   - component: {fileID: 6112913263723783054}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LowPolyIsland
   m_TagString: Untagged
   m_Icon: {fileID: 0}

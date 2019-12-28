@@ -325,7 +325,6 @@ GameObject:
   - component: {fileID: 1535071274}
   - component: {fileID: 7791627838801124558}
   - component: {fileID: 4832682374285577335}
-  - component: {fileID: 1325510595647295443}
   m_Layer: 20
   m_Name: Player
   m_TagString: Player
@@ -522,22 +521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95182fe05a7e18f49b9237feefacbc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1325510595647295443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6126187404098910136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dc518ed0af64b542abe2ae6a5f7bbbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fogOfSanityMesh: {fileID: 0}
-  mainCamera: {fileID: 0}
-  pulseIntensity: 3
-  pulseFrequency: 0.6
 --- !u!1 &7119464287082272653
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +801,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 1517941757197169441, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -923,11 +911,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 2456554992891907293, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_IsActive

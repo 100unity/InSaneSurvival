@@ -12,7 +12,7 @@ Shader "Custom/FogOfSanity"
         // Custom Properties
         _FogRadius ("FogRadius", Range(1,500)) = 1.0
         _FogMaxRadius ("FogMaxRadius", Range(0.1,10)) = 0.5
-        _PlayerPosition ("PlayerPostion", Vector) = (0,0,0,1)
+        _Center ("Center", Vector) = (0,0,0,1)
     }
     SubShader
     {
@@ -35,7 +35,7 @@ Shader "Custom/FogOfSanity"
         // Custom Properties
         float _FogRadius;
         float _FogMaxRadius;
-        float4 _PlayerPosition;
+        float4 _Center;
 
         struct Input
         {
@@ -64,7 +64,7 @@ Shader "Custom/FogOfSanity"
         {
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            float alpha = (1.0 - (c.a + powerForPos(_PlayerPosition, IN.location)));
+            float alpha = (1.0 - (c.a + powerForPos(_Center, IN.location)));
             o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
