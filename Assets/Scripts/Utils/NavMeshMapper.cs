@@ -11,21 +11,21 @@ namespace Utils
     public class NavMeshMapper
     {
         /// <summary>
-        /// Returns a random point mapped onto the layermask.
+        /// Returns a random point mapped onto the NavMesh.
         /// Since NavMesh.SamplePosition() can get very expensive, it's better to use it with a small distance
         /// and try multiple times (and only use the random points that are near the NavMesh).
         /// </summary>
         /// <param name="area">The area to draw the point from</param>
-        /// <param name="layermask">The layermask to map the point onto</param>
+        /// <param name="areaMask">The NavMesh area mask to map the point onto</param>
         /// <returns>The random point on the ground</returns>
-        public Vector3 GetMappedRandomPoint(Area area, int layermask)
+        public Vector3 GetMappedRandomPoint(Area area, int areaMask)
         {
             for (int i = 0; i < Consts.Utils.MAPPING_ITERATIONS; i++)
             {
                 Vector3 randomPoint = GetRandomPoint(area);
                 // try to map point onto NavMesh
                 NavMeshHit hit;
-                if (NavMesh.SamplePosition(randomPoint, out hit, Consts.Utils.MAX_NAVMESH_MAPPING_DISTANCE, layermask))
+                if (NavMesh.SamplePosition(randomPoint, out hit, Consts.Utils.MAX_NAVMESH_MAPPING_DISTANCE, areaMask))
                 {
                     return hit.position;
                 }
