@@ -24,8 +24,7 @@ namespace Utils
             {
                 Vector3 randomPoint = GetRandomPoint(area);
                 // try to map point onto NavMesh
-                NavMeshHit hit;
-                if (NavMesh.SamplePosition(randomPoint, out hit, Consts.Utils.MAX_NAVMESH_MAPPING_DISTANCE, areaMask))
+                if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, Consts.Utils.MAX_NAVMESH_MAPPING_DISTANCE, areaMask))
                 {
                     return hit.position;
                 }
