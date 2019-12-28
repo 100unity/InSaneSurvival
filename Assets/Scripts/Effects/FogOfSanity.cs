@@ -65,20 +65,12 @@ namespace Effects
             if (_isGrowing)
             {
                 _currentRadius += Time.deltaTime / pulseFrequency;
-                if (_currentRadius >= _baseRadius + intensity)
-                {
-                    _isGrowing = false;
-                    print("shrink");
-                }
+                if (_currentRadius >= _baseRadius + intensity) _isGrowing = false;
             }
             else
             {
                 _currentRadius -= Time.deltaTime / (pulseFrequency / 2);
-                if (_currentRadius <= _baseRadius)
-                {
-                    _isGrowing = true;
-                    print("grow");
-                }
+                if (_currentRadius <= _baseRadius) _isGrowing = true;
             }
         }
     
