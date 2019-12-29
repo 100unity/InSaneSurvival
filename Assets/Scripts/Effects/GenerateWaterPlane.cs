@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Effects
 {
+    [ExecuteInEditMode]
+
     public class GenerateWaterPlane : MonoBehaviour
     {
         [SerializeField][Tooltip("Size of the mesh")]
