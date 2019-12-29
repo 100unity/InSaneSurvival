@@ -25,7 +25,7 @@ namespace GameTime
         
         private float _intensity;
 
-        void Update()
+        private void Update()
         {
             RotateSun();
             SunIntensity();
