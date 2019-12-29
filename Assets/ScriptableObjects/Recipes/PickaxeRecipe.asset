@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 433a787e3a2a2404ca18409922208c86, type: 3}
-  m_Name: Axe
+  m_Script: {fileID: 11500000, guid: 57c56c6397135a04ebfaeb59f7db11ca, type: 3}
+  m_Name: PickaxeRecipe
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  maxStackSize: 0
-  equipableAbility: 0
+  neededItems: []
+  createdItems: []
+  recipeName: 

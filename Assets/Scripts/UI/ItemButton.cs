@@ -7,6 +7,9 @@ namespace UI
 {
     public class ItemButton : MonoBehaviour
     {
+        [Tooltip("The button for using or dragging the item")] [SerializeField]
+        private Button button;
+
         [Tooltip("The icon of item")] [SerializeField]
         private Image icon;
 
@@ -38,20 +41,11 @@ namespace UI
         public Item Item { get; set; }
 
         /// <summary>
-        /// The button used for the click-event
-        /// </summary>
-        private Button _button;
-
-        /// <summary>
         /// The amount of this item
         /// </summary>
         private int _count;
 
-        private void Awake()
-        {
-            _button = GetComponent<Button>();
-            _button.onClick.AddListener(OnClick);
-        }
+        private void Awake() => button.onClick.AddListener(OnClick);
 
         /// <summary>
         /// Sets all needed values for the UI element

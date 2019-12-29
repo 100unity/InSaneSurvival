@@ -1,36 +1,38 @@
-﻿using Entity.Player;
-using System.Collections;
-using System.Collections.Generic;
+﻿using AbstractClasses;
+using Managers;
 using UnityEngine;
-using AbstractClasses;
 
 namespace Entity
 {
     [RequireComponent(typeof(Movable))]
     public class AttackLogic : MonoBehaviour
     {
-        [Tooltip("The base damage dealt")]
-        [SerializeField]
+        [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
 
-        [Tooltip("The maximum distance between attacker and target in order to deal damage")]
-        [SerializeField]
+        [Tooltip("The maximum distance between attacker and target in order to deal damage")] [SerializeField]
         private int attackRange;
 
-        [Tooltip("The time needed for an attack in seconds")]
-        [SerializeField]
+        [Tooltip("The time needed for an attack in seconds")] [SerializeField]
         private double attackTime;
 
-        [Tooltip("The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
+        [Tooltip(
+            "The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
         [SerializeField]
         private double hitRotationTolerance;
 
-        [Tooltip("Stops attacking the target after a (un-)successful hit")]
-        [SerializeField]
+        [Tooltip("Stops attacking the target after a (un-)successful hit")] [SerializeField]
         private bool resetAfterHit;
 
 
-        public enum AttackStatus { Hit, Miss, NotFinished, None };
+        public enum AttackStatus
+        {
+            Hit,
+            Miss,
+            NotFinished,
+            None
+        };
+
         public AttackStatus Status { get; private set; }
 
         // component references
@@ -41,9 +43,10 @@ namespace Entity
         private float _distanceToTarget;
 
         // ----temporary as animation replacement------
-            private MeshRenderer _gameObjectRenderer;
-            private Material _prevMat;
-            private Material _attackAnimationMaterial;
+        private MeshRenderer _gameObjectRenderer;
+        private Material _prevMat;
+
+        private Material _attackAnimationMaterial;
         // ---------
 
         private void Awake()
@@ -52,10 +55,10 @@ namespace Entity
             _movable = GetComponent<Movable>();
 
             // -----temp replacement for animation-----
-                _gameObjectRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
-                _prevMat = _gameObjectRenderer.material;
-                _attackAnimationMaterial = new Material(Shader.Find("Standard"));
-                _attackAnimationMaterial.color = Color.yellow;
+            _gameObjectRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+            _prevMat = _gameObjectRenderer.material;
+            _attackAnimationMaterial = new Material(Shader.Find("Standard"));
+            _attackAnimationMaterial.color = Color.yellow;
             // ----------
         }
 
@@ -132,7 +135,8 @@ namespace Entity
             {
                 // deal damage
                 Damageable damageable = _target.GetComponent<Damageable>();
-                damageable.Hit(damage);
+                // Add damage boost from weapon
+                damageable.Hit(damage + InventoryManager.Instance.DamageBoost);
             }
 
             // -----temp-----
@@ -192,8 +196,10 @@ namespace Entity
                     else
                         return AttackStatus.Miss;
                 }
+
                 return AttackStatus.Miss;
             }
+
             return AttackStatus.NotFinished;
         }
     }

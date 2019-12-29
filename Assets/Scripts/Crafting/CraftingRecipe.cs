@@ -13,23 +13,25 @@ namespace Crafting
         [Tooltip("All needed items for crafting the new item(s) with this recipe")] [SerializeField]
         private List<ResourceData> neededItems;
 
-        [Tooltip("The item(s) that will be created with this recipe")] [SerializeField]
-        private List<ResourceData> createdItems;
+        [Tooltip("The item that will be created with this recipe")] [SerializeField]
+        private ResourceData createdItem;
 
         [Tooltip(
-            "[CAN BE UNDEFINED]\nThe name to be displayed for this recipe. If not defined, will use the name of the first created item")]
+            "[CAN BE UNDEFINED]\nThe name to be displayed for this recipe. If not defined, will use the name of the created item")]
         [SerializeField]
         private string recipeName;
 
         /// <summary>
-        /// The <see cref="recipeName"/> of this crafting recipe or - if not defined - the name of the first item in the <see cref="createdItems"/> list
+        /// The <see cref="recipeName"/> of this crafting recipe or - if not defined - the name of the first item in the <see cref="createdItem"/> list
         /// </summary>
-        public string CreatedItemName => string.IsNullOrEmpty(recipeName) ? createdItems[0].item.name : recipeName;
+        public string CreatedItemName => string.IsNullOrEmpty(recipeName) ? createdItem.item.name : recipeName;
 
         /// <summary>
         /// All needed items for crafting the new item(s) with this recipe
         /// </summary>
         public List<ResourceData> NeededItems => neededItems;
+
+        public ResourceData CreatedItem => createdItem;
 
         /// <summary>
         /// Checks if all ingredients for this recipe are present. If one item is missing or the amount of items does not match the needed amount, false will be returned.
@@ -52,9 +54,8 @@ namespace Crafting
             foreach (ResourceData neededItem in neededItems)
                 itemHandler.RemoveItem(neededItem.item, neededItem.amount);
 
-            // Add newly created item(s)
-            foreach (ResourceData createdItem in createdItems)
-                itemHandler.AddItem(createdItem.item, createdItem.amount);
+            // Add newly created item
+            itemHandler.AddItem(createdItem.item, createdItem.amount);
         }
 
 
