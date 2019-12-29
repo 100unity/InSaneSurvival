@@ -130,7 +130,7 @@ namespace Entity
                 // deal damage
                 Damageable damageable = _target.GetComponent<Damageable>();
                 // Add damage boost from weapon
-                damageable.Hit(damage + InventoryManager.Instance.DamageBoost);
+                damageable.Hit(damage + InventoryManager.Instance.DamageBoostFromEquipable);
             }
 
             // -----temp-----

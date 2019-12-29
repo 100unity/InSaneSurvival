@@ -28,7 +28,7 @@ namespace Managers
         /// <summary>
         /// The damage boost of the currently equipped weapon. Returns 0 if no item is equipped.
         /// </summary>
-        public int DamageBoost => CurrentlyEquippedItem ? CurrentlyEquippedItem.DamageBoost : 0;
+        public int DamageBoostFromEquipable => CurrentlyEquippedItem ? CurrentlyEquippedItem.DamageBoost : 0;
 
         /// <summary>
         /// Adds an item to the player's inventory.
