@@ -8,8 +8,8 @@ namespace Effects
         [SerializeField][Tooltip("Reference to the fog generating mesh")]
         private Renderer fogOfSanityMesh;
     
-        [SerializeField][Tooltip("Main camera in the scene")]
-        private Camera mainCamera;
+        [SerializeField][Tooltip("Reference to the players Model")]
+        private Transform player;
 
         [SerializeField] [Tooltip("Intensity of the pulse animation")]
         private float pulseIntensity;
@@ -46,12 +46,7 @@ namespace Effects
         /// </summary>
         private void CenterFog()
         {
-            Ray rayToPlayer = mainCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
-
-            if (Physics.Raycast(rayToPlayer, out RaycastHit hit, 1000))
-            {
-                fogOfSanityMesh.material.SetVector(PlayerPosition, hit.point);
-            }
+            fogOfSanityMesh.material.SetVector(PlayerPosition, player.position);
         }
 
         /// <summary>
@@ -94,7 +89,7 @@ namespace Effects
             }
             else
             {
-                _baseRadius = sanityLevel * 2;
+                _baseRadius = sanityLevel * 1.5f;
             }
         }
     }
