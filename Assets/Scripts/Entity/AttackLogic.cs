@@ -25,13 +25,7 @@ namespace Entity
         private bool resetAfterHit;
 
 
-        public enum AttackStatus
-        {
-            Hit,
-            Miss,
-            NotFinished,
-            None
-        };
+        public enum AttackStatus { Hit, Miss, NotFinished, None }
 
         public AttackStatus Status { get; private set; }
 
