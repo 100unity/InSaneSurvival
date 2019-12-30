@@ -17,6 +17,9 @@ namespace Effects
         [SerializeField] [Tooltip("Determines how fast pulse animation is")]
         private float pulseFrequency;
 
+        [SerializeField] [Tooltip("Determines the relation between sanity and fog radius")]
+        private float scaleFactor;    
+        
         // radius of the fog
         private float _baseRadius;
     
@@ -89,7 +92,7 @@ namespace Effects
             }
             else
             {
-                _baseRadius = sanityLevel * 1.5f;
+                _baseRadius = sanityLevel * scaleFactor;
             }
         }
     }
