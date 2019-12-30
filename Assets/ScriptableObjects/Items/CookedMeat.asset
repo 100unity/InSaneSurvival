@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dddbf48c44c41f54ca084202f466156a, type: 3}
-  m_Name: Bandage
+  m_Name: CookedMeat
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: ab97eea803c1fb642921225713e2020a, type: 3}
-  maxStackSize: 10
-  healthValue: 10
+  icon: {fileID: 0}
+  maxStackSize: 0
+  healthValue: 0
   saturationValue: 0
   hydrationValue: 0

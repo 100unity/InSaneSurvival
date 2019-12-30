@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meat
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  maxStackSize: 0
+  maxStackSize: 5
   healthValue: 0
   saturationValue: 20
   hydrationValue: 0

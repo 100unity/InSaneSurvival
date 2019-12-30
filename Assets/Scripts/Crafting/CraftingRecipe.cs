@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Interfaces;
 using Inventory;
+using Managers;
 using UnityEngine;
 
 namespace Crafting
@@ -10,11 +11,14 @@ namespace Crafting
     [CreateAssetMenu(fileName = "Recipe", menuName = "Crafting/Recipe", order = 0)]
     public class CraftingRecipe : ScriptableObject
     {
-        [Tooltip("All needed items for crafting the new item(s) with this recipe")] [SerializeField]
+        [Header("Items")] [Tooltip("All needed items for crafting the new item(s) with this recipe")] [SerializeField]
         private List<ResourceData> neededItems;
 
         [Tooltip("The item that will be created with this recipe")] [SerializeField]
         private ResourceData createdItem;
+
+        [Header("Recipe")] [Tooltip("The crafting station needed to craft this recipe")] [SerializeField]
+        private CraftingManager.CraftingStation craftingStation;
 
         [Tooltip(
             "[CAN BE UNDEFINED]\nThe name to be displayed for this recipe. If not defined, will use the name of the created item")]
@@ -35,11 +39,15 @@ namespace Crafting
 
         /// <summary>
         /// Checks if all ingredients for this recipe are present. If one item is missing or the amount of items does not match the needed amount, false will be returned.
+        /// <para>Also checks if the needed crafting station is currently been used.</para>
         /// </summary>
         /// <param name="itemHandler">The object that holds the items</param>
         /// <returns>Whether all needed items are present</returns>
-        public bool CanCraft(IItemHandler itemHandler) =>
-            neededItems.All(neededItem => itemHandler.ContainsItem(neededItem.item, neededItem.amount));
+        public bool CanCraft(IItemHandler itemHandler)
+        {
+            return neededItems.All(neededItem => itemHandler.ContainsItem(neededItem.item, neededItem.amount)) &&
+                   CraftingManager.Instance.CurrentCraftingStation == craftingStation;
+        }
 
         /// <summary>
         /// Crafts the new item(s) ith this recipe

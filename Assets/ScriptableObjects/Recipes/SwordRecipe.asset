@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c56c6397135a04ebfaeb59f7db11ca, type: 3}
   m_Name: SwordRecipe
   m_EditorClassIdentifier: 
-  neededItems: []
-  createdItems: []
+  neededItems:
+  - item: {fileID: 11400000, guid: f144e69106a98f647b57e29ab30134e1, type: 2}
+    amount: 3
+  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
+    amount: 2
+  createdItem:
+    item: {fileID: 11400000, guid: 435bf4a15213560408c58d224106ced1, type: 2}
+    amount: 1
   recipeName: 

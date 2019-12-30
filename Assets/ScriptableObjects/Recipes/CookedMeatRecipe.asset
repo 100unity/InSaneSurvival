@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dddbf48c44c41f54ca084202f466156a, type: 3}
-  m_Name: Bandage
+  m_Script: {fileID: 11500000, guid: 57c56c6397135a04ebfaeb59f7db11ca, type: 3}
+  m_Name: CookedMeatRecipe
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: ab97eea803c1fb642921225713e2020a, type: 3}
-  maxStackSize: 10
-  healthValue: 10
-  saturationValue: 0
-  hydrationValue: 0
+  neededItems: []
+  createdItem:
+    item: {fileID: 0}
+    amount: 0
+  craftingStation: 0
+  recipeName: 

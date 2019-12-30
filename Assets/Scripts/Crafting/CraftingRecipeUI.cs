@@ -62,7 +62,12 @@ namespace Crafting
         }
 
         /// <summary>
-        /// Invokes <see cref="SetCanCraft"/>
+        /// See <see cref="OnItemUpdate"/>
+        /// </summary>
+        public void UpdateRecipe() => OnItemUpdate();
+
+        /// <summary>
+        /// Checks if this recipe can be crafted. If so makes it white, else red.
         /// </summary>
         private void OnItemUpdate() =>
             SetCanCraft(_recipe.CanCraft(InventoryManager.Instance.ItemHandler));

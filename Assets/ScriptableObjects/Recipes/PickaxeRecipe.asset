@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c56c6397135a04ebfaeb59f7db11ca, type: 3}
   m_Name: PickaxeRecipe
   m_EditorClassIdentifier: 
-  neededItems: []
-  createdItems: []
+  neededItems:
+  - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
+    amount: 3
+  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
+    amount: 2
+  createdItem:
+    item: {fileID: 11400000, guid: 0bb4c8f056c744e1f8dd9416d4742d8c, type: 2}
+    amount: 1
   recipeName: 
