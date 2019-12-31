@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Utils.ElementInteraction
+namespace Utils.NotInUse
 {
     /// <summary>
     /// Small class only used to define and find SnapPosition

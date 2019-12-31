@@ -34,7 +34,6 @@ namespace Inventory
         /// </summary>
         public override bool Use()
         {
-            InventoryManager.Instance.ToggleEquipableItem(this);
             Debug.Log("Equipping the item " + name);
             return true;
         }

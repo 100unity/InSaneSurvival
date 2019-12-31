@@ -2,13 +2,16 @@
 using Inventory;
 using Managers;
 using UnityEngine;
+using UnityEngine.UI;
+using Utils;
+using Utils.ElementInteraction;
 
 namespace UI
 {
     public class InventoryUI : MonoBehaviour
     {
         [Tooltip("The grid in which the ItemButtons will be spawned")] [SerializeField]
-        private GameObject itemGrid;
+        private GridLayoutGroup itemGrid;
 
         [Tooltip("The ItemButtonPrefab for spawning")] [SerializeField]
         private ItemButton itemButtonPrefab;
@@ -19,7 +22,7 @@ namespace UI
         /// <summary>
         /// All items and the corresponding ItemButtons
         /// </summary>
-        private readonly Dictionary<Item, ItemButton> _itemStacks = new Dictionary<Item, ItemButton>();
+        private readonly List<ItemButton> _items = new List<ItemButton>();
 
         /// <summary>
         /// Whether the inventory is currently showing
@@ -29,35 +32,29 @@ namespace UI
         private void OnEnable()
         {
             InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
-            InventoryManager.Instance.OnItemEquipped += ItemEquipped;
+            Swappable.OnAfterSwap += SwapCompleted;
         }
 
         private void OnDisable()
         {
             InventoryManager.Instance.ItemHandler.ItemsUpdated -= ItemsUpdated;
-            InventoryManager.Instance.OnItemEquipped -= ItemEquipped;
+            Swappable.OnAfterSwap -= SwapCompleted;
         }
 
         /// <summary>
-        /// Enables/Disables the <see cref="ItemButton.imgIsEquipped"/> for the given items.
-        /// </summary>
-        /// <param name="oldItem">The item that WAS equipped</param>
-        /// <param name="newItem">The item that IS equipped</param>
-        private void ItemEquipped(Equipable oldItem, Equipable newItem)
-        {
-            if (oldItem != null)
-                _itemStacks[oldItem]?.ToggleIsEquipped(false);
-            if (newItem != null)
-                _itemStacks[newItem]?.ToggleIsEquipped(true);
-        }
-
-        /// <summary>
-        /// Checks if the amount is negative or positive and removes or adds respectively
+        /// Checks if the amount is negative or positive and removes or adds respectively.
+        /// If the amount is 0, it will check all item buttons instead.
         /// </summary>
         /// <param name="item">The item to be added/removed</param>
         /// <param name="amount">The amount to be added/removed</param>
         private void ItemsUpdated(Item item, int amount)
         {
+            if (amount == 0)
+            {
+                UpdateItemButtons();
+                return;
+            }
+
             if (amount > 0)
                 AddItem(item, amount);
             else
@@ -74,36 +71,66 @@ namespace UI
         }
 
         /// <summary>
-        /// Adds an item to the inventory UI or increases the stack size in case it already exists
+        /// Adds an item to the inventory UI or increases the stack size in case it already exists.
+        /// Creates a new item button if the previous ones are full.
         /// </summary>
         /// <param name="item">The item to add to the UI</param>
         /// <param name="amount">The amount to be added</param>
         private void AddItem(Item item, int amount)
         {
-            if (_itemStacks.ContainsKey(item))
+            for (int i = 0; i < amount; i++)
             {
-                _itemStacks[item].Count += amount;
-                return;
+                ItemButton itemButtonInList = _items.Find(button => button.Item == item && button.CanAddOne());
+                // Only full stacks or no stack yet
+                if (itemButtonInList == default(ItemButton))
+                {
+                    ItemButton itemButton = Instantiate(itemButtonPrefab, itemGrid.transform);
+                    itemButton.Init(item, amount);
+                    _items.Add(itemButton);
+                }
+                else // Add to first one found
+                    itemButtonInList.Count++;
             }
-
-            ItemButton itemButton = Instantiate(itemButtonPrefab, itemGrid.transform);
-            itemButton.Init(item, amount);
-            _itemStacks[item] = itemButton;
         }
 
         /// <summary>
-        /// Removes an item from the inventory UI or decreases the stack size
-        /// by one if there are at least two items of the same type
+        /// Removes an item from the inventory UI or decreases the stack size by one.
+        /// Deletes a item button if the count is 0.
         /// </summary>
         /// <param name="item">The item to remove from the UI</param>
         /// <param name="amount">The amount to be removed</param>
         private void RemoveItem(Item item, int amount)
         {
-            if (!_itemStacks.ContainsKey(item)) return;
-            _itemStacks[item].Count -= amount;
-            if (_itemStacks[item].Count > 0) return;
-            Destroy(_itemStacks[item].gameObject);
-            _itemStacks.Remove(item);
+            for (int i = 0; i < amount; i++)
+            {
+                ItemButton itemButtonInList = _items.Find(button => button.Item == item);
+                if (itemButtonInList == default(ItemButton)) return;
+                itemButtonInList.Count--;
+                if (itemButtonInList.Count > 0) continue;
+                Destroy(itemButtonInList.gameObject);
+                _items.Remove(itemButtonInList);
+            }
         }
+
+        /// <summary>
+        /// Goes through all ItemButtons and deletes all buttons that have a Count of 0.
+        /// </summary>
+        private void UpdateItemButtons()
+        {
+            List<ItemButton> itemButtonInList = _items.FindAll(button => button.Count <= 0);
+            foreach (ItemButton currentButton in itemButtonInList)
+            {
+                Destroy(currentButton.gameObject);
+                _items.Remove(currentButton);
+            }
+        }
+
+        /// <summary>
+        /// Switches the elements in the Grid to make sure that they are ordered and displayed correctly
+        /// </summary>
+        /// <param name="swappable">The first swappable</param>
+        /// <param name="otherSwappable">The second swappable</param>
+        private void SwapCompleted(Swappable swappable, Swappable otherSwappable) =>
+            itemGrid.SwitchElements(swappable.Parent, otherSwappable.Parent);
     }
 }
