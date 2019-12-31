@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c56c6397135a04ebfaeb59f7db11ca, type: 3}
   m_Name: CookedMeatRecipe
   m_EditorClassIdentifier: 
-  neededItems: []
-  createdItem:
-    item: {fileID: 0}
+  neededItems:
+  - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
     amount: 0
-  craftingStation: 0
+  createdItem:
+    item: {fileID: 11400000, guid: d795ebb3b8abce941885ae32b0ec8277, type: 2}
+    amount: 1
+  craftingStation: 2
   recipeName: 
