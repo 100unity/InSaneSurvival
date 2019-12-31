@@ -1,6 +1,6 @@
-﻿using System;
-using Interfaces;
+﻿using Interfaces;
 using Inventory;
+using UI;
 using UnityEngine;
 
 namespace Managers
@@ -12,8 +12,6 @@ namespace Managers
     {
         [Tooltip("Player's inventory")] [SerializeField]
         private InventoryController playerInventory;
-
-        public event Action<Equipable, Equipable> OnItemEquipped;
 
         /// <summary>
         /// The current ItemHandler that holds all items.
@@ -31,6 +29,11 @@ namespace Managers
         public int DamageBoostFromEquipable => CurrentlyEquippedItem ? CurrentlyEquippedItem.DamageBoost : 0;
 
         /// <summary>
+        /// The currently equipped ItemButton (Visually equipped item)
+        /// </summary>
+        private ItemButton _currentlyEquippedItemButton;
+
+        /// <summary>
         /// Adds an item to the player's inventory.
         /// </summary>
         /// <param name="item">The item to be added</param>
@@ -45,22 +48,20 @@ namespace Managers
         public void RemoveItem(Item item, int amount = 1) => playerInventory.RemoveItem(item, amount);
 
         /// <summary>
-        /// Equips/Unequips the provided item.
+        /// Refreshes all items in the inventory.
         /// </summary>
-        /// <param name="equipable">Item to be equipped</param>
-        public void ToggleEquipableItem(Equipable equipable)
-        {
-            Equipable old = CurrentlyEquippedItem;
-            if (CurrentlyEquippedItem == null)
-            {
-                CurrentlyEquippedItem = equipable;
-                OnItemEquipped?.Invoke(old, CurrentlyEquippedItem);
-                return;
-            }
+        public void RefreshItems() => playerInventory.RefreshItems();
 
-            // If already equipped, unequip it or switch
-            CurrentlyEquippedItem = CurrentlyEquippedItem != equipable ? equipable : null;
-            OnItemEquipped?.Invoke(old, CurrentlyEquippedItem);
+        /// <summary>
+        /// Saves the given ItemButton as the equipped item, saves the item it holds and updates the old ItemButton
+        /// </summary>
+        /// <param name="itemButton">The new equipped itemButton (that holds the equipped item)</param>
+        public void SetCurrentlyEquipped(ItemButton itemButton)
+        {
+            CurrentlyEquippedItem = itemButton ? (Equipable) itemButton.Item : null;
+            if (_currentlyEquippedItemButton != null)
+                _currentlyEquippedItemButton.Unequip();
+            _currentlyEquippedItemButton = itemButton;
         }
     }
 }

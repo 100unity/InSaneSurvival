@@ -1,7 +1,4 @@
-﻿using Constants;
-using Entity.Enemy;
-using System;
-using System.Collections;
+﻿using Entity.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -26,10 +23,6 @@ namespace Spawner
         [Tooltip("The NPC to spawn")]
         [SerializeField]
         private EnemyController toSpawn;
-
-        [Tooltip("The ground to spawn NPCs on")]
-        [SerializeField]
-        private LayerMask spawnLayer;
 
         [Tooltip("The main camera")]
         [SerializeField]
@@ -75,7 +68,7 @@ namespace Spawner
         /// </summary>
         private void TrySpawn()
         {
-            Vector3 spawnLocation = _navMeshMapper.GetMappedRandomPoint(spawnArea, spawnLayer.value);
+            Vector3 spawnLocation = _navMeshMapper.GetMappedRandomPoint(spawnArea, NavMesh.AllAreas);
             // setting a random rotation doesn't seem to work with a NavMeshAgent, but since NPCs start walking in a random direction immediately it doesn't really matter
             EnemyController spawned = Instantiate(toSpawn, spawnLocation, Quaternion.identity, transform);
             Renderer renderer = spawned.Renderer;
