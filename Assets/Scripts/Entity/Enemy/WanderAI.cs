@@ -1,8 +1,4 @@
-﻿using Constants;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using Utils;
 
@@ -24,14 +20,14 @@ namespace Entity.Enemy
         /// </summary>
         /// <param name="wanderArea">The area to generate the path in</param>
         /// <param name="agent">The agent of the NPC to generate the path for</param>
-        /// <param name="layermask">The ground</param>
+        /// <param name="areaMask">The NavMesh area the entity is allowed to move in</param>
         /// <returns>The next wander path</returns>
-        public NavMeshPath GetNextWanderPath(Area wanderArea, NavMeshAgent agent, int layermask)
+        public NavMeshPath GetNextWanderPath(Area wanderArea, NavMeshAgent agent, int areaMask)
         {
             NavMeshPath path = new NavMeshPath();
             do
             {
-                Vector3 wanderPoint = _navMeshMapper.GetMappedRandomPoint(wanderArea, layermask);
+                Vector3 wanderPoint = _navMeshMapper.GetMappedRandomPoint(wanderArea, areaMask);
                 agent.CalculatePath(wanderPoint, path);
             }
             while (!IsPathInArea(wanderArea, path));

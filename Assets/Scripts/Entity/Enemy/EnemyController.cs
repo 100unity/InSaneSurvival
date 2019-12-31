@@ -1,7 +1,4 @@
 ﻿using AbstractClasses;
-using Managers;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -22,10 +19,6 @@ namespace Entity.Enemy
         [SerializeField]
         private bool freezeArea;
 
-        [Tooltip("The ground the NPC should walk on.")]
-        [SerializeField]
-        private LayerMask moveLayer;
-
         [Tooltip("The speed the NPC chases targets with.")]
         [SerializeField]
         private float runningSpeed;
@@ -33,10 +26,6 @@ namespace Entity.Enemy
         [Tooltip("Determine whether the NPC attacks and chases the player.")]
         [SerializeField]
         private bool isAggressive;
-
-        [Tooltip("The radius around the NPC in which a player gets the aggro.")]
-        [SerializeField]
-        private float lookRadius;
 
         [Tooltip("The radius around the NPC in which a player can escape.")]
         [SerializeField]
@@ -96,10 +85,10 @@ namespace Entity.Enemy
             if (!_isChasing)
                 Wander();
 
-            if (!isAggressive || targetFinder.Targets.Count == 0) return;
+            if (!isAggressive || !targetFinder.HasTarget()) return;
 
             // Attack first target in list
-            GameObject currentTarget = targetFinder.Targets[0];
+            Damageable currentTarget = targetFinder.GetFirstTarget();
 
             if (!_isChasing)
                 StartChasing(currentTarget);
@@ -128,7 +117,7 @@ namespace Entity.Enemy
         /// Starts attacking and chasing the target.
         /// </summary>
         /// <param name="target">The target to attack</param>
-        private void StartChasing(GameObject target)
+        private void StartChasing(Damageable target)
         {
             _isChasing = true;
             NavMeshAgent.speed = runningSpeed;
@@ -140,7 +129,7 @@ namespace Entity.Enemy
         /// </summary>
         private void StopChasing()
         {
-            targetFinder.Targets.RemoveAt(0);
+            targetFinder.RemoveFirstTarget();
             _isChasing = false;
             NavMeshAgent.speed = _initialSpeed;
             _attackLogic.StopAttack();
@@ -161,7 +150,7 @@ namespace Entity.Enemy
             else
             {
                 // don't use SetDestination but set calculated path
-                NavMeshPath wanderPath = _wanderAI.GetNextWanderPath(wanderArea, NavMeshAgent, moveLayer.value);
+                NavMeshPath wanderPath = _wanderAI.GetNextWanderPath(wanderArea, NavMeshAgent, NavMesh.AllAreas);
                 NavMeshAgent.SetPath(wanderPath);
                 NavMeshAgent.isStopped = false;
             }

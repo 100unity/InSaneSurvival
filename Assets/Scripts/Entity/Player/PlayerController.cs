@@ -144,38 +144,36 @@ namespace Entity.Player
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            else
+            
+            Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            // only change target / move, if not performing a hit
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
+                _attackLogic.Status == AttackLogic.AttackStatus.None)
             {
-                Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+                GameObject objectHit = hit.collider.gameObject;
 
-                // only change target / move, if not performing a hit
-                if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
-                    _attackLogic.Status == AttackLogic.AttackStatus.None)
+                if (objectHit.TryGetComponent(out Damageable damageable))
                 {
-                    GameObject objectHit = hit.collider.gameObject;
+                    _interactLogic.RemoveFocus();
+                    // implementation NOT capable of area damage
+                    _attackLogic.StartAttack(damageable);
+                }
 
-                    if (objectHit.GetComponent<Damageable>() is Damageable damageable)
-                    {
-                        _interactLogic.RemoveFocus();
-                        // implementation NOT capable of area damage
-                        _attackLogic.StartAttack(objectHit);
-                    }
+                else if (objectHit.TryGetComponent(out Interactable interactable))
+                {
+                    _attackLogic.StopAttack();
+                    //Set as focus
+                    _interactLogic.StartInteract(interactable);
+                }
 
-                    else if (objectHit.GetComponent<Interactable>() is Interactable interactable)
-                    {
-                        _attackLogic.StopAttack();
-                        //Set as focus
-                        _interactLogic.StartInteract(interactable);
-                    }
-
-                    // Get ground position from mouse click
-                    else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, groundLayer))
-                    {
-                        // cancel possible ongoing attacks
-                        _attackLogic.StopAttack();
-                        _interactLogic.RemoveFocus();
-                        Move(groundHit);
-                    }
+                // Get ground position from mouse click
+                else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, groundLayer))
+                {
+                    // cancel possible ongoing attacks
+                    _attackLogic.StopAttack();
+                    _interactLogic.RemoveFocus();
+                    Move(groundHit);
                 }
             }
         }
@@ -200,11 +198,9 @@ namespace Entity.Player
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            else
-            {
-                _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
-                UpdateCameraAngle();
-            }
+            
+            _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
+            UpdateCameraAngle();
         }
 
         /// <summary>
