@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using AbstractClasses;
+using System;
 
 namespace Entity
 {
@@ -69,6 +70,14 @@ namespace Entity
             if (_target != null)
             {
                 Attack();
+            }
+            else
+            {
+                // if target despawns, the player should not freeze
+                _timer = 0;
+                _distanceToTarget = 0;
+                _gameObjectRenderer.material = _prevMat;
+                Status = AttackStatus.None;
             }
         }
 
