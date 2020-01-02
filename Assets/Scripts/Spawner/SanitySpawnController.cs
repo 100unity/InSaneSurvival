@@ -15,7 +15,11 @@ namespace Spawner
         public delegate void PlayerStateChanged(int newValue);
 
         [SerializeField]
-        private float dimensionScale;
+        private float spawnDimensionScale;
+
+        // at sanity = 45
+        [SerializeField]
+        private float despawnDimensionScale;
 
         [SerializeField]
         private AnimationCurve probabilityScaleCurve;
@@ -24,8 +28,6 @@ namespace Spawner
         [SerializeField]
         private float activeSpawnPenalty;
 
-        [SerializeField]
-        private float despawnProbability;
 
         private Dictionary<Renderer, GameObject> _spawned;
         // keep track of the sanity internally so that calculating the spawnProbability is easier
@@ -57,6 +59,7 @@ namespace Spawner
 
         private void DestroyActiveNPCs()
         {
+            float despawnProbability = probabilityScaleCurve.Evaluate(1 - _sanity) * despawnDimensionScale;
             if (_probability.GetProbability(despawnProbability))
             {
                 Destroy(_spawned.First().Value);
@@ -107,7 +110,7 @@ namespace Spawner
 
         private void CalculateSpawnProbability(int sanity)
         {
-            float scale = probabilityScaleCurve.Evaluate(sanity / 100f) * dimensionScale;
+            float scale = probabilityScaleCurve.Evaluate(sanity / 100f) * spawnDimensionScale;
             foreach (Renderer r in _spawned.Keys)
                 scale = scale * (1 - activeSpawnPenalty);
             spawnProbability = (100 - sanity) * scale;

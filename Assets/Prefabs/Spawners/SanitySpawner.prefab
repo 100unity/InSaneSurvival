@@ -50,7 +50,8 @@ MonoBehaviour:
   spawnProbability: 0
   toSpawn: {fileID: 9047338808857409608, guid: b398bb82e93d77645a8dc4dcfd528a8e, type: 3}
   mainCamera: {fileID: 0}
-  dimensionScale: 0.00001
+  spawnDimensionScale: 0.000015
+  despawnDimensionScale: 0.008
   probabilityScaleCurve:
     serializedVersion: 2
     m_Curve:
@@ -85,4 +86,3 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   activeSpawnPenalty: 0.6
-  despawnProbability: 0.003
