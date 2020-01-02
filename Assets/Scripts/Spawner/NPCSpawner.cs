@@ -31,7 +31,7 @@ namespace Spawner
         protected Probability _probability;
         protected NavMeshMapper _navMeshMapper;
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             _probability = new Probability();
             _navMeshMapper = new NavMeshMapper();
@@ -40,7 +40,7 @@ namespace Spawner
         /// <summary>
         /// Spawns all NPCs on game start.
         /// </summary>
-        protected void OnEnable()
+        protected virtual void OnEnable()
         {
             InitNPCs();
         }
@@ -56,7 +56,7 @@ namespace Spawner
             }
         }
 
-        protected void Update()
+        protected virtual void Update()
         {
             if (transform.childCount < maximumConcurrentEnemies && _probability.GetProbability(spawnProbability))
                 TrySpawn();

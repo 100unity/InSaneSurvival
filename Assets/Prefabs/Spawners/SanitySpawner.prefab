@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2770742438879035630}
-  - component: {fileID: 3286470898069685260}
+  - component: {fileID: 5572706999313617591}
   m_Layer: 0
   m_Name: SanitySpawner
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3286470898069685260
+--- !u!114 &5572706999313617591
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,13 +40,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 2770742438879035624}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f2535e3ac01b8d4e9905df2418c5473, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f009d9d0187c914ab81356d002daeaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawnArea:
     center: {fileID: 0}
-    radius: 20
+    radius: 12
   maximumConcurrentEnemies: 3
-  spawnProbability: 0.00005
+  spawnProbability: 0
   toSpawn: {fileID: 9047338808857409608, guid: b398bb82e93d77645a8dc4dcfd528a8e, type: 3}
   mainCamera: {fileID: 0}
+  dimensionScale: 0.00001
+  probabilityScaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.90021515
+      inSlope: -0.26432586
+      outSlope: -0.26432586
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.3270338
+    - serializedVersion: 3
+      time: 0.50008285
+      value: 0.40049326
+      inSlope: -2.5213604
+      outSlope: -2.5213604
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10002776
+      outWeight: 0.060026854
+    - serializedVersion: 3
+      time: 0.99998474
+      value: 0.0003181228
+      inSlope: -0.13055603
+      outSlope: -0.13055603
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1555383
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  activeSpawnPenalty: 0.6
+  despawnProbability: 0.003
