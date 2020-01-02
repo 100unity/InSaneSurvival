@@ -2,19 +2,17 @@
 
 namespace AbstractClasses
 {
-    
     public abstract class Damageable : MonoBehaviour
     {
         // ------temp for hit animation------
-        [Tooltip("The time the object should be marked as hit after being hit")]
-        [SerializeField]
+        [Tooltip("The time the object should be marked as hit after being hit")] [SerializeField]
         private float hitMarkTime;
 
-        [Tooltip("The MeshRenderer of the graphics object of the player")]
-        [SerializeField]
-        private MeshRenderer gameObjectRenderer;
+        [Tooltip("The MeshRenderer of the graphics object of the player")] [SerializeField]
+        protected MeshRenderer gameObjectRenderer;
 
-        private Material _prevMat;
+        protected Material PrevMat;
+
         private Material _hitMarkerMaterial;
         private float _timer;
         private bool _hit;
@@ -24,7 +22,7 @@ namespace AbstractClasses
             // ------------
             _hitMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.red};
             // just put initial mat here
-            _prevMat = gameObjectRenderer.material;
+            PrevMat = gameObjectRenderer.material;
             // ------------
         }
 
@@ -41,7 +39,7 @@ namespace AbstractClasses
                 {
                     _hit = false;
                     _timer = 0;
-                    gameObjectRenderer.material = _prevMat;
+                    gameObjectRenderer.material = PrevMat;
                 }
             }
         }

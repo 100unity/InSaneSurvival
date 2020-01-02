@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 1510608199083388101}
   - component: {fileID: 1510608199083388100}
   - component: {fileID: 1510608199083388107}
-  m_Layer: 0
+  - component: {fileID: 4147913038059282168}
+  m_Layer: 19
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,6 +67,7 @@ MonoBehaviour:
   escapeRadius: 12
   showEscapeRadius: 1
   targetFinder: {fileID: 6970089841446486794}
+  graphicsRenderer: {fileID: 1510608199636081249}
 --- !u!114 &4583121872170788062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +151,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4147913038059282168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510608199083388104}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218b986b74d7f7949901cc3a1f1bcca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshRenderer: {fileID: 1510608199636081249}
 --- !u!1 &1510608199636081255
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +211,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510608199636081255}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

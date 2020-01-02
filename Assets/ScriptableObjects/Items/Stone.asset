@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  maxStackSize: 64
+  maxStackSize: 10

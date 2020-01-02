@@ -1,5 +1,5 @@
 ﻿using Constants;
-using Inventory;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,11 +24,6 @@ namespace Crafting
         private CraftingRecipeResource craftingRecipeResourcePrefab;
 
         /// <summary>
-        /// The crafting UI reference that holds the item handler
-        /// </summary>
-        private CraftingUI _craftingUI;
-
-        /// <summary>
         /// The recipe of this CraftingRecipeUI element
         /// </summary>
         private CraftingRecipe _recipe;
@@ -39,10 +34,8 @@ namespace Crafting
         /// Instantiates all crafting recipe resources for the given recipe
         /// </summary>
         /// <param name="recipe">The recipe of this crafting recipe UI</param>
-        /// <param name="craftingUI">The crafting UI that should hold the correct <see cref="CraftingUI.ItemHandler"/></param>
-        public void InitRecipe(CraftingRecipe recipe, CraftingUI craftingUI)
+        public void InitRecipe(CraftingRecipe recipe)
         {
-            _craftingUI = craftingUI;
             _recipe = recipe;
 
             txtTitle.SetText(_recipe.CreatedItemName);
@@ -50,16 +43,16 @@ namespace Crafting
                 Instantiate(craftingRecipeResourcePrefab, recipeResourceList.transform)
                     .InitResource(resourceData.item.name, resourceData.amount, resourceData.item.Icon);
             craftButton.onClick.RemoveAllListeners();
-            craftButton.onClick.AddListener(() => _recipe.Craft(_craftingUI.ItemHandler));
+            craftButton.onClick.AddListener(() => _recipe.Craft(InventoryManager.Instance.ItemHandler));
 
-            _craftingUI.ItemHandler.ItemsUpdated += (item, amount) => OnItemUpdate();
+            InventoryManager.Instance.ItemHandler.ItemsUpdated += (item, amount) => OnItemUpdate();
         }
 
         /// <summary>
         /// Invokes <see cref="SetCanCraft"/>
         /// </summary>
         private void OnItemUpdate() =>
-            SetCanCraft(_recipe.CanCraft(_craftingUI.ItemHandler));
+            SetCanCraft(_recipe.CanCraft(InventoryManager.Instance.ItemHandler));
 
         /// <summary>
         /// Sets the color of the image to visually show if this recipe can be crafted

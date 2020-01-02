@@ -1,7 +1,4 @@
-﻿using Entity.Player;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using AbstractClasses;
 
 namespace Entity
@@ -37,7 +34,7 @@ namespace Entity
         private Movable _movable;
 
         private float _timer;
-        private GameObject _target;
+        private Damageable _target;
         private float _distanceToTarget;
 
         // ----temporary as animation replacement------
@@ -109,7 +106,7 @@ namespace Entity
         {
             _movable.StopMoving();
             // face target
-            if (_movable.FaceTarget(_target, true, out _))
+            if (_movable.FaceTarget(_target.gameObject, true, out _))
             {
                 // faces target
                 // perform hit
@@ -155,7 +152,7 @@ namespace Entity
         /// performs a hit on it and either resets or continues attacking.
         /// </summary>
         /// <param name="target">The target to be attacked</param>
-        public void StartAttack(GameObject target)
+        public void StartAttack(Damageable target)
         {
             print("start attack");
             _target = target;
@@ -185,12 +182,8 @@ namespace Entity
                 if (_distanceToTarget < attackRange)
                 {
                     // check rotation as well
-                    float difference;
-                    _movable.FaceTarget(_target, false, out difference);
-                    if (difference < hitRotationTolerance)
-                        return AttackStatus.Hit;
-                    else
-                        return AttackStatus.Miss;
+                    _movable.FaceTarget(_target.gameObject, false, out float difference);
+                    return difference < hitRotationTolerance ? AttackStatus.Hit : AttackStatus.Miss;
                 }
                 return AttackStatus.Miss;
             }

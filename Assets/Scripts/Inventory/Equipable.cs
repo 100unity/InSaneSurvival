@@ -1,21 +1,74 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
-using Inventory;
+using Utils;
 
-[CreateAssetMenu(fileName = "New Equipable", menuName = "Inventory/Item/Equipable")]
-public class Equipable : Item
+namespace Inventory
 {
-    /// <summary>
-    /// Placeholder function for now.
-    /// </summary>
-    public new bool Use()
+    [CreateAssetMenu(fileName = "New Equipable", menuName = "Inventory/Item/Equipable")]
+    public class Equipable : Item
     {
-        Debug.Log("Equipping the item " + name);
-        return false;
-    }
-    public override bool Equals(object other)
-    {
-        return other is Equipable item && item.name == name;
+        [Tooltip("All abilities this item has")] [EnumMultiSelect] [SerializeField]
+        private EquipableAbility equipableAbility;
+
+        /// <summary>
+        /// A list of all abilities this equipable has
+        /// </summary>
+        private List<EquipableAbility> _abilities;
+
+        /// <summary>
+        /// Get all abilities from the MultiSelect
+        /// </summary>
+        private void Awake() => _abilities = GetSelectedElements();
+
+        /// <summary>
+        /// Checks if this item has the given ability
+        /// </summary>
+        /// <param name="ability">The ability to check</param>
+        /// <returns>Whether it has the given ability or not</returns>
+        public bool HasAbility(EquipableAbility ability) => _abilities.Contains(ability);
+
+        /// <summary>
+        /// Placeholder function for now.
+        /// </summary>
+        public override bool Use()
+        {
+            Debug.Log("Equipping the item " + name);
+            return true;
+        }
+
+        /// <summary>
+        /// Gets all Abilities selected in the MultiSelect
+        /// </summary>
+        /// <returns>A list of all selected abilities</returns>
+        private List<EquipableAbility> GetSelectedElements()
+        {
+            List<EquipableAbility> selectedElements = new List<EquipableAbility>();
+            for (int i = 0; i < Enum.GetValues(typeof(EquipableAbility)).Length; i++)
+            {
+                int layer = 1 << i;
+                if (((int) equipableAbility & layer) != 0)
+                {
+                    selectedElements.Add((EquipableAbility) i);
+                }
+            }
+
+            return selectedElements;
+        }
+
+
+        #region Inner-Class
+
+        /// <summary>
+        /// All abilities a equipable could have
+        /// </summary>
+        public enum EquipableAbility
+        {
+            Chop,
+            Mine
+        }
+
+        #endregion
     }
 }

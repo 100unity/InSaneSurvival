@@ -1,7 +1,4 @@
-﻿using Interfaces;
-using Inventory;
-using Managers;
-using UI;
+﻿using Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,15 +15,7 @@ namespace Crafting
         [Tooltip("The crafting recipe UI prefab")] [SerializeField]
         private CraftingRecipeUI craftingRecipeUIPrefab;
 
-        [Tooltip("The inventory of the player representing it's item handler")] [SerializeField]
-        private InventoryController inventory;
-
         private bool _isShowing;
-
-        /// <summary>
-        /// The item handler of this crafting UI
-        /// </summary>
-        public IItemHandler ItemHandler => inventory;
 
         /// <summary>
         /// Adds a crafting recipe UI for each recipe and sets their data
@@ -34,7 +23,7 @@ namespace Crafting
         private void Awake()
         {
             foreach (CraftingRecipe recipe in CraftingManager.Instance.Recipes)
-                Instantiate(craftingRecipeUIPrefab, craftingRecipeGrid.transform).InitRecipe(recipe, this);
+                Instantiate(craftingRecipeUIPrefab, craftingRecipeGrid.transform).InitRecipe(recipe);
         }
 
         /// <summary>

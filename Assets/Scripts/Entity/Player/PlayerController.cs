@@ -8,6 +8,7 @@ using UI.Menus;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
+using UnityEngine.EventSystems;
 
 namespace Entity.Player
 {
@@ -141,6 +142,9 @@ namespace Entity.Player
         /// </summary>
         private void OnRightClick(InputAction.CallbackContext obj)
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+            
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
@@ -149,14 +153,14 @@ namespace Entity.Player
             {
                 GameObject objectHit = hit.collider.gameObject;
 
-                if (objectHit.GetComponent<Damageable>() is Damageable damageable)
+                if (objectHit.TryGetComponent(out Damageable damageable))
                 {
                     _interactLogic.RemoveFocus();
                     // implementation NOT capable of area damage
-                    _attackLogic.StartAttack(objectHit);
+                    _attackLogic.StartAttack(damageable);
                 }
 
-                else if (objectHit.GetComponent<Interactable>() is Interactable interactable)
+                else if (objectHit.TryGetComponent(out Interactable interactable))
                 {
                     _attackLogic.StopAttack();
                     //Set as focus
@@ -192,6 +196,9 @@ namespace Entity.Player
         /// </summary>
         private void RotateCamera(InputAction.CallbackContext obj)
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+            
             _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
             UpdateCameraAngle();
         }

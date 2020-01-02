@@ -11,7 +11,7 @@ namespace Inventory
         public Sprite Icon => icon;
         public int MaxStackSize => maxStackSize;
 
-        public bool Use()
+        public virtual bool Use()
         {
             Debug.Log("The item " + name + " can not be used.");
             return false;
