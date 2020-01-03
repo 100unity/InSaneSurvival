@@ -18,6 +18,6 @@ public class PlaySound : MonoBehaviour
     
     public void FadeOutLoop()
     {
-        AudioManager.Instance.FadeOut("testloop", 10f);
+        AudioManager.Instance.FadeOut("testloozp", 10f);
     }
 }

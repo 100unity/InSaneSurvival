@@ -6,10 +6,6 @@ namespace Managers
 {
     public class AudioManager : Singleton<AudioManager>
     {
-        /// <summary>
-        /// contains all sounds
-        /// Call sounds with "AudioManager.Instance.Play("name");"
-        /// </summary>
         [SerializeField][Tooltip("Container for all sounds")]
         private System.Collections.Generic.List<Sound> sounds;
 
@@ -18,7 +14,7 @@ namespace Managers
 
         private void Start()
         {
-            // Applying properties of each sound to their audio sources
+            // Setting up audio sources
             foreach (Sound s in sounds)
             {
                 s.source = audioSources.AddComponent<AudioSource>();
@@ -28,36 +24,49 @@ namespace Managers
             }
         }
         
+        /// <summary>
+        /// Searches for a sound and plays it
+        /// </summary>
         public void Play(string soundName)
         {
-            Sound soundToPlay = sounds.Find(sound => sound.name == soundName);
-            if (soundToPlay == null)
-            {
-                Debug.Log("Unable to find sound: " + soundName);
-                return;
-            }
-            soundToPlay.source.Play();
+            FindSound(soundName).source.Play();
         }
-
+        
+        /// <summary>
+        /// Searches for a sound and fades it in
+        /// </summary>
         public void FadeIn(string soundName, float duration)
         {
-            StartCoroutine(FadeInIe(soundName, duration));
+            StartCoroutine(FadeInIe(FindSound(soundName), duration));
         }
         
+        /// <summary>
+        /// Searches for a sound and fades it in
+        /// </summary>
         public void FadeOut(string soundName, float duration)
         {
-            StartCoroutine(FadeOutIe(soundName, duration));
+            StartCoroutine(FadeOutIe(FindSound(soundName), duration));
         }
         
-        private IEnumerator FadeInIe(string soundName, float duration)
+        /// <summary>
+        /// Returns a sound by a given name
+        /// </summary>
+        private Sound FindSound(string soundName)
         {
-            Sound soundToFade = sounds.Find(sound => sound.name == soundName);
-            if (soundToFade == null)
+            Sound soundToFind= sounds.Find(sound => sound.name == soundName);
+            if (soundToFind == null)
             {
                 Debug.Log("Unable to find sound: " + soundName);
-                yield break;
+                return null;
             }
-            
+            return soundToFind;
+        }
+        
+        /// <summary>
+        /// Fades in a sound if called via Coroutine 
+        /// </summary>
+        private IEnumerator FadeInIe(Sound soundToFade, float duration)
+        {
             float finalVolume = soundToFade.volume;
             float currentTime = 0f;
             
@@ -73,15 +82,11 @@ namespace Managers
             }
         }
         
-        public IEnumerator FadeOutIe(string soundName, float duration)
+        /// <summary>
+        /// Fades out a sound if called via Coroutine 
+        /// </summary>
+        private IEnumerator FadeOutIe(Sound soundToFade, float duration)
         {
-            Sound soundToFade = sounds.Find(sound => sound.name == soundName);
-            if (soundToFade == null)
-            {
-                Debug.Log("Unable to find sound: " + soundName);
-                yield break;
-            }
-            
             float startVolume = soundToFade.volume;
             float currentTime = 0f;
             
