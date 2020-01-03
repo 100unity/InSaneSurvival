@@ -32,14 +32,13 @@ namespace GameTime
         private void Awake()
         {
             NormalizeTimeCurve();
+            _timeScale = 24 / (dayLength / 60); // calculating basic tick rate
         }
 
         private void Update()
         {
             UpdateTimeScale();
             UpdateTime();
-            _timeScale = 24 / (dayLength / 60); // calculating basic tick rate
-
         }
 
         /// <summary>
