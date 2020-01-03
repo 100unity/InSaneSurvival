@@ -31,7 +31,7 @@ namespace Spawner
         protected Probability _probability;
         protected NavMeshMapper _navMeshMapper;
 
-        protected virtual void Awake()
+        protected void Awake()
         {
             _probability = new Probability();
             _navMeshMapper = new NavMeshMapper();

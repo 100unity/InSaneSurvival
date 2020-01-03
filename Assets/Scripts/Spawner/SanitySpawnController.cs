@@ -1,6 +1,5 @@
 ﻿using Entity.Enemy;
 using Entity.Player;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -12,15 +11,15 @@ namespace Spawner
 {
     public class SanitySpawnController : NPCSpawner
     {
-        public delegate void PlayerStateChanged(int newValue);
-
+        [Tooltip("Scales the spawn probability.")]
         [SerializeField]
         private float spawnDimensionScale;
 
-        // at sanity = 45
+        [Tooltip("Scales the despawn probability.")]
         [SerializeField]
         private float despawnDimensionScale;
 
+        [Tooltip("Scales spawn and despawn probability.")]
         [SerializeField]
         private AnimationCurve probabilityScaleCurve;
 
@@ -29,15 +28,9 @@ namespace Spawner
         private float activeSpawnPenalty;
 
 
-        private Dictionary<Renderer, GameObject> _spawned;
+        private readonly Dictionary<Renderer, GameObject> _spawned = new Dictionary<Renderer, GameObject>();
         // keep track of the sanity internally so that calculating the spawnProbability is easier
         private int _sanity;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _spawned = new Dictionary<Renderer, GameObject>();
-        }
 
         protected override void OnEnable()
         {
@@ -49,7 +42,7 @@ namespace Spawner
         {
             PlayerState.OnPlayerSanityUpdate -= OnSanityUpdate;
         }
-
+        
         protected override void Update()
         {
             base.Update();
@@ -57,8 +50,12 @@ namespace Spawner
                 DestroyActiveNPCs();
         }
 
+        /// <summary>
+        /// Destroy sanity NPCs that are out of sight or despawn them randomly.
+        /// </summary>
         private void DestroyActiveNPCs()
         {
+            // calculate despawn probability
             float despawnProbability = probabilityScaleCurve.Evaluate(1 - _sanity) * despawnDimensionScale;
             if (_probability.GetProbability(despawnProbability))
             {
@@ -68,6 +65,9 @@ namespace Spawner
             DestroyOutOfSight();
         }
 
+        /// <summary>
+        /// Destroy automatically if player can't see NPC anymore.
+        /// </summary>
         private void DestroyOutOfSight()
         {
             List toRemove = new List();
@@ -85,6 +85,9 @@ namespace Spawner
                 CalculateSpawnProbability(_sanity);
         }
 
+        /// <summary>
+        /// Spawn NPCs even when they are in line of sight, recalculate spawn probability.
+        /// </summary>
         protected override void TrySpawn()
         {
             Vector3 spawnLocation = _navMeshMapper.GetMappedRandomPoint(spawnArea, NavMesh.AllAreas);
@@ -92,14 +95,9 @@ namespace Spawner
             Renderer renderer = spawned.Renderer;
             renderer.enabled = true;
             _spawned.Add(renderer, spawned.gameObject);
-            /*if (!renderer.InFrustum(mainCamera))
-                renderer.enabled = true;
-            else
-                Destroy(spawned.gameObject);*/
+            // assign the spawned NPC a wander area that is moving with the player
             spawned.WanderArea.center = spawnArea.center;
             CalculateSpawnProbability(_sanity);
-            //base.TrySpawn();
-            //spawned.WanderArea.center = spawnArea.center;
         }
 
         private void OnSanityUpdate(int sanity)
@@ -108,6 +106,10 @@ namespace Spawner
             CalculateSpawnProbability(_sanity);
         }
 
+        /// <summary>
+        /// Calculate spawn probability and applies active spawn penalties.
+        /// </summary>
+        /// <param name="sanity">Current sanity</param>
         private void CalculateSpawnProbability(int sanity)
         {
             float scale = probabilityScaleCurve.Evaluate(sanity / 100f) * spawnDimensionScale;
