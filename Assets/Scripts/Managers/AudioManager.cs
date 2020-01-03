@@ -1,13 +1,17 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using GameAudio;
 using UnityEngine;
 
 namespace Managers
 {
+    /**
+     * Play sounds with 'AudioManager.Instance.Play("name");'
+     */
     public class AudioManager : Singleton<AudioManager>
     {
         [SerializeField][Tooltip("Container for all sounds")]
-        private System.Collections.Generic.List<Sound> sounds;
+        private List<Sound> sounds;
 
         [SerializeField]
         private GameObject audioSources;
