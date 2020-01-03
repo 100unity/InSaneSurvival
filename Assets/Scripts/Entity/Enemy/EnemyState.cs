@@ -13,10 +13,11 @@ namespace Entity.Enemy {
         [Range(0, 100)]
         private int health;
 
-        [Tooltip("The mean of the restored health points the NPC will regenerate with.")]
+        [Tooltip("Determines how many health points are restored per tick.")]
         [SerializeField]
         private AnimationCurve regenerationCurve;
 
+        [Tooltip("Probability that the NPC regenerates when not in a fight or chasing.")]
         [SerializeField]
         private float regenerationProbability;
 
@@ -24,13 +25,14 @@ namespace Entity.Enemy {
         [SerializeField]
         private TargetFinder targetFinder;
 
-        private Probability _probability;
+
+        private Probability _probability = new Probability();
+        private System.Random _random = new System.Random();
         private int _maxHealth;
 
         protected override void Awake()
         {
             base.Awake();
-            _probability = new Probability();
             _maxHealth = health;
         }
 
@@ -42,11 +44,12 @@ namespace Entity.Enemy {
                 Regenerate();
             }
         }
-
+        
         public override void Die()
         {
             Destroy(gameObject);
         }
+
         public override void Hit(int damage)
         {
             base.Hit(damage);
@@ -62,19 +65,18 @@ namespace Entity.Enemy {
                 updatedValue = 0;
                 Die();
             }
-
             health = updatedValue;
         }
 
+        /// <summary>
+        /// Restores a certain amount of health points with a certain probability.
+        /// </summary>
         private void Regenerate()
         {
             if (_probability.GetProbability(regenerationProbability))
             {
-                System.Random random = new System.Random();
-                float x = (float) random.NextDouble();
-                Debug.Log("x: " + x);
+                float x = (float) _random.NextDouble();
                 float healthPoints = regenerationCurve.Evaluate(x) * 10f;
-                Debug.Log(healthPoints);
                 ChangeHealth((int)healthPoints);
             }
         }
