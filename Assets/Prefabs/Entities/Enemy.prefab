@@ -58,12 +58,8 @@ MonoBehaviour:
     radius: 15
   wanderTimer: 5
   freezeArea: 1
-  moveLayer:
-    serializedVersion: 2
-    m_Bits: 257
   runningSpeed: 4
   isAggressive: 1
-  lookRadius: 8
   escapeRadius: 12
   showEscapeRadius: 1
   targetFinder: {fileID: 6970089841446486794}
@@ -99,6 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMarkTime: 0.3
   gameObjectRenderer: {fileID: 1510608199636081249}
+  health: 20
 --- !u!136 &1510608199083388101
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -163,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218b986b74d7f7949901cc3a1f1bcca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshRenderer: {fileID: 1510608199636081249}
+  meshRenderer: {fileID: 0}
 --- !u!1 &1510608199636081255
 GameObject:
   m_ObjectHideFlags: 0
