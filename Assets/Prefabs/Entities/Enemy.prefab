@@ -96,6 +96,59 @@ MonoBehaviour:
   hitMarkTime: 0.3
   gameObjectRenderer: {fileID: 1510608199636081249}
   health: 20
+  regenerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.6353225
+      outSlope: 0.6353225
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.76691514
+    - serializedVersion: 3
+      time: 0.113897085
+      value: 0.11776706
+      inSlope: 0.040928435
+      outSlope: 0.040928435
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15152967
+      outWeight: 0.10490374
+    - serializedVersion: 3
+      time: 0.6002169
+      value: 0.20739487
+      inSlope: 0.20578708
+      outSlope: 0.20578708
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.87283134
+      value: 0.30203694
+      inSlope: 0.5747942
+      outSlope: 0.5747942
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15768656
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.55368423
+      inSlope: 1.9937288
+      outSlope: 1.9937288
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.037566483
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  regenerationProbability: 0.002
+  targetFinder: {fileID: 6970089841446486794}
 --- !u!136 &1510608199083388101
 CapsuleCollider:
   m_ObjectHideFlags: 0
