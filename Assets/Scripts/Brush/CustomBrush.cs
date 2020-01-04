@@ -25,10 +25,15 @@ namespace Brush
         [SerializeField]
         private bool justScaleY;
 
+        [Tooltip("Placed objects are trees.")]
+        [SerializeField]
+        private bool isTree;
+
         public GameObject[] Prefabs => prefabs;
         public Range ScaleXZ => scaleXZ;
         public Range ScaleY => scaleY;
         public string ParentNaming => parentNaming;
         public bool JustScaleY => justScaleY;
+        public bool IsTree => isTree;
     }
 }

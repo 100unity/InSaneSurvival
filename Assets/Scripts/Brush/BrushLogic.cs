@@ -17,10 +17,11 @@ namespace Brush
         private string _parentName;
         private Transform _parent;
         private int _parentNumber;
+        private GameObject[] _prefabs;
         private Range _scaleXZ;
         private Range _scaleY;
         private bool _justScaleY;
-        private GameObject[] _prefabs;
+        private bool _isTree;
 
         /// <summary>
         /// Store vars internally.
@@ -31,6 +32,7 @@ namespace Brush
             _scaleY = customBrush.ScaleY;
             _prefabs = customBrush.Prefabs;
             _justScaleY = customBrush.JustScaleY;
+            _isTree = customBrush.IsTree;
 
             // check if naming was changed and reset number
             if (_parentName != customBrush.ParentNaming)
@@ -155,7 +157,8 @@ namespace Brush
             if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Ground")))
             {
                 _currentPlaceableObject.transform.position = hit.point;
-                _currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                if (!_isTree)
+                    _currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
             }
         }
 
