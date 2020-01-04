@@ -53,7 +53,19 @@ MonoBehaviour:
   - {fileID: 204036649528011429, guid: ecb98606e0597154dabbd186ac207a0d, type: 3}
   - {fileID: 6595677153731643119, guid: 3eb327f022e3e3949a5cc1029aeafb43, type: 3}
   - {fileID: 5965281195512337076, guid: 33fd17f9a13ccda4383423e1c5fc5323, type: 3}
-  minScale: -1
-  maxScale: 1
+  - {fileID: 5592918712389574515, guid: 2a3e3128b92e6584c88abdaedf6a38af, type: 3}
+  - {fileID: 3044449359531408558, guid: d368b0ba5e79a574abfdf1f3d45c3327, type: 3}
+  - {fileID: 2678078804735155120, guid: 13d9e4c352adbe0459c08a2e47ba052d, type: 3}
+  - {fileID: 8225669635665113615, guid: 7d9901074439f154795664efb5c010d5, type: 3}
+  - {fileID: 2401098510048091559, guid: 0dc9ce75da69c5346b8c674e59fdae68, type: 3}
+  - {fileID: 150661431983188487, guid: 750ff580ea64558479aca0f508a96ddc, type: 3}
+  - {fileID: 6985730704037086972, guid: a5c68334d26d8574889fa49e44eb66fe, type: 3}
+  - {fileID: 2585311334555952401, guid: 16e8c6d6f1aeabc4dbef10b079094820, type: 3}
   parentNaming: GrassGroup
+  scaleXZ:
+    min: -1
+    max: 1
+  scaleY:
+    min: -1
+    max: 1
   justScaleY: 0
