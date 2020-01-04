@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Inventory;
 using Managers;
+using Utils;
 
 namespace Interactables
 {
@@ -14,6 +15,9 @@ namespace Interactables
 
         [SerializeField] private float gatherTime;
         [SerializeField] private float respawnTime;
+
+        [SerializeField] private GameObject replacement;
+        [SerializeField] private Camera mainCam;
         
 
         private Dictionary<Item, int> _itemsWithQuantities;
@@ -50,6 +54,11 @@ namespace Interactables
                 if (_timePassed >= gatherTime)
                 {
                     AddItems();
+                    GetComponent<MeshRenderer>().enabled = false; // save references for performance
+                    GetComponent<BoxCollider>().enabled = false;
+                    replacement.GetComponent<MeshRenderer>().enabled = true;
+                    StartCoroutine("Respawn"); // use coroutine manager
+
                 }
                 yield return null;
             }
@@ -61,6 +70,29 @@ namespace Interactables
             {
                 InventoryManager.Instance.ItemHandler.AddItem(entry.Key, entry.Value);
             }
+        }
+
+        private double _respawnTimePassed;
+
+        private Renderer _renderer;
+        private Collider _coll;
+        
+        private IEnumerator Respawn()
+        {
+            _renderer = GetComponent<MeshRenderer>();
+            _coll = GetComponent<BoxCollider>();
+            
+            while (_respawnTimePassed < respawnTime || _renderer.InFrustum(mainCam))
+            {
+                _respawnTimePassed += Time.deltaTime;
+                yield return null;
+            }
+
+            _respawnTimePassed = 0;
+
+            _renderer.enabled = true;
+            _coll.enabled = true;
+            replacement.GetComponent<MeshRenderer>().enabled = false;
         }
     }
 }
