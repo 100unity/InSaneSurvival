@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1403423761938496986
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1403423761938496984}
+  - component: {fileID: 1403423761938496985}
+  m_Layer: 0
+  m_Name: GrassBrush
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1403423761938496984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403423761938496986}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -63.078762, y: 12.097249, z: -149.87323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1403423761938496985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403423761938496986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853f86897d7204f40bd9c7c85c1c44ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 5398836654962426599, guid: 6b35d184bbc0b1548bd004a77dd6d0aa, type: 3}
+  - {fileID: 6569452182147875545, guid: 01f871ac3f09349dd85c5d7ced1f34f9, type: 3}
+  - {fileID: 6184512904954255405, guid: 40cf6340bd20a7a4bac68b0b2dfe0654, type: 3}
+  - {fileID: 6263562664034684169, guid: f72aed23293564697b74cab1ca496168, type: 3}
+  - {fileID: 5414240603503688270, guid: e80039cb2259e1b4ca8f23c30db50a6f, type: 3}
+  - {fileID: 1010056534930586473, guid: b12aa44bc01391843b13a14139b8863d, type: 3}
+  - {fileID: 204036649528011429, guid: ecb98606e0597154dabbd186ac207a0d, type: 3}
+  - {fileID: 6595677153731643119, guid: 3eb327f022e3e3949a5cc1029aeafb43, type: 3}
+  - {fileID: 5965281195512337076, guid: 33fd17f9a13ccda4383423e1c5fc5323, type: 3}
+  minScale: -1
+  maxScale: 1
+  parentNaming: GrassGroup
+  justScaleY: 0
