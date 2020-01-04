@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Utils;
 
 namespace Brush
 {
@@ -8,25 +9,25 @@ namespace Brush
         [SerializeField]
         private GameObject[] prefabs;
 
-        [Tooltip("Maximum subtraction from base scale.")]
-        [SerializeField]
-        private float minScale;
-
-        [Tooltip("Maximum addition to base scale.")]
-        [SerializeField]
-        private float maxScale;
-
-        [Tooltip("The parents' names (numbers are appended automatically)")]
+        [Tooltip("The parents' names (numbers are appended automatically).")]
         [SerializeField]
         private string parentNaming;
 
-        [Tooltip("Scale y only.")]
+        [Tooltip("Max subtraction and max addition from/to the base scale of X and Z axis. (Terms min and max are slightly confusing)")]
+        [SerializeField]
+        private Range scaleXZ;
+
+        [Tooltip("Max subtraction and max addition from/to the base scale of Y axis. (Terms min and max are slightly confusing)")]
+        [SerializeField]
+        private Range scaleY;
+
+        [Tooltip("Scale Y only.")]
         [SerializeField]
         private bool justScaleY;
 
         public GameObject[] Prefabs => prefabs;
-        public float MinScale => minScale;
-        public float MaxScale => maxScale;
+        public Range ScaleXZ => scaleXZ;
+        public Range ScaleY => scaleY;
         public string ParentNaming => parentNaming;
         public bool JustScaleY => justScaleY;
     }
