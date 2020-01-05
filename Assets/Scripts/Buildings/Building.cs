@@ -3,9 +3,14 @@ using UnityEngine;
 
 namespace Buildings
 {
+    /// <summary>
+    /// A building offers crafting-functionality to the player, allowing him to craft more items.
+    /// It automatically updates the <see cref="CraftingManager.CurrentCraftingStation"/> when the player is close enough.
+    /// </summary>
     public class Building : MonoBehaviour
     {
-        [SerializeField] private Renderer buildingRenderer;
+        [Tooltip("The renderer that holds the material of this building. Used for fading it out")] [SerializeField]
+        private Renderer buildingRenderer;
 
         [Tooltip("Defines the needed distance to the player for showing the tooltip")] [SerializeField]
         private float showWithDistanceToPlayer;

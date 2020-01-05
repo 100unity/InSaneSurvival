@@ -9,6 +9,10 @@ using Utils;
 
 namespace Buildings
 {
+    /// <summary>
+    /// Shows a preview of the building (slightly faded out) to indicate that it needs to be build first.
+    /// It will show an UI that tells the player what resources are needed when the player is close enough
+    /// </summary>
     public class BuildingBlueprint : MonoBehaviour
     {
         [Header("Building Blueprint")]
@@ -59,7 +63,7 @@ namespace Buildings
         private static readonly int ZWrite = Shader.PropertyToID("_ZWrite");
 
         /// <summary>
-        /// Copies the list and creates the blueprint material.
+        /// Creates the UI and fades out the building.
         /// </summary>
         private void Awake()
         {
@@ -119,7 +123,7 @@ namespace Buildings
 
 
         /// <summary>
-        /// Reverts the material and disables this.
+        /// Reverts the material and destroys this.
         /// </summary>
         private void ActivateBuilding()
         {
@@ -129,7 +133,7 @@ namespace Buildings
         }
 
         /// <summary>
-        /// Toggles the build-button
+        /// Refreshes the buildButton and the resources
         /// </summary>
         private void ItemsUpdated(Item item, int amount)
         {

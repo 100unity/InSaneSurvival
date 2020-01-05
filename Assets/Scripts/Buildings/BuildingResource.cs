@@ -1,4 +1,5 @@
 ﻿using Constants;
+using Crafting;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,9 @@ using Utils;
 
 namespace Buildings
 {
+    /// <summary>
+    /// One of the needed resources for the building. Similar to <see cref="CraftingRecipeResource"/>
+    /// </summary>
     public class BuildingResource : MonoBehaviour
     {
         [Tooltip("Background image. Used for showing the status")] [SerializeField]
