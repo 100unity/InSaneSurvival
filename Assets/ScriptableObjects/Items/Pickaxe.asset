@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   maxStackSize: 1
-  equipableAbility: 0
+  equipableAbility: 2
+  damageBoost: 1

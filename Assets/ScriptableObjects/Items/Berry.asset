@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Berry
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  maxStackSize: 0
+  maxStackSize: 10
+  healthValue: 0
   saturationValue: 10
   hydrationValue: 10

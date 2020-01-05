@@ -12,6 +12,9 @@ namespace Crafting
         [Tooltip("The name of this recipe")] [SerializeField]
         private TextMeshProUGUI txtTitle;
 
+        [Tooltip("The image of this recipe. Represents the crafted item.")] [SerializeField]
+        private Image imgCraftItem;
+
         [Tooltip("The vertical layout group where the resources will be ordered in")] [SerializeField]
         private VerticalLayoutGroup recipeResourceList;
 
@@ -39,8 +42,18 @@ namespace Crafting
         {
             _recipe = recipe;
 
-            txtTitle.SetText(_recipe.CreatedItemName);
-            foreach (ItemResourceData resourceData in _recipe.NeededItems)
+            if (_recipe.CreatedItem.item.Icon)
+            {
+                txtTitle.gameObject.SetActive(false);
+                imgCraftItem.sprite = _recipe.CreatedItem.item.Icon;
+            }
+            else
+            {
+                imgCraftItem.gameObject.SetActive(false);
+                txtTitle.SetText(_recipe.CreatedItemName);
+            }
+
+            foreach (CraftingRecipe.ResourceData resourceData in _recipe.NeededItems)
                 Instantiate(craftingRecipeResourcePrefab, recipeResourceList.transform)
                     .InitResource(resourceData.item.name, resourceData.amount, resourceData.item.Icon);
             craftButton.onClick.RemoveAllListeners();
@@ -50,7 +63,12 @@ namespace Crafting
         }
 
         /// <summary>
-        /// Invokes <see cref="SetCanCraft"/>
+        /// See <see cref="OnItemUpdate"/>
+        /// </summary>
+        public void UpdateRecipe() => OnItemUpdate();
+
+        /// <summary>
+        /// Checks if this recipe can be crafted. If so makes it white, else red.
         /// </summary>
         private void OnItemUpdate() =>
             SetCanCraft(_recipe.CanCraft(InventoryManager.Instance.ItemHandler));

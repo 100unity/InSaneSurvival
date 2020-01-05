@@ -12,6 +12,14 @@ namespace Inventory
         [Tooltip("All abilities this item has")] [EnumMultiSelect] [SerializeField]
         private EquipableAbility equipableAbility;
 
+        [Tooltip("The damage that will be added to the normal attack when this is equipped")] [SerializeField]
+        private int damageBoost;
+
+        /// <summary>
+        /// The damage boost of this equipable
+        /// </summary>
+        public int DamageBoost => damageBoost;
+
         /// <summary>
         /// A list of all abilities this equipable has
         /// </summary>
