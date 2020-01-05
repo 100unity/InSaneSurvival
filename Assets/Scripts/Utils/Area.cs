@@ -7,7 +7,7 @@ namespace Utils
     /// Defines an area.
     /// </summary>
     [Serializable]
-    public struct Area
+    public class Area
     {
         [Tooltip("The center of the area.")]
         public Transform center;

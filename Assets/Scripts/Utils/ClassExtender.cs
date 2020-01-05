@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Utils.ElementInteraction;
 
 namespace Utils
 {
@@ -52,6 +53,20 @@ namespace Utils
         {
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
             return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
-        }        
+        }
+
+        /// <summary>
+        /// Switches the given two elements in the hierarchy of the grid.
+        /// </summary>
+        /// <param name="first">The first element to be swapped with the second</param>
+        /// <param name="second">The second element to be swapped with the first</param>
+        public static void SwitchElements(this GridLayoutGroup _, GameObject first, GameObject second)
+        {
+            int firstPos = first.transform.GetSiblingIndex();
+            int secondPos = second.transform.GetSiblingIndex();
+            
+            first.transform.SetSiblingIndex(secondPos);
+            second.transform.SetSiblingIndex(firstPos);
+        }
     }
 }

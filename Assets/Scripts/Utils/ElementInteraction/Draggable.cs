@@ -13,6 +13,8 @@ namespace Utils.ElementInteraction
     [RequireComponent(typeof(Image))]
     public class Draggable : MonoBehaviour, IDragHandler, IEndDragHandler
     {
+        [Tooltip("The highest parent element that will be moved")] [SerializeField] private Transform parent;
+
         /// <summary>
         /// Will be triggered when the user stops dragging
         /// </summary>
@@ -34,7 +36,7 @@ namespace Utils.ElementInteraction
         /// An event to be executed on <see cref="LateUpdate"/>
         /// </summary>
         private UnityAction _executeOnLateUpdate;
-        
+
         /// <summary>
         /// Gets the GraphicRayCaster from the canvas
         /// </summary>
@@ -49,7 +51,7 @@ namespace Utils.ElementInteraction
         /// <summary>
         /// Wait for the Grid-Layout calculations to be done
         /// </summary>
-        private void Start() => CoroutineManager.Instance.WaitForOneFrame(() => OldPosition = transform.position);
+        private void Start() => CoroutineManager.Instance.WaitForOneFrame(() => OldPosition = parent.position);
 
         /// <summary>
         /// Execute the current <see cref="executeOnLateUpdate"/> action
@@ -64,7 +66,7 @@ namespace Utils.ElementInteraction
         /// Follows the mouse position
         /// </summary>
         /// <param name="eventData"></param>
-        public void OnDrag(PointerEventData eventData) => transform.position = eventData.position;
+        public void OnDrag(PointerEventData eventData) => parent.position = eventData.position;
 
         /// <summary>
         /// Invokes the <see cref="OnEndDrag"/> event
@@ -72,12 +74,12 @@ namespace Utils.ElementInteraction
         /// <param name="eventData"></param>
         public void OnEndDrag(PointerEventData eventData) => OnEndDragging?.Invoke(eventData);
 
-        public void SetExecuteOnLateUpdateAction(UnityAction onLateUpdate) => this._executeOnLateUpdate = onLateUpdate;
-        
+        public void SetExecuteOnLateUpdateAction(UnityAction onLateUpdate) => _executeOnLateUpdate = onLateUpdate;
+
         /// <summary>
         /// Reset the elements position to the old position
         /// </summary>
-        public void ResetPosition() => transform.position = OldPosition;
+        public void ResetPosition() => parent.position = OldPosition;
 
         /// <summary>
         /// Updates the current position and the OldPosition
@@ -85,7 +87,7 @@ namespace Utils.ElementInteraction
         /// <param name="position"></param>
         public void UpdatePosition(Vector2 position)
         {
-            transform.position = position;
+            parent.position = position;
             OldPosition = position;
         }
     }

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils.ElementInteraction;
 
-namespace Utils.ElementInteraction
+namespace Utils.NotInUse
 {
     /// <summary>
     /// Allows snapping to a <see cref="SnapPoint"/>

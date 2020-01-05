@@ -1,43 +1,41 @@
-﻿using Entity.Player;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using AbstractClasses;
+using Managers;
+using UnityEngine;
+using System;
 
 namespace Entity
 {
     [RequireComponent(typeof(Movable))]
     public class AttackLogic : MonoBehaviour
     {
-        [Tooltip("The base damage dealt")]
-        [SerializeField]
+        [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
 
-        [Tooltip("The maximum distance between attacker and target in order to deal damage")]
-        [SerializeField]
+        [Tooltip("The maximum distance between attacker and target in order to deal damage")] [SerializeField]
         private int attackRange;
 
-        [Tooltip("The time needed for an attack in seconds")]
-        [SerializeField]
+        [Tooltip("The time needed for an attack in seconds")] [SerializeField]
         private double attackTime;
 
-        [Tooltip("The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
+        [Tooltip(
+            "The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
         [SerializeField]
         private double hitRotationTolerance;
 
-        [Tooltip("Stops attacking the target after a (un-)successful hit")]
-        [SerializeField]
+        [Tooltip("Stops attacking the target after a (un-)successful hit")] [SerializeField]
         private bool resetAfterHit;
 
 
-        public enum AttackStatus { Hit, Miss, NotFinished, None };
+        public enum AttackStatus { Hit, Miss, NotFinished, None }
+
         public AttackStatus Status { get; private set; }
 
         // component references
         private Movable _movable;
 
         private float _timer;
-        private GameObject _target;
+        private Damageable _target;
         private float _distanceToTarget;
 
         // ----temporary as animation replacement------
@@ -72,6 +70,14 @@ namespace Entity
             if (_target != null)
             {
                 Attack();
+            }
+            else
+            {
+                // if target despawns, the player should not freeze
+                _timer = 0;
+                _distanceToTarget = 0;
+                _gameObjectRenderer.material = _prevMat;
+                Status = AttackStatus.None;
             }
         }
 
@@ -109,7 +115,7 @@ namespace Entity
         {
             _movable.StopMoving();
             // face target
-            if (_movable.FaceTarget(_target, true, out _))
+            if (_movable.FaceTarget(_target.gameObject, true, out _))
             {
                 // faces target
                 // perform hit
@@ -132,7 +138,8 @@ namespace Entity
             {
                 // deal damage
                 Damageable damageable = _target.GetComponent<Damageable>();
-                damageable.Hit(damage);
+                // Add damage boost from weapon
+                damageable.Hit(damage + InventoryManager.Instance.DamageBoostFromEquipable);
             }
 
             // -----temp-----
@@ -155,7 +162,7 @@ namespace Entity
         /// performs a hit on it and either resets or continues attacking.
         /// </summary>
         /// <param name="target">The target to be attacked</param>
-        public void StartAttack(GameObject target)
+        public void StartAttack(Damageable target)
         {
             print("start attack");
             _target = target;
@@ -185,12 +192,8 @@ namespace Entity
                 if (_distanceToTarget < attackRange)
                 {
                     // check rotation as well
-                    float difference;
-                    _movable.FaceTarget(_target, false, out difference);
-                    if (difference < hitRotationTolerance)
-                        return AttackStatus.Hit;
-                    else
-                        return AttackStatus.Miss;
+                    _movable.FaceTarget(_target.gameObject, false, out float difference);
+                    return difference < hitRotationTolerance ? AttackStatus.Hit : AttackStatus.Miss;
                 }
                 return AttackStatus.Miss;
             }
