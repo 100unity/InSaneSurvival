@@ -16,8 +16,10 @@ namespace Managers
         [SerializeField]
         private GameObject audioSources;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+                
             // Setting up audio sources
             foreach (Sound s in sounds)
             {
