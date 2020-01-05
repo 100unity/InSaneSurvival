@@ -51,6 +51,25 @@ namespace Interactables
             }
             _ownMeshRenderer = GetComponent<MeshRenderer>();
             _ownCollider = GetComponent<BoxCollider>();
+            
+            // stuff needed to calculate a proper interaction radius
+            float numberToUse = 0;
+            float x = _ownCollider.size.x;
+            float z = _ownCollider.size.z;
+            float scale;
+            float offset = 1.5f;
+            if (x > z)
+            {
+                scale = transform.localScale.x;
+                numberToUse = x;
+            }
+            else
+            {
+                scale = transform.localScale.z;
+                numberToUse = z;
+            }
+            SetRadius((numberToUse * offset) * scale); 
+            
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
             
             _itemsWithQuantities = new Dictionary<Item, int>();

@@ -9,6 +9,8 @@ namespace Interactables
 
         public float Radius => radius;
 
+        public void SetRadius(float value) => radius = value;
+
         [Tooltip("Is this interactable currently being focused?")]
         [SerializeField] private bool isFocus;
 
