@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Interfaces;
-using Inventory;
 using UnityEngine;
+using Utils;
 
 namespace Crafting
 {
@@ -11,10 +10,10 @@ namespace Crafting
     public class CraftingRecipe : ScriptableObject
     {
         [Tooltip("All needed items for crafting the new item(s) with this recipe")] [SerializeField]
-        private List<ResourceData> neededItems;
+        private List<ItemResourceData> neededItems;
 
         [Tooltip("The item(s) that will be created with this recipe")] [SerializeField]
-        private List<ResourceData> createdItems;
+        private List<ItemResourceData> createdItems;
 
         [Tooltip(
             "[CAN BE UNDEFINED]\nThe name to be displayed for this recipe. If not defined, will use the name of the first created item")]
@@ -29,7 +28,7 @@ namespace Crafting
         /// <summary>
         /// All needed items for crafting the new item(s) with this recipe
         /// </summary>
-        public List<ResourceData> NeededItems => neededItems;
+        public List<ItemResourceData> NeededItems => neededItems;
 
         /// <summary>
         /// Checks if all ingredients for this recipe are present. If one item is missing or the amount of items does not match the needed amount, false will be returned.
@@ -49,23 +48,12 @@ namespace Crafting
                 return;
 
             // Remove used item(s)
-            foreach (ResourceData neededItem in neededItems)
+            foreach (ItemResourceData neededItem in neededItems)
                 itemHandler.RemoveItem(neededItem.item, neededItem.amount);
 
             // Add newly created item(s)
-            foreach (ResourceData createdItem in createdItems)
+            foreach (ItemResourceData createdItem in createdItems)
                 itemHandler.AddItem(createdItem.item, createdItem.amount);
-        }
-
-
-        /// <summary>
-        /// Small struct for storing the item and the amount of the item as an "ingredient" for the recipe.
-        /// </summary>
-        [Serializable]
-        public struct ResourceData
-        {
-            public Item item;
-            public int amount;
         }
     }
 }
