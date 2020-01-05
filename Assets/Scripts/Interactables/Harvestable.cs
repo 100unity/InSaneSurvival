@@ -33,10 +33,7 @@ namespace Interactables
         [SerializeField] 
         private GameObject replacement;
         
-        /*
-         * Need a camera reference so resources don't respawn while the player can see them.
-         */
-        [Tooltip("Scales the spawn probability.")]
+        [Tooltip("Need a camera reference so resources don't respawn while the player can see them.")]
         [SerializeField] 
         private Camera mainCam;
 
@@ -48,6 +45,10 @@ namespace Interactables
 
         private void Awake()    
         {
+            if (mainCam == null) // in case it was forgotten to set via the editor
+            {
+                mainCam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+            }
             _ownMeshRenderer = GetComponent<MeshRenderer>();
             _ownCollider = GetComponent<BoxCollider>();
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
