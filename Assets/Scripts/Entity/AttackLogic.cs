@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using AbstractClasses;
+using Managers;
+using UnityEngine;
 using System;
 
 namespace Entity
@@ -7,28 +9,26 @@ namespace Entity
     [RequireComponent(typeof(Movable))]
     public class AttackLogic : MonoBehaviour
     {
-        [Tooltip("The base damage dealt")]
-        [SerializeField]
+        [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
 
-        [Tooltip("The maximum distance between attacker and target in order to deal damage")]
-        [SerializeField]
+        [Tooltip("The maximum distance between attacker and target in order to deal damage")] [SerializeField]
         private int attackRange;
 
-        [Tooltip("The time needed for an attack in seconds")]
-        [SerializeField]
+        [Tooltip("The time needed for an attack in seconds")] [SerializeField]
         private double attackTime;
 
-        [Tooltip("The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
+        [Tooltip(
+            "The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
         [SerializeField]
         private double hitRotationTolerance;
 
-        [Tooltip("Stops attacking the target after a (un-)successful hit")]
-        [SerializeField]
+        [Tooltip("Stops attacking the target after a (un-)successful hit")] [SerializeField]
         private bool resetAfterHit;
 
 
-        public enum AttackStatus { Hit, Miss, NotFinished, None };
+        public enum AttackStatus { Hit, Miss, NotFinished, None }
+
         public AttackStatus Status { get; private set; }
 
         // component references
@@ -138,7 +138,8 @@ namespace Entity
             {
                 // deal damage
                 Damageable damageable = _target.GetComponent<Damageable>();
-                damageable.Hit(damage);
+                // Add damage boost from weapon
+                damageable.Hit(damage + InventoryManager.Instance.DamageBoostFromEquipable);
             }
 
             // -----temp-----

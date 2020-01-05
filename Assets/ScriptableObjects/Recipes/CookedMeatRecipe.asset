@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57c56c6397135a04ebfaeb59f7db11ca, type: 3}
-  m_Name: AxeRecipe
+  m_Name: CookedMeatRecipe
   m_EditorClassIdentifier: 
   neededItems:
-  - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
-    amount: 2
-  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
-    amount: 2
+  - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
+    amount: 0
   createdItem:
-    item: {fileID: 11400000, guid: b4c5c309ebbae274aa3f6dd850867d62, type: 2}
+    item: {fileID: 11400000, guid: d795ebb3b8abce941885ae32b0ec8277, type: 2}
     amount: 1
-  craftingStation: 0
+  craftingStation: 2
   recipeName: 
