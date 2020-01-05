@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4774730132349241657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4774730132349241659}
+  - component: {fileID: 4774730132349241658}
+  m_Layer: 0
+  m_Name: TreeBrushEvergreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4774730132349241659
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4774730132349241657}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -63.078762, y: 12.097249, z: -149.87323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4774730132349241658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4774730132349241657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853f86897d7204f40bd9c7c85c1c44ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 3598213378273647000, guid: ce1cf6a1de51141e2b0b756b34c1afc3, type: 3}
+  - {fileID: 125634679504119005, guid: 1114194c8870d46caa59159d7115b319, type: 3}
+  - {fileID: 5547202975392220949, guid: 7f691a424d2484159a5cbc1cf7173de9, type: 3}
+  - {fileID: 4552556786368187399, guid: 28c866e2fda7742d38b74831f1e8a624, type: 3}
+  - {fileID: 5023833898135176730, guid: d017a206ac62349bd8ba92afd16913f4, type: 3}
+  - {fileID: 9171065599911654237, guid: 775ade2c23e7ba247aa5f44d97aada33, type: 3}
+  - {fileID: 1277932457259329250, guid: b86770a07ec40a14683c5552a5b967fb, type: 3}
+  - {fileID: 9136285602905049077, guid: 18f5ec17efcee1245841734972398673, type: 3}
+  - {fileID: 5081352666724575412, guid: 54317dbfbfd4ed9469c8b8f6f520de8a, type: 3}
+  - {fileID: 1467274618584845758, guid: b43a7ea1e4e3f5f41be96f675adfda37, type: 3}
+  parentNaming: TreeGroupEvergreen
+  scaleXZ:
+    min: -0.1
+    max: 0.1
+  scaleY:
+    min: -0.1
+    max: 0.9
+  justScaleY: 0
+  isTree: 1
