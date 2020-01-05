@@ -33,7 +33,7 @@ namespace Effects
 
         private void Awake()
         {
-            _baseRadius = 500;
+            _baseRadius = 20;
             _currentRadius = _baseRadius;
             _isGrowing = true;
         }
@@ -88,7 +88,7 @@ namespace Effects
         {
             if (sanityLevel > 50)
             {
-                _baseRadius = 500;
+                _baseRadius = 20;
             }
             else
             {

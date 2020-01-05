@@ -14,12 +14,17 @@ Shader "Custom/FogOfSanity"
         _FogMaxRadius ("FogMaxRadius", Range(0.1,10)) = 0.5
         _Center ("Center", Vector) = (0,0,0,1)
     }
+    
     SubShader
     {
         Tags { "Queue"="Transparent" "RenderType"="Transparent" }
         LOD 200
-        Cull Off
-
+        
+        Pass
+        {
+            ColorMask 0            
+        }
+        
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
         #pragma surface surf Standard fullforwardshadows vertex:vert alpha:blend
@@ -80,5 +85,6 @@ Shader "Custom/FogOfSanity"
         }
         ENDCG
     }
+    
     FallBack "Diffuse"
 }
