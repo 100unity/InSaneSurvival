@@ -52,24 +52,19 @@ namespace Utils.ElementInteraction
         /// <param name="eventData"></param>
         private void Swap(PointerEventData eventData)
         {
-            // Reset position by default
-            _draggable.SetExecuteOnLateUpdateAction(_draggable.ResetPosition);
-
             Swappable otherSwappable = _draggable.GraphicRaycaster.FindUIElement(eventData, this);
             // No swappable, nothing to do
             if (otherSwappable == null)
+            {
+                _draggable.ResetPosition();
                 return;
+            }
 
             // Invoke OnSwap event before swapping
             if (OnBeforeSwap != null && !OnBeforeSwap.Invoke(otherSwappable))
                 return;
 
-            //Switch positions
-            Vector2 otherPosition = otherSwappable._draggable.OldPosition;
-            otherSwappable._draggable.UpdatePosition(_draggable.OldPosition);
-            _draggable.UpdatePosition(otherPosition);
-            // Remove default position-reset
-            _draggable.SetExecuteOnLateUpdateAction(null);
+
             OnAfterSwap?.Invoke(this, otherSwappable);
         }
     }

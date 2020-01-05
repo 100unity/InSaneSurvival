@@ -1,5 +1,4 @@
 ﻿using Constants;
-using Inventory;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -10,16 +9,21 @@ namespace Buildings
 {
     public class BuildingResource : MonoBehaviour
     {
-        [SerializeField] private Image imgBackground;
-        [SerializeField] private Image imgResourceIcon;
-        [SerializeField] private TextMeshProUGUI txtResource;
+        [Tooltip("Background image. Used for showing the status")] [SerializeField]
+        private Image imgBackground;
+
+        [Tooltip("The icon of this resource")] [SerializeField]
+        private Image imgResourceIcon;
+
+        [Tooltip("The name and number of this resource")] [SerializeField]
+        private TextMeshProUGUI txtResource;
 
         private ItemResourceData _resourceData;
 
-        private void OnEnable() => InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
-
-        private void OnDisable() => InventoryManager.Instance.ItemHandler.ItemsUpdated -= ItemsUpdated;
-
+        /// <summary>
+        /// Sets all the needed data/texts/images.
+        /// </summary>
+        /// <param name="resourceData"></param>
         public void Init(ItemResourceData resourceData)
         {
             imgResourceIcon.sprite = resourceData.item.Icon;
@@ -29,9 +33,10 @@ namespace Buildings
             Refresh();
         }
 
-        private void ItemsUpdated(Item arg1, int arg2) => Refresh();
-
-        private void Refresh()
+        /// <summary>
+        /// Checks if there are enough resources for this buildingResource. If so, changes the color.
+        /// </summary>
+        public void Refresh()
         {
             imgBackground.color =
                 InventoryManager.Instance.ItemHandler.ContainsItem(_resourceData.item, _resourceData.amount)

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Interfaces;
+using Managers;
 using UnityEngine;
 using Utils;
 
@@ -10,10 +11,10 @@ namespace Crafting
     public class CraftingRecipe : ScriptableObject
     {
         [Header("Items")] [Tooltip("All needed items for crafting the new item(s) with this recipe")] [SerializeField]
-        private List<ResourceData> neededItems;
+        private List<ItemResourceData> neededItems;
 
         [Tooltip("The item that will be created with this recipe")] [SerializeField]
-        private ResourceData createdItem;
+        private ItemResourceData createdItem;
 
         [Header("Recipe")] [Tooltip("The crafting station needed to craft this recipe")] [SerializeField]
         private CraftingManager.CraftingStation craftingStation;
@@ -33,7 +34,7 @@ namespace Crafting
         /// </summary>
         public List<ItemResourceData> NeededItems => neededItems;
 
-        public ResourceData CreatedItem => createdItem;
+        public ItemResourceData CreatedItem => createdItem;
 
         /// <summary>
         /// Checks if all ingredients for this recipe are present. If one item is missing or the amount of items does not match the needed amount, false will be returned.
@@ -44,7 +45,8 @@ namespace Crafting
         public bool CanCraft(IItemHandler itemHandler)
         {
             return neededItems.All(neededItem => itemHandler.ContainsItem(neededItem.item, neededItem.amount)) &&
-                   CraftingManager.Instance.CurrentCraftingStation == craftingStation;
+                   (CraftingManager.Instance.CurrentCraftingStation == craftingStation ||
+                    craftingStation == CraftingManager.CraftingStation.None);
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Crafting
                 return;
 
             // Remove used item(s)
-            foreach (ResourceData neededItem in neededItems)
+            foreach (ItemResourceData neededItem in neededItems)
                 itemHandler.RemoveItem(neededItem.item, neededItem.amount);
 
             // Add newly created item

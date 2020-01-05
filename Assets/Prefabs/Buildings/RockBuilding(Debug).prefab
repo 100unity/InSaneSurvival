@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingRenderer: {fileID: 2617136721606173682}
   showWithDistanceToPlayer: 5
+  craftingStation: 2
 --- !u!1001 &5853468649750411931
 PrefabInstance:
   m_ObjectHideFlags: 0

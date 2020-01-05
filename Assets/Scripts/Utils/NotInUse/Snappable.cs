@@ -30,19 +30,17 @@ namespace Utils.NotInUse
         /// <param name="eventData">The EventData from the <see cref="Draggable.OnEndDrag"/> event</param>
         private void Snap(PointerEventData eventData)
         {
-            // Reset position by default
-            _draggable.SetExecuteOnLateUpdateAction(_draggable.ResetPosition);
-
             SnapPoint snapPoint = _draggable.GraphicRaycaster.FindUIElement<SnapPoint>(eventData);
             Draggable otherDraggable = _draggable.GraphicRaycaster.FindUIElement(eventData, _draggable);
             // If there is no snapping point or if there is already another snappable, don't do anything
             if (snapPoint == null || otherDraggable != null)
+            {
+                _draggable.ResetPosition();
                 return;
+            }
 
             // Get new position and set to current
             _draggable.UpdatePosition(snapPoint.transform.position);
-            // Remove default position-reset
-            _draggable.SetExecuteOnLateUpdateAction(null);
         }
     }
 }

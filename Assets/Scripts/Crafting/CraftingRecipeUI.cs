@@ -53,7 +53,7 @@ namespace Crafting
                 txtTitle.SetText(_recipe.CreatedItemName);
             }
 
-            foreach (CraftingRecipe.ResourceData resourceData in _recipe.NeededItems)
+            foreach (ItemResourceData resourceData in _recipe.NeededItems)
                 Instantiate(craftingRecipeResourcePrefab, recipeResourceList.transform)
                     .InitResource(resourceData.item.name, resourceData.amount, resourceData.item.Icon);
             craftButton.onClick.RemoveAllListeners();

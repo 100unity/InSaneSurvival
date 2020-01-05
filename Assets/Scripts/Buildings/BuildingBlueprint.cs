@@ -48,6 +48,11 @@ namespace Buildings
         /// </summary>
         private Camera _camera;
 
+        /// <summary>
+        /// Used for refreshing.
+        /// </summary>
+        private readonly List<BuildingResource> _resources = new List<BuildingResource>();
+
         // Transparent Shader properties
         private static readonly int SrcBlend = Shader.PropertyToID("Src_Blend");
         private static readonly int DstBlend = Shader.PropertyToID("_DstBlend");
@@ -66,7 +71,11 @@ namespace Buildings
 
             // Setup tooltip
             foreach (ItemResourceData requiredResource in requiredResources)
-                Instantiate(buildingResource, layoutGroup.transform).Init(requiredResource);
+            {
+                BuildingResource resource = Instantiate(buildingResource, layoutGroup.transform);
+                resource.Init(requiredResource);
+                _resources.Add(resource);
+            }
         }
 
         private void OnEnable() => InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
@@ -116,14 +125,17 @@ namespace Buildings
         {
             building.BuildingRenderer.material = _oldMat;
             building.IsBuild = true;
-            enabled = false;
+            Destroy(gameObject);
         }
 
         /// <summary>
         /// Toggles the build-button
         /// </summary>
-        private void ItemsUpdated(Item item, int amount) =>
+        private void ItemsUpdated(Item item, int amount)
+        {
             buildButton.gameObject.SetActive(CanBuild(InventoryManager.Instance.ItemHandler));
+            _resources.ForEach(resource => resource.Refresh());
+        }
 
         /// <summary>
         /// Takes the material from the given Building, copies it and fades it out a bit.
