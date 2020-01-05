@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433a787e3a2a2404ca18409922208c86, type: 3}
   m_Name: Pickaxe
   m_EditorClassIdentifier: 
+  id: 4
   icon: {fileID: 0}
   maxStackSize: 1
   equipableAbility: 0

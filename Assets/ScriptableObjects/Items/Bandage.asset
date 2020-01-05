@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddbf48c44c41f54ca084202f466156a, type: 3}
   m_Name: Bandage
   m_EditorClassIdentifier: 
+  id: 1
   icon: {fileID: 0}
   maxStackSize: 0
   healthValue: 10

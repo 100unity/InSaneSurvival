@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eba810f194bea0468b3318491a21203, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
+  id: 7
   icon: {fileID: 0}
   maxStackSize: 5

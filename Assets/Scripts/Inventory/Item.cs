@@ -2,11 +2,12 @@
 
 namespace Inventory
 {
-    [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item/Item(General)")][System.Serializable]
-    public class Item : ScriptableObject
+    [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item/Item(General)")]
+    [System.Serializable] public class Item : ScriptableObject
     {
-        [SerializeField] private Sprite icon;
-        [SerializeField] private int maxStackSize;
+        [SerializeField] public int id;
+        [SerializeField] public Sprite icon;
+        [SerializeField] public int maxStackSize;
 
         public Sprite Icon => icon;
         public int MaxStackSize => maxStackSize;
@@ -15,6 +16,11 @@ namespace Inventory
         {
             Debug.Log("The item " + name + " can not be used.");
             return false;
+        }
+
+        public string ToJson()
+        {
+            return JsonUtility.ToJson(this);
         }
     }
 }

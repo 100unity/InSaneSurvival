@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Schema;
 using Inventory;
+using Managers;
 using UnityEngine;
 
 namespace Utils.Saves
@@ -11,6 +12,7 @@ namespace Utils.Saves
     {
         //metadata
         public string timestamp;
+        public int saveVersion = 1;
 
         //player state
         public Vector3 playerPosition;
@@ -22,6 +24,7 @@ namespace Utils.Saves
 
         //inventory data
         public List<Item> items;
+        public List<Item> itemsNew;
         
         //world state data
         public int timeOfDay;
@@ -45,5 +48,7 @@ namespace Utils.Saves
         }
 
         public void SetInventory(List<Item> itemList) => this.items = itemList;
+
+        public void SetInventoryNew(List<Item> itemList) => this.itemsNew = itemList;
     }
 }
