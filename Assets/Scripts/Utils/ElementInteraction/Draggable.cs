@@ -63,6 +63,11 @@ namespace Utils.ElementInteraction
         public void ResetPosition() => parent.position = OldPosition;
 
         /// <summary>
+        /// Saves the current position of the parent as <see cref="OldPosition"/>
+        /// </summary>
+        public void RefreshPosition() => OldPosition = parent.position;
+
+        /// <summary>
         /// Updates the current position and the OldPosition
         /// </summary>
         /// <param name="position">The new postiion</param>

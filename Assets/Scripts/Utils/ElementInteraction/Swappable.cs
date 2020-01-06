@@ -64,7 +64,7 @@ namespace Utils.ElementInteraction
             if (OnBeforeSwap != null && !OnBeforeSwap.Invoke(otherSwappable))
                 return;
 
-
+            _draggable.RefreshPosition();
             OnAfterSwap?.Invoke(this, otherSwappable);
         }
     }
