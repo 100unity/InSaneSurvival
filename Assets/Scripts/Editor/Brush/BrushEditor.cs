@@ -1,8 +1,7 @@
-﻿using Brush;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+namespace Editor.Brush
 {
     [CustomEditor(typeof(CustomBrush))]
     public class BrushEditor : UnityEditor.Editor
@@ -19,7 +18,7 @@ namespace Editor
         {
             base.OnInspectorGUI();
 
-            _customBrush = (CustomBrush)target;
+            _customBrush = (CustomBrush) target;
             _brushLogic.InitVars(_customBrush);
 
             // ---- Custom Buttons ----
@@ -58,4 +57,3 @@ namespace Editor
         }
     }
 }
-
