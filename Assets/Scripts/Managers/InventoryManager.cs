@@ -24,6 +24,11 @@ namespace Managers
         public Equipable CurrentlyEquippedItem { get; private set; }
 
         /// <summary>
+        /// The damage boost of the currently equipped weapon. Returns 0 if no item is equipped.
+        /// </summary>
+        public int DamageBoostFromEquipable => CurrentlyEquippedItem ? CurrentlyEquippedItem.DamageBoost : 0;
+
+        /// <summary>
         /// The currently equipped ItemButton (Visually equipped item)
         /// </summary>
         private ItemButton _currentlyEquippedItemButton;

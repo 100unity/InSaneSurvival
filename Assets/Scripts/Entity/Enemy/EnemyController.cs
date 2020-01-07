@@ -156,6 +156,8 @@ namespace Entity.Enemy
             }
         }
 
+        public Area WanderArea => wanderArea;
+
         /// <summary>
         /// Draws wire spheres to display lookRadius, wander area and escapeRadius.
         /// </summary>
