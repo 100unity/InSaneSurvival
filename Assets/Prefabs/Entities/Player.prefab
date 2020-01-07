@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 5
   rotationTolerance: 10
+  animator: {fileID: 466687203411084045}
   clickableLayers:
     serializedVersion: 2
     m_Bits: 524545
@@ -432,6 +433,12 @@ PrefabInstance:
 --- !u!4 &466687203404098771 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400062, guid: ae495434e84223e4986a98db34c5941a,
+    type: 3}
+  m_PrefabInstance: {fileID: 466687203403708013}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &466687203411084045 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: ae495434e84223e4986a98db34c5941a,
     type: 3}
   m_PrefabInstance: {fileID: 466687203403708013}
   m_PrefabAsset: {fileID: 0}

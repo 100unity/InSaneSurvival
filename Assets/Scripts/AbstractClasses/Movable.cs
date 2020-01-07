@@ -14,12 +14,23 @@ namespace AbstractClasses
         [SerializeField]
         private int rotationTolerance;
 
-
+        [Tooltip("The animator that should be used for movement animations")]
+        [SerializeField] private Animator animator;
+        
         protected NavMeshAgent NavMeshAgent;
+        private bool _hasAnimator;
+        private static readonly int MovementSpeed = Animator.StringToHash("movementSpeed");
 
         protected virtual void Awake()
         {
             NavMeshAgent = GetComponent<NavMeshAgent>();
+            _hasAnimator = animator != null;
+        }
+
+        protected virtual void Update()
+        {
+            if (_hasAnimator)
+                animator.SetFloat(MovementSpeed, NavMeshAgent.velocity.magnitude);
         }
 
         /// <summary>
