@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433a787e3a2a2404ca18409922208c86, type: 3}
   m_Name: Pickaxe
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0769c0b82088cb64d98a544e1ff78ea9, type: 3}
   maxStackSize: 1
   equipableAbility: 2
   damageBoost: 1

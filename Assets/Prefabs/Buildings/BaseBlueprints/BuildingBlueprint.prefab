@@ -476,19 +476,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   building: {fileID: 0}
-  requiredResources:
-  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
-    amount: 5
-  - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
-    amount: 5
-  fadeStrength: 0.4
+  requiredResources: []
+  fadeStrength: 0.3
   tooltip: {fileID: 1757951633893585645}
   buildingResource: {fileID: 30599501017163685, guid: ca4eecc6738bfb244a3f3f116662d2fc,
     type: 3}
   layoutGroup: {fileID: 5959497673498847472}
   buildButton: {fileID: 3362582714707808199}
   offset: {x: 0, y: 80, z: 0}
-  showWithDistanceToPlayer: 4
 --- !u!1 &9077741720750548309
 GameObject:
   m_ObjectHideFlags: 0

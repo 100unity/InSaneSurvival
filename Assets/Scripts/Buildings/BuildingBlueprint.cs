@@ -45,7 +45,7 @@ namespace Buildings
         /// <summary>
         /// Old material of the building. Used for enabling it.
         /// </summary>
-        private Material _oldMat;
+        private List<Material> _oldMats;
 
         /// <summary>
         /// Used for calculating the tooltip-position.
@@ -67,6 +67,8 @@ namespace Buildings
         /// </summary>
         private void Awake()
         {
+            _oldMats = new List<Material>();
+
             _camera = Camera.main;
             buildButton.gameObject.SetActive(false);
             buildButton.onClick.AddListener(BuildBuilding);
@@ -127,7 +129,7 @@ namespace Buildings
         /// </summary>
         private void ActivateBuilding()
         {
-            building.BuildingRenderer.material = _oldMat;
+            building.BuildingRenderer.materials = _oldMats.ToArray();
             building.IsBuild = true;
             Destroy(gameObject);
         }
@@ -147,23 +149,26 @@ namespace Buildings
         /// </summary>
         private void SetBlueprintMaterial()
         {
-            _oldMat = building.BuildingRenderer.material;
+            for (int i = 0; i < building.BuildingRenderer.materials.Length; i++)
+            {
+                Material blueprintMat = building.BuildingRenderer.materials[i];
+                // Save copy of original material
+                _oldMats.Add(new Material(blueprintMat));
 
-            Material blueprintMat = new Material(_oldMat);
-            // Set rendering mode to transparent
-            blueprintMat.SetInt(SrcBlend, (int) UnityEngine.Rendering.BlendMode.One);
-            blueprintMat.SetInt(DstBlend, (int) UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            blueprintMat.SetInt(ZWrite, 0);
-            blueprintMat.DisableKeyword("_ALPHATEST_ON");
-            blueprintMat.DisableKeyword("_ALPHABLEND_ON");
-            blueprintMat.EnableKeyword("_ALPHAPREMULTIPLY_ON");
-            blueprintMat.renderQueue = 3000;
-            // Lower alpha
-            Color color = blueprintMat.color;
-            color.a = fadeStrength;
-            blueprintMat.color = color;
-
-            building.BuildingRenderer.material = blueprintMat;
+                blueprintMat.shader = Shader.Find("Standard");
+                // Set rendering mode to transparent
+                blueprintMat.SetInt(SrcBlend, (int) UnityEngine.Rendering.BlendMode.One);
+                blueprintMat.SetInt(DstBlend, (int) UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                blueprintMat.SetInt(ZWrite, 0);
+                blueprintMat.DisableKeyword("_ALPHATEST_ON");
+                blueprintMat.DisableKeyword("_ALPHABLEND_ON");
+                blueprintMat.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+                blueprintMat.renderQueue = 3000;
+                // Lower alpha
+                Color color = blueprintMat.color;
+                color.a = fadeStrength;
+                blueprintMat.color = color;
+            }
         }
     }
 }
