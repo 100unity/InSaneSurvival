@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &786490506819060474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786490506819060472}
+  - component: {fileID: 786490506819060473}
+  m_Layer: 0
+  m_Name: ForestBrush
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &786490506819060472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786490506819060474}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -63.078762, y: 12.097249, z: -149.87323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &786490506819060473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786490506819060474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853f86897d7204f40bd9c7c85c1c44ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 97221911553787394, guid: 3436217bd39c145f19af80a6c65bc6f0, type: 3}
+  - {fileID: 96704226749761417, guid: aaa25337e1399431a99a4d3c10476bbb, type: 3}
+  - {fileID: 6794867913692308073, guid: 3321ec4a0c71e462db0409519a0e7364, type: 3}
+  - {fileID: 97221911553787394, guid: 3436217bd39c145f19af80a6c65bc6f0, type: 3}
+  - {fileID: 97221911553787394, guid: 3436217bd39c145f19af80a6c65bc6f0, type: 3}
+  - {fileID: 6595677153731643119, guid: 3eb327f022e3e3949a5cc1029aeafb43, type: 3}
+  - {fileID: 5965281195512337076, guid: 33fd17f9a13ccda4383423e1c5fc5323, type: 3}
+  - {fileID: 5398836654962426599, guid: 6b35d184bbc0b1548bd004a77dd6d0aa, type: 3}
+  - {fileID: 5398836654962426599, guid: 6b35d184bbc0b1548bd004a77dd6d0aa, type: 3}
+  - {fileID: 5592918712389574515, guid: 2a3e3128b92e6584c88abdaedf6a38af, type: 3}
+  - {fileID: 5080821112121408204, guid: 9b35a7ff21b52cd4aa35ca3858642b7e, type: 3}
+  parentNaming: ForestGroup
+  scaleXZ:
+    min: -0.3
+    max: 0.3
+  scaleY:
+    min: -0.5
+    max: 1
+  justScaleY: 0
+  isTree: 0
