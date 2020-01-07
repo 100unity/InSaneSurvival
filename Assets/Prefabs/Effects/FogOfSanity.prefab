@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fogOfSanityMesh: {fileID: 6112913263723783040}
-  mainCamera: {fileID: 0}
+  player: {fileID: 0}
   pulseIntensity: 3
   pulseFrequency: 0.6
+  scaleFactor: 1.5
 --- !u!1 &6112913263723783042
 GameObject:
   m_ObjectHideFlags: 0

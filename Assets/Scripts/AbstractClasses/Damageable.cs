@@ -9,7 +9,7 @@ namespace AbstractClasses
         private float hitMarkTime;
 
         [Tooltip("The MeshRenderer of the graphics object of the player")] [SerializeField]
-        protected MeshRenderer gameObjectRenderer;
+        protected Renderer gameObjectRenderer;
 
         protected Material PrevMat;
 

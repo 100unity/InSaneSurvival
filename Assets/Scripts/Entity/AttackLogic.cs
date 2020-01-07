@@ -39,7 +39,7 @@ namespace Entity
         private float _distanceToTarget;
 
         // ----temporary as animation replacement------
-            private MeshRenderer _gameObjectRenderer;
+            private Renderer _gameObjectRenderer;
             private Material _prevMat;
             private Material _attackAnimationMaterial;
         // ---------
@@ -50,7 +50,7 @@ namespace Entity
             _movable = GetComponent<Movable>();
 
             // -----temp replacement for animation-----
-                _gameObjectRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+                _gameObjectRenderer = gameObject.GetComponentInChildren<Renderer>();
                 _prevMat = _gameObjectRenderer.material;
                 _attackAnimationMaterial = new Material(Shader.Find("Standard"));
                 _attackAnimationMaterial.color = Color.yellow;
