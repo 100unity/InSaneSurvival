@@ -6,6 +6,10 @@ namespace GameTime
 {
     public class Clock : MonoBehaviour
     {
+        public delegate void SunRise();
+        
+        public delegate void SunSet();
+        
         [SerializeField][Tooltip("Day length in minutes")]
         private float dayLength;
     
@@ -15,6 +19,8 @@ namespace GameTime
         [SerializeField] [Tooltip("Current time")] [Range(0f, 1f)]
         private float timeOfDay;
         public float TimeOfDay => timeOfDay;
+        
+        private bool _isNight;
 
         private int _days;
         public int Days => _days;
@@ -30,9 +36,13 @@ namespace GameTime
         private AnimationCurve timeCurve;
 
         private float _timeCurveNormalization;
+        
+        public static event SunRise OnSunRise;
+        public static event SunSet OnSunSet;
 
         private void Awake()
         {
+            SetDayNightTriggers();
             NormalizeTimeCurve();
             _baseTickRate = 24 / (dayLength / 60); // calculating basic tick rate
         }
@@ -69,6 +79,21 @@ namespace GameTime
                     _years++;
                 }
             }
+
+            if (timeOfDay >= 0.25 && _isNight)
+            {
+                _isNight = !_isNight;
+                OnSunRise?.Invoke();
+                Debug.Log("Sun is Rising");
+            }
+            
+            if (timeOfDay >= 0.75 && !_isNight)
+            {
+                _isNight = !_isNight;
+                OnSunSet?.Invoke();
+                Debug.Log("Night is coming");
+            }
+            
         }
 
         /// <summary>
@@ -86,6 +111,18 @@ namespace GameTime
             }
 
             _timeCurveNormalization = curveTotal / numberOfSteps;
+        }
+
+        private void SetDayNightTriggers()
+        {
+            if (TimeOfDay >= 0.25 && TimeOfDay <= 0.75)
+            {
+                _isNight = false;
+            }
+            else
+            {
+                _isNight = true;
+            }
         }
     }
 }
