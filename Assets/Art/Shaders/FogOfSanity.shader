@@ -11,7 +11,7 @@ Shader "Custom/FogOfSanity"
         
         // Custom Properties
         _FogRadius ("FogRadius", Range(1,500)) = 1.0
-        _FogMaxRadius ("FogMaxRadius", Range(0.1,10)) = 0.5
+        _ApertureAlpha ("ApertureAlpha", Range(0.1,10)) = 0.5
         _Center ("Center", Vector) = (0,0,0,1)
     }
     
@@ -39,7 +39,7 @@ Shader "Custom/FogOfSanity"
         
         // Custom Properties
         float _FogRadius;
-        float _FogMaxRadius;
+        float _ApertureAlpha;
         float4 _Center;
 
         struct Input
@@ -81,7 +81,7 @@ Shader "Custom/FogOfSanity"
         float powerForPos(float4 position, float2 nearVertex)
         {
             float atten = clamp(_FogRadius - length(position.xz - nearVertex.xy), 0.0, _FogRadius);
-            return (1.0/_FogMaxRadius) * atten / _FogRadius;
+            return (1.0/_ApertureAlpha) * atten / _FogRadius;
         }
         ENDCG
     }

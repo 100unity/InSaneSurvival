@@ -5,6 +5,9 @@ namespace Effects
 {
     public class FogOfSanity : MonoBehaviour
     {
+        [SerializeField][Tooltip("Sanity level when effects begin to be visible")]
+        private float sanityImpactThreshhold;
+        
         [SerializeField][Tooltip("Reference to the fog generating mesh")]
         private Renderer fogOfSanityMesh;
     
@@ -30,6 +33,7 @@ namespace Effects
         // shader properties
         private static readonly int PlayerPosition = Shader.PropertyToID("_Center");
         private static readonly int FogRadius = Shader.PropertyToID("_FogRadius");
+        private static readonly int ApertureAlpha = Shader.PropertyToID("_ApertureAlpha");
 
         private void Awake()
         {
@@ -74,7 +78,7 @@ namespace Effects
     
         private void OnEnable()
         {
-            PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
+           PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
         }
         
         private void OnDisable()
@@ -86,12 +90,21 @@ namespace Effects
 
         private void UpdateFogRadius(int sanityLevel)
         {
-            if (sanityLevel > 50)
+            Color fogColor = fogOfSanityMesh.material.color;
+            fogColor.a = Mathf.Lerp(0.2f, 1f, sanityLevel/100f);
+            fogOfSanityMesh.material.color = fogColor;
+                
+            float apertureAlpha = Mathf.Lerp(1, 10, sanityLevel/200f);
+            fogOfSanityMesh.material.SetFloat(ApertureAlpha, apertureAlpha);
+            
+            if (sanityLevel > sanityImpactThreshhold)
             {
-                _baseRadius = 20;
+                _baseRadius = 100;
             }
             else
             {
+                
+                
                 _baseRadius = sanityLevel * scaleFactor;
             }
         }
