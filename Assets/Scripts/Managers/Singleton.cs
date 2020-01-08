@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Constants;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -19,6 +21,18 @@ namespace Managers
                 Destroy(gameObject);
             else
                 Instance = this as T;
+
+            SceneManager.sceneUnloaded += GameSceneUnloaded;
+        }
+
+        /// <summary>
+        /// Needed due to missing <see cref="UnityEngine.Object.DontDestroyOnLoad"/>
+        /// </summary>
+        private void GameSceneUnloaded(Scene scene)
+        {
+            if (scene.buildIndex != Consts.Scene.GAME) return;
+            Instance = null;
+            SceneManager.sceneUnloaded -= GameSceneUnloaded;
         }
     }
 }
