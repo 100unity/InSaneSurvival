@@ -51,6 +51,7 @@ namespace GameTime
         {
             UpdateTimeScale();
             UpdateTime();
+            InvokeSunRiseAndSunSet();
         }
 
         /// <summary>
@@ -79,23 +80,26 @@ namespace GameTime
                     _years++;
                 }
             }
-
-            if (timeOfDay >= 0.25 && _isNight)
+        }
+        
+        /// <summary>
+        /// Triggers Events for Sunrise and Sunset
+        /// </summary>
+        private void InvokeSunRiseAndSunSet()
+        {
+            if (timeOfDay >= 0.25 && timeOfDay < 0.75 && _isNight)
             {
                 _isNight = !_isNight;
                 OnSunRise?.Invoke();
-                Debug.Log("Sun is Rising");
             }
             
             if (timeOfDay >= 0.75 && !_isNight)
             {
                 _isNight = !_isNight;
                 OnSunSet?.Invoke();
-                Debug.Log("Night is coming");
             }
-            
         }
-
+        
         /// <summary>
         /// Calculates the mean of timeCurve
         /// </summary>
@@ -112,17 +116,13 @@ namespace GameTime
 
             _timeCurveNormalization = curveTotal / numberOfSteps;
         }
-
+        
+        /// <summary>
+        /// Checks if it is day or night and sets "_isNight" accordingly
+        /// </summary>
         private void SetDayNightTriggers()
         {
-            if (TimeOfDay >= 0.25 && TimeOfDay <= 0.75)
-            {
-                _isNight = false;
-            }
-            else
-            {
-                _isNight = true;
-            }
+            _isNight = (TimeOfDay >= 0.25 && TimeOfDay <= 0.75) ? _isNight = false : _isNight = true;
         }
     }
 }
