@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Inventory;
 using UnityEngine;
 
@@ -57,6 +57,8 @@ namespace UI
             itemButton.Icon.sprite = item.Icon;
             itemButton.NameLabel.text = item.name;
             itemButton.Count = 1;
+            itemButton.item = item;
+            itemButton.inventory = inventory;
             _itemStacks[item] = itemButton;
         }
 

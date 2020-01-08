@@ -8,6 +8,7 @@ using UI.Menus;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
+using UnityEngine.EventSystems;
 
 namespace Entity.Player
 {
@@ -43,7 +44,7 @@ namespace Entity.Player
 
         public delegate void PlayerPositionChanged(Vector3 newPosition);
 
-        public static event PlayerPositionChanged OnPlayerPositionUpdated;
+        public static event PlayerPositionChanged OnPlayerPositionUpdate;
 
         //Component references
         private Camera _camera;
@@ -141,35 +142,40 @@ namespace Entity.Player
         /// </summary>
         private void OnRightClick(InputAction.CallbackContext obj)
         {
-            Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
-                _attackLogic.Status == AttackLogic.AttackStatus.None)
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+            else
             {
-                GameObject objectHit = hit.collider.gameObject;
+                Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-                if (objectHit.GetComponent<Damageable>() is Damageable damageable)
+                // only change target / move, if not performing a hit
+                if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
+                    _attackLogic.Status == AttackLogic.AttackStatus.None)
                 {
-                    _interactLogic.RemoveFocus();
-                    // implementation NOT capable of area damage
-                    _attackLogic.StartAttack(objectHit);
-                }
+                    GameObject objectHit = hit.collider.gameObject;
 
-                else if (objectHit.GetComponent<Interactable>() is Interactable interactable)
-                {
-                    _attackLogic.StopAttack();
-                    //Set as focus
-                    _interactLogic.StartInteract(interactable);
-                }
+                    if (objectHit.GetComponent<Damageable>() is Damageable damageable)
+                    {
+                        _interactLogic.RemoveFocus();
+                        // implementation NOT capable of area damage
+                        _attackLogic.StartAttack(objectHit);
+                    }
 
-                // Get ground position from mouse click
-                else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, groundLayer))
-                {
-                    // cancel possible ongoing attacks
-                    _attackLogic.StopAttack();
-                    _interactLogic.RemoveFocus();
-                    Move(groundHit);
+                    else if (objectHit.GetComponent<Interactable>() is Interactable interactable)
+                    {
+                        _attackLogic.StopAttack();
+                        //Set as focus
+                        _interactLogic.StartInteract(interactable);
+                    }
+
+                    // Get ground position from mouse click
+                    else if (Physics.Raycast(clickRay, out RaycastHit groundHit, 10000, groundLayer))
+                    {
+                        // cancel possible ongoing attacks
+                        _attackLogic.StopAttack();
+                        _interactLogic.RemoveFocus();
+                        Move(groundHit);
+                    }
                 }
             }
         }
@@ -184,7 +190,7 @@ namespace Entity.Player
             // Create click point effect
             Instantiate(clickEffect, hit.point, Quaternion.identity);
 
-            OnPlayerPositionUpdated?.Invoke(transform.position);
+			OnPlayerPositionUpdate?.Invoke(transform.position);
         }
 
         /// <summary>
@@ -192,8 +198,13 @@ namespace Entity.Player
         /// </summary>
         private void RotateCamera(InputAction.CallbackContext obj)
         {
-            _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
-            UpdateCameraAngle();
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+            else
+            {
+                _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
+                UpdateCameraAngle();
+            }
         }
 
         /// <summary>
