@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4453236705715023681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4453236705715023683}
+  - component: {fileID: 4453236705715023682}
+  m_Layer: 0
+  m_Name: StoneBrush
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4453236705715023683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4453236705715023681}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -63.078762, y: 12.097249, z: -149.87323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4453236705715023682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4453236705715023681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853f86897d7204f40bd9c7c85c1c44ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 5592918712389574515, guid: 2a3e3128b92e6584c88abdaedf6a38af, type: 3}
+  - {fileID: 7532577480131546341, guid: 2e3c6cbf3f53e42c3a73b13db7800dd2, type: 3}
+  - {fileID: 5592918712389574515, guid: 2a3e3128b92e6584c88abdaedf6a38af, type: 3}
+  - {fileID: 5592918712389574515, guid: 2a3e3128b92e6584c88abdaedf6a38af, type: 3}
+  - {fileID: 5592918712389574515, guid: 2a3e3128b92e6584c88abdaedf6a38af, type: 3}
+  - {fileID: 4677943338118760566, guid: a65fa74872c014ba1bc91ea6e23a284b, type: 3}
+  - {fileID: 455205445166257099, guid: 7942d6fb632ba45999a66e1ba8f29a4d, type: 3}
+  - {fileID: 377144870050158813, guid: 71a0248b7cf13406aa6dbc16415a1eef, type: 3}
+  - {fileID: 8195634591905619213, guid: 1ce478fddb6fa447c81579eaf9fa64e5, type: 3}
+  - {fileID: 5592918712389574515, guid: 2a3e3128b92e6584c88abdaedf6a38af, type: 3}
+  parentNaming: StoneGroup
+  scaleXZ:
+    min: -1
+    max: 1
+  scaleY:
+    min: -1
+    max: 1
+  justScaleY: 0

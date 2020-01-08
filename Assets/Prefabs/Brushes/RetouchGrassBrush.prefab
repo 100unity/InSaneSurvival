@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &49203031345149235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 49203031345149233}
+  - component: {fileID: 49203031345149232}
+  m_Layer: 0
+  m_Name: RetouchGrassBrush
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &49203031345149233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49203031345149235}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -63.078762, y: 12.097249, z: -149.87323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &49203031345149232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49203031345149235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853f86897d7204f40bd9c7c85c1c44ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 2585311334555952401, guid: 16e8c6d6f1aeabc4dbef10b079094820, type: 3}
+  - {fileID: 6985730704037086972, guid: a5c68334d26d8574889fa49e44eb66fe, type: 3}
+  - {fileID: 2401098510048091559, guid: 0dc9ce75da69c5346b8c674e59fdae68, type: 3}
+  - {fileID: 150661431983188487, guid: 750ff580ea64558479aca0f508a96ddc, type: 3}
+  - {fileID: 8225669635665113615, guid: 7d9901074439f154795664efb5c010d5, type: 3}
+  - {fileID: 2678078804735155120, guid: 13d9e4c352adbe0459c08a2e47ba052d, type: 3}
+  - {fileID: 3044449359531408558, guid: d368b0ba5e79a574abfdf1f3d45c3327, type: 3}
+  parentNaming: SpecialGrassGroup
+  scaleXZ:
+    min: -0.5
+    max: 0.5
+  scaleY:
+    min: -0.8
+    max: 1
+  justScaleY: 0
