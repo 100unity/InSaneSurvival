@@ -97,13 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e825beb0ed384efe9610c64377c31bf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitMarkTime: 0.3
-  gameObjectRenderer: {fileID: 466687203415178701}
+  animator: {fileID: 466687203411084045}
   health: 100
   saturation: 100
   hydration: 100
   sanity: 100
-  healMarkTime: 0
 --- !u!114 &8049901093428442674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +229,7 @@ MonoBehaviour:
   attackTime: 3
   hitRotationTolerance: 40
   resetAfterHit: 1
+  animator: {fileID: 466687203411084045}
 --- !u!114 &4832682374285577335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,12 +438,6 @@ Transform:
 --- !u!95 &466687203411084045 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: ae495434e84223e4986a98db34c5941a,
-    type: 3}
-  m_PrefabInstance: {fileID: 466687203403708013}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &466687203415178701 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 13700000, guid: ae495434e84223e4986a98db34c5941a,
     type: 3}
   m_PrefabInstance: {fileID: 466687203403708013}
   m_PrefabAsset: {fileID: 0}

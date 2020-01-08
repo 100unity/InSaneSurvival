@@ -18,20 +18,11 @@ namespace AbstractClasses
         [SerializeField] private Animator animator;
         
         protected NavMeshAgent NavMeshAgent;
-        private bool _hasAnimator;
         private static readonly int MovementSpeed = Animator.StringToHash("movementSpeed");
 
-        protected virtual void Awake()
-        {
-            NavMeshAgent = GetComponent<NavMeshAgent>();
-            _hasAnimator = animator != null;
-        }
+        protected virtual void Awake() => NavMeshAgent = GetComponent<NavMeshAgent>();
 
-        protected virtual void Update()
-        {
-            if (_hasAnimator)
-                animator.SetFloat(MovementSpeed, NavMeshAgent.velocity.magnitude);
-        }
+        protected virtual void Update() => animator.SetFloat(MovementSpeed, NavMeshAgent.velocity.magnitude);
 
         /// <summary>
         /// Faces the target. Returns true if facing the target.

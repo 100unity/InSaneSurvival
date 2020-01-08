@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using AbstractClasses;
 using Managers;
-using UnityEngine;
-using System;
 
 namespace Entity
 {
@@ -26,6 +24,8 @@ namespace Entity
         [Tooltip("Stops attacking the target after a (un-)successful hit")] [SerializeField]
         private bool resetAfterHit;
 
+        [Tooltip("Animator for playing the attack animation")] [SerializeField]
+        private Animator animator;
 
         public enum AttackStatus { Hit, Miss, NotFinished, None }
 
@@ -37,24 +37,12 @@ namespace Entity
         private float _timer;
         private Damageable _target;
         private float _distanceToTarget;
-
-        // ----temporary as animation replacement------
-            private Renderer _gameObjectRenderer;
-            private Material _prevMat;
-            private Material _attackAnimationMaterial;
-        // ---------
+        private static readonly int AttackTrigger = Animator.StringToHash("attack");
 
         private void Awake()
         {
             // init components
             _movable = GetComponent<Movable>();
-
-            // -----temp replacement for animation-----
-                _gameObjectRenderer = gameObject.GetComponentInChildren<Renderer>();
-                _prevMat = _gameObjectRenderer.material;
-                _attackAnimationMaterial = new Material(Shader.Find("Standard"));
-                _attackAnimationMaterial.color = Color.yellow;
-            // ----------
         }
 
         private void OnEnable()
@@ -76,7 +64,6 @@ namespace Entity
                 // if target despawns, the player should not freeze
                 _timer = 0;
                 _distanceToTarget = 0;
-                _gameObjectRenderer.material = _prevMat;
                 Status = AttackStatus.None;
             }
         }
@@ -121,10 +108,7 @@ namespace Entity
                 // perform hit
                 Status = AttackStatus.NotFinished;
 
-                // -----temp-----
-                _prevMat = _gameObjectRenderer.material;
-                _gameObjectRenderer.material = _attackAnimationMaterial;
-                // ----------
+                animator.SetTrigger(AttackTrigger);
             }
         }
 
@@ -141,12 +125,6 @@ namespace Entity
                 // Add damage boost from weapon
                 damageable.Hit(damage + InventoryManager.Instance.DamageBoostFromEquipable);
             }
-
-            // -----temp-----
-            //Material newMaterial = new Material(Shader.Find("Standard"));
-            //newMaterial.color = Color.gray;
-            _gameObjectRenderer.material = _prevMat;
-            // ----------
 
             // end hit
             Status = AttackStatus.None;
@@ -195,8 +173,10 @@ namespace Entity
                     _movable.FaceTarget(_target.gameObject, false, out float difference);
                     return difference < hitRotationTolerance ? AttackStatus.Hit : AttackStatus.Miss;
                 }
+
                 return AttackStatus.Miss;
             }
+
             return AttackStatus.NotFinished;
         }
     }
