@@ -23,6 +23,8 @@ namespace GameTime
         public int Years => _years;
 
         private float _timeScale;
+
+        private float _baseTickRate;
         
         [SerializeField][Tooltip("Controls timeScale so certain time periods (night) can pass faster than others (day)")]
         private AnimationCurve timeCurve;
@@ -32,7 +34,7 @@ namespace GameTime
         private void Awake()
         {
             NormalizeTimeCurve();
-            _timeScale = 24 / (dayLength / 60); // calculating basic tick rate
+            _baseTickRate = 24 / (dayLength / 60); // calculating basic tick rate
         }
 
         private void Update()
@@ -46,6 +48,7 @@ namespace GameTime
         /// </summary>
         private void UpdateTimeScale()
         {
+            _timeScale = _baseTickRate;
             _timeScale *= timeCurve.Evaluate(timeOfDay);
             _timeScale /= _timeCurveNormalization;
         }
