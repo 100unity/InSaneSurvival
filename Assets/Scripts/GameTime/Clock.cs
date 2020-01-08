@@ -32,7 +32,6 @@ namespace GameTime
         private void Awake()
         {
             NormalizeTimeCurve();
-            _timeScale = 24 / (dayLength / 60); // calculating basic tick rate
         }
 
         private void Update()
@@ -46,6 +45,7 @@ namespace GameTime
         /// </summary>
         private void UpdateTimeScale()
         {
+            _timeScale = 24 / (dayLength / 60); // calculating basic tick rate
             _timeScale *= timeCurve.Evaluate(timeOfDay);
             _timeScale /= _timeCurveNormalization;
         }
