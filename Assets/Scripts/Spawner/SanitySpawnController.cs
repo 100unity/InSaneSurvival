@@ -1,26 +1,22 @@
-﻿using Entity.Enemy;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Entity.Enemy;
 using Entity.Player;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
-using System.Linq;
-using System.Collections.Generic;
-using Boo.Lang;
 
 namespace Spawner
 {
     public class SanitySpawnController : NPCSpawner
     {
-        [Tooltip("Scales the spawn probability.")]
-        [SerializeField]
+        [Tooltip("Scales the spawn probability.")] [SerializeField]
         private float spawnDimensionScale;
 
-        [Tooltip("Scales the despawn probability.")]
-        [SerializeField]
+        [Tooltip("Scales the despawn probability.")] [SerializeField]
         private float despawnDimensionScale;
 
-        [Tooltip("Scales spawn and despawn probability.")]
-        [SerializeField]
+        [Tooltip("Scales spawn and despawn probability.")] [SerializeField]
         private AnimationCurve probabilityScaleCurve;
 
         [Tooltip("Spawn probability is scaled with a factor 1-x for every active/existing sanity NPC.")]
@@ -29,6 +25,7 @@ namespace Spawner
 
 
         private readonly Dictionary<Renderer, GameObject> _spawned = new Dictionary<Renderer, GameObject>();
+
         // keep track of the sanity internally so that calculating the spawnProbability is easier
         private int _sanity;
 
@@ -42,7 +39,7 @@ namespace Spawner
         {
             PlayerState.OnPlayerSanityUpdate -= OnSanityUpdate;
         }
-        
+
         protected override void Update()
         {
             base.Update();
@@ -62,6 +59,7 @@ namespace Spawner
                 Destroy(_spawned.First().Value);
                 _spawned.Remove(_spawned.First().Key);
             }
+
             DestroyOutOfSight();
         }
 
@@ -70,7 +68,7 @@ namespace Spawner
         /// </summary>
         private void DestroyOutOfSight()
         {
-            List toRemove = new List();
+            List<Renderer> toRemove = new List<Renderer>();
             foreach (Renderer renderer in _spawned.Keys)
             {
                 if (!renderer.InFrustum(mainCamera))
@@ -79,6 +77,7 @@ namespace Spawner
                     toRemove.Add(renderer);
                 }
             }
+
             foreach (Renderer renderer in toRemove)
                 _spawned.Remove(renderer);
             if (toRemove.Count > 0)

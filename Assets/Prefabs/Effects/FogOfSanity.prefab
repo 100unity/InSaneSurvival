@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6112913262769956337}
-  - component: {fileID: 5879607462033449367}
+  - component: {fileID: 2297100120285075883}
   m_Layer: 9
   m_Name: FogOfSanity
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5879607462033449367
+--- !u!114 &2297100120285075883
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fogOfSanityMesh: {fileID: 6112913263723783040}
-  mainCamera: {fileID: 0}
+  player: {fileID: 0}
   pulseIntensity: 3
   pulseFrequency: 0.6
+  scaleFactor: 1.5
 --- !u!1 &6112913263723783042
 GameObject:
   m_ObjectHideFlags: 0
