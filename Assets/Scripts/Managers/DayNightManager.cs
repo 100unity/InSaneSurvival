@@ -50,7 +50,10 @@ namespace Managers
 
             // Used for going to an earlier time e.g. from 0.8 to 0.3
             if (newTimeOfDay < oldTimeOfDay)
+            {
                 newTimeOfDay += 1;
+                clock.AddOneDay();
+            }
 
             while (time < animationTime)
             {

@@ -49,10 +49,15 @@ namespace GameTime
         /// <param name="newTimeOfDay">The new time of the day (0 to 2)</param>
         public void SetTimeOfDay(float newTimeOfDay)
         {
-            if (newTimeOfDay > 1)
+            if (newTimeOfDay >= 1)
                 newTimeOfDay -= 1;
             timeOfDay = newTimeOfDay;
         }
+
+        /// <summary>
+        /// Manually adds a day. Should be used if the time is set manually.
+        /// </summary>
+        public void AddOneDay() => _days++;
 
         /// <summary>
         /// Updates the current timeScale; Varies depending on the current time of day (=> timeCurve)
