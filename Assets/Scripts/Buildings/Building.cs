@@ -46,26 +46,14 @@ namespace Buildings
         /// </summary>
         private bool _isBuild;
 
-        /// <summary>
-        /// Used for calculating the distance
-        /// </summary>
-        private GameObject _player;
 
-
-        private void Awake()
-        {
-            _player = PlayerManager.Instance.GetPlayer();
-            _isBuild = isAlreadyBuild;
-        }
+        private void Awake() => _isBuild = isAlreadyBuild;
 
         /// <summary>
         /// Updates <see cref="PlayerInReach"/>.
         /// </summary>
-        protected virtual void Update()
-        {
-            PlayerInReach = Vector3.Distance(_player.transform.position, transform.position) <=
-                            useDistance;
-        }
+        protected virtual void Update() =>
+            PlayerInReach = PlayerManager.Instance.PlayerInReach(gameObject, useDistance);
 
         /// <summary>
         /// Can be overriden to define an interaction action.

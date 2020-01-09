@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Managers
@@ -12,6 +13,17 @@ namespace Managers
             IEnumerator WaitFrame()
             {
                 yield return null;
+                onFinish?.Invoke();
+            }
+        }
+
+        public void WaitForSeconds(float time, UnityAction onFinish)
+        {
+            StartCoroutine(WaitSeconds());
+
+            IEnumerator WaitSeconds()
+            {
+                yield return new WaitForSeconds(time);
                 onFinish?.Invoke();
             }
         }

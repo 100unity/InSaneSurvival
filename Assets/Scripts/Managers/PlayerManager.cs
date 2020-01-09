@@ -8,12 +8,8 @@ namespace Managers
 
         public GameObject GetPlayer() => player;
 
-        public Transform SpawnPoint { get; private set; }
-
-        /// <summary>
-        /// Sets the spawn point of the player. WIP.
-        /// </summary>
-        /// <param name="spawnPoint">The new spawn point</param>
-        public void SetSpawnPoint(Transform spawnPoint) => SpawnPoint = spawnPoint;
+        public bool PlayerInReach(GameObject otherObject, float distanceToPlayer) =>
+            Vector3.Distance(player.transform.position, otherObject.transform.position) <=
+            distanceToPlayer;
     }
 }

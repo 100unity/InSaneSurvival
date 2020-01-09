@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5237862548912126428}
-  - component: {fileID: 7471014277518033078}
   m_Layer: 0
   m_Name: Anvil
   m_TagString: Untagged
@@ -32,22 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7471014277518033078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3200046293866550345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e07eb4087314e22a63f8e2b8dd30f67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildingRenderer: {fileID: 875177260522936858}
-  useDistance: 4
-  isAlreadyBuild: 0
-  craftingStation: 1
 --- !u!1001 &875177260521093938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,12 +91,6 @@ PrefabInstance:
 --- !u!4 &875177260521187978 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 430520, guid: 9ea995a0e015e624dbb4483257deb221,
-    type: 3}
-  m_PrefabInstance: {fileID: 875177260521093938}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &875177260522936858 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2351400, guid: 9ea995a0e015e624dbb4483257deb221,
     type: 3}
   m_PrefabInstance: {fileID: 875177260521093938}
   m_PrefabAsset: {fileID: 0}
