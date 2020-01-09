@@ -13,6 +13,9 @@ namespace Entity.Player.Sanity
         private AnimationCurve intensityCurve;
 
         [SerializeField]
+        private int maxShutterAngle;
+
+        [SerializeField]
         private float vignettePulseFrequency;
 
         [SerializeField]
@@ -31,7 +34,10 @@ namespace Entity.Player.Sanity
         private bool[] _isGrowing;
 
         private PostProcessVolume _postProcessVolume;
+
         private MotionBlur _motionBlur;
+        private int _baseShutterAngle;
+        private int _currentShutterAngle;
 
         private Vignette _vignette;
         [Range(0, 1)]
@@ -48,6 +54,7 @@ namespace Entity.Player.Sanity
         private float _currentAberrationIntensity;
         private float _aberrationPulse;
 
+
         private void Awake()
         {
             _isGrowing = new bool[3];
@@ -55,12 +62,14 @@ namespace Entity.Player.Sanity
             _postProcessVolume.profile.TryGetSettings(out _motionBlur);
             _postProcessVolume.profile.TryGetSettings(out _chromaticAberration);
             _postProcessVolume.profile.TryGetSettings(out _vignette);
+            _sanity = 100;
         }
 
         private void Start()
         {
             _aberrationBaseIntensity = _chromaticAberration.intensity.value;
             _vignetteBaseIntensity = _vignette.intensity.value;
+            _baseShutterAngle = (int) _motionBlur.shutterAngle.value;
             ClampAll();
         }
 
@@ -85,6 +94,7 @@ namespace Entity.Player.Sanity
             // update values in effects
             _vignette.intensity.value = _currentVignetteIntensity;
             _chromaticAberration.intensity.value = _currentAberrationIntensity;
+            _motionBlur.shutterAngle.value = _currentShutterAngle;
         }
 
         private void ClampAll()
@@ -93,6 +103,7 @@ namespace Entity.Player.Sanity
                 vignettePulseIntensity = 1 - _vignetteBaseIntensity;
             if (aberrationPulseIntensity + _aberrationBaseIntensity > 1)
                 aberrationPulseIntensity = 1 - _aberrationBaseIntensity;
+            Mathf.Clamp(maxShutterAngle, 0, 360);
         }
 
         private void PulseAll()
@@ -108,6 +119,7 @@ namespace Entity.Player.Sanity
         {
             _currentVignetteIntensity = _vignetteBaseIntensity + intensityCurve.Evaluate(_sanity / 100f) * _vignettePulse;
             _currentAberrationIntensity = _aberrationBaseIntensity + intensityCurve.Evaluate(_sanity / 100f) * _aberrationPulse;
+            _currentShutterAngle = (int) (_baseShutterAngle + intensityCurve.Evaluate(_sanity / 100f) * maxShutterAngle);
         }
 
         private float Pulse(float valueToBePulsed, float pulseFrequency, float pulseIntensity, int isGrowing)
@@ -126,6 +138,5 @@ namespace Entity.Player.Sanity
             }
             return valueToBePulsed;
         }
-
     }
 }
