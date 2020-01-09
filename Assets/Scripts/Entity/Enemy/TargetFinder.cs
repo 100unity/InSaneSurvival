@@ -17,15 +17,32 @@ namespace Entity.Enemy
         /// <summary>
         /// List of all targets that entered the trigger-radius and have a layer of the <see cref="attackableLayers"/> layer mask
         /// </summary>
-        public readonly List<GameObject> Targets = new List<GameObject>();  //TODO: Should probably be replaced by the abstract class "Damageable"
+        private readonly List<Damageable> _targets = new List<Damageable>();
 
         private void OnTriggerEnter(Collider other)
         {
-            if(!attackableLayers.Contains(other.gameObject.layer)) return;
-            
-            if(other.gameObject.TryGetComponent(typeof(Damageable), out _))
-                if(!Targets.Contains(other.gameObject))
-                    Targets.Add(other.gameObject);
+            if (!attackableLayers.Contains(other.gameObject.layer)) return;
+
+            if (other.gameObject.TryGetComponent(out Damageable target))
+                if (!_targets.Contains(target))
+                    _targets.Add(target);
         }
+
+        /// <summary>
+        /// Checks if the target finder has found any targets.
+        /// </summary>
+        /// <returns>True if at least one target was found, otherwise false</returns>
+        public bool HasTarget() => _targets.Count > 0;
+
+        /// <summary>
+        /// Gets the first target from the target finder.
+        /// </summary>
+        /// <returns>The first target from the list of targets, or null if the list doesn't contain any targets</returns>
+        public Damageable GetFirstTarget() => HasTarget() ? _targets[0] : null;
+
+        /// <summary>
+        /// Removes the first target from the target finder.
+        /// </summary>
+        public void RemoveFirstTarget() => _targets.RemoveAt(0);
     }
 }

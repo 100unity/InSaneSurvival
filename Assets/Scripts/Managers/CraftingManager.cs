@@ -1,31 +1,53 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Crafting;
-using Utils;
+using UnityEngine;
 
 namespace Managers
 {
     /// <summary>
-    /// Used for crafting new items with recipes.
+    /// ATM used for storing the recipes
     /// </summary>
     public class CraftingManager : Singleton<CraftingManager>
     {
         /// <summary>
+        /// Crafting stations that limit the crafting of specific items to them.
+        /// </summary>
+        public enum CraftingStation { None, CraftingBench, Fire }
+
+        /// <summary>
+        /// Will be invoked when something related to crafting changes (e.g. <see cref="CurrentCraftingStation"/>).
+        /// </summary>
+        public event CraftingDelegate OnCraftingUpdate;
+
+        public delegate void CraftingDelegate();
+
+        /// <summary>
         /// All recipes in the game
         /// </summary>
-        public List<CraftingRecipe> Recipes => _recipes;
+        [Tooltip("All crafting recipes the player can craft")] [SerializeField]
+        private List<CraftingRecipe> recipes;
 
-        private List<CraftingRecipe> _recipes;
+        /// <summary>
+        /// All recipes in the game
+        /// </summary>
+        public List<CraftingRecipe> Recipes => recipes;
 
-        protected override void Awake()
+        /// <summary>
+        /// The currently used crafting station. Invokes <see cref="OnCraftingUpdate"/>
+        /// </summary>
+        public CraftingStation CurrentCraftingStation
         {
-            base.Awake();
-            GetRecipes();
+            get => _craftingStation;
+            set
+            {
+                _craftingStation = value;
+                OnCraftingUpdate?.Invoke();
+            }
         }
 
         /// <summary>
-        /// Gets all recipes in the project
+        /// The currently used crafting station.
         /// </summary>
-        private void GetRecipes() => _recipes = this.GetAllInstances<CraftingRecipe>().ToList();
+        private CraftingStation _craftingStation;
     }
 }

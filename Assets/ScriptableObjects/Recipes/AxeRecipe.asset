@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neededItems:
   - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
-    amount: 3
+    amount: 2
   - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
     amount: 2
-  createdItems:
-  - item: {fileID: 11400000, guid: 0bb4c8f056c744e1f8dd9416d4742d8c, type: 2}
+  createdItem:
+    item: {fileID: 11400000, guid: b4c5c309ebbae274aa3f6dd850867d62, type: 2}
     amount: 1
+  craftingStation: 0
   recipeName: 

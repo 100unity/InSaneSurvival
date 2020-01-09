@@ -11,7 +11,7 @@ namespace Constants
             public const int DEATH = 2;
         }
 
-        public static class Enemy
+        public static class Utils
         {
             // maxDistance for mapping random points onto the NavMesh
             public const float MAX_NAVMESH_MAPPING_DISTANCE = 1.0f;
@@ -23,7 +23,9 @@ namespace Constants
         public static class Colors
         {
             public static Color White = new Color(1, 1, 1, 1);
-            public static Color Red = new Color(1f, 0.4f, 0.4f);
+            public static Color WhiteFaded = new Color(1, 1, 1, 0.4f);
+            public static Color Red = new Color(1f, 0.4f, 0.4f, 1);
+            public static Color RedFaded = new Color(1f, 0.4f, 0.4f, 0.4f);
         }
 
         public static class Tooltip

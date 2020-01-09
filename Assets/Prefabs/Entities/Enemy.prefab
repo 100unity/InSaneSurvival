@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 1510608199083388101}
   - component: {fileID: 1510608199083388100}
   - component: {fileID: 1510608199083388107}
-  m_Layer: 0
+  - component: {fileID: 4147913038059282168}
+  m_Layer: 19
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,15 +58,12 @@ MonoBehaviour:
     radius: 15
   wanderTimer: 5
   freezeArea: 1
-  moveLayer:
-    serializedVersion: 2
-    m_Bits: 257
   runningSpeed: 4
   isAggressive: 1
-  lookRadius: 8
   escapeRadius: 12
   showEscapeRadius: 1
   targetFinder: {fileID: 6970089841446486794}
+  graphicsRenderer: {fileID: 1510608199636081249}
 --- !u!114 &4583121872170788062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +95,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMarkTime: 0.3
   gameObjectRenderer: {fileID: 1510608199636081249}
+  health: 20
+  regenerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.6353225
+      outSlope: 0.6353225
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.76691514
+    - serializedVersion: 3
+      time: 0.113897085
+      value: 0.11776706
+      inSlope: 0.040928435
+      outSlope: 0.040928435
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15152967
+      outWeight: 0.10490374
+    - serializedVersion: 3
+      time: 0.6002169
+      value: 0.20739487
+      inSlope: 0.20578708
+      outSlope: 0.20578708
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.87283134
+      value: 0.30203694
+      inSlope: 0.5747942
+      outSlope: 0.5747942
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15768656
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.55368423
+      inSlope: 1.9937288
+      outSlope: 1.9937288
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.037566483
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  regenerationProbability: 0.002
+  targetFinder: {fileID: 6970089841446486794}
 --- !u!136 &1510608199083388101
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -149,6 +201,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4147913038059282168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510608199083388104}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218b986b74d7f7949901cc3a1f1bcca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 0}
 --- !u!1 &1510608199636081255
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +261,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510608199636081255}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

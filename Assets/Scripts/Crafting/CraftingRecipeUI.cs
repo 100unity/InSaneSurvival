@@ -1,8 +1,9 @@
 ﻿using Constants;
-using Inventory;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Crafting
 {
@@ -10,6 +11,9 @@ namespace Crafting
     {
         [Tooltip("The name of this recipe")] [SerializeField]
         private TextMeshProUGUI txtTitle;
+
+        [Tooltip("The image of this recipe. Represents the crafted item.")] [SerializeField]
+        private Image imgCraftItem;
 
         [Tooltip("The vertical layout group where the resources will be ordered in")] [SerializeField]
         private VerticalLayoutGroup recipeResourceList;
@@ -24,11 +28,6 @@ namespace Crafting
         private CraftingRecipeResource craftingRecipeResourcePrefab;
 
         /// <summary>
-        /// The crafting UI reference that holds the item handler
-        /// </summary>
-        private CraftingUI _craftingUI;
-
-        /// <summary>
         /// The recipe of this CraftingRecipeUI element
         /// </summary>
         private CraftingRecipe _recipe;
@@ -39,27 +38,40 @@ namespace Crafting
         /// Instantiates all crafting recipe resources for the given recipe
         /// </summary>
         /// <param name="recipe">The recipe of this crafting recipe UI</param>
-        /// <param name="craftingUI">The crafting UI that should hold the correct <see cref="CraftingUI.ItemHandler"/></param>
-        public void InitRecipe(CraftingRecipe recipe, CraftingUI craftingUI)
+        public void InitRecipe(CraftingRecipe recipe)
         {
-            _craftingUI = craftingUI;
             _recipe = recipe;
 
-            txtTitle.SetText(_recipe.CreatedItemName);
-            foreach (CraftingRecipe.ResourceData resourceData in _recipe.NeededItems)
+            if (_recipe.CreatedItem.item.Icon)
+            {
+                txtTitle.gameObject.SetActive(false);
+                imgCraftItem.sprite = _recipe.CreatedItem.item.Icon;
+            }
+            else
+            {
+                imgCraftItem.gameObject.SetActive(false);
+                txtTitle.SetText(_recipe.CreatedItemName);
+            }
+
+            foreach (ItemResourceData resourceData in _recipe.NeededItems)
                 Instantiate(craftingRecipeResourcePrefab, recipeResourceList.transform)
                     .InitResource(resourceData.item.name, resourceData.amount, resourceData.item.Icon);
             craftButton.onClick.RemoveAllListeners();
-            craftButton.onClick.AddListener(() => _recipe.Craft(_craftingUI.ItemHandler));
+            craftButton.onClick.AddListener(() => _recipe.Craft(InventoryManager.Instance.ItemHandler));
 
-            _craftingUI.ItemHandler.ItemsUpdated += (item, amount) => OnItemUpdate();
+            InventoryManager.Instance.ItemHandler.ItemsUpdated += (item, amount) => OnItemUpdate();
         }
 
         /// <summary>
-        /// Invokes <see cref="SetCanCraft"/>
+        /// See <see cref="OnItemUpdate"/>
+        /// </summary>
+        public void UpdateRecipe() => OnItemUpdate();
+
+        /// <summary>
+        /// Checks if this recipe can be crafted. If so makes it white, else red.
         /// </summary>
         private void OnItemUpdate() =>
-            SetCanCraft(_recipe.CanCraft(_craftingUI.ItemHandler));
+            SetCanCraft(_recipe.CanCraft(InventoryManager.Instance.ItemHandler));
 
         /// <summary>
         /// Sets the color of the image to visually show if this recipe can be crafted

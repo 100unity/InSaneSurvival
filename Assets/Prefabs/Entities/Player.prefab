@@ -368,7 +368,6 @@ MonoBehaviour:
   hydration: 100
   sanity: 100
   healMarkTime: 0
-  meshRenderer: {fileID: 6126187403260861676}
 --- !u!114 &8049901093428442674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,7 +413,7 @@ MonoBehaviour:
   rotationTolerance: 10
   clickableLayers:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 524545
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
