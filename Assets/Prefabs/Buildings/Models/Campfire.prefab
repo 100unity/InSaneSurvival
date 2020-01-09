@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingRenderer: {fileID: 7136342084447446894}
   useDistance: 4
+  isAlreadyBuild: 0
   craftingStation: 2
 --- !u!1001 &7136342084445629288
 PrefabInstance:
@@ -54,10 +55,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3125845370026706356}
     m_Modifications:
-    - target: {fileID: 199704, guid: 30b6473f0e558ff4c94e8b60856c8e71, type: 3}
-      propertyPath: m_Name
-      value: Campfire_01
-      objectReference: {fileID: 0}
     - target: {fileID: 450456, guid: 30b6473f0e558ff4c94e8b60856c8e71, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -101,6 +98,14 @@ PrefabInstance:
     - target: {fileID: 450456, guid: 30b6473f0e558ff4c94e8b60856c8e71, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199704, guid: 30b6473f0e558ff4c94e8b60856c8e71, type: 3}
+      propertyPath: m_Name
+      value: Campfire_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 199704, guid: 30b6473f0e558ff4c94e8b60856c8e71, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30b6473f0e558ff4c94e8b60856c8e71, type: 3}

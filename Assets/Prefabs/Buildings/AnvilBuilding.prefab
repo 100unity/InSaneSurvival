@@ -39,11 +39,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1931566429376249256}
     m_Modifications:
-    - target: {fileID: 3200046293866550345, guid: 89fb77e3f6c9c1e40937bcc7ea977619,
-        type: 3}
-      propertyPath: m_Name
-      value: Anvil
-      objectReference: {fileID: 0}
     - target: {fileID: 5237862548912126428, guid: 89fb77e3f6c9c1e40937bcc7ea977619,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -98,6 +93,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200046293866550345, guid: 89fb77e3f6c9c1e40937bcc7ea977619,
+        type: 3}
+      propertyPath: m_Name
+      value: Anvil
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200046293866550345, guid: 89fb77e3f6c9c1e40937bcc7ea977619,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89fb77e3f6c9c1e40937bcc7ea977619, type: 3}

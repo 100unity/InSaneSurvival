@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingRenderer: {fileID: 875177260522936858}
   useDistance: 4
+  isAlreadyBuild: 0
   craftingStation: 1
 --- !u!1001 &875177260521093938
 PrefabInstance:

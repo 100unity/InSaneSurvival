@@ -166,11 +166,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1931566429376249256}
     m_Modifications:
-    - target: {fileID: 6709548761578674293, guid: 818f1ae2359d55d42b2ac094f48acb01,
-        type: 3}
-      propertyPath: m_Name
-      value: Campfire
-      objectReference: {fileID: 0}
     - target: {fileID: 3125845370026706356, guid: 818f1ae2359d55d42b2ac094f48acb01,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -225,6 +220,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709548761578674293, guid: 818f1ae2359d55d42b2ac094f48acb01,
+        type: 3}
+      propertyPath: m_Name
+      value: Campfire
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136342084445693808, guid: 818f1ae2359d55d42b2ac094f48acb01,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 818f1ae2359d55d42b2ac094f48acb01, type: 3}
