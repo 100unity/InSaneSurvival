@@ -3,6 +3,7 @@ using Constants;
 
 namespace UI
 {
+    [RequireComponent(typeof(Collider))]
     public class Tooltip : MonoBehaviour
     {
         [Tooltip("Highlight color when hover over object.")] [SerializeField]
