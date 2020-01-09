@@ -27,7 +27,7 @@ namespace Buildings.BuildingScripts
         /// </summary>
         public override void Interact()
         {
-            if (!PlayerInReach) return;
+            base.Interact();
             DayNightManager.Instance.SetDayTimeWithAnimation(newTime, animationTime);
         }
     }

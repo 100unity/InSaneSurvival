@@ -53,15 +53,10 @@ namespace GameTime
         }
 
         /// <summary>
-        /// Sets the time of the day instantly. Allows values between 0 and 2 (Everything over 1 being the next day).
+        /// Sets the time of the day instantly.
         /// </summary>
-        /// <param name="newTimeOfDay">The new time of the day (0 to 2)</param>
-        public void SetTimeOfDay(float newTimeOfDay)
-        {
-            if (newTimeOfDay >= 1)
-                newTimeOfDay -= 1;
-            timeOfDay = newTimeOfDay;
-        }
+        /// <param name="newTimeOfDay">The new time of the day (0 to 1)</param>
+        public void SetTimeOfDay(float newTimeOfDay) => timeOfDay = newTimeOfDay;
 
         /// <summary>
         /// Manually adds a day. Should be used if the time is set manually.

@@ -72,6 +72,7 @@ namespace Buildings
         /// </summary>
         public virtual void Interact()
         {
+            if (!PlayerInReach) return;
         }
 
         /// <summary>

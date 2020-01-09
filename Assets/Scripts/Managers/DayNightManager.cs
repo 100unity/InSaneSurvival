@@ -58,8 +58,11 @@ namespace Managers
             while (time < animationTime)
             {
                 time += Time.deltaTime;
-                float t = time * (1 / animationTime);
-                SetTimeOfDay(Mathf.Lerp(oldTimeOfDay, newTimeOfDay, animationCurve.Evaluate(t)));
+                float lerpTime = Mathf.Lerp(oldTimeOfDay, newTimeOfDay, animationCurve.Evaluate(time * (1 / animationTime)));
+                // Next day?
+                if (lerpTime > 1)
+                    lerpTime -= 1;
+                SetTimeOfDay(lerpTime);
                 yield return null;
             }
 
