@@ -238,7 +238,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_Name
-      value: Low_Hen_v01
+      value: Graphics
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -299,7 +299,7 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 2c9f1c39052e9409bb66667aa2e98ed7, type: 2}
+      objectReference: {fileID: 9100000, guid: 557df4d08af4345918545f3070df0646, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
 --- !u!4 &6890635537345037210 stripped
