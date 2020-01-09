@@ -33,21 +33,31 @@ namespace Managers
         public List<CraftingRecipe> Recipes => recipes;
 
         /// <summary>
-        /// The currently used crafting station. Invokes <see cref="OnCraftingUpdate"/>
+        /// The currently used crafting station(s). <see cref="CraftingStation.None"/> is always included
         /// </summary>
-        public CraftingStation CurrentCraftingStation
+        private readonly HashSet<CraftingStation> _craftingStations = new HashSet<CraftingStation>
+            {CraftingStation.None};
+
+        public bool HasCraftingStation(CraftingStation craftingStation) => _craftingStations.Contains(craftingStation);
+
+        /// <summary>
+        /// Adds a crafting station to the set. Invokes <see cref="OnCraftingUpdate"/>.
+        /// </summary>
+        /// <param name="craftingStation">The new crafting station</param>
+        public void AddCraftingStation(CraftingStation craftingStation)
         {
-            get => _craftingStation;
-            set
-            {
-                _craftingStation = value;
-                OnCraftingUpdate?.Invoke();
-            }
+            _craftingStations.Add(craftingStation);
+            OnCraftingUpdate?.Invoke();
         }
 
         /// <summary>
-        /// The currently used crafting station.
+        /// Removes a crafting station to the set. Invokes <see cref="OnCraftingUpdate"/>.
         /// </summary>
-        private CraftingStation _craftingStation;
+        /// <param name="craftingStation">The old crafting station (aka to be removed)</param>
+        public void RemoveCraftingStation(CraftingStation craftingStation)
+        {
+            _craftingStations.Remove(craftingStation);
+            OnCraftingUpdate?.Invoke();
+        }
     }
 }

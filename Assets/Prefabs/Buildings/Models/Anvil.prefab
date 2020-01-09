@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5237862548912126428}
-  - component: {fileID: 3638329926104796303}
+  - component: {fileID: 7471014277518033078}
   m_Layer: 0
   m_Name: Anvil
   m_TagString: Untagged
@@ -24,15 +24,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3200046293866550345}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 875177260521187978}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3638329926104796303
+--- !u!114 &7471014277518033078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +41,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3200046293866550345}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e682243de8f77419e453a1520aa5cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e07eb4087314e22a63f8e2b8dd30f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buildingRenderer: {fileID: 875177260522936858}
-  showWithDistanceToPlayer: 5
+  useDistance: 4
   craftingStation: 1
 --- !u!1001 &875177260521093938
 PrefabInstance:
