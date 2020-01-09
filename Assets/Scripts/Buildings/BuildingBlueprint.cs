@@ -131,7 +131,7 @@ namespace Buildings
         {
             building.BuildingRenderer.materials = _oldMats.ToArray();
             building.IsBuild = true;
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         /// <summary>
