@@ -43,6 +43,7 @@ namespace Effects
             _apertureBaseRadius = 100;
             _apertureCurrentRadius = _apertureBaseRadius;
             _isGrowing = true;
+            UpdateFogRadius(100);
         }
     
         private void Update()

@@ -13,6 +13,12 @@ namespace Entity.Player.Sanity
         private AnimationCurve intensityCurve;
 
         [SerializeField]
+        private int saturation;
+
+        [SerializeField]
+        private int contrast;
+
+        [SerializeField]
         private int maxShutterAngle;
 
         [SerializeField]
@@ -34,6 +40,10 @@ namespace Entity.Player.Sanity
         private bool[] _isGrowing;
 
         private PostProcessVolume _postProcessVolume;
+
+        private ColorGrading _colorGrading;
+        private int _currentSaturation;
+        private int _currentContrast;
 
         private MotionBlur _motionBlur;
         private int _baseShutterAngle;
@@ -59,6 +69,7 @@ namespace Entity.Player.Sanity
         {
             _isGrowing = new bool[3];
             _postProcessVolume = GetComponent<PostProcessVolume>();
+            _postProcessVolume.profile.TryGetSettings(out _colorGrading);
             _postProcessVolume.profile.TryGetSettings(out _motionBlur);
             _postProcessVolume.profile.TryGetSettings(out _chromaticAberration);
             _postProcessVolume.profile.TryGetSettings(out _vignette);
@@ -92,9 +103,11 @@ namespace Entity.Player.Sanity
             MaskAll();
 
             // update values in effects
+            _colorGrading.saturation.value = _currentSaturation;
+            _colorGrading.contrast.value = _currentContrast;
+            _motionBlur.shutterAngle.value = _currentShutterAngle;
             _vignette.intensity.value = _currentVignetteIntensity;
             _chromaticAberration.intensity.value = _currentAberrationIntensity;
-            _motionBlur.shutterAngle.value = _currentShutterAngle;
         }
 
         private void ClampAll()
@@ -104,6 +117,8 @@ namespace Entity.Player.Sanity
             if (aberrationPulseIntensity + _aberrationBaseIntensity > 1)
                 aberrationPulseIntensity = 1 - _aberrationBaseIntensity;
             Mathf.Clamp(maxShutterAngle, 0, 360);
+            Mathf.Clamp(saturation, -100, 100);
+            Mathf.Clamp(contrast, -100, 100);
         }
 
         private void PulseAll()
@@ -113,13 +128,16 @@ namespace Entity.Player.Sanity
         }
 
         /// <summary>
-        /// Masks all pulses depending on the sanity level.
+        /// Masks all values depending on the sanity level.
         /// </summary>
         private void MaskAll()
         {
-            _currentVignetteIntensity = _vignetteBaseIntensity + intensityCurve.Evaluate(_sanity / 100f) * _vignettePulse;
-            _currentAberrationIntensity = _aberrationBaseIntensity + intensityCurve.Evaluate(_sanity / 100f) * _aberrationPulse;
-            _currentShutterAngle = (int) (_baseShutterAngle + intensityCurve.Evaluate(_sanity / 100f) * maxShutterAngle);
+            float y = intensityCurve.Evaluate(_sanity / 100f);
+            _currentSaturation = (int)(y * saturation);
+            _currentContrast = (int)(y * contrast);
+            _currentShutterAngle = (int)(_baseShutterAngle + y * maxShutterAngle);
+            _currentVignetteIntensity = _vignetteBaseIntensity + y * _vignettePulse;
+            _currentAberrationIntensity = _aberrationBaseIntensity + y * _aberrationPulse;
         }
 
         private float Pulse(float valueToBePulsed, float pulseFrequency, float pulseIntensity, int isGrowing)

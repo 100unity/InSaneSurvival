@@ -165,8 +165,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  saturation: -55
+  contrast: 60
   maxShutterAngle: 360
-  vignettePulseFrequency: 0.1
+  vignettePulseFrequency: 0.2
   vignettePulseIntensity: 0.4
   aberrationPulseFrequency: 1
   aberrationPulseIntensity: 0.9
