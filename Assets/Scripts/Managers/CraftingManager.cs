@@ -40,8 +40,8 @@ namespace Managers
             get => _craftingStation;
             set
             {
-                OnCraftingUpdate?.Invoke();
                 _craftingStation = value;
+                OnCraftingUpdate?.Invoke();
             }
         }
 

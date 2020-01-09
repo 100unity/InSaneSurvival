@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2821474075205783639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2821474075205783637}
+  - component: {fileID: 2821474075205783636}
+  m_Layer: 0
+  m_Name: TreeBrushBroadLeaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2821474075205783637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2821474075205783639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -63.078762, y: 12.097249, z: -149.87323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2821474075205783636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2821474075205783639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853f86897d7204f40bd9c7c85c1c44ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 1688675782004117360, guid: 08681096974a9ca468891f5df6c81948, type: 3}
+  - {fileID: 4624194913464790254, guid: 80f22184bc1544b01afa15f0a1c5590f, type: 3}
+  - {fileID: 7775394501977847432, guid: 661dac18abd9443438aab516e90d7006, type: 3}
+  - {fileID: 125634679504119005, guid: 1114194c8870d46caa59159d7115b319, type: 3}
+  - {fileID: 1044470142296462833, guid: 0bb15f1f1f2024c98a2c3349f0a00379, type: 3}
+  - {fileID: 2131872609549541261, guid: ca0129cfb62e94cfeb13a1feea18d170, type: 3}
+  - {fileID: 1169487212374476916, guid: c4f0b141bb1426c47bbddca4c2821bde, type: 3}
+  - {fileID: 6482878847694471280, guid: dc2b373e46a18d74f8fa39feeea884cc, type: 3}
+  - {fileID: 9008696042882691246, guid: a4d2b865b93fd9646b8cad9c10a63595, type: 3}
+  - {fileID: 2120474203633566171, guid: 5b8ff74eb1db60f43a3e2d90bfa72b93, type: 3}
+  parentNaming: TreeGroupBroadLeaf
+  scaleXZ:
+    min: -0.1
+    max: 0.1
+  scaleY:
+    min: -0.3
+    max: 0.75
+  justScaleY: 0
+  isTree: 1

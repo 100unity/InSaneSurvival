@@ -7,25 +7,19 @@ namespace Spawner
 {
     public class NPCSpawner : MonoBehaviour
     {
-        [Tooltip("The area NPCs should be spawned in")]
-        [SerializeField]
+        [Tooltip("The area NPCs should be spawned in")] [SerializeField]
         protected Area spawnArea;
 
-        [Tooltip("The maximum NPCs that can be spawned in the area concurrently")]
-        [SerializeField]
+        [Tooltip("The maximum NPCs that can be spawned in the area concurrently")] [SerializeField]
         protected int maximumConcurrentEnemies;
 
-        [Tooltip("The probability to spawn an NPC for each frame")]
-        [SerializeField]
-        [Range(0, 0.1f)]
+        [Tooltip("The probability to spawn an NPC for each frame")] [SerializeField] [Range(0, 0.1f)]
         protected float spawnProbability;
 
-        [Tooltip("The NPC to spawn")]
-        [SerializeField]
+        [Tooltip("The NPC to spawn")] [SerializeField]
         protected EnemyController toSpawn;
 
-        [Tooltip("The main camera")]
-        [SerializeField]
+        [Tooltip("The main camera")] [SerializeField]
         protected Camera mainCamera;
 
         protected Probability _probability;
@@ -79,6 +73,7 @@ namespace Spawner
                 Destroy(spawned.gameObject);
         }
 
+#if UNITY_EDITOR
         /// <summary>
         /// Draws disc and wires to display spawn area.
         /// </summary>
@@ -90,5 +85,6 @@ namespace Spawner
             Gizmos.color = Color.black;
             Gizmos.DrawWireSphere(spawnArea.GetCenterPosition(), spawnArea.radius);
         }
+#endif
     }
 }
