@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using Utils;
 
-namespace Brush
+namespace Editor.Brush
 {
     public class BrushLogic
     {
@@ -77,8 +77,7 @@ namespace Brush
             {
                 name = _parentName + _parentNumber;
                 _parentNumber += 1;
-            }
-            while (GameObject.Find(name));
+            } while (GameObject.Find(name));
 
             GameObject parent = new GameObject(name);
             _parent = parent.transform;
@@ -96,14 +95,17 @@ namespace Brush
         {
             //InitVars();
             _e = Event.current;
-            if (_e.isMouse && _e.button == 1 && _e.type == EventType.MouseDown && _e.modifiers == EventModifiers.Alt && _currentPlaceableObject == null)
+            if (_e.isMouse && _e.button == 1 && _e.type == EventType.MouseDown && _e.modifiers == EventModifiers.Alt &&
+                _currentPlaceableObject == null)
             {
                 _e.Use();
                 if (_parent == null)
                     CreateNewParent();
                 int numberOfPrefabs = _prefabs.Count();
                 GameObject toSpawn = _prefabs[_random.Next(numberOfPrefabs)];
-                _currentPlaceableObject = PrefabUtility.InstantiatePrefab(toSpawn, _parent.transform) as GameObject; // instantiates prefabs, not clones (idk if that's helpful ;)
+                _currentPlaceableObject =
+                    PrefabUtility.InstantiatePrefab(toSpawn,
+                        _parent.transform) as GameObject; // instantiates prefabs, not clones (idk if that's helpful ;)
                 ApplyRandomScale();
             }
 
@@ -123,13 +125,14 @@ namespace Brush
         private void ApplyRandomScale()
         {
             float x = 0;
-            float y = (float)(_random.NextDouble() * (_scaleY.max - _scaleY.min) + _scaleY.min);
+            float y = (float) (_random.NextDouble() * (_scaleY.max - _scaleY.min) + _scaleY.min);
             float z = 0;
             if (!_justScaleY)
             {
-                x = (float)(_random.NextDouble() * (_scaleXZ.max - _scaleXZ.min) + _scaleXZ.min);
-                z = (float)(_random.NextDouble() * (_scaleXZ.max - _scaleXZ.min) + _scaleXZ.min);
+                x = (float) (_random.NextDouble() * (_scaleXZ.max - _scaleXZ.min) + _scaleXZ.min);
+                z = (float) (_random.NextDouble() * (_scaleXZ.max - _scaleXZ.min) + _scaleXZ.min);
             }
+
             _currentPlaceableObject.transform.localScale += new Vector3(x, y, z);
         }
 

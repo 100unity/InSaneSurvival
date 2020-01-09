@@ -66,7 +66,7 @@ namespace UI.Menus
             _isPaused = !_isPaused;
             backgroundDim.SetActive(_isPaused);
             pauseContent.SetActive(_isPaused);
-            if(!_isPaused)
+            if (!_isPaused)
                 optionsContent.SetActive(false);
             Time.timeScale = _isPaused && freezeGameOnPause ? 0 : 1;
             OnPause?.Invoke(_isPaused);
@@ -77,20 +77,8 @@ namespace UI.Menus
         /// </summary>
         private void GoToMainMenu()
         {
+            Time.timeScale = 1;
             SceneManager.LoadScene(Consts.Scene.MAIN_MENU);
-            SceneManager.sceneLoaded += SceneLoadCompleted;
-        }
-
-        /// <summary>
-        /// This will wait until the MainMenuScene is loaded before hiding the PauseMenu
-        /// </summary>
-        /// <param name="scene">The loaded scene</param>
-        /// <param name="mode">The loading mode</param>
-        private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
-        {
-            if (scene.buildIndex != Consts.Scene.MAIN_MENU) return;
-            TogglePause();
-            SceneManager.sceneLoaded -= SceneLoadCompleted;
         }
 
         /// <summary>
