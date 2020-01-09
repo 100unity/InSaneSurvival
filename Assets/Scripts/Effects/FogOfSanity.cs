@@ -14,7 +14,7 @@ namespace Effects
         [SerializeField] [Tooltip("Intensity of the pulse animation")]
         private float pulseIntensity;
     
-        [SerializeField] [Tooltip("Determines how fast pulse animation is")]
+        [SerializeField] [Tooltip("Determines how fast pulse animation is. (Although called frequency, the smaller the value the faster it pulses)")]
         private float pulseFrequency;
 
         [SerializeField][Tooltip("Determines the the center area size of the sanity texture")]
