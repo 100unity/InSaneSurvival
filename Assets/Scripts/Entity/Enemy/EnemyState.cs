@@ -4,6 +4,7 @@ using Utils;
 
 namespace Entity.Enemy {
     
+    [RequireComponent(typeof(AttackLogic))]
     public class EnemyState : Damageable
     {
         [Tooltip("0 - dead")]
@@ -26,10 +27,12 @@ namespace Entity.Enemy {
         private readonly Probability _probability = new Probability();
         private readonly System.Random _random = new System.Random();
         private int _maxHealth;
+        private AttackLogic _attackLogic;
 
         private void Awake()
         {
             _maxHealth = health;
+            _attackLogic = GetComponent<AttackLogic>();
         }
 
         private void Update()
@@ -41,6 +44,7 @@ namespace Entity.Enemy {
         public override void Die()
         {
             base.Die();
+            _attackLogic.enabled = false;
             Destroy(gameObject, 5f);
         }
 
