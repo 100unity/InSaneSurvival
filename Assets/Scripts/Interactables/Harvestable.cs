@@ -26,8 +26,11 @@ namespace Interactables
         [Tooltip("Time in seconds needed until this resource is allowed to respawn again.")]
         [SerializeField] 
         private float respawnTime;
-        
-        private double _respawnTimePassed;
+
+        [SerializeField]
+        private bool isRespawning;
+        [SerializeField]
+        private double respawnTimePassed;
 
         [Tooltip("The GameObject that is supposed to replace this resource while it respawns.")]
         [SerializeField] 
@@ -56,19 +59,16 @@ namespace Interactables
             float numberToUse = 0;
             float x = _ownCollider.size.x;
             float z = _ownCollider.size.z;
-            float scale;
             float offset = 1.5f;
             if (x > z)
             {
-                scale = transform.localScale.x;
                 numberToUse = x;
             }
             else
             {
-                scale = transform.localScale.z;
                 numberToUse = z;
             }
-            SetRadius((numberToUse * offset) * scale); 
+            SetRadius((numberToUse * offset)); 
             
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
             
@@ -77,6 +77,8 @@ namespace Interactables
             {
                 _itemsWithQuantities.Add(drops[i], quantities[i]);
             }
+            // if item was respawning before save, keep it respawning
+            if(isRespawning) CoroutineManager.Instance.WaitForOneFrame(() => StartCoroutine(Respawn())); 
         }
 
         /// <summary>
@@ -103,9 +105,6 @@ namespace Interactables
                 if (_gatherTimePassed >= gatherTime)
                 {
                     AddItems();
-                    _ownMeshRenderer.enabled = false; 
-                    _ownCollider.enabled = false; 
-                    _replacementMeshRenderer.enabled = true;
                     CoroutineManager.Instance.WaitForOneFrame(() => StartCoroutine(Respawn())); 
 
                 }
@@ -131,14 +130,17 @@ namespace Interactables
         /// </summary>
         private IEnumerator Respawn()
         {
-            
-            while (_respawnTimePassed < respawnTime || _ownMeshRenderer.InFrustum(mainCam))
+            isRespawning = true;
+            _ownMeshRenderer.enabled = false; 
+            _ownCollider.enabled = false; 
+            _replacementMeshRenderer.enabled = true;
+            while (respawnTimePassed < respawnTime || _ownMeshRenderer.InFrustum(mainCam))
             {
-                _respawnTimePassed += Time.deltaTime;
+                respawnTimePassed += Time.deltaTime;
                 yield return null;
             }
-
-            _respawnTimePassed = 0;
+            isRespawning = false;
+            respawnTimePassed = 0;
 
             _ownMeshRenderer.enabled = true;
             _ownCollider.enabled = true;
