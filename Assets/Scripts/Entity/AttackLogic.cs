@@ -11,7 +11,7 @@ namespace Entity
         private int damage;
 
         [Tooltip("The maximum distance between attacker and target in order to deal damage")] [SerializeField]
-        private int attackRange;
+        private float attackRange;
 
         [Tooltip("The time needed for an attack in seconds")] [SerializeField]
         private double attackTime;

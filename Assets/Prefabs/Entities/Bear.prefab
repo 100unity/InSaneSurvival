@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  attackRange: 3
+  attackRange: 3.7
   attackTime: 1.2
   hitRotationTolerance: 30
   resetAfterHit: 0
@@ -159,7 +159,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1510608199083388104}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.6
+  m_Radius: 2.41
   m_Speed: 2
   m_Acceleration: 15
   avoidancePriority: 50
@@ -168,7 +168,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.44
+  m_Height: 2.13
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -212,8 +212,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.93, y: 1.46, z: 2.52}
-  m_Center: {x: 0, y: 0.7, z: 0.32}
+  m_Size: {x: 1.38, y: 2.17, z: 3.77}
+  m_Center: {x: 0, y: 1.04, z: 0.48}
 --- !u!1 &3435760118962587146
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 2403601846276658031}
   - component: {fileID: 6970089841446486794}
   - component: {fileID: 3504930466647188241}
-  m_Layer: 25
+  m_Layer: 2
   m_Name: TargetFinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,10 +285,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Graphics
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 6731441f7e464422baf7f811d2ddf7de, type: 2}
     - target: {fileID: 400064, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -345,6 +341,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6731441f7e464422baf7f811d2ddf7de, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
 --- !u!4 &8351342211080173289 stripped

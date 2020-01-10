@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  attackRange: 3
+  attackRange: 3.7
   attackTime: 1.1
   hitRotationTolerance: 40
   resetAfterHit: 1
