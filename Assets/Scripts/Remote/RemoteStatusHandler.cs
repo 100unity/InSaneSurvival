@@ -10,6 +10,8 @@ namespace Remote
     {
         public delegate void PlayerStateChanged(int newValue);
 
+        public delegate void GameTimeChanged(float newTime);
+
         private TcpClient _client;
         private NetworkStream _stream;
 
@@ -21,6 +23,7 @@ namespace Remote
         public static event PlayerStateChanged OnPlayerSaturationRemoteUpdate;
         public static event PlayerStateChanged OnPlayerHydrationRemoteUpdate;
         public static event PlayerStateChanged OnPlayerSanityRemoteUpdate;
+        public static event GameTimeChanged OnGameTimeRemoteUpdate;
 
         private void OnEnable()
         {
@@ -112,6 +115,8 @@ namespace Remote
                         break;
                     case "LOAD":
                         SaveManager.Instance.Load(parameters[1]);
+                        break;
+                    case "TIME": OnGameTimeRemoteUpdate?.Invoke(float.Parse(parameters[1]));
                         break;
                 }
                     

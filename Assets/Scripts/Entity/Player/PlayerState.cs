@@ -47,10 +47,10 @@ namespace Entity.Player
         {
             base.Awake();
             // send event on initial values
-            OnPlayerHealthUpdate?.Invoke(health);
-            OnPlayerSaturationUpdate?.Invoke(saturation);
-            OnPlayerHydrationUpdate?.Invoke(hydration);
-            OnPlayerSanityUpdate?.Invoke(sanity);
+            //OnPlayerHealthUpdate?.Invoke(health);
+            //OnPlayerSaturationUpdate?.Invoke(saturation);
+            //OnPlayerHydrationUpdate?.Invoke(hydration);
+            //OnPlayerSanityUpdate?.Invoke(sanity);
             // ------------
             _healMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.magenta};
         }

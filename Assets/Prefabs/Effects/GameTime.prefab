@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf33aad4dc96e454787794d7d4539930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayLength: 24
+  dayLength: 8
   yearLength: 10
   timeOfDay: 0.5
   timeCurve:
@@ -226,7 +226,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  sunTilt: 30
+  tilt: 0
 --- !u!1 &1129089693592033672
 GameObject:
   m_ObjectHideFlags: 0

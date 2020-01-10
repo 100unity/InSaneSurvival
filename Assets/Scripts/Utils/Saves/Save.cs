@@ -27,8 +27,8 @@ namespace Utils.Saves
         public List<Item> itemsNew;
         
         //world state data
-        public int timeOfDay;
-        public string weather;
+        public float timeOfDay;
+        public int dayNumber;
         
         //world object data
 
@@ -45,6 +45,12 @@ namespace Utils.Saves
             playerSaturation = saturation;
 
             playerPosition = pos;
+        }
+
+        public void SetWorldState(float time, int dayNumber)
+        {
+            timeOfDay = time;
+            this.dayNumber = dayNumber;
         }
 
         public void SetInventory(List<Item> itemList) => this.items = itemList;

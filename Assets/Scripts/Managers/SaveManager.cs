@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Entity.Player;
+using GameTime;
 using Inventory;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,6 +29,10 @@ namespace Managers
 
                 //get a json-able list of items in the player's inventory
                 List<Item> inventoryData = inventoryController.GetItems();
+
+                GameObject gameTime = GameObject.Find("GameTime");
+                float time = gameTime.GetComponent<Clock>().TimeOfDay;
+                int daynumber = gameTime.GetComponent<Clock>().Days;
                 
                 /*List<Item> inventoryDataNew = new List<Item>();
                 foreach (var item in inventoryData)
@@ -39,6 +44,7 @@ namespace Managers
                 Save save = new Save();
 
                 save.SetPlayerState(playerPosition, state.GetHealth(), state.GetSaturation(), state.GetHydration(), state.GetSanity());
+                save.SetWorldState(time, daynumber);
                 save.SetInventory(inventoryData);
                 //save.SetInventoryNew(inventoryDataNew);
 
@@ -62,6 +68,7 @@ namespace Managers
                 // get game components
                 GameObject player = PlayerManager.Instance.GetPlayer();
                 InventoryController inventoryController = player.GetComponentInChildren<InventoryController>();
+                GameObject gameTime = GameObject.Find("GameTime");
 
                 // set player position
                 player.GetComponent<NavMeshAgent>().Warp(save.playerPosition);
@@ -74,6 +81,9 @@ namespace Managers
                 state.SetSaturation(save.playerSaturation);
                 
                 inventoryController.SetItems(save.items);
+
+                gameTime.GetComponent<Clock>().SetTime(save.timeOfDay);
+                gameTime.GetComponent<Clock>().SetDayNumber(save.dayNumber);
                 
                 Debug.Log("save recreated");
             }
