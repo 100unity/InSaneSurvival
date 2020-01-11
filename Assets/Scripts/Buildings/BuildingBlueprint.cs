@@ -64,7 +64,7 @@ namespace Buildings
         public void ActivateBuilding()
         {
             building.BuildingRenderer.materials = _oldMats.ToArray();
-            building.IsBuild = true;
+            building.Build();
         }
 
         /// <summary>

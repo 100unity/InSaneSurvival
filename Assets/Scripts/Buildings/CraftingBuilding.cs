@@ -19,7 +19,7 @@ namespace Buildings
         {
             base.Update();
 
-            if (!IsBuild) return;
+            if (!IsBuilt) return;
 
             if (PlayerInReach)
                 CraftingManager.Instance.AddCraftingStation(craftingStation);

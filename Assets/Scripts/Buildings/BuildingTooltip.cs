@@ -25,7 +25,7 @@ namespace Buildings
 
         protected override void Update()
         {
-            if (!building.IsBuild)
+            if (!building.IsBuilt)
             {
                 tooltipContent.SetActive(false);
                 return;

@@ -19,7 +19,7 @@ namespace Buildings
         [Tooltip("Whether this building is build from the start or need to be build first\n" +
                  "Make sure to add a BuildingBlueprint if false")]
         [SerializeField]
-        private bool isAlreadyBuild;
+        private bool isAlreadyBuilt;
 
         public Renderer BuildingRenderer => buildingRenderer;
 
@@ -31,23 +31,10 @@ namespace Buildings
         /// <summary>
         /// Whether the building is build or not. Invokes <see cref="OnBuild"/>
         /// </summary>
-        public bool IsBuild
-        {
-            get => _isBuild;
-            set
-            {
-                _isBuild = value;
-                OnBuild();
-            }
-        }
-
-        /// <summary>
-        /// Whether the building is build or not.
-        /// </summary>
-        private bool _isBuild;
+        public bool IsBuilt { get; private set; }
 
 
-        private void Awake() => _isBuild = isAlreadyBuild;
+        private void Awake() => IsBuilt = isAlreadyBuilt;
 
         /// <summary>
         /// Updates <see cref="PlayerInReach"/>.
@@ -61,6 +48,12 @@ namespace Buildings
         public virtual void Interact()
         {
             if (!PlayerInReach) return;
+        }
+
+        public void Build()
+        {
+            IsBuilt = true;
+            OnBuild();
         }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace Buildings
                 campsiteModel.SetActive(false);
                 foreach (BuildingBlueprint blueprint in buildingBlueprints)
                 {
-                    if (blueprint.Building.IsBuild)
+                    if (blueprint.Building.IsBuilt)
                         blueprint.ShowBuilding();
                     else
                         blueprint.ShowBlueprint();
@@ -63,7 +63,7 @@ namespace Buildings
             campsiteModel.SetActive(false);
             foreach (BuildingBlueprint blueprint in buildingBlueprints)
             {
-                if (blueprint.Building.IsBuild)
+                if (blueprint.Building.IsBuilt)
                     blueprint.ShowBuilding();
                 else
                     blueprint.ShowBlueprint();
