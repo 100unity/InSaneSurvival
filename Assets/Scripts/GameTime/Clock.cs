@@ -6,14 +6,15 @@ namespace GameTime
     {
         public delegate void DayTimeEvent();
 
-        [SerializeField][Tooltip("Day length in minutes")]
+        [SerializeField] [Tooltip("Day length in minutes")]
         private float dayLength;
-    
-        [SerializeField][Tooltip("Year length in days")]
+
+        [SerializeField] [Tooltip("Year length in days")]
         private int yearLength;
 
         [SerializeField] [Tooltip("Current time")] [Range(0f, 1f)]
         private float timeOfDay;
+
         public float TimeOfDay => timeOfDay;
         
         private bool _isNight;
@@ -27,8 +28,9 @@ namespace GameTime
         private float _timeScale;
 
         private float _baseTickRate;
-        
-        [SerializeField][Tooltip("Controls timeScale so certain time periods (night) can pass faster than others (day)")]
+
+        [SerializeField]
+        [Tooltip("Controls timeScale so certain time periods (night) can pass faster than others (day)")]
         private AnimationCurve timeCurve;
 
         private float _timeCurveNormalization;
@@ -49,6 +51,17 @@ namespace GameTime
             UpdateTime();
             InvokeSunRiseAndSunSet();
         }
+
+        /// <summary>
+        /// Sets the time of the day instantly.
+        /// </summary>
+        /// <param name="newTimeOfDay">The new time of the day (0 to 1)</param>
+        public void SetTimeOfDay(float newTimeOfDay) => timeOfDay = newTimeOfDay;
+
+        /// <summary>
+        /// Manually adds a day. Should be used if the time is set manually.
+        /// </summary>
+        public void AddOneDay() => _days++;
 
         /// <summary>
         /// Updates the current timeScale; Varies depending on the current time of day (=> timeCurve)

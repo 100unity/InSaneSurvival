@@ -45,10 +45,8 @@ namespace Crafting
         /// <returns>Whether all needed items are present</returns>
         public bool CanCraft()
         {
-            return neededItems.All(neededItem =>
-                       InventoryManager.Instance.ItemHandler.ContainsItem(neededItem.item, neededItem.amount)) &&
-                   (CraftingManager.Instance.CurrentCraftingStation == craftingStation ||
-                    craftingStation == CraftingManager.CraftingStation.None);
+            return neededItems.All(neededItem => itemHandler.ContainsItem(neededItem.item, neededItem.amount)) &&
+                   (CraftingManager.Instance.HasCraftingStation(craftingStation));
         }
 
         /// <summary>

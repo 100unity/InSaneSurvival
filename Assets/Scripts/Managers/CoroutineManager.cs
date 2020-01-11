@@ -1,17 +1,24 @@
 ﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Managers
 {
     public class CoroutineManager : Singleton<CoroutineManager>
     {
-        public void WaitForOneFrame(UnityAction onFinish)
+        /// <summary>
+        /// Waits the given time, then executes the given UnityAction.
+        /// </summary>
+        /// <param name="time">Time to wait</param>
+        /// 
+        /// <param name="onFinish">Action to be executed after one frame</param>
+        public void WaitForSeconds(float time, UnityAction onFinish)
         {
-            StartCoroutine(WaitFrame());
+            StartCoroutine(WaitSeconds());
 
-            IEnumerator WaitFrame()
+            IEnumerator WaitSeconds()
             {
-                yield return null;
+                yield return new WaitForSeconds(time);
                 onFinish?.Invoke();
             }
         }
