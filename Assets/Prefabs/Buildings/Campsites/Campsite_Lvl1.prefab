@@ -538,6 +538,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_DustCloud
       objectReference: {fileID: 0}
+    - target: {fileID: 859927871462116261, guid: 60a4d333eb1aded4d84961fb474430c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7036165937014742770, guid: 60a4d333eb1aded4d84961fb474430c9,
         type: 3}
       propertyPath: m_LocalPosition.x
