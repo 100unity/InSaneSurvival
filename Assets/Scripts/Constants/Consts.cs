@@ -36,5 +36,18 @@ namespace Constants
             // Color of the text shadow
             public static Color TOOLTIP_SHADOW_COLOR = new Color(0.1f, 0.1f, 0.1f);
         }
+
+        public static class Animation
+        {
+            public const string ATTACK_TRIGGER = "attack";
+            public const string HIT_TRIGGER = "hit";
+            public const string DIE_TRIGGER = "die";
+            public const string INTERACT_TRIGGER = "interact";
+            
+            public const string SLEEP_BOOL = "isSleeping";
+            public const string OPEN_BOOL = "open";
+
+            public const string MOVEMENT_SPEED_FLOAT = "movementSpeed";
+        }
     }
 }
