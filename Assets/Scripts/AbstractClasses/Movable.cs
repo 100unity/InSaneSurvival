@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Constants;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace AbstractClasses
@@ -14,13 +15,15 @@ namespace AbstractClasses
         [SerializeField]
         private int rotationTolerance;
 
-
+        [Tooltip("The animator that should be used for movement animations")]
+        [SerializeField] private Animator animator;
+        
         protected NavMeshAgent NavMeshAgent;
+        private static readonly int MovementSpeed = Animator.StringToHash(Consts.Animation.MOVEMENT_SPEED_FLOAT);
 
-        protected virtual void Awake()
-        {
-            NavMeshAgent = GetComponent<NavMeshAgent>();
-        }
+        protected virtual void Awake() => NavMeshAgent = GetComponent<NavMeshAgent>();
+
+        protected virtual void Update() => animator.SetFloat(MovementSpeed, NavMeshAgent.velocity.magnitude);
 
         /// <summary>
         /// Faces the target. Returns true if facing the target.
