@@ -31,6 +31,7 @@ namespace Inventory
         {
             items.Add(item);
             ItemAdded?.Invoke(item);
+            ItemsUpdated?.Invoke();
         }
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace Inventory
         {
             items.Remove(item);
             ItemRemoved?.Invoke(item);
+            ItemsUpdated?.Invoke();
         }
 
         /// <summary>

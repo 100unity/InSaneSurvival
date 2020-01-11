@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Interfaces;
-using Managers;
 using UnityEngine;
 using Utils;
 
@@ -68,16 +65,6 @@ namespace Buildings
         {
             building.BuildingRenderer.materials = _oldMats.ToArray();
             building.Build();
-            Destroy(gameObject);
-        }
-
-        /// <summary>
-        /// Refreshes the buildButton and the resources
-        /// </summary>
-        private void ItemsUpdated()
-        {
-            buildButton.gameObject.SetActive(CanBuild(InventoryManager.Instance.ItemHandler));
-            _resources.ForEach(resource => resource.Refresh());
         }
 
         /// <summary>
