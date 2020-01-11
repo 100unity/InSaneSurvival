@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Constants;
+using UnityEngine;
 
 namespace AbstractClasses
 {
@@ -8,8 +9,8 @@ namespace AbstractClasses
         [SerializeField]
         private Animator animator;
 
-        private static readonly int HitTrigger = Animator.StringToHash("hit");
-        private static readonly int DieTrigger = Animator.StringToHash("die");
+        private static readonly int HitTrigger = Animator.StringToHash(Consts.Animation.HIT_TRIGGER);
+        private static readonly int DieTrigger = Animator.StringToHash(Consts.Animation.DIE_TRIGGER);
 
         /// <summary>
         /// Marks the player as hit after being hit.

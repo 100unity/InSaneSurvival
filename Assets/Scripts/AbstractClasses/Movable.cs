@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Constants;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace AbstractClasses
@@ -18,7 +19,7 @@ namespace AbstractClasses
         [SerializeField] private Animator animator;
         
         protected NavMeshAgent NavMeshAgent;
-        private static readonly int MovementSpeed = Animator.StringToHash("movementSpeed");
+        private static readonly int MovementSpeed = Animator.StringToHash(Consts.Animation.MOVEMENT_SPEED_FLOAT);
 
         protected virtual void Awake() => NavMeshAgent = GetComponent<NavMeshAgent>();
 
