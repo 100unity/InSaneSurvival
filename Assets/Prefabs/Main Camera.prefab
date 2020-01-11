@@ -169,7 +169,7 @@ MonoBehaviour:
   contrast: 60
   maxShutterAngle: 360
   vignettePulseFrequency: 0.2
-  vignettePulseIntensity: 0.4
+  vignettePulseIntensity: 0.5
   aberrationPulseFrequency: 1
   aberrationPulseIntensity: 0.9
 --- !u!1 &8484758891574652329

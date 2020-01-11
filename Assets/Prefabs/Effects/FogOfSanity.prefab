@@ -47,7 +47,7 @@ MonoBehaviour:
   fogOfSanityMesh: {fileID: 6112913263723783040}
   player: {fileID: 0}
   pulseIntensity: 5
-  pulseFrequency: 0.6
+  pulseDelay: 0.6
   apertureRadiusCurve:
     serializedVersion: 2
     m_Curve:
@@ -103,8 +103,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0012779236
-      value: 0.14959717
+      time: -0.000118255615
+      value: 0.024780273
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -112,10 +112,10 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.25382996
-      value: 0.23277685
-      inSlope: 0.66637516
-      outSlope: 0.66637516
+      time: 0.30142212
+      value: 0.08525488
+      inSlope: 0.4831276
+      outSlope: 0.4831276
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
@@ -146,7 +146,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0.0006571803
-      value: 0.19839478
+      value: 0.117492676
       inSlope: 0.85653836
       outSlope: 0.85653836
       tangentMode: 0
@@ -154,8 +154,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.08527297
     - serializedVersion: 3
-      time: 0.4255876
-      value: 0.5511719
+      time: 0.4271745
+      value: 0.46396792
       inSlope: 2.751622
       outSlope: 2.751622
       tangentMode: 0
