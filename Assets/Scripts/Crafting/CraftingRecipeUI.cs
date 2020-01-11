@@ -57,9 +57,9 @@ namespace Crafting
                 Instantiate(craftingRecipeResourcePrefab, recipeResourceList.transform)
                     .InitResource(resourceData.item.name, resourceData.amount, resourceData.item.Icon);
             craftButton.onClick.RemoveAllListeners();
-            craftButton.onClick.AddListener(() => _recipe.Craft(InventoryManager.Instance.ItemHandler));
+            craftButton.onClick.AddListener(() => _recipe.Craft());
 
-            InventoryManager.Instance.ItemHandler.ItemsUpdated += (item, amount) => OnItemUpdate();
+            InventoryManager.Instance.ItemHandler.ItemsUpdated += OnItemUpdate;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Crafting
         /// Checks if this recipe can be crafted. If so makes it white, else red.
         /// </summary>
         private void OnItemUpdate() =>
-            SetCanCraft(_recipe.CanCraft(InventoryManager.Instance.ItemHandler));
+            SetCanCraft(_recipe.CanCraft());
 
         /// <summary>
         /// Sets the color of the image to visually show if this recipe can be crafted

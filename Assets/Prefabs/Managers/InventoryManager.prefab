@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInventory: {fileID: 0}
+  inventorySlotPrefab: {fileID: 6127602990466313688, guid: f154bcedd19afd7439a255f14f018c69,
+    type: 3}
+  numberOfInventorySlots: 20

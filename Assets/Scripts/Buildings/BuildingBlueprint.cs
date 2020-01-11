@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Interfaces;
-using Inventory;
 using Managers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -137,7 +136,7 @@ namespace Buildings
         /// <summary>
         /// Refreshes the buildButton and the resources
         /// </summary>
-        private void ItemsUpdated(Item item, int amount)
+        private void ItemsUpdated()
         {
             buildButton.gameObject.SetActive(CanBuild(InventoryManager.Instance.ItemHandler));
             _resources.ForEach(resource => resource.Refresh());
