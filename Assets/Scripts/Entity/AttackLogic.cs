@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using AbstractClasses;
+using Constants;
 using Managers;
 
 namespace Entity
@@ -37,7 +38,7 @@ namespace Entity
         private float _timer;
         private Damageable _target;
         private float _distanceToTarget;
-        private static readonly int AttackTrigger = Animator.StringToHash("attack");
+        private static readonly int AttackTrigger = Animator.StringToHash(Consts.Animation.ATTACK_TRIGGER);
 
         private void Awake()
         {
