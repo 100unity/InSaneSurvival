@@ -49,7 +49,7 @@ namespace UI
         /// The amount of this item
         /// </summary>
         private int _count;
-        
+
         /// <summary>
         /// Checks if the item is visually equipped
         /// </summary>
@@ -127,7 +127,7 @@ namespace UI
                 !otherStackable.ItemButton.CanAddOne() || !CanAddOne())
                 return true;
             // If not the same, skip
-            if (!Item == otherStackable.ItemButton.Item)
+            if (Item != otherStackable.ItemButton.Item)
                 return true;
 
             int freeSpace = otherStackable.ItemButton.GetFreeSpace();

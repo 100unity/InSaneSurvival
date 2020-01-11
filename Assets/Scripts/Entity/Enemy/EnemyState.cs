@@ -1,11 +1,10 @@
 ﻿using AbstractClasses;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
 namespace Entity.Enemy {
     
+    [RequireComponent(typeof(AttackLogic))]
     public class EnemyState : Damageable
     {
         [Tooltip("0 - dead")]
@@ -25,29 +24,28 @@ namespace Entity.Enemy {
         [SerializeField]
         private TargetFinder targetFinder;
 
-
-        private Probability _probability = new Probability();
-        private System.Random _random = new System.Random();
+        private readonly Probability _probability = new Probability();
+        private readonly System.Random _random = new System.Random();
         private int _maxHealth;
+        private AttackLogic _attackLogic;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             _maxHealth = health;
+            _attackLogic = GetComponent<AttackLogic>();
         }
 
-        protected override void Update()
+        private void Update()
         {
-            base.Update();
             if (!targetFinder.HasTarget() && health < _maxHealth)
-            {
                 Regenerate();
-            }
         }
         
         public override void Die()
         {
-            Destroy(gameObject);
+            base.Die();
+            _attackLogic.enabled = false;
+            Destroy(gameObject, 5f);
         }
 
         public override void Hit(int damage)

@@ -16,4 +16,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: c6dc88592953a2f4f9445a4fd0decc93, type: 3}
   maxStackSize: 1
   equipableAbility: 0
-  damageBoost: 3
+  damageBoost: 5
