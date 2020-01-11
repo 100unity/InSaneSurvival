@@ -80,8 +80,10 @@ namespace Entity.Enemy
         /// Moves around randomly in the defined wander area at a defined frequency and checks for an attackable 
         /// target near (which is the player for now). If the player is near, starts chasing (and attacking) it until the aggro is lost.
         /// </summary>
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+            
             if (!_isChasing)
                 Wander();
 
