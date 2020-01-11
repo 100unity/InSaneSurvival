@@ -57,7 +57,7 @@ MonoBehaviour:
   wanderArea:
     center: {fileID: 1510608199083388096}
     radius: 15
-  wanderTimer: 5
+  wanderTimer: 20
   freezeArea: 1
   runningSpeed: 4
   isAggressive: 1
