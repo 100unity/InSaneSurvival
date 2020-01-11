@@ -156,10 +156,10 @@ MonoBehaviour:
     type: 3}
   cameraRotationSpeed: 0.3
   invertRotation: 1
-  cameraDistance: {x: 15, y: 20}
+  cameraDistance: {x: 7, y: 3}
   cameraDistanceRange:
-    min: 10
-    max: 20
+    min: 3
+    max: 10
   inventoryUI: {fileID: 240218050177758290}
   craftingUI: {fileID: 725042129556747380}
 --- !u!195 &6126187404098910138
