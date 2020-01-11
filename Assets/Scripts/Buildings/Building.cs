@@ -26,7 +26,7 @@ namespace Buildings
         /// <summary>
         /// Whether the player is in reach of this building.
         /// </summary>
-        public bool PlayerInReach { get; private set; }
+        protected bool PlayerInReach { get; private set; }
 
         /// <summary>
         /// Whether the building is build or not. Invokes <see cref="OnBuild"/>

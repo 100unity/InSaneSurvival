@@ -6,27 +6,34 @@ namespace Buildings
 {
     public class CampsiteTooltip : ObjectTooltip
     {
-        [Header("Campsite-Tooltip")] [SerializeField]
+        [Header("Campsite-Tooltip")] [Tooltip("Button that unlocks the campsite")] [SerializeField]
         private Button btnUnlock;
 
-        [SerializeField] private Campsite campsite;
+        [Tooltip("Campsite reference. used for unlocking the buildings")] [SerializeField]
+        private Campsite campsite;
 
-
+        /// <summary>
+        /// Check if already unlocked, else setup button.
+        /// </summary>
         protected override void Awake()
         {
-            base.Awake();
-            // If already unlocked disable this.
             if (campsite.IsUnlocked)
             {
                 gameObject.SetActive(false);
                 return;
             }
 
-            btnUnlock.onClick.AddListener(() =>
-            {
-                campsite.UnlockBuildingBlueprints();
-                gameObject.SetActive(false);
-            });
+            base.Awake();
+            btnUnlock.onClick.AddListener(campsite.UnlockBuildingBlueprints);
         }
+
+        private void OnEnable() => campsite.OnUnlock += OnUnlock;
+
+        private void OnDisable() => campsite.OnUnlock -= OnUnlock;
+
+        /// <summary>
+        /// Simply deactivate this.
+        /// </summary>
+        private void OnUnlock() => gameObject.SetActive(false);
     }
 }

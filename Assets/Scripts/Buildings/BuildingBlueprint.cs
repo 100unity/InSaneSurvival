@@ -54,7 +54,7 @@ namespace Buildings
 
         public void ShowBuilding()
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
             ActivateBuilding();
         }
 

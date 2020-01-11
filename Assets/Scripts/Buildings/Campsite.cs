@@ -6,16 +6,43 @@ namespace Buildings
 {
     public class Campsite : MonoBehaviour
     {
-        [Header("Campsite")] [SerializeField] private List<BuildingBlueprint> buildingBlueprints;
+        [Header("Campsite")] [Tooltip("All building blueprints of this campsite")] [SerializeField]
+        private List<BuildingBlueprint> buildingBlueprints;
 
-        [SerializeField] private GameObject campsiteModel;
-        [SerializeField] private ParticleSystem unlockPS;
-        [SerializeField] private float unlockBuildingTimer;
+        [Tooltip("The model of the campsite. Used to hide it after unlocking")] [SerializeField]
+        private GameObject campsiteModel;
 
-        public bool IsUnlocked => isUnlocked;
+        [Tooltip("The particle system for unlocking this campsite")] [SerializeField]
+        private ParticleSystem unlockPS;
 
+        [Tooltip("Delay after which the blueprints appear. Should be synced with the particle system")] [SerializeField]
+        private float unlockBuildingTimer;
+
+        /// <summary>
+        /// Whether this campsite is already unlocked.
+        /// </summary>
+        public bool IsUnlocked
+        {
+            get => isUnlocked;
+            set
+            {
+                isUnlocked = value;
+                OnUnlock?.Invoke();
+            }
+        }
+
+        public event CampsiteStatus OnUnlock;
+
+        public delegate void CampsiteStatus();
+
+        /// <summary>
+        /// Whether this campsite is already unlocked. Used for json.
+        /// </summary>
         [SerializeField] [HideInInspector] private bool isUnlocked;
 
+        /// <summary>
+        /// Unlocks blueprints and shows the particle system.
+        /// </summary>
         public void UnlockBuildingBlueprints()
         {
             isUnlocked = true;
@@ -31,6 +58,22 @@ namespace Buildings
                         blueprint.ShowBlueprint();
                 }
             });
+        }
+
+        /// <summary>
+        /// Unlocks the blueprints instantly.
+        /// </summary>
+        public void UnlockBuildingBlueprintsInstantly()
+        {
+            isUnlocked = true;
+            campsiteModel.SetActive(false);
+            foreach (BuildingBlueprint blueprint in buildingBlueprints)
+            {
+                if (blueprint.Building.IsBuild)
+                    blueprint.ShowBuilding();
+                else
+                    blueprint.ShowBlueprint();
+            }
         }
     }
 }

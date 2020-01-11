@@ -48,7 +48,7 @@ namespace Managers
             float time = 0;
             float oldTimeOfDay = clock.TimeOfDay;
 
-            // Used for going to an earlier time e.g. from 0.8 to 0.3
+            // Used for going to the next day e.g. from 0.8 to 0.3
             if (newTimeOfDay < oldTimeOfDay)
             {
                 newTimeOfDay += 1;
@@ -58,7 +58,8 @@ namespace Managers
             while (time < animationTime)
             {
                 time += Time.deltaTime;
-                float lerpTime = Mathf.Lerp(oldTimeOfDay, newTimeOfDay, animationCurve.Evaluate(time * (1 / animationTime)));
+                float lerpTime = Mathf.Lerp(oldTimeOfDay, newTimeOfDay,
+                    animationCurve.Evaluate(time * (1 / animationTime)));
                 // Next day?
                 if (lerpTime > 1)
                     lerpTime -= 1;
