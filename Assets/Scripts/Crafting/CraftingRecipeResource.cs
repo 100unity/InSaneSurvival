@@ -20,8 +20,8 @@ namespace Crafting
         /// <param name="resourceSprite">The sprite for this resource</param>
         public void InitResource(string resourceName, int amount, Sprite resourceSprite)
         {
-            string amountText = amount > 1 ? $" x{amount}" : "";
-            txtResource.SetText(resourceName + amountText);
+            string amountText = $" x{amount}";
+            txtResource.SetText(amountText);
             imgResource.sprite = resourceSprite;
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Constants;
 using Managers;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
@@ -9,14 +8,11 @@ namespace Crafting
 {
     public class CraftingRecipeUI : MonoBehaviour
     {
-        [Tooltip("The name of this recipe")] [SerializeField]
-        private TextMeshProUGUI txtTitle;
-
         [Tooltip("The image of this recipe. Represents the crafted item.")] [SerializeField]
         private Image imgCraftItem;
 
         [Tooltip("The vertical layout group where the resources will be ordered in")] [SerializeField]
-        private VerticalLayoutGroup recipeResourceList;
+        private LayoutGroup recipeResourceList;
 
         [Tooltip("The background image to show if the recipe can be crafted")] [SerializeField]
         private Image imgBackground;
@@ -43,15 +39,7 @@ namespace Crafting
             _recipe = recipe;
 
             if (_recipe.CreatedItem.item.Icon)
-            {
-                txtTitle.gameObject.SetActive(false);
                 imgCraftItem.sprite = _recipe.CreatedItem.item.Icon;
-            }
-            else
-            {
-                imgCraftItem.gameObject.SetActive(false);
-                txtTitle.SetText(_recipe.CreatedItemName);
-            }
 
             foreach (ItemResourceData resourceData in _recipe.NeededItems)
                 Instantiate(craftingRecipeResourcePrefab, recipeResourceList.transform)
