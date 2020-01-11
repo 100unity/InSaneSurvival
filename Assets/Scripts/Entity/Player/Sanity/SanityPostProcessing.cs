@@ -58,16 +58,12 @@ namespace Entity.Player.Sanity
         private int _currentShutterAngle;
 
         private Vignette _vignette;
-        [Range(0, 1)]
         private float _vignetteBaseIntensity;
-        [Range(0, 1)]
         private float _currentVignetteIntensity;
         private float _vignettePulse;
 
         private ChromaticAberration _chromaticAberration;
-        [Range(0, 1)]
         private float _aberrationBaseIntensity;
-        [Range(0, 1)]
         private float _currentAberrationIntensity;
         private float _aberrationPulse;
 
@@ -81,27 +77,21 @@ namespace Entity.Player.Sanity
             _postProcessVolume.profile.TryGetSettings(out _chromaticAberration);
             _postProcessVolume.profile.TryGetSettings(out _vignette);
             _sanity = 100; // init with 100, since the first sent out event doesn't seem to be received here
-        }
-
-        /// <summary>
-        /// Remembers base intensities (resp. shutter angle).
-        /// </summary>
-        private void Start()
-        {
+            // remember base intensities and shutter angle
             _aberrationBaseIntensity = _chromaticAberration.intensity.value;
             _vignetteBaseIntensity = _vignette.intensity.value;
-            _baseShutterAngle = (int) _motionBlur.shutterAngle.value;
+            _baseShutterAngle = (int)_motionBlur.shutterAngle.value;
             ClampAll();
         }
 
         private void OnEnable()
         {
-            PlayerState.OnPlayerSanityUpdate += (int sanity) => _sanity = sanity;
+            PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
         }
 
         private void OnDisable()
         {
-            PlayerState.OnPlayerSanityUpdate -= (int sanity) => _sanity = sanity;
+            PlayerState.OnPlayerSanityUpdate -= OnSanityUpdated;
         }
 
         /// <summary>
@@ -119,6 +109,8 @@ namespace Entity.Player.Sanity
             _vignette.intensity.value = _currentVignetteIntensity;
             _chromaticAberration.intensity.value = _currentAberrationIntensity;
         }
+
+        private void OnSanityUpdated(int sanity) => _sanity = sanity;
         
         private void ClampAll()
         {

@@ -15,7 +15,7 @@ namespace Effects
         private float pulseIntensity;
     
         [SerializeField] [Tooltip("Determines how fast pulse animation is. (Although called frequency, the smaller the value the faster it pulses)")]
-        private float pulseFrequency;
+        private float pulseDelay;
 
         [SerializeField][Tooltip("Determines the the center area size of the sanity texture")]
         private AnimationCurve apertureRadiusCurve;
@@ -70,12 +70,12 @@ namespace Effects
         
             if (_isGrowing)
             {
-                _apertureCurrentRadius += Time.deltaTime / pulseFrequency;
+                _apertureCurrentRadius += Time.deltaTime / pulseDelay;
                 if (_apertureCurrentRadius >= _apertureBaseRadius + intensity) _isGrowing = false;
             }
             else
             {
-                _apertureCurrentRadius -= Time.deltaTime / (pulseFrequency / 2);
+                _apertureCurrentRadius -= Time.deltaTime / (pulseDelay / 2);
                 if (_apertureCurrentRadius <= _apertureBaseRadius) _isGrowing = true;
             }
         }
