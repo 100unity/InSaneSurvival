@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
   tooltipContent: {fileID: 2666710222993246493}
-  offset: {x: 0, y: -150, z: 0}
+  offset: {x: 0, y: 0, z: 0}
   distanceToPlayer: 4
   btnUnlock: {fileID: 5005731711959681352}
   campsite: {fileID: 0}

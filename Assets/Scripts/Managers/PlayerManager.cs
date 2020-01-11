@@ -8,8 +8,8 @@ namespace Managers
 
         public GameObject GetPlayer() => player;
 
-        public bool PlayerInReach(GameObject otherObject, float distanceToPlayer) =>
+        public bool PlayerInReach(GameObject otherObject, float maxRange) =>
             Vector3.Distance(player.transform.position, otherObject.transform.position) <=
-            distanceToPlayer;
+            maxRange;
     }
 }

@@ -21,15 +21,7 @@ namespace Buildings
         /// <summary>
         /// Whether this campsite is already unlocked.
         /// </summary>
-        public bool IsUnlocked
-        {
-            get => isUnlocked;
-            set
-            {
-                isUnlocked = value;
-                OnUnlock?.Invoke();
-            }
-        }
+        public bool IsUnlocked => isUnlocked;
 
         public event CampsiteStatus OnUnlock;
 
@@ -46,6 +38,7 @@ namespace Buildings
         public void UnlockBuildingBlueprints()
         {
             isUnlocked = true;
+            OnUnlock?.Invoke();
             unlockPS.Play();
             CoroutineManager.Instance.WaitForSeconds(unlockBuildingTimer, () =>
             {
@@ -66,6 +59,7 @@ namespace Buildings
         public void UnlockBuildingBlueprintsInstantly()
         {
             isUnlocked = true;
+            OnUnlock?.Invoke();
             campsiteModel.SetActive(false);
             foreach (BuildingBlueprint blueprint in buildingBlueprints)
             {
