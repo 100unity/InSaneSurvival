@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Schema;
+using Buildings;
 using Inventory;
 using Managers;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Utils.Saves
     {
         //metadata
         public string timestamp;
-        public int saveVersion = 1;
+        public string buildVersion;
 
         //player state
         public Vector3 playerPosition;
@@ -24,13 +25,15 @@ namespace Utils.Saves
 
         //inventory data
         public List<Item> items;
-        public List<Item> itemsNew;
         
         //world state data
         public float timeOfDay;
         public int dayNumber;
         
-        //world object data
+        //word buildings data
+        public List<SavedCampsite> campsites;
+
+        //world resource data
 
         public Save()
         {
@@ -47,14 +50,12 @@ namespace Utils.Saves
             playerPosition = pos;
         }
 
-        public void SetWorldState(float time, int dayNumber)
+        public void SetWorldState(float time, int day)
         {
             timeOfDay = time;
-            this.dayNumber = dayNumber;
+            dayNumber = day;
         }
 
         public void SetInventory(List<Item> itemList) => this.items = itemList;
-
-        public void SetInventoryNew(List<Item> itemList) => this.itemsNew = itemList;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using AbstractClasses;
 using Inventory;
 using Remote;
@@ -36,10 +35,10 @@ namespace Entity.Player
         private void Awake()
         {
             // send event on initial values
-            //OnPlayerHealthUpdate?.Invoke(health);
-            //OnPlayerSaturationUpdate?.Invoke(saturation);
-            //OnPlayerHydrationUpdate?.Invoke(hydration);
-            //OnPlayerSanityUpdate?.Invoke(sanity);
+            /*OnPlayerHealthUpdate?.Invoke(health);
+            OnPlayerSaturationUpdate?.Invoke(saturation);
+            OnPlayerHydrationUpdate?.Invoke(hydration);
+            OnPlayerSanityUpdate?.Invoke(sanity);*/
         }
 
         private void OnEnable()
@@ -57,24 +56,7 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
             RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
         }
-
-        /// <summary>
-        /// Changes the objects color back to normal after being healed.
-        /// </summary>
-        protected override void Update()
-        {
-            base.Update();
-            if (!_healed) return;
-            _healTimer += Time.deltaTime;
-
-            if (_healTimer > healMarkTime)
-            {
-                _healed = false;
-                _healTimer = 0;
-                gameObjectRenderer.material = PrevMat;
-            }
-        }
-
+        
         public int GetHealth() => health;
         public int GetSaturation() => saturation;
         public int GetHydration() => hydration;
@@ -174,7 +156,7 @@ namespace Entity.Player
             ChangePlayerHealth(amount);
         }
 
-        public bool Consume(Inventory.Consumable item)
+        public bool Consume(Consumable item)
         {
             if (item.HealthValue > 0)
                 Heal(item.HealthValue);

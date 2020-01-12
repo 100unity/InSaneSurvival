@@ -21,7 +21,11 @@ namespace Buildings
         [Tooltip("How strong the blueprint should be faded out")] [SerializeField] [Range(0f, 1f)]
         private float fadeStrength;
 
-        public Building Building => building;
+        public Building Building
+        {
+            get => building;
+            set => building = value;
+        }
 
         public bool IsActive => gameObject.activeSelf;
 
@@ -54,6 +58,7 @@ namespace Buildings
 
         public void ShowBuilding()
         {
+            Debug.Log("hello "+this.name);
             gameObject.SetActive(false);
             ActivateBuilding();
         }

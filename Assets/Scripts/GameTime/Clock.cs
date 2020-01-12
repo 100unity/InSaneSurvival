@@ -42,33 +42,23 @@ namespace GameTime
 
         private void Awake()
         {
-            RemoteStatusHandler.OnGameTimeRemoteUpdate += SetTime;
             SetDayNightTriggers();
             NormalizeTimeCurve();
             _baseTickRate = 24 / (dayLength / 60); // calculating basic tick rate
         }
-
-        private void OnDisable()
-        {
-            RemoteStatusHandler.OnGameTimeRemoteUpdate -= SetTime;
-        }
-
+        
         private void Update()
         {
             UpdateTimeScale();
             UpdateTime();
             InvokeSunRiseAndSunSet();
         }
-
-        public void SetTime(float time)
-        {
-            timeOfDay = time;
-        }
-
-        public void SetDayNumber(int day)
-        {
-            this._days = day;
-        }
+        
+        /// <summary>
+        /// Sets the daynumber - used for loading savegames
+        /// </summary>
+        /// <param name="day"></param>
+        public void SetDayNumber(int day) => this._days = day;
 
         /// <summary>
         /// Sets the time of the day instantly.

@@ -1,6 +1,6 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Buildings;
 using Entity.Player;
 using GameTime;
 using Inventory;
@@ -29,24 +29,28 @@ namespace Managers
 
                 //get a json-able list of items in the player's inventory
                 List<Item> inventoryData = inventoryController.GetItems();
-
-                GameObject gameTime = GameObject.Find("GameTime");
-                float time = gameTime.GetComponent<Clock>().TimeOfDay;
-                int daynumber = gameTime.GetComponent<Clock>().Days;
                 
-                /*List<Item> inventoryDataNew = new List<Item>();
-                foreach (var item in inventoryData)
-                {
-                    inventoryDataNew.Add(JsonUtility.FromJson<Item>(JsonUtility.ToJson(item)));
-                }*/
+                //get all campsites
+                List<Campsite> campsites = CampsiteManager.Instance.campsites;
+                
+                //get all buildings
+                Building[] buildings = FindObjectsOfType<Building>();
+                BuildingBlueprint[] blueprints = FindObjectsOfType<BuildingBlueprint>();
 
+                Clock clock = DayNightManager.Instance.GetComponent<Clock>();
+                float time = clock.TimeOfDay;
+                int daynumber = clock.Days;
+                
                 // build a JSON-Object
                 Save save = new Save();
 
                 save.SetPlayerState(playerPosition, state.GetHealth(), state.GetSaturation(), state.GetHydration(), state.GetSanity());
                 save.SetWorldState(time, daynumber);
                 save.SetInventory(inventoryData);
-                //save.SetInventoryNew(inventoryDataNew);
+                save.buildVersion = Application.version;
+                
+                save.campsites = new List<SavedCampsite>();
+                campsites.ForEach(cs => save.campsites.Add(new SavedCampsite(cs, cs.IsUnlocked)));
 
                 Write(save, fileName);
             }
@@ -54,7 +58,6 @@ namespace Managers
             {
                 Debug.Log(e);
             }
-
         }
 
         public void Load(string fileName)
@@ -68,7 +71,8 @@ namespace Managers
                 // get game components
                 GameObject player = PlayerManager.Instance.GetPlayer();
                 InventoryController inventoryController = player.GetComponentInChildren<InventoryController>();
-                GameObject gameTime = GameObject.Find("GameTime");
+                DayNightManager timeManager = DayNightManager.Instance;
+                CampsiteManager campsiteManager = CampsiteManager.Instance;
 
                 // set player position
                 player.GetComponent<NavMeshAgent>().Warp(save.playerPosition);
@@ -80,10 +84,40 @@ namespace Managers
                 state.SetSanity(save.playerSanity);
                 state.SetSaturation(save.playerSaturation);
                 
+                // set inventory
                 inventoryController.SetItems(save.items);
 
-                gameTime.GetComponent<Clock>().SetTime(save.timeOfDay);
-                gameTime.GetComponent<Clock>().SetDayNumber(save.dayNumber);
+                // set time
+                timeManager.SetTimeOfDay(save.timeOfDay);
+                timeManager.SetDayNumber(save.dayNumber);
+                
+                // set campsites and blueprints
+                List<SavedCampsite> savedCampsites = save.campsites;
+                savedCampsites.ForEach(cs =>
+                {
+                    cs.campsite.buildingBlueprints = new List<BuildingBlueprint>();
+                    cs.blueprints.ForEach(sbp =>
+                    {
+                        cs.campsite.buildingBlueprints.Add(sbp.blueprint);
+                        sbp.blueprint.Building = sbp.building;
+                        if (sbp.blueprintActive && sbp.buildingActive)
+                        {
+                            sbp.building.IsBuilt = true;
+                            sbp.blueprint.gameObject.SetActive(true);
+                            //sbp.blueprint.ShowBlueprint();
+                            //sbp.blueprint.ShowBuilding();
+                            Debug.Log("here " + sbp.building.name);
+                        } else if (sbp.blueprintActive && !sbp.buildingActive)
+                        {
+                            sbp.building.IsBuilt = false;
+                            //sbp.blueprint.ShowBlueprint();
+                            Debug.Log("there " + sbp.building.name);
+                        }
+                    });
+                    cs.SetState();
+                });
+                
+                
                 
                 Debug.Log("save recreated");
             }
@@ -91,9 +125,10 @@ namespace Managers
             {
                 Debug.Log(e);
             }
-            
-            
         }
+        
+        //Buildings -  Utility functions
+        
         
         
         //JSON - Utility functions
@@ -101,7 +136,6 @@ namespace Managers
         private void Write(Save save, string fileName)
         {
             string json = JsonUtility.ToJson(save);
-            
             if(fileName == "") System.IO.File.WriteAllText(@"C:\Users\Public\save.json", json);
             else System.IO.File.WriteAllText(@"C:\Users\Public\"+fileName+".json", json);
             
@@ -112,30 +146,6 @@ namespace Managers
         {
             string json = fileName == "" ? System.IO.File.ReadAllText(@"C:\Users\Public\save.json") : System.IO.File.ReadAllText(@"C:\Users\Public\"+fileName+".json");
             return JsonUtility.FromJson<Save>(json);
-        }
-
-        [System.Serializable]
-        public class SavedItem
-        {
-            public SavedItem(int id, int instanceId, string itemName)
-            {
-                this.id = id;
-                this.instanceId = instanceId;
-                this.itemName = itemName;
-            }
-
-            public int id;
-            public int instanceId;
-            public string itemName;
-
-            public Item ToItem()
-            {
-                var so = ScriptableObject.CreateInstance<Item>();
-                so.id = id;
-                so.name = itemName;
-
-                return so;
-            }
         }
     }
 }
