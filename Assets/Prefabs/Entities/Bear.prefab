@@ -54,6 +54,10 @@ MonoBehaviour:
   rotationSpeed: 5
   rotationTolerance: 10
   animator: {fileID: 8351342211089979721}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  graphicsTransform: {fileID: 8351342211080173289}
   wanderArea:
     center: {fileID: 1510608199083388096}
     radius: 15
@@ -285,6 +289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Graphics
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6731441f7e464422baf7f811d2ddf7de, type: 2}
     - target: {fileID: 400064, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -341,10 +349,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 6731441f7e464422baf7f811d2ddf7de, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
 --- !u!4 &8351342211080173289 stripped

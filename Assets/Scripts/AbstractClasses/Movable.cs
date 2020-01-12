@@ -7,23 +7,48 @@ namespace AbstractClasses
     [RequireComponent(typeof(NavMeshAgent))]
     public abstract class Movable : MonoBehaviour
     {
-        [Tooltip("The speed to rotate with")]
-        [SerializeField]
+        [Tooltip("The speed to rotate with")] [SerializeField]
         private int rotationSpeed;
 
-        [Tooltip("The maximum difference in degrees between look direction and target direction in order to be facing the target.")]
+        [Tooltip(
+            "The maximum difference in degrees between look direction and target direction in order to be facing the target.")]
         [SerializeField]
         private int rotationTolerance;
 
-        [Tooltip("The animator that should be used for movement animations")]
-        [SerializeField] private Animator animator;
-        
+        [Tooltip("The animator that should be used for movement animations")] [SerializeField]
+        private Animator animator;
+
+        [Tooltip("The ground layer to use for movement calculations")] [SerializeField]
+        protected LayerMask groundLayer;
+
+        [Tooltip("The graphics object's transform to align parallel to the ground")] [SerializeField]
+        private Transform graphicsTransform;
+
         protected NavMeshAgent NavMeshAgent;
         private static readonly int MovementSpeed = Animator.StringToHash(Consts.Animation.MOVEMENT_SPEED_FLOAT);
 
         protected virtual void Awake() => NavMeshAgent = GetComponent<NavMeshAgent>();
 
-        protected virtual void Update() => animator.SetFloat(MovementSpeed, NavMeshAgent.velocity.magnitude);
+        protected virtual void Update()
+        {
+            UpdateRotation();
+            animator.SetFloat(MovementSpeed, NavMeshAgent.velocity.magnitude);
+        }
+
+        /// <summary>
+        /// Updates the rotation of the entity so that it's always parallel to the ground it's standing on.
+        /// </summary>
+        private void UpdateRotation()
+        {
+            Quaternion oldRotation = graphicsTransform.rotation;
+            
+            if (!Physics.Raycast(graphicsTransform.position, Vector3.down, out RaycastHit hit, 100))
+                return;
+            // Ground hit, update rotation
+            Quaternion newRotation = Quaternion.FromToRotation(graphicsTransform.up, hit.normal) * oldRotation;
+            Debug.DrawLine(graphicsTransform.position, hit.point, Color.red);
+            graphicsTransform.rotation = Quaternion.Lerp(oldRotation, newRotation, Time.deltaTime * rotationSpeed);
+        }
 
         /// <summary>
         /// Faces the target. Returns true if facing the target.

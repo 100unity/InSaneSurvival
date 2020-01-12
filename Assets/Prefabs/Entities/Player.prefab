@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 6126187404098910140}
   - component: {fileID: 1535071274}
   - component: {fileID: 4832682374285577335}
-  - component: {fileID: 6157196434871660350}
+  - component: {fileID: 6583156151531784303}
   m_Layer: 20
   m_Name: Player
   m_TagString: Player
@@ -146,12 +146,13 @@ MonoBehaviour:
   rotationSpeed: 5
   rotationTolerance: 10
   animator: {fileID: 466687203411084045}
-  clickableLayers:
-    serializedVersion: 2
-    m_Bits: 524545
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  graphicsTransform: {fileID: 466687203404098771}
+  clickableLayers:
+    serializedVersion: 2
+    m_Bits: 524545
   clickEffect: {fileID: 3687566934736743005, guid: 303d5b1eeeba949aca04be0bec872f12,
     type: 3}
   cameraRotationSpeed: 0.3
@@ -242,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95182fe05a7e18f49b9237feefacbc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &6157196434871660350
+--- !u!65 &6583156151531784303
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -453,6 +454,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CraftingUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2534910834049080152, guid: 9df5d19eb07a9804a96f230bf905b704,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 4065175225237497898, guid: 9df5d19eb07a9804a96f230bf905b704,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -558,11 +564,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2534910834049080152, guid: 9df5d19eb07a9804a96f230bf905b704,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 1358884243312397464, guid: 9df5d19eb07a9804a96f230bf905b704,
         type: 3}
       propertyPath: m_IsActive
@@ -620,6 +621,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 1517941757197169441, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -725,11 +731,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 2456554992891907293, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_IsActive
