@@ -53,6 +53,17 @@ namespace Managers
         {
             StartCoroutine(FadeOutIe(FindSound(soundName), duration));
         }
+
+        /// <summary>
+        /// Fades out all Sounds that are currently playing
+        /// </summary>
+        public void FadeOutPlaying(float duration)
+        {
+            foreach (Sound s in sounds)
+            {
+                if(s.source.isPlaying) FadeOut(s.name, duration);
+            }
+        }
         
         /// <summary>
         /// Returns a sound by a given name

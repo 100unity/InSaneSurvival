@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Constants;
+using UnityEngine;
 
 namespace Interactables
 {
@@ -7,7 +8,7 @@ namespace Interactables
         [SerializeField] private Animator animator;
 
         [SerializeField] private bool isOpen;
-        private static readonly int Open = Animator.StringToHash("open");
+        private static readonly int Open = Animator.StringToHash(Consts.Animation.OPEN_BOOL);
 
         private void Awake()
         {

@@ -6,17 +6,21 @@ namespace GameTime
     {
         public delegate void DayTimeEvent();
 
-        [SerializeField][Tooltip("Day length in minutes")]
+        [SerializeField] [Tooltip("Day length in minutes")]
         private float dayLength;
-    
-        [SerializeField][Tooltip("Year length in days")]
+
+        [SerializeField] [Tooltip("Year length in days")]
         private int yearLength;
 
         [SerializeField] [Tooltip("Current time")] [Range(0f, 1f)]
         private float timeOfDay;
+
         public float TimeOfDay => timeOfDay;
         
         private bool _isNight;
+        public bool IsNight =>_isNight;
+        
+        private bool _moonShines;
 
         private int _days;
         public int Days => _days;
@@ -27,14 +31,17 @@ namespace GameTime
         private float _timeScale;
 
         private float _baseTickRate;
-        
-        [SerializeField][Tooltip("Controls timeScale so certain time periods (night) can pass faster than others (day)")]
+
+        [SerializeField]
+        [Tooltip("Controls timeScale so certain time periods (night) can pass faster than others (day)")]
         private AnimationCurve timeCurve;
 
         private float _timeCurveNormalization;
         
         public static event DayTimeEvent SunRise;
         public static event DayTimeEvent SunSet;
+        public static event DayTimeEvent MoonRise;
+        public static event DayTimeEvent MoonSet;
 
         private void Awake()
         {
@@ -47,8 +54,19 @@ namespace GameTime
         {
             UpdateTimeScale();
             UpdateTime();
-            InvokeSunRiseAndSunSet();
+            InvokeDayTimeEvent();
         }
+
+        /// <summary>
+        /// Sets the time of the day instantly.
+        /// </summary>
+        /// <param name="newTimeOfDay">The new time of the day (0 to 1)</param>
+        public void SetTimeOfDay(float newTimeOfDay) => timeOfDay = newTimeOfDay;
+
+        /// <summary>
+        /// Manually adds a day. Should be used if the time is set manually.
+        /// </summary>
+        public void AddOneDay() => _days++;
 
         /// <summary>
         /// Updates the current timeScale; Varies depending on the current time of day (=> timeCurve)
@@ -81,19 +99,32 @@ namespace GameTime
         /// <summary>
         /// Triggers Events for Sunrise and Sunset
         /// </summary>
-        private void InvokeSunRiseAndSunSet()
+        private void InvokeDayTimeEvent()
         {
-            if (timeOfDay >= 0.25 && timeOfDay < 0.75 && _isNight)
+            if (_isNight && timeOfDay >= 0.25 && timeOfDay < 0.70)
             {
                 _isNight = !_isNight;
                 SunRise?.Invoke();
             }
             
-            if (timeOfDay >= 0.75 && !_isNight)
+            if (!_isNight && timeOfDay >= 0.70)
             {
                 _isNight = !_isNight;
                 SunSet?.Invoke();
             }
+
+            if (!_moonShines && timeOfDay >= 0.85)
+            {
+                _moonShines = !_moonShines;
+                MoonRise?.Invoke();
+            }
+
+            if (_moonShines && TimeOfDay > 0.15 && timeOfDay < 0.85)
+            {
+                _moonShines = !_moonShines;
+                MoonSet?.Invoke();
+            }
+            
         }
         
         /// <summary>
@@ -118,7 +149,8 @@ namespace GameTime
         /// </summary>
         private void SetDayNightTriggers()
         {
-            _isNight = !(TimeOfDay >= 0.25 && TimeOfDay <= 0.75);
+            _isNight = !(TimeOfDay >= 0.25 && TimeOfDay <= 0.70);
+            _moonShines = !(TimeOfDay >= 0.15 && TimeOfDay <= 0.85);
         }
     }
 }

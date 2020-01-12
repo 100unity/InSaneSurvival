@@ -20,5 +20,5 @@ MonoBehaviour:
   createdItem:
     item: {fileID: 11400000, guid: 435bf4a15213560408c58d224106ced1, type: 2}
     amount: 1
-  craftingStation: 1
+  craftingStation: 3
   recipeName: 

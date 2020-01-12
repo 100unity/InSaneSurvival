@@ -4,66 +4,63 @@ using UnityEngine;
 namespace Buildings
 {
     /// <summary>
-    /// A building offers crafting-functionality to the player, allowing him to craft more items.
-    /// It automatically updates the <see cref="CraftingManager.CurrentCraftingStation"/> when the player is close enough.
+    /// Simple building behaviour.
     /// </summary>
-    public class Building : MonoBehaviour
+    public abstract class Building : MonoBehaviour
     {
-        [Tooltip("The renderer that holds the material of this building. Used for fading it out")] [SerializeField]
+        [Header("Building-Base")]
+        [Tooltip("The renderer that holds the material of this building. Used for fading it out")]
+        [SerializeField]
         private Renderer buildingRenderer;
 
-        [Tooltip("Defines the needed distance to the player for showing the tooltip")] [SerializeField]
-        private float showWithDistanceToPlayer;
+        [Tooltip("Defines the needed distance to the player for using this")] [SerializeField]
+        private float useDistance;
 
-        [Tooltip("The crafting station that this building provides")] [SerializeField]
-        private CraftingManager.CraftingStation craftingStation;
+        [Tooltip("Whether this building is build from the start or need to be build first\n" +
+                 "Make sure to add a BuildingBlueprint if false")]
+        [SerializeField]
+        private bool isAlreadyBuilt;
 
         public Renderer BuildingRenderer => buildingRenderer;
 
         /// <summary>
         /// Whether the player is in reach of this building.
         /// </summary>
-        public bool PlayerInReach { get; private set; }
+        protected bool PlayerInReach { get; private set; }
 
         /// <summary>
-        /// Whether the building is build or not
+        /// Whether the building is build or not. Invokes <see cref="OnBuild"/>
         /// </summary>
-        public bool IsBuild { get; set; }
+        public bool IsBuilt { get; private set; }
+
+
+        private void Awake() => IsBuilt = isAlreadyBuilt;
 
         /// <summary>
-        /// Used for resetting <see cref="CraftingManager.CurrentCraftingStation"/>
+        /// Updates <see cref="PlayerInReach"/>.
         /// </summary>
-        private bool _playerWasInReach;
+        protected virtual void Update() =>
+            PlayerInReach = PlayerManager.Instance.PlayerInReach(gameObject, useDistance);
 
         /// <summary>
-        /// Used for calculating the distance
+        /// Can be overriden to define an interaction action.
         /// </summary>
-        private GameObject _player;
-
-        private void Awake() => _player = PlayerManager.Instance.GetPlayer();
-
-        /// <summary>
-        /// Updates <see cref="PlayerInReach"/> and sets the <see cref="CraftingManager.CurrentCraftingStation"/>.
-        /// </summary>
-        private void Update()
+        public virtual void Interact()
         {
-            PlayerInReach = Vector3.Distance(_player.transform.position, transform.position) <=
-                            showWithDistanceToPlayer;
+            if (!PlayerInReach) return;
+        }
 
-            if (!IsBuild) return;
+        public void Build()
+        {
+            IsBuilt = true;
+            OnBuild();
+        }
 
-            if (PlayerInReach && !_playerWasInReach)
-            {
-                _playerWasInReach = true;
-                CraftingManager.Instance.CurrentCraftingStation = craftingStation;
-            }
-
-            // Walked away from this crafting station
-            if (!PlayerInReach && _playerWasInReach)
-            {
-                _playerWasInReach = false;
-                CraftingManager.Instance.CurrentCraftingStation = CraftingManager.CraftingStation.None;
-            }
+        /// <summary>
+        /// Can be overriden to define an action on building this building.
+        /// </summary>
+        protected virtual void OnBuild()
+        {
         }
     }
 }
