@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2011177521534756505}
-  - component: {fileID: 8905319067963532123}
   m_Layer: 0
   m_Name: Tent
   m_TagString: Untagged
@@ -32,21 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8905319067963532123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6472021505025179228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e682243de8f77419e453a1520aa5cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildingRenderer: {fileID: 4960278045297029996}
-  showWithDistanceToPlayer: 5
-  craftingStation: 0
 --- !u!1001 &4960278045299379712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -107,12 +91,6 @@ PrefabInstance:
 --- !u!4 &4960278045299185248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 464992, guid: e3fedd8bd64c8ad4daa829b06ec5fc7c,
-    type: 3}
-  m_PrefabInstance: {fileID: 4960278045299379712}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &4960278045297029996 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2375020, guid: e3fedd8bd64c8ad4daa829b06ec5fc7c,
     type: 3}
   m_PrefabInstance: {fileID: 4960278045299379712}
   m_PrefabAsset: {fileID: 0}
