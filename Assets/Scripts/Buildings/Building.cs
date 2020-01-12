@@ -53,7 +53,6 @@ namespace Buildings
 
         public void Build()
         {
-            Debug.Log("hey");
             IsBuilt = true;
             OnBuild();
         }
