@@ -23,13 +23,19 @@ namespace Interactables
         
         private double _gatherTimePassed;
         
+        [Tooltip("Should this resource be only harvestable once?")]
+        [SerializeField] 
+        private bool destroyAfterHarvest;
+
+        private GameObject _parent;
+        
         [Tooltip("Time in seconds needed until this resource is allowed to respawn again.")]
         [SerializeField] 
         private float respawnTime;
 
-        [SerializeField]
+        [SerializeField] [HideInInspector]
         private bool isRespawning;
-        [SerializeField]
+        [SerializeField] [HideInInspector]
         private double respawnTimePassed;
 
         [Tooltip("The GameObject that is supposed to replace this resource while it respawns.")]
@@ -71,6 +77,8 @@ namespace Interactables
             SetRadius((numberToUse * offset)); 
             
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
+
+            if (destroyAfterHarvest) _parent = transform.parent.gameObject;
             
             _itemsWithQuantities = new Dictionary<Item, int>();
             for (int i = 0; i < drops.Count; i++)
@@ -105,8 +113,11 @@ namespace Interactables
                 if (_gatherTimePassed >= gatherTime)
                 {
                     AddItems();
-                    CoroutineManager.Instance.WaitForOneFrame(() => StartCoroutine(Respawn())); 
-
+                    if(destroyAfterHarvest) GameObject.Destroy(_parent);
+                    else
+                    {
+                        CoroutineManager.Instance.WaitForOneFrame(() => StartCoroutine(Respawn())); 
+                    }
                 }
                 yield return null;
             }

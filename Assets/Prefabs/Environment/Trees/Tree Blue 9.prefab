@@ -114,7 +114,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
   quantities: 05000000
   gatherTime: 3
+  destroyAfterGather: 0
   respawnTime: 10
+  isRespawning: 0
+  respawnTimePassed: 0
   replacement: {fileID: 9198609481186505352}
   mainCam: {fileID: 0}
 --- !u!1 &6482878847694471280
@@ -201,6 +204,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2ab14cb99e98ac441800b6c4955ecb42, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 2ab14cb99e98ac441800b6c4955ecb42, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
