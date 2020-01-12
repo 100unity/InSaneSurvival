@@ -90,6 +90,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5ceaa12d6ee044aa4961ba1a04570c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clock: {fileID: 0}
+  dayTimeAmbience: 
+  nightTimeAmbience: 
+  moonLightAmbience: 
 --- !u!1 &7058954467443417514
 GameObject:
   m_ObjectHideFlags: 0

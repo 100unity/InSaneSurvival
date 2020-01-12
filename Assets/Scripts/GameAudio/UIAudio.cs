@@ -26,7 +26,5 @@ namespace GameAudio
         public void PlayOnClick() {
             AudioManager.Instance.Play(btnClickSound);
         }
-        
-        
     }
 }
