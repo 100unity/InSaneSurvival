@@ -62,12 +62,27 @@ namespace Crafting
             foreach (ItemResourceData neededItem in neededItems)
                 InventoryManager.Instance.RemoveItem(neededItem.item, neededItem.amount);
 
-            // Add newly created item
-            if (InventoryManager.Instance.AddItem(createdItem.item, createdItem.amount)) return;
+            int addedAmount = 0;
+            // Add newly created item(s)
+            for (int i = 0; i < createdItem.amount; i++)
+            {
+                if (!InventoryManager.Instance.AddItem(createdItem.item))
+                    break;
+                addedAmount++;
+            }
 
-            // Refund used item(s) if inventory is full
+            if (addedAmount >= createdItem.amount) return;
+
+            // Revert if inventory is full:
+
+            //Remove newly added items
+            for (int i = 0; i < addedAmount; i++)
+                InventoryManager.Instance.RemoveItem(createdItem.item);
+
+            //Add removed items
             foreach (ItemResourceData neededItem in neededItems)
-                InventoryManager.Instance.AddItem(neededItem.item, neededItem.amount);
+                for (int i = 0; i < neededItem.amount; i++)
+                    InventoryManager.Instance.AddItem(neededItem.item);
         }
     }
 }

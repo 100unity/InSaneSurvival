@@ -48,15 +48,11 @@ namespace Managers
         /// Adds an item to the player's inventory.
         /// </summary>
         /// <param name="item">The item to be added</param>
-        /// <param name="amount">The amount</param>
-        public bool AddItem(Item item, int amount = 1)
+        public bool AddItem(Item item)
         {
-            for (int i = 0; i < amount; i++)
-            {
-                if (!HasEmptySlots && !NotFullItemStacks.Contains(item)) return false;
-                playerInventory.AddItem(item);
-            }
+            if (!HasEmptySlots && !NotFullItemStacks.Contains(item)) return false;
 
+            playerInventory.AddItem(item);
             return true;
         }
 

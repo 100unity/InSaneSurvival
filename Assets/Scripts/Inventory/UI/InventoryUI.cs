@@ -137,7 +137,7 @@ namespace Inventory.UI
             if (itemButtonInList.Count > 0) return;
 
             itemGrid.AddEmptySlotAt(itemButtonInList.transform.GetSiblingIndex());
-            Destroy(itemButtonInList.gameObject);
+            DestroyImmediate(itemButtonInList.gameObject);
             _items.Remove(itemButtonInList);
         }
 
@@ -146,10 +146,11 @@ namespace Inventory.UI
         /// </summary>
         private void UpdateItemButtons()
         {
-            List<ItemButton> itemButtonInList = _items.FindAll(button => button.Count <= 0);
-            foreach (ItemButton currentButton in itemButtonInList)
+            List<ItemButton> itemButtonList = _items.FindAll(button => button.Count <= 0);
+            foreach (ItemButton currentButton in itemButtonList)
             {
-                Destroy(currentButton.gameObject);
+                itemGrid.AddEmptySlotAt(currentButton.transform.GetSiblingIndex());
+                DestroyImmediate(currentButton.gameObject);
                 _items.Remove(currentButton);
             }
         }
