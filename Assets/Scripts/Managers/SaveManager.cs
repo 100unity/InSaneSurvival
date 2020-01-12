@@ -103,6 +103,7 @@ namespace Managers
                         if (sbp.blueprintActive && sbp.buildingActive)
                         {
                             sbp.building.IsBuilt = true;
+                            sbp.blueprint.gameObject.GetComponentInChildren<BlueprintTooltip>().gameObject.SetActive(false);
                             //sbp.blueprint.ShowBlueprint();
                             //sbp.blueprint.ShowBuilding();
                         } else if (sbp.blueprintActive && !sbp.buildingActive)
