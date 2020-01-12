@@ -110,8 +110,9 @@ namespace Entity.Player
         /// <summary>
         /// Moves the camera with the player.
         /// </summary>
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             // Set camera position and look angle
             Vector3 playerPosition = transform.position;
             _camera.transform.position = playerPosition + _cameraPosition;
