@@ -18,6 +18,9 @@ namespace GameTime
         public float TimeOfDay => timeOfDay;
         
         private bool _isNight;
+        public bool IsNight =>_isNight;
+        
+        private bool _moonShines;
 
         private int _days;
         public int Days => _days;
@@ -37,6 +40,8 @@ namespace GameTime
         
         public static event DayTimeEvent SunRise;
         public static event DayTimeEvent SunSet;
+        public static event DayTimeEvent MoonRise;
+        public static event DayTimeEvent MoonSet;
 
         private void Awake()
         {
@@ -49,7 +54,7 @@ namespace GameTime
         {
             UpdateTimeScale();
             UpdateTime();
-            InvokeSunRiseAndSunSet();
+            InvokeDayTimeEvent();
         }
 
         /// <summary>
@@ -94,19 +99,32 @@ namespace GameTime
         /// <summary>
         /// Triggers Events for Sunrise and Sunset
         /// </summary>
-        private void InvokeSunRiseAndSunSet()
+        private void InvokeDayTimeEvent()
         {
-            if (timeOfDay >= 0.25 && timeOfDay < 0.75 && _isNight)
+            if (_isNight && timeOfDay >= 0.25 && timeOfDay < 0.70)
             {
                 _isNight = !_isNight;
                 SunRise?.Invoke();
             }
             
-            if (timeOfDay >= 0.75 && !_isNight)
+            if (!_isNight && timeOfDay >= 0.70)
             {
                 _isNight = !_isNight;
                 SunSet?.Invoke();
             }
+
+            if (!_moonShines && timeOfDay >= 0.85)
+            {
+                _moonShines = !_moonShines;
+                MoonRise?.Invoke();
+            }
+
+            if (_moonShines && TimeOfDay > 0.15 && timeOfDay < 0.85)
+            {
+                _moonShines = !_moonShines;
+                MoonSet?.Invoke();
+            }
+            
         }
         
         /// <summary>
@@ -131,7 +149,8 @@ namespace GameTime
         /// </summary>
         private void SetDayNightTriggers()
         {
-            _isNight = !(TimeOfDay >= 0.25 && TimeOfDay <= 0.75);
+            _isNight = !(TimeOfDay >= 0.25 && TimeOfDay <= 0.70);
+            _moonShines = !(TimeOfDay >= 0.15 && TimeOfDay <= 0.85);
         }
     }
 }
