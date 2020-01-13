@@ -43,8 +43,13 @@ namespace Entity.Player
         private CraftingUI craftingUI;
 
         public delegate void PlayerPositionChanged(Vector3 newPosition);
-
         public static event PlayerPositionChanged OnPlayerPositionUpdate;
+
+        public delegate void CameraDistanceChanged(float newDistance);
+        public static event CameraDistanceChanged OnCameraDistanceChange;
+
+        public float CameraDistance => cameraDistance.y;
+        public Range CameraDistanceRange => cameraDistanceRange;
 
         //Component references
         private Camera _camera;
@@ -235,6 +240,7 @@ namespace Entity.Player
                 cameraDistanceRange.max);
             _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
                 (float) -Math.Cos(radian) * cameraDistance.x);
+            OnCameraDistanceChange?.Invoke(_cameraPosition.y);
         }
 
         /// <summary>
