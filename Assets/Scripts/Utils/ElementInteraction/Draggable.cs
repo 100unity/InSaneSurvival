@@ -19,6 +19,8 @@ namespace Utils.ElementInteraction
         /// </summary>
         public event DragDelegate OnEndDragging;
 
+        public event DragDelegate OnBeginDragging;
+
         public delegate void DragDelegate(PointerEventData eventData);
 
         /// <summary>
@@ -45,7 +47,11 @@ namespace Utils.ElementInteraction
         /// <summary>
         /// Save old position before the drag
         /// </summary>
-        public void OnBeginDrag(PointerEventData eventData) => OldPosition = parent.position;
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            OldPosition = parent.position;
+            OnBeginDragging?.Invoke(eventData);
+        }
 
         /// <summary>
         /// Follows the mouse position

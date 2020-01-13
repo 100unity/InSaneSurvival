@@ -1,14 +1,14 @@
 ﻿using System;
-using Crafting;
 using AbstractClasses;
+using Crafting;
 using Interactables;
 using Managers;
 using UI;
 using UI.Menus;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Utils;
-using UnityEngine.EventSystems;
 
 namespace Entity.Player
 {
@@ -62,6 +62,8 @@ namespace Entity.Player
         /// </summary>
         private Vector3 _cameraPosition;
 
+        private bool _startedDragOverUI;
+
         /// <summary>
         /// Gets references and sets up the controls.
         /// </summary>
@@ -112,6 +114,9 @@ namespace Entity.Player
             Vector3 playerPosition = transform.position;
             _camera.transform.position = playerPosition + _cameraPosition;
             _camera.transform.LookAt(playerPosition);
+
+            if (Input.GetMouseButtonUp(0))
+                _startedDragOverUI = false;
         }
 
         /// <summary>
@@ -145,7 +150,7 @@ namespace Entity.Player
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            
+
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
@@ -189,7 +194,7 @@ namespace Entity.Player
             // Create click point effect
             Instantiate(clickEffect, hit.point, Quaternion.identity);
 
-			OnPlayerPositionUpdate?.Invoke(transform.position);
+            OnPlayerPositionUpdate?.Invoke(transform.position);
         }
 
         /// <summary>
@@ -197,9 +202,14 @@ namespace Entity.Player
         /// </summary>
         private void RotateCamera(InputAction.CallbackContext obj)
         {
+            if (_startedDragOverUI) return;
+
             if (EventSystem.current.IsPointerOverGameObject())
+            {
+                _startedDragOverUI = true;
                 return;
-            
+            }
+
             _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
             UpdateCameraAngle();
         }
