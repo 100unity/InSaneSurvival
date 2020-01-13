@@ -286,8 +286,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1245374304537478918}
-  - {fileID: 784861889176494528}
   - {fileID: 6290656398760315500}
+  - {fileID: 784861889176494528}
   m_Father: {fileID: 6126187404098910139}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -453,6 +453,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CraftingUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2534910834049080152, guid: 9df5d19eb07a9804a96f230bf905b704,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 4065175225237497898, guid: 9df5d19eb07a9804a96f230bf905b704,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -558,11 +563,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2534910834049080152, guid: 9df5d19eb07a9804a96f230bf905b704,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 1358884243312397464, guid: 9df5d19eb07a9804a96f230bf905b704,
         type: 3}
       propertyPath: m_IsActive
@@ -620,6 +620,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 1517941757197169441, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -658,7 +663,7 @@ PrefabInstance:
     - target: {fileID: 1517941757197169441, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1517941757197169441, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
@@ -725,11 +730,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 4480492776089546363}
     - target: {fileID: 2456554992891907293, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_IsActive
@@ -825,7 +825,7 @@ PrefabInstance:
     - target: {fileID: 6367347880368899858, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6367347880368899858, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
