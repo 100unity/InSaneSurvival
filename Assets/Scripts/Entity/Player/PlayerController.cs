@@ -213,6 +213,7 @@ namespace Entity.Player
             {
                 _startedDragOverUI = true;
                 return;
+
             }
 
             _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);

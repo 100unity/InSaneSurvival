@@ -22,10 +22,8 @@ namespace Interactables
         private void PickUp()
         {
             //Add to inventory
-            InventoryManager.Instance.AddItem(item);
-
-            //Destroy object
-            Destroy(gameObject);
+            if (InventoryManager.Instance.AddItem(item))
+                Destroy(gameObject);
         }
     }
 }

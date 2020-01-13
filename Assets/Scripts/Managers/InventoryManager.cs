@@ -1,6 +1,7 @@
-﻿using Interfaces;
+﻿using System.Collections.Generic;
+using Interfaces;
 using Inventory;
-using UI;
+using Inventory.UI;
 using UnityEngine;
 
 namespace Managers
@@ -19,14 +20,19 @@ namespace Managers
         public IItemHandler ItemHandler => playerInventory;
 
         /// <summary>
-        /// The currently equipped item
-        /// </summary>
-        public Equipable CurrentlyEquippedItem { get; private set; }
-
-        /// <summary>
         /// The damage boost of the currently equipped weapon. Returns 0 if no item is equipped.
         /// </summary>
         public int DamageBoostFromEquipable => CurrentlyEquippedItem ? CurrentlyEquippedItem.DamageBoost : 0;
+
+        /// <summary>
+        /// Whether the inventory still has empty slots. Used for determining if an item can be added.
+        /// </summary>
+        public bool HasEmptySlots { get; set; }
+
+        /// <summary>
+        /// All items that still have an not-full stack. Used for determining if an item can be added.
+        /// </summary>
+        public HashSet<Item> NotFullItemStacks { get; set; }
 
         /// <summary>
         /// The currently equipped ItemButton (Visually equipped item)
@@ -34,18 +40,32 @@ namespace Managers
         private ItemButton _currentlyEquippedItemButton;
 
         /// <summary>
+        /// The currently equipped item
+        /// </summary>
+        private Equipable CurrentlyEquippedItem { get; set; }
+
+        /// <summary>
         /// Adds an item to the player's inventory.
         /// </summary>
         /// <param name="item">The item to be added</param>
-        /// <param name="amount">The amount</param>
-        public void AddItem(Item item, int amount = 1) => playerInventory.AddItem(item, amount);
+        public bool AddItem(Item item)
+        {
+            if (!HasEmptySlots && !NotFullItemStacks.Contains(item)) return false;
+
+            playerInventory.AddItem(item);
+            return true;
+        }
 
         /// <summary>
         /// Removes an item from the player's inventory.
         /// </summary>
         /// <param name="item">The item to be removed</param>
         /// <param name="amount">The amount</param>
-        public void RemoveItem(Item item, int amount = 1) => playerInventory.RemoveItem(item, amount);
+        public void RemoveItem(Item item, int amount = 1)
+        {
+            for (int i = 0; i < amount; i++)
+                playerInventory.RemoveItem(item);
+        }
 
         /// <summary>
         /// Refreshes all items in the inventory.

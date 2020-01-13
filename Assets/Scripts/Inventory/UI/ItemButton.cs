@@ -1,11 +1,10 @@
-using Inventory;
 using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils.ElementInteraction;
 
-namespace UI
+namespace Inventory.UI
 {
     public class ItemButton : MonoBehaviour
     {
@@ -65,12 +64,11 @@ namespace UI
         /// Sets all needed values for the UI element
         /// </summary>
         /// <param name="item">The item for this ItemButton</param>
-        /// <param name="amount">The quantity to be displayed</param>
-        public void Init(Item item, int amount)
+        public void Init(Item item)
         {
             Item = item;
             icon.sprite = Item.Icon;
-            Count = amount;
+            Count = 1;
 
             // TODO: Remove this if we have icons for all items
             nameLabel.SetText(Item.name);
