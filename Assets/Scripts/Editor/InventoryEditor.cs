@@ -10,24 +10,19 @@ namespace Editor
     {
         public Item item;
         private bool _showCustomInspector;
-
+        
         public override void OnInspectorGUI()
         {
-            _showCustomInspector =
-                EditorGUILayout.BeginFoldoutHeaderGroup(_showCustomInspector,
-                    "Add items to inventory (for dev purposes)");
-
-            if (_showCustomInspector)
-            {
-                item = (Item) EditorGUILayout.ObjectField("Item to add", item, typeof(Item), true);
-
-                if (GUILayout.Button("Add Items"))
-                    InventoryManager.Instance.AddItem(item);
-            }
-
-            EditorGUILayout.EndFoldoutHeaderGroup();
-
             base.OnInspectorGUI();
+            
+            if (!EditorApplication.isPlaying) return;
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Testing UI for Development", EditorStyles.boldLabel);
+            item = (Item) EditorGUILayout.ObjectField("Item to add", item, typeof(Item), true);
+
+            if (GUILayout.Button("Add Items"))
+                InventoryManager.Instance.AddItem(item);
         }
     }
 }
