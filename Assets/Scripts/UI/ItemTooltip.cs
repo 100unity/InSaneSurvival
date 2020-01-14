@@ -37,7 +37,9 @@ namespace UI
             base.Awake();
             CoroutineManager.Instance.WaitUntil(() => itemButton.Item != null, () =>
             {
-                txtTitle.SetText(itemButton.Item.name);
+                txtTitle.SetText(string.IsNullOrEmpty(itemButton.Item.ItemName)
+                    ? itemButton.Item.name
+                    : itemButton.Item.ItemName);
                 txtDescription.SetText(itemButton.Item.Description);
                 txtEffect.SetText(itemButton.Item.EffectText);
             });
