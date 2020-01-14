@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 0566a43cc9e4ede47b375e3402078c08, type: 3}
   maxStackSize: 1
+  description: "A trustworthy Axe only a king would wield. \nThe inscriptions says:\n<i>\"Qui
+    Tyria regit me, et omnia supergreditur\"</i>\n"
+  effectText: <color=#00FDFF>Can be equipped to chop wood</color>
   equipableAbility: 1
   damageBoost: 2

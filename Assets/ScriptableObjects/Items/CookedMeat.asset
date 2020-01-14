@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   maxStackSize: 1
+  description: 
+  effectText: 
   healthValue: 0
   saturationValue: 20
   hydrationValue: 0

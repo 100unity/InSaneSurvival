@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 5794819159137068986}
+  disableDragging: 0
 --- !u!114 &385708937367166942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,7 +634,7 @@ GameObject:
   - component: {fileID: 3948161127978455136}
   - component: {fileID: 5826145494405074117}
   - component: {fileID: 4819880164127155570}
-  - component: {fileID: 983137178597540482}
+  - component: {fileID: 6552835494013975288}
   m_Layer: 5
   m_Name: ItemButton
   m_TagString: Untagged
@@ -716,7 +717,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5794819159137068986}
   m_CullTransparentMesh: 0
---- !u!114 &983137178597540482
+--- !u!114 &6552835494013975288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -725,13 +726,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 5794819159137068986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bad33296f974ecc8ff78da277a02316, type: 3}
+  m_Script: {fileID: 11500000, guid: 19572a5806ed4b12992649c46506b1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipContent: {fileID: 5349454247355079978}
   showDelay: 0.25
-  offset: {x: 20, y: -30}
+  offset: {x: 20, y: -25}
+  itemButton: {fileID: 3948161127978455136}
   draggable: {fileID: 7382666403005675327}
+  txtTitle: {fileID: 2169190611610296037}
+  txtDescription: {fileID: 7101892601617552651}
+  txtEffect: {fileID: 7132590478124881938}
 --- !u!1001 &639648671175774711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -743,6 +748,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ItemHoverTooltip
+      objectReference: {fileID: 0}
+    - target: {fileID: 2604722632226548796, guid: 6ce47f67babf3b642ac19c067be63890,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 604108293049034488, guid: 6ce47f67babf3b642ac19c067be63890,
         type: 3}
@@ -799,11 +809,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2604722632226548796, guid: 6ce47f67babf3b642ac19c067be63890,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ce47f67babf3b642ac19c067be63890, type: 3}
 --- !u!1 &5349454247355079978 stripped
@@ -818,3 +823,39 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 639648671175774711}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2169190611610296037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1655915422318284562, guid: 6ce47f67babf3b642ac19c067be63890,
+    type: 3}
+  m_PrefabInstance: {fileID: 639648671175774711}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7101892601617552651 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7669208649974678780, guid: 6ce47f67babf3b642ac19c067be63890,
+    type: 3}
+  m_PrefabInstance: {fileID: 639648671175774711}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7132590478124881938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7646109602228734437, guid: 6ce47f67babf3b642ac19c067be63890,
+    type: 3}
+  m_PrefabInstance: {fileID: 639648671175774711}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

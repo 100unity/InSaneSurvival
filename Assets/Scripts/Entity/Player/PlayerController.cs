@@ -2,8 +2,8 @@
 using AbstractClasses;
 using Crafting;
 using Interactables;
+using Inventory.UI;
 using Managers;
-using UI;
 using UI.Menus;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,9 +43,11 @@ namespace Entity.Player
         private CraftingUI craftingUI;
 
         public delegate void PlayerPositionChanged(Vector3 newPosition);
+
         public static event PlayerPositionChanged OnPlayerPositionUpdate;
 
         public delegate void CameraDistanceChanged(float newDistance);
+
         public static event CameraDistanceChanged OnCameraDistanceChange;
 
         public float CameraDistance => cameraDistance.y;
@@ -213,7 +215,6 @@ namespace Entity.Player
             {
                 _startedDragOverUI = true;
                 return;
-
             }
 
             _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);

@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: ab97eea803c1fb642921225713e2020a, type: 3}
   maxStackSize: 10
+  description: You should probably ask someone with a pair of thumbs to help you with
+    this.
+  effectText: <color=#79FF85>+ Heals you a bit.</color>
   healthValue: 10
   saturationValue: 0
   hydrationValue: 0

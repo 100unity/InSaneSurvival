@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4607063757248953553}
   - component: {fileID: 6671614497102898816}
   - component: {fileID: 5330057578649661358}
-  - component: {fileID: 5694086349232129544}
   m_Layer: 0
   m_Name: CraftingRecipeUI
   m_TagString: Untagged
@@ -62,25 +61,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391db7c18c68efe47924fb95a090c246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtTitle: {fileID: 0}
   imgCraftItem: {fileID: 6176579308596552262}
   recipeResourceList: {fileID: 5188021438275714979}
   imgBackground: {fileID: 8147712441959291740}
   craftButton: {fileID: 6966223168451593898}
   craftingRecipeResourcePrefab: {fileID: 4987473723129198034, guid: a89be3425693cc146b2f8bef32bbd569,
     type: 3}
---- !u!114 &5694086349232129544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81730556217976284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bad33296f974ecc8ff78da277a02316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2309883947739214124
 GameObject:
   m_ObjectHideFlags: 0
