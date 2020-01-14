@@ -1,5 +1,4 @@
-﻿using Managers;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -11,9 +10,10 @@ namespace Utils
     /// </summary>
     public abstract class HoverTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [Header("UITooltip base")]
-        [Tooltip("The content of the tooltip. Will be used for movement and showing/hiding")]
-        [SerializeField]
+        [Header("UITooltip base")] [Tooltip("Used for showing this on top of other UI-Elements")] [SerializeField]
+        private Canvas canvas;
+
+        [Tooltip("The content of the tooltip. Will be used for movement and showing/hiding")] [SerializeField]
         private GameObject tooltipContent;
 
         [Tooltip("Defines the time that the player has to hover over the element before it will be shown")]
@@ -55,7 +55,8 @@ namespace Utils
             {
                 _isShowing = value;
                 tooltipContent.SetActive(value);
-                UIRenderManager.Instance.SetCurrentGameObject(value ? tooltipContent : null);
+                canvas.overrideSorting = value;
+                canvas.sortingOrder = value ? 10 : 0;
             }
         }
 

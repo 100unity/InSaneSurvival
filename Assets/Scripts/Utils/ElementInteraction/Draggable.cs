@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -11,8 +12,16 @@ namespace Utils.ElementInteraction
     [RequireComponent(typeof(Image))]
     public class Draggable : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
+        [Tooltip("Used for showing this on top of other UI-Elements")] [SerializeField]
+        private Canvas canvas;
+
+        [Tooltip("Used for finding UI elements with rays")] [SerializeField]
+        private GraphicRaycaster graphicRaycaster;
+
         [Tooltip("The highest parent element that will be moved")] [SerializeField]
         private Transform parent;
+
+        public GraphicRaycaster GraphicRaycaster { get; private set; }
 
         /// <summary>
         /// Will be triggered when the user stops dragging.
@@ -27,22 +36,27 @@ namespace Utils.ElementInteraction
         public delegate void DragDelegate(PointerEventData eventData);
 
         /// <summary>
-        /// Used for finding UI elements with rays
-        /// </summary>
-        public GraphicRaycaster GraphicRaycaster { get; private set; }
-
-        /// <summary>
         /// The old position before the drag started. Used for resetting the position.
         /// </summary>
         private Vector2 OldPosition { get; set; }
+
+        private bool IsBeingMoved
+        {
+            set
+            {
+                graphicRaycaster.enabled = !value;
+                canvas.overrideSorting = value;
+                canvas.sortingOrder = value ? 1 : 0;
+            }
+        }
 
         /// <summary>
         /// Gets the GraphicRayCaster from the canvas
         /// </summary>
         private void Awake()
         {
-            // Get the closest GraphicRaycaster (in hierarchy)
-            GraphicRaycaster = GetComponentInParent<GraphicRaycaster>();
+            // Get the highest GraphicRaycaster (in hierarchy)
+            GraphicRaycaster = GetComponentsInParent<GraphicRaycaster>().Last();
             if (GraphicRaycaster == null)
                 Debug.LogError("There is no GraphicsRaycaster attached to the Canvas. Please add one!");
         }
@@ -54,6 +68,7 @@ namespace Utils.ElementInteraction
         {
             OldPosition = parent.position;
             OnBeginDragging?.Invoke(eventData);
+            IsBeingMoved = true;
         }
 
         /// <summary>
@@ -64,7 +79,11 @@ namespace Utils.ElementInteraction
         /// <summary>
         /// Invokes the <see cref="OnEndDrag"/> event
         /// </summary>
-        public void OnEndDrag(PointerEventData eventData) => OnEndDragging?.Invoke(eventData);
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            OnEndDragging?.Invoke(eventData);
+            IsBeingMoved = false;
+        }
 
         /// <summary>
         /// Reset the elements position to the old position
