@@ -46,7 +46,6 @@ namespace AbstractClasses
                 return;
             // Ground hit, update rotation
             Quaternion newRotation = Quaternion.FromToRotation(graphicsTransform.up, hit.normal) * oldRotation;
-            Debug.DrawLine(graphicsTransform.position, hit.point, Color.red);
             graphicsTransform.rotation = Quaternion.Lerp(oldRotation, newRotation, Time.deltaTime * rotationSpeed);
         }
 
