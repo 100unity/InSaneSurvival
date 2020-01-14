@@ -130,9 +130,18 @@ namespace Interactables
         {
             foreach (KeyValuePair<Item, int> entry in _itemsWithQuantities)
             {
-                for(int i = 0; i < entry.Value; i++) InventoryManager.Instance.ItemHandler.AddItem(entry.Key);
+                for (int i = 0; i < entry.Value; i++)
+                {
+                    if (!InventoryManager.Instance.AddItem(entry.Key))
+                    {
+                        // Item could not be added to the inventory, drop it to the ground or show an indicator for no space
+                        // For now, just skip to the next item(if there is any) and see if this one can be added
+                        break;
+                    }
+                }
             }
         }
+        
 
         /// <summary>
         /// Increases the <see cref="_respawnTimePassed"/> to the limit of <see cref="respawnTime"/>.
