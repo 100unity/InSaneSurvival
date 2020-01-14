@@ -24,16 +24,6 @@ namespace Entity.Player
         [Tooltip("100: sane, 0: insane")] [Range(0, 100)] [SerializeField]
         private int sanity;
 
-        // ------temp for hit animation------
-        [Tooltip("The time the object should be marked as hit after being hit")] [SerializeField]
-        private float healMarkTime;
-
-        private Material _healMarkerMaterial;
-        private bool _healed;
-
-        private float _healTimer;
-        // ----------
-
         public int Sanity => sanity;
 
         public static event PlayerStateChanged OnPlayerHealthUpdate;
@@ -42,16 +32,13 @@ namespace Entity.Player
         public static event PlayerStateChanged OnPlayerSanityUpdate;
         public static event PlayerIsDead OnPlayerDeath;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             // send event on initial values
             OnPlayerHealthUpdate?.Invoke(health);
             OnPlayerSaturationUpdate?.Invoke(saturation);
             OnPlayerHydrationUpdate?.Invoke(hydration);
             OnPlayerSanityUpdate?.Invoke(sanity);
-            // ------------
-            _healMarkerMaterial = new Material(Shader.Find("Standard")) {color = Color.magenta};
         }
 
         private void OnEnable()
@@ -68,23 +55,6 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
             RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
-        }
-
-        /// <summary>
-        /// Changes the objects color back to normal after being healed.
-        /// </summary>
-        protected override void Update()
-        {
-            base.Update();
-            if (!_healed) return;
-            _healTimer += Time.deltaTime;
-
-            if (_healTimer > healMarkTime)
-            {
-                _healed = false;
-                _healTimer = 0;
-                gameObjectRenderer.material = PrevMat;
-            }
         }
 
         //Interface
@@ -155,11 +125,6 @@ namespace Entity.Player
         public void Heal(int amount)
         {
             ChangePlayerHealth(amount);
-
-            //-------
-            _healed = true;
-            gameObjectRenderer.material = _healMarkerMaterial;
-            //-------
         }
 
         public bool Consume(Consumable item)

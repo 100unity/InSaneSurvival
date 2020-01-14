@@ -1,4 +1,5 @@
 using Inventory;
+using Managers;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,23 +13,16 @@ namespace Editor
         
         public override void OnInspectorGUI()
         {
-            InventoryController inventory = (InventoryController) target;
-
-            _showCustomInspector =
-                EditorGUILayout.BeginFoldoutHeaderGroup(_showCustomInspector,
-                    "Add items to inventory (for dev purposes)");
-            
-            if (_showCustomInspector)
-            {
-                item = (Item) EditorGUILayout.ObjectField("Item to add", item, typeof(Item), true);
-
-                if (GUILayout.Button("Add Items"))
-                    inventory.AddItem(item);
-            }
-            
-            EditorGUILayout.EndFoldoutHeaderGroup();
-            
             base.OnInspectorGUI();
+            
+            if (!EditorApplication.isPlaying) return;
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Testing UI for Development", EditorStyles.boldLabel);
+            item = (Item) EditorGUILayout.ObjectField("Item to add", item, typeof(Item), true);
+
+            if (GUILayout.Button("Add Items"))
+                InventoryManager.Instance.AddItem(item);
         }
     }
 }

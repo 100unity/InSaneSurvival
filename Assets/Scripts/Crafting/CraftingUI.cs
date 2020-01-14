@@ -11,7 +11,7 @@ namespace Crafting
         private GameObject craftingUIContent;
 
         [Tooltip("The grid for the recipes to be displayed in")] [SerializeField]
-        private GridLayoutGroup craftingRecipeGrid;
+        private LayoutGroup craftingRecipeGrid;
 
         [Tooltip("The crafting recipe UI prefab")] [SerializeField]
         private CraftingRecipeUI craftingRecipeUIPrefab;

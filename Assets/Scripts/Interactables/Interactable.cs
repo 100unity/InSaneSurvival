@@ -20,7 +20,7 @@ namespace Interactables
         public bool HasInteracted => hasInteracted;
 
         [SerializeField] private Transform player;    // Reference to the player transform
-        
+
         private void Update()
         {
             if (isFocus)    // If currently being focused

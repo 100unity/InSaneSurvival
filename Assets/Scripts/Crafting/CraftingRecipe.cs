@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Interfaces;
 using Managers;
 using UnityEngine;
 using Utils;
@@ -34,36 +33,56 @@ namespace Crafting
         /// </summary>
         public List<ItemResourceData> NeededItems => neededItems;
 
+        /// <summary>
+        /// The item that will be created with this recipe
+        /// </summary>
         public ItemResourceData CreatedItem => createdItem;
 
         /// <summary>
         /// Checks if all ingredients for this recipe are present. If one item is missing or the amount of items does not match the needed amount, false will be returned.
         /// <para>Also checks if the needed crafting station is currently been used.</para>
         /// </summary>
-        /// <param name="itemHandler">The object that holds the items</param>
         /// <returns>Whether all needed items are present</returns>
-        public bool CanCraft(IItemHandler itemHandler)
+        public bool CanCraft()
         {
-            return neededItems.All(neededItem => itemHandler.ContainsItem(neededItem.item, neededItem.amount)) &&
-                   (CraftingManager.Instance.CurrentCraftingStation == craftingStation ||
-                    craftingStation == CraftingManager.CraftingStation.None);
+            return neededItems.All(neededItem =>
+                       InventoryManager.Instance.ItemHandler.ContainsItem(neededItem.item, neededItem.amount)) &&
+                   (CraftingManager.Instance.HasCraftingStation(craftingStation));
         }
 
         /// <summary>
         /// Crafts the new item(s) ith this recipe
         /// </summary>
-        /// <param name="itemHandler">The object that holds the items</param>
-        public void Craft(IItemHandler itemHandler)
+        public void Craft()
         {
-            if (!CanCraft(itemHandler))
+            if (!CanCraft())
                 return;
 
             // Remove used item(s)
             foreach (ItemResourceData neededItem in neededItems)
-                itemHandler.RemoveItem(neededItem.item, neededItem.amount);
+                InventoryManager.Instance.RemoveItem(neededItem.item, neededItem.amount);
 
-            // Add newly created item
-            itemHandler.AddItem(createdItem.item, createdItem.amount);
+            int addedAmount = 0;
+            // Add newly created item(s)
+            for (int i = 0; i < createdItem.amount; i++)
+            {
+                if (!InventoryManager.Instance.AddItem(createdItem.item))
+                    break;
+                addedAmount++;
+            }
+
+            if (addedAmount >= createdItem.amount) return;
+
+            // Revert if inventory is full:
+
+            //Remove newly added items
+            for (int i = 0; i < addedAmount; i++)
+                InventoryManager.Instance.RemoveItem(createdItem.item);
+
+            //Add removed items
+            foreach (ItemResourceData neededItem in neededItems)
+                for (int i = 0; i < neededItem.amount; i++)
+                    InventoryManager.Instance.AddItem(neededItem.item);
         }
     }
 }
