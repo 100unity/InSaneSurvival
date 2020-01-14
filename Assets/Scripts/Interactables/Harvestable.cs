@@ -86,7 +86,7 @@ namespace Interactables
                 _itemsWithQuantities.Add(drops[i], quantities[i]);
             }
             // if item was respawning before save, keep it respawning
-            if(isRespawning) CoroutineManager.Instance.WaitForOneFrame(() => StartCoroutine(Respawn())); 
+            if(isRespawning) CoroutineManager.Instance.WaitForSeconds(1.0f/60.0f,() => StartCoroutine(Respawn())); 
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Interactables
         public override void Interact()
         {
             _gatherTimePassed = 0;
-            CoroutineManager.Instance.WaitForOneFrame(() => StartCoroutine(Gather()));
+            CoroutineManager.Instance.WaitForSeconds(1.0f/60.0f,() => StartCoroutine(Gather()));
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Interactables
                     if(destroyAfterHarvest) GameObject.Destroy(_parent);
                     else
                     {
-                        CoroutineManager.Instance.WaitForOneFrame(() => StartCoroutine(Respawn())); 
+                        CoroutineManager.Instance.WaitForSeconds(1.0f/60.0f,() => StartCoroutine(Respawn())); 
                     }
                 }
                 yield return null;
@@ -130,7 +130,7 @@ namespace Interactables
         {
             foreach (KeyValuePair<Item, int> entry in _itemsWithQuantities)
             {
-                InventoryManager.Instance.ItemHandler.AddItem(entry.Key, entry.Value);
+                for(int i = 0; i < entry.Value; i++) InventoryManager.Instance.ItemHandler.AddItem(entry.Key);
             }
         }
 
