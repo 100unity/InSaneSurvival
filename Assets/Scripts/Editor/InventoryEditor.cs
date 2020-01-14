@@ -1,4 +1,5 @@
 using Inventory;
+using Managers;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,14 +17,12 @@ namespace Editor
             
             if (!EditorApplication.isPlaying) return;
 
-            InventoryController inventory = (InventoryController) target;
-
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Testing UI for Development", EditorStyles.boldLabel);
             item = (Item) EditorGUILayout.ObjectField("Item to add", item, typeof(Item), true);
 
             if (GUILayout.Button("Add Items"))
-                inventory.AddItem(item);
+                InventoryManager.Instance.AddItem(item);
         }
     }
 }

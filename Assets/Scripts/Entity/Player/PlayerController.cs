@@ -1,14 +1,14 @@
 ﻿using System;
-using Crafting;
 using AbstractClasses;
+using Crafting;
 using Interactables;
+using Inventory.UI;
 using Managers;
-using UI;
 using UI.Menus;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Utils;
-using UnityEngine.EventSystems;
 
 namespace Entity.Player
 {
@@ -150,7 +150,7 @@ namespace Entity.Player
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            
+
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
@@ -194,7 +194,7 @@ namespace Entity.Player
             // Create click point effect
             Instantiate(clickEffect, hit.point, Quaternion.identity);
 
-			OnPlayerPositionUpdate?.Invoke(transform.position);
+            OnPlayerPositionUpdate?.Invoke(transform.position);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Entity.Player
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            
+
             _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
             UpdateCameraAngle();
         }
