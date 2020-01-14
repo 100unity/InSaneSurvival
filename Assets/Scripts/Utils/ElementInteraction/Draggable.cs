@@ -15,10 +15,13 @@ namespace Utils.ElementInteraction
         private Transform parent;
 
         /// <summary>
-        /// Will be triggered when the user stops dragging
+        /// Will be triggered when the user stops dragging.
         /// </summary>
         public event DragDelegate OnEndDragging;
 
+        /// <summary>
+        /// Will be triggered when the user starts dragging.
+        /// </summary>
         public event DragDelegate OnBeginDragging;
 
         public delegate void DragDelegate(PointerEventData eventData);

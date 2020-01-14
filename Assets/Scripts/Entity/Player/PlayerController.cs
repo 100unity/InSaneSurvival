@@ -69,6 +69,9 @@ namespace Entity.Player
         /// </summary>
         private Vector3 _cameraPosition;
 
+        /// <summary>
+        /// Used to prevent camera rotation when the player clicked on an UI element first.
+        /// </summary>
         private bool _startedDragOverUI;
 
         /// <summary>

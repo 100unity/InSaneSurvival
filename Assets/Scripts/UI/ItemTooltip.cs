@@ -14,16 +14,24 @@ namespace UI
     /// </summary>
     public class ItemTooltip : HoverTooltip
     {
-        [Header("UIItemTooltip")] [SerializeField]
+        [Header("UIItemTooltip")] [Tooltip("Used for getting the item-information")] [SerializeField]
         private ItemButton itemButton;
 
-        [SerializeField] private Draggable draggable;
+        [Tooltip("Used for disabling the tooltip on drag")] [SerializeField]
+        private Draggable draggable;
 
-        [SerializeField] protected TextMeshProUGUI txtTitle;
+        [Tooltip("The title text component")] [SerializeField]
+        protected TextMeshProUGUI txtTitle;
 
-        [SerializeField] protected TextMeshProUGUI txtDescription;
-        [SerializeField] protected TextMeshProUGUI txtEffect;
+        [Tooltip("The description text component")] [SerializeField]
+        protected TextMeshProUGUI txtDescription;
 
+        [Tooltip("The effect text component")] [SerializeField]
+        protected TextMeshProUGUI txtEffect;
+
+        /// <summary>
+        /// Wait until the item is set and set the texts.
+        /// </summary>
         protected override void Awake()
         {
             base.Awake();
@@ -47,12 +55,18 @@ namespace UI
             draggable.OnEndDragging -= Activate;
         }
 
+        /// <summary>
+        /// Re-enables the tooltip.
+        /// </summary>
         private void Activate(PointerEventData eventData)
         {
             Time = float.MaxValue;
             IsDeactivated = false;
         }
 
+        /// <summary>
+        /// Disables the tooltip.
+        /// </summary>
         private void Deactivate(PointerEventData eventData)
         {
             IsDeactivated = true;
