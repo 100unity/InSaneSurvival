@@ -1,4 +1,4 @@
-﻿using UI;
+﻿using Inventory.UI;
 using UnityEngine;
 
 namespace Utils.ElementInteraction

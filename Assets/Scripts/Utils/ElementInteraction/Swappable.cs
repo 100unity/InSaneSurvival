@@ -12,6 +12,9 @@ namespace Utils.ElementInteraction
         [Tooltip("The highest parent element")] [SerializeField]
         private GameObject parent;
 
+        [Tooltip("Disables the dragging behaviour. This does not influence the swapping")] [SerializeField]
+        private bool disableDragging;
+
         /// <summary>
         /// The highest parent of this swappable. Should be used for positioning
         /// </summary>
@@ -43,8 +46,14 @@ namespace Utils.ElementInteraction
         private void Awake()
         {
             _draggable = GetComponent<Draggable>();
-            _draggable.OnEndDragging += Swap;
+
+            if (disableDragging)
+                _draggable.enabled = false;
         }
+
+        private void OnEnable() => _draggable.OnEndDragging += Swap;
+
+        private void OnDisable() => _draggable.OnEndDragging -= Swap;
 
         /// <summary>
         /// Swap with another Swappable. If no swappable found, snap to old position
