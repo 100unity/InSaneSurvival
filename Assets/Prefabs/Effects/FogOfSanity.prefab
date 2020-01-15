@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fogOfSanityMesh: {fileID: 6112913263723783040}
-  player: {fileID: 0}
   pulseIntensity: 5
   pulseDelay: 0.6
   apertureRadiusCurve:
@@ -163,8 +162,8 @@ MonoBehaviour:
       inWeight: 0.04892519
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5020799
-      value: 0.80082214
+      time: 0.5033562
+      value: 0.90158135
       inSlope: -0.02915633
       outSlope: -0.02915633
       tangentMode: 0
@@ -172,10 +171,10 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.13105406
     - serializedVersion: 3
-      time: 1
-      value: 0.79756165
-      inSlope: -0.006548226
-      outSlope: -0.006548226
+      time: 1.0012763
+      value: 0.9006402
+      inSlope: -0.0018901777
+      outSlope: -0.0018901777
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

@@ -39,9 +39,8 @@ namespace Entity.Player.Sanity
         [SerializeField]
         [Range(0, 1)]
         private float aberrationPulseIntensity;
+        
 
-
-        [Range(0,100)]
         private int _sanity;
         // have different frequencies for different effects
         private bool[] _isGrowing;
@@ -128,8 +127,8 @@ namespace Entity.Player.Sanity
         /// </summary>
         private void PulseAll()
         {
-            _vignettePulse = Pulse(_vignettePulse, vignettePulseFrequency, vignettePulseIntensity, 0);
-            _aberrationPulse = Pulse(_aberrationPulse, aberrationPulseFrequency, aberrationPulseIntensity, 1);
+            _vignettePulse = Pulse(_vignettePulse, vignettePulseFrequency, vignettePulseIntensity, ref _isGrowing[0]);
+            _aberrationPulse = Pulse(_aberrationPulse, aberrationPulseFrequency, aberrationPulseIntensity, ref _isGrowing[1]);
         }
 
         /// <summary>
@@ -151,21 +150,21 @@ namespace Entity.Player.Sanity
         /// <param name="valueToBePulsed">The value pulsing should be applied to.</param>
         /// <param name="pulseFrequency">The frequency of the pulse.</param>
         /// <param name="pulseIntensity">The intensity of the pulse.</param>
-        /// <param name="boolIndex">Index of the boolean to be used for creating the pulse effect.</param>
+        /// <param name="isGrowing">The boolean to be used for creating the pulse effect.</param>
         /// <returns></returns>
-        private float Pulse(float valueToBePulsed, float pulseFrequency, float pulseIntensity, int boolIndex)
+        private float Pulse(float valueToBePulsed, float pulseFrequency, float pulseIntensity, ref bool isGrowing)
         {
-            if (_isGrowing[boolIndex])
+            if (isGrowing)
             {
                 valueToBePulsed += Time.deltaTime * pulseFrequency;
                 if (valueToBePulsed > pulseIntensity)
-                    _isGrowing[boolIndex] = false;
+                    isGrowing = false;
             }
             else
             {
                 valueToBePulsed -= Time.deltaTime * (pulseFrequency / 2);
                 if (valueToBePulsed <= 0)
-                    _isGrowing[boolIndex] = true;
+                    isGrowing = true;
             }
             return valueToBePulsed;
         }
