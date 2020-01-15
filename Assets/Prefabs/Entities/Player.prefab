@@ -287,8 +287,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1245374304537478918}
-  - {fileID: 784861889176494528}
   - {fileID: 6290656398760315500}
+  - {fileID: 784861889176494528}
   - {fileID: 5627339879313764189}
   m_Father: {fileID: 6126187404098910139}
   m_RootOrder: 1
@@ -665,7 +665,7 @@ PrefabInstance:
     - target: {fileID: 1517941757197169441, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1517941757197169441, guid: 7a8a0fc9d153348aa88e48613c9304bb,
         type: 3}
@@ -827,7 +827,7 @@ PrefabInstance:
     - target: {fileID: 6367347880368899858, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6367347880368899858, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
@@ -909,6 +909,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
+    - target: {fileID: 1757607776424889163, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
+        type: 3}
+      propertyPath: m_Name
+      value: SpeechBubble
+      objectReference: {fileID: 0}
     - target: {fileID: 1385837920800683127, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -938,11 +943,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1757607776424889163, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
-        type: 3}
-      propertyPath: m_Name
-      value: SpeechBubble
       objectReference: {fileID: 0}
     - target: {fileID: 2396523189984196907, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
         type: 3}
