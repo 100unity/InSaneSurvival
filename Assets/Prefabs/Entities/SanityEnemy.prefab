@@ -114,6 +114,10 @@ MonoBehaviour:
   rotationSpeed: 5
   rotationTolerance: 10
   animator: {fileID: 6890635537354632276}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  graphicsTransform: {fileID: 6890635537345037210}
   wanderArea:
     center: {fileID: 0}
     radius: 15
