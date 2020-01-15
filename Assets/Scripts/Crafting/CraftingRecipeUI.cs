@@ -65,6 +65,6 @@ namespace Crafting
         /// Sets the color of the image to visually show if this recipe can be crafted
         /// </summary>
         private void SetCanCraft(bool canCraft) =>
-            imgBackground.color = canCraft ? Consts.Colors.White : Consts.Colors.Red;
+            imgCraftItem.color = canCraft ? Consts.Colors.White : Color.black;
     }
 }

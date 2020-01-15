@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddbf48c44c41f54ca084202f466156a, type: 3}
   m_Name: Berry
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a186b6b5073596148846555c32687af9, type: 3}
   maxStackSize: 10
   healthValue: 0
   saturationValue: 10
