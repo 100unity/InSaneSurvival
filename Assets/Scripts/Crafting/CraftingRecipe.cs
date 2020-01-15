@@ -42,12 +42,21 @@ namespace Crafting
         /// Checks if all ingredients for this recipe are present. If one item is missing or the amount of items does not match the needed amount, false will be returned.
         /// <para>Also checks if the needed crafting station is currently been used.</para>
         /// </summary>
-        /// <returns>Whether all needed items are present</returns>
-        public bool CanCraft()
+        /// <returns>Whether this crafting recipe can be crafted</returns>
+        public bool CanCraft() => CanCraft(out _);
+
+        /// <summary>
+        /// Checks if all ingredients for this recipe are present. If one item is missing or the amount of items does not match the needed amount, false will be returned.
+        /// <para>Also checks if the needed crafting station is currently been used.</para>
+        /// </summary>
+        /// <param name="hasCraftingStation">OUT PARAM: Whether the required crafting station is present</param>
+        /// <returns>Whether this crafting recipe can be crafted</returns>
+        public bool CanCraft(out bool hasCraftingStation)
         {
+            hasCraftingStation = CraftingManager.Instance.HasCraftingStation(craftingStation);
             return neededItems.All(neededItem =>
                        InventoryManager.Instance.ItemHandler.ContainsItem(neededItem.item, neededItem.amount)) &&
-                   (CraftingManager.Instance.HasCraftingStation(craftingStation));
+                   hasCraftingStation;
         }
 
         /// <summary>
