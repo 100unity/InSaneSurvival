@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Inventory;
 using Managers;
@@ -45,23 +47,29 @@ namespace Interactables
         [Tooltip("Need a camera reference so resources don't respawn while the player can see them.")]
         [SerializeField] 
         private Camera mainCam;
+        
+        [Tooltip("Select abilities needed (if any) in order to harvest this resource.")] [SerializeField] [EnumMultiSelect] 
+        private Equipable.EquipableAbility neededAbility;
 
         private MeshRenderer _ownMeshRenderer;
         private BoxCollider _ownCollider;
         private MeshRenderer _replacementMeshRenderer;
 
         private Dictionary<Item, int> _itemsWithQuantities;
-
-        private void Awake()    
+        
+        private List<Equipable.EquipableAbility>  _neededAbility;
+        
+        private void Awake()
         {
             if (mainCam == null) // in case it was forgotten to set via the editor
             {
                 mainCam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
             }
+            
             _ownMeshRenderer = GetComponent<MeshRenderer>();
             _ownCollider = GetComponent<BoxCollider>();
             
-            // stuff needed to calculate a proper interaction radius
+            // TODO: Fix this or find another solution
             float numberToUse = 0;
             float x = _ownCollider.size.x;
             float z = _ownCollider.size.z;
@@ -85,15 +93,37 @@ namespace Interactables
             {
                 _itemsWithQuantities.Add(drops[i], quantities[i]);
             }
+            
+            _neededAbility = GetSelectedElements(); 
+            
             // if item was respawning before save, keep it respawning
             if(isRespawning) CoroutineManager.Instance.WaitForSeconds(1.0f/60.0f,() => StartCoroutine(Respawn())); 
         }
 
         /// <summary>
-        /// Resets the <see cref="_gatherTimePassed"/> and starts the <see cref="Gather"/> coroutine.
+        /// Checks if the player has the ability to harvest this resource.
+        /// If so, it resets the <see cref="_gatherTimePassed"/> and starts the <see cref="Gather"/> coroutine.
         /// </summary>
         public override void Interact()
         {
+            if (_neededAbility.Count != 0) // check for needed abilities ony if this resource has any
+            {
+                Equipable equipped = InventoryManager.Instance.CurrentlyEquippedItem;
+                if (equipped == null)
+                {
+                    Debug.Log("Missing ability/No item equipped.");
+                    return;
+                }
+                foreach (Equipable.EquipableAbility ability in _neededAbility)
+                {
+                    if (!equipped.HasAbility(ability))
+                    {
+                        // show that ability is missing
+                        Debug.Log("Missing ability");
+                        return;
+                    }
+                }
+            }
             _gatherTimePassed = 0;
             CoroutineManager.Instance.WaitForSeconds(1.0f/60.0f,() => StartCoroutine(Gather()));
         }
@@ -102,7 +132,8 @@ namespace Interactables
         /// Increases the <see cref="_gatherTimePassed"/> to the limit of <see cref="gatherTime"/> as long as the
         /// player keeps interacting.
         /// If enough time has passed, it calls <see cref="AddItems"/>,
-        /// replaces the resource with the <see cref="replacement"/>
+        /// and if the resource is not supposed to be destroyed after the successful harvest,
+        /// it replaces the resource with the <see cref="replacement"/>
         /// and starts the coroutine <see cref="Respawn"/>.
         /// </summary>
         private IEnumerator Gather()
@@ -124,7 +155,7 @@ namespace Interactables
         }
 
         /// <summary>
-        /// Adds each item with their respective quantity to the player's inventory.
+        /// Adds each item with their respective quantity to the player's inventory as long as there is space.
         /// </summary>
         private void AddItems()
         {
@@ -141,7 +172,6 @@ namespace Interactables
                 }
             }
         }
-        
 
         /// <summary>
         /// Increases the <see cref="_respawnTimePassed"/> to the limit of <see cref="respawnTime"/>.
@@ -165,6 +195,22 @@ namespace Interactables
             _ownMeshRenderer.enabled = true;
             _ownCollider.enabled = true;
             _replacementMeshRenderer.enabled = false;
+        }
+        
+        // TODO: Code duplication because it's also used in Equipables
+        private List<Equipable.EquipableAbility> GetSelectedElements()
+        {
+            List<Equipable.EquipableAbility> selectedElements = new List<Equipable.EquipableAbility>();
+            for (int i = 0; i < Enum.GetValues(typeof(Equipable.EquipableAbility)).Length; i++)
+            {
+                int layer = 1 << i;
+                if (((int) neededAbility & layer) != 0)
+                {
+                    selectedElements.Add((Equipable.EquipableAbility) i);
+                }
+            }
+
+            return selectedElements;
         }
     }
 }

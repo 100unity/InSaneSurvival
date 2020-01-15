@@ -26,16 +26,17 @@ namespace Inventory
         private List<EquipableAbility> _abilities;
 
         /// <summary>
-        /// Get all abilities from the MultiSelect
-        /// </summary>
-        private void Awake() => _abilities = GetSelectedElements();
-
-        /// <summary>
-        /// Checks if this item has the given ability
+        /// Get all abilities from the MultiSelect (if null) and
+        /// checks if this item has the given ability
         /// </summary>
         /// <param name="ability">The ability to check</param>
         /// <returns>Whether it has the given ability or not</returns>
-        public bool HasAbility(EquipableAbility ability) => _abilities.Contains(ability);
+        public bool HasAbility(EquipableAbility ability)
+        {
+            if (_abilities == null)
+                _abilities = GetSelectedElements();
+            return _abilities.Contains(ability);
+        }
 
         /// <summary>
         /// Placeholder function for now.
