@@ -27,7 +27,7 @@ namespace UI
         protected TextMeshProUGUI txtDescription;
 
         [Tooltip("The effect text component")] [SerializeField]
-        protected TextMeshProUGUI txtEffect;
+        protected TextMeshProUGUI txtCondition;
 
         /// <summary>
         /// Wait until the item is set and set the texts.
@@ -41,7 +41,6 @@ namespace UI
                     ? itemButton.Item.name
                     : itemButton.Item.ItemName);
                 txtDescription.SetText(itemButton.Item.Description);
-                txtEffect.SetText(itemButton.Item.EffectText);
             });
         }
 

@@ -57,6 +57,7 @@ namespace Utils
                 tooltipContent.SetActive(value);
                 canvas.overrideSorting = value;
                 canvas.sortingOrder = value ? 10 : 0;
+                Cursor.visible = !value;
             }
         }
 

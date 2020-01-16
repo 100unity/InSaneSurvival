@@ -50,6 +50,7 @@ namespace Utils.ElementInteraction
                 graphicRaycaster.enabled = !value;
                 canvas.overrideSorting = value;
                 canvas.sortingOrder = value ? 1 : 0;
+                Cursor.visible = !value;
             }
         }
 
@@ -77,7 +78,11 @@ namespace Utils.ElementInteraction
         /// <summary>
         /// Follows the mouse position
         /// </summary>
-        public void OnDrag(PointerEventData eventData) => parent.position = eventData.position;
+        public void OnDrag(PointerEventData eventData)
+        {
+            parent.position = eventData.position;
+            Cursor.visible = false;
+        }
 
         /// <summary>
         /// Invokes the <see cref="OnEndDrag"/> event
