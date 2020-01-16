@@ -19,7 +19,7 @@ namespace Managers
             {
                 // grab required components to extract data from
                 GameObject player = PlayerManager.Instance.GetPlayer();
-                InventoryController inventoryController = player.GetComponentInChildren<InventoryController>();
+                InventoryController inventoryController = InventoryManager.Instance.GetInvController();
 
                 // this is the player's current position in the map
                 Vector3 playerPosition = player.transform.localPosition;
@@ -70,7 +70,7 @@ namespace Managers
                 
                 // get game components
                 GameObject player = PlayerManager.Instance.GetPlayer();
-                InventoryController inventoryController = player.GetComponentInChildren<InventoryController>();
+                InventoryController inventoryController = InventoryManager.Instance.GetInvController();
                 DayNightManager timeManager = DayNightManager.Instance;
                 CampsiteManager campsiteManager = CampsiteManager.Instance;
 
