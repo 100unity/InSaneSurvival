@@ -26,6 +26,7 @@ namespace Constants
             public static Color WhiteFaded = new Color(1, 1, 1, 0.4f);
             public static Color Red = new Color(1f, 0.4f, 0.4f, 1);
             public static Color RedFaded = new Color(1f, 0.4f, 0.4f, 0.4f);
+            public static Color Green = new Color(0.19f, 0.93f, 0.62f, 1);
             public static Color Grey = new Color(0.41f, 0.41f, 0.41f);
         }
 

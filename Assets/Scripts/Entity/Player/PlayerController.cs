@@ -40,9 +40,11 @@ namespace Entity.Player
         private CraftingUI craftingUI;
 
         public delegate void PlayerPositionChanged(Vector3 newPosition);
+
         public static event PlayerPositionChanged OnPlayerPositionUpdate;
 
         public delegate void CameraDistanceChanged(float newDistance);
+
         public static event CameraDistanceChanged OnCameraDistanceChange;
 
         public float CameraDistance => cameraDistance.y;
@@ -63,6 +65,11 @@ namespace Entity.Player
         /// The current position of the camera, relative to the player
         /// </summary>
         private Vector3 _cameraPosition;
+
+        /// <summary>
+        /// Used to prevent camera rotation when the player clicked on an UI element first.
+        /// </summary>
+        private bool _startedDragOverUI;
 
         /// <summary>
         /// Gets references and sets up the controls.
@@ -114,6 +121,9 @@ namespace Entity.Player
             Vector3 playerPosition = transform.position;
             _camera.transform.position = playerPosition + _cameraPosition;
             _camera.transform.LookAt(playerPosition);
+
+            if (Input.GetMouseButtonUp(0))
+                _startedDragOverUI = false;
         }
 
         /// <summary>
@@ -199,8 +209,13 @@ namespace Entity.Player
         /// </summary>
         private void RotateCamera(InputAction.CallbackContext obj)
         {
+            if (_startedDragOverUI) return;
+
             if (EventSystem.current.IsPointerOverGameObject())
+            {
+                _startedDragOverUI = true;
                 return;
+            }
 
             _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
             UpdateCameraAngle();

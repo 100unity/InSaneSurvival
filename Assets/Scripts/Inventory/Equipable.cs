@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Managers;
 using UnityEngine;
 using Utils;
 
@@ -9,7 +8,7 @@ namespace Inventory
     [CreateAssetMenu(fileName = "New Equipable", menuName = "Inventory/Item/Equipable")]
     public class Equipable : Item
     {
-        [Tooltip("All abilities this item has")] [EnumMultiSelect] [SerializeField]
+        [Header("Equipable")] [Tooltip("All abilities this item has")] [EnumMultiSelect] [SerializeField]
         private EquipableAbility equipableAbility;
 
         [Tooltip("The damage that will be added to the normal attack when this is equipped")] [SerializeField]
