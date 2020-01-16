@@ -83,15 +83,9 @@ namespace Entity.Player.Sanity
             ClampAll();
         }
 
-        private void OnEnable()
-        {
-            PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
-        }
+        private void OnEnable() => PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
 
-        private void OnDisable()
-        {
-            PlayerState.OnPlayerSanityUpdate -= OnSanityUpdated;
-        }
+        private void OnDisable() => PlayerState.OnPlayerSanityUpdate -= OnSanityUpdated;
 
         /// <summary>
         /// Pulses all pulses. Masks them. Sets current values in post processing profile.

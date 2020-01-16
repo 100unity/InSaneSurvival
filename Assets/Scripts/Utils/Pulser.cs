@@ -8,19 +8,13 @@ namespace Utils
         // have different frequencies for different effects
         private Dictionary<string, bool> _pulses;
 
-        public Pulser()
-        {
-            _pulses = new Dictionary<string, bool>();
-        }
+        public Pulser() => _pulses = new Dictionary<string, bool>();
 
         /// <summary>
         /// Make a new pulse.
         /// </summary>
         /// <param name="name"></param>
-        public void NewPulse(string name)
-        {
-            _pulses.Add(name, false);
-        }
+        public void NewPulse(string name) => _pulses.Add(name, false);
 
         /// <summary>
         /// Pulse a value with a certain frequency and intensity. If the pulse doesn't already exist, a new pulse is made.
