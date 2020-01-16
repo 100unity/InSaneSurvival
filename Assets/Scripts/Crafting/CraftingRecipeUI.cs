@@ -14,9 +14,6 @@ namespace Crafting
         [Tooltip("The vertical layout group where the resources will be ordered in")] [SerializeField]
         private LayoutGroup recipeResourceList;
 
-        [Tooltip("The background image to show if the recipe can be crafted")] [SerializeField]
-        private Image imgBackground;
-
         [Tooltip("The button for crafting the item")] [SerializeField]
         private Button craftButton;
 
@@ -65,6 +62,6 @@ namespace Crafting
         /// Sets the color of the image to visually show if this recipe can be crafted
         /// </summary>
         private void SetCanCraft(bool canCraft) =>
-            imgBackground.color = canCraft ? Consts.Colors.White : Consts.Colors.Red;
+            imgCraftItem.color = canCraft ? Consts.Colors.White : Color.black;
     }
 }
