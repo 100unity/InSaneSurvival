@@ -83,5 +83,10 @@ namespace Managers
                 _currentlyEquippedItemButton.Unequip();
             _currentlyEquippedItemButton = itemButton;
         }
+
+        public Equipable GetCurrentlyEquipped()
+        {
+            return CurrentlyEquippedItem;
+        }
     }
 }
