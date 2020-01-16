@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddbf48c44c41f54ca084202f466156a, type: 3}
   m_Name: Bandage
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: ab97eea803c1fb642921225713e2020a, type: 3}
+  icon: {fileID: 21300000, guid: 33d61d1797e07ed479b4c3a6b625e086, type: 3}
   maxStackSize: 10
   healthValue: 10
   saturationValue: 0
