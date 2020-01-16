@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 0d1179e549d3c464685347b1216951ba, type: 3}
   maxStackSize: 20
+  description: 
+  effectText: 
