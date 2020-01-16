@@ -21,6 +21,9 @@ namespace Buildings
         [SerializeField]
         private bool isAlreadyBuilt;
 
+        [Tooltip("The particle system to enable after the building is built")] [SerializeField]
+        private ParticleSystem particles;
+
         public Renderer BuildingRenderer => buildingRenderer;
 
         /// <summary>
@@ -61,6 +64,8 @@ namespace Buildings
         /// </summary>
         protected virtual void OnBuild()
         {
+            if (particles)
+                particles.Play(true);
         }
     }
 }

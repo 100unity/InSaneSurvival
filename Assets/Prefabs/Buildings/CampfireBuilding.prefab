@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1931566429376249256}
-  - component: {fileID: 1301473851611091510}
+  - component: {fileID: 6210544236673023515}
   - component: {fileID: 3238405777838765277}
   m_Layer: 0
   m_Name: CampfireBuilding
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1301473851611091510
+--- !u!114 &6210544236673023515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingRenderer: {fileID: 1556595926484926037}
   useDistance: 3
-  isAlreadyBuild: 0
+  isAlreadyBuilt: 0
+  particles: {fileID: 3372996268217254630}
   craftingStation: 2
 --- !u!114 &3238405777838765277
 MonoBehaviour:
@@ -62,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31bbc0654a15461db2a4df9e47a71ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building: {fileID: 1301473851611091510}
+  building: {fileID: 6210544236673023515}
   requiredResources:
   - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
     amount: 10
@@ -186,11 +187,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3786582098739031718, guid: f5a344f14d48fb14e939261530a7950c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7169431523735949782, guid: f5a344f14d48fb14e939261530a7950c,
         type: 3}
       propertyPath: parent
@@ -201,6 +197,11 @@ PrefabInstance:
       propertyPath: blueprint
       value: 
       objectReference: {fileID: 3238405777838765277}
+    - target: {fileID: 3786582098739031718, guid: f5a344f14d48fb14e939261530a7950c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5a344f14d48fb14e939261530a7950c, type: 3}
 --- !u!224 &2601874734206806944 stripped
@@ -287,6 +288,12 @@ Transform:
 --- !u!23 &1556595926484926037 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7136342084447446894, guid: 818f1ae2359d55d42b2ac094f48acb01,
+    type: 3}
+  m_PrefabInstance: {fileID: 8544246515065755963}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3372996268217254630 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6366973677809163229, guid: 818f1ae2359d55d42b2ac094f48acb01,
     type: 3}
   m_PrefabInstance: {fileID: 8544246515065755963}
   m_PrefabAsset: {fileID: 0}
