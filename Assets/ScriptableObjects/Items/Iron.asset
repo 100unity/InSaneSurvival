@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eba810f194bea0468b3318491a21203, type: 3}
   m_Name: Iron
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8de1dc4846d4228428ae13c48ac51b42, type: 3}
   maxStackSize: 10
   description: 
   effectText: 

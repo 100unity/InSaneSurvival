@@ -18,9 +18,6 @@ namespace Entity.Player
         [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
         private LayerMask clickableLayers;
 
-        [Tooltip("Defines where the player can move")] [SerializeField]
-        private LayerMask groundLayer;
-
         [Tooltip("An effect that will be displayed whenever the player clicks to move")] [SerializeField]
         private GameObject clickEffect;
 
