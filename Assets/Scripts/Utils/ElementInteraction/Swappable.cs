@@ -61,7 +61,7 @@ namespace Utils.ElementInteraction
         /// <param name="eventData"></param>
         private void Swap(PointerEventData eventData)
         {
-            Swappable otherSwappable = _draggable.GraphicRaycaster.FindUIElement(eventData, this);
+            Swappable otherSwappable = _draggable.HighestGraphicRaycaster.FindUIElement(eventData, this);
             // No swappable, nothing to do
             if (otherSwappable == null)
             {
