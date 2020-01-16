@@ -49,7 +49,7 @@ MonoBehaviour:
   buildingRenderer: {fileID: 1556595926484926037}
   useDistance: 3
   isAlreadyBuilt: 0
-  particles: {fileID: 3372996268217254630}
+  additionalBehaviour: {fileID: 5538101324295295665}
   craftingStation: 2
 --- !u!114 &3238405777838765277
 MonoBehaviour:
@@ -277,6 +277,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4720788688378127091, guid: 818f1ae2359d55d42b2ac094f48acb01,
+        type: 3}
+      propertyPath: building
+      value: 
+      objectReference: {fileID: 6210544236673023515}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 818f1ae2359d55d42b2ac094f48acb01, type: 3}
 --- !u!4 &6769606380398632079 stripped
@@ -291,9 +296,9 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 8544246515065755963}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &3372996268217254630 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6366973677809163229, guid: 818f1ae2359d55d42b2ac094f48acb01,
+--- !u!1 &5538101324295295665 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4199618886055807882, guid: 818f1ae2359d55d42b2ac094f48acb01,
     type: 3}
   m_PrefabInstance: {fileID: 8544246515065755963}
   m_PrefabAsset: {fileID: 0}
