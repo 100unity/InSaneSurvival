@@ -9,6 +9,8 @@ namespace Entity.Player
     {
         public delegate void PlayerStateChanged(int newValue);
 
+        public delegate void PlayerEvents();
+
         public delegate void PlayerIsDead();
 
         //Player State values
@@ -30,6 +32,9 @@ namespace Entity.Player
         public static event PlayerStateChanged OnPlayerSaturationUpdate;
         public static event PlayerStateChanged OnPlayerHydrationUpdate;
         public static event PlayerStateChanged OnPlayerSanityUpdate;
+        public static event PlayerEvents OnPlayerHit;
+        public static event PlayerEvents OnPlayerHealed;
+
         public static event PlayerIsDead OnPlayerDeath;
 
         private void Awake()
@@ -115,6 +120,7 @@ namespace Entity.Player
         {
             base.Hit(damage);
             ChangePlayerHealth(-damage);
+            OnPlayerHit?.Invoke();
         }
 
         /// <summary>
@@ -125,6 +131,7 @@ namespace Entity.Player
         public void Heal(int amount)
         {
             ChangePlayerHealth(amount);
+            OnPlayerHealed?.Invoke();
         }
 
         public bool Consume(Consumable item)
@@ -141,7 +148,6 @@ namespace Entity.Player
         public override void Die()
         {
             OnPlayerDeath?.Invoke();
-            Debug.Log("Player is dead");
         }
     }
 }

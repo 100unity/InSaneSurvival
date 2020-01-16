@@ -2,12 +2,16 @@
 using AbstractClasses;
 using Constants;
 using Managers;
+using Entity.Enemy;
 
 namespace Entity
 {
     [RequireComponent(typeof(Movable))]
     public class AttackLogic : MonoBehaviour
     {
+        public delegate void PlayerAttackPerformed();
+        public static event PlayerAttackPerformed OnPlayerAttackPerformed;
+
         [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
 
@@ -31,12 +35,12 @@ namespace Entity
         public enum AttackStatus { Hit, Miss, NotFinished, None }
 
         public AttackStatus Status { get; private set; }
+        public Damageable Target { get; private set; }
 
         // component references
         private Movable _movable;
 
         private float _timer;
-        private Damageable _target;
         private float _distanceToTarget;
         private static readonly int AttackTrigger = Animator.StringToHash(Consts.Animation.ATTACK_TRIGGER);
 
@@ -56,7 +60,7 @@ namespace Entity
         /// </summary>
         private void Update()
         {
-            if (_target != null)
+            if (Target != null)
             {
                 Attack();
             }
@@ -76,7 +80,7 @@ namespace Entity
         /// </summary>
         private void Attack()
         {
-            _distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
+            _distanceToTarget = Vector3.Distance(Target.transform.position, transform.position);
             if (_distanceToTarget < attackRange && Status == AttackStatus.None)
             {
                 IsInRange();
@@ -92,7 +96,7 @@ namespace Entity
             else
             {
                 // chase target
-                _movable.Move(_target.transform.position);
+                _movable.Move(Target.transform.position);
             }
         }
 
@@ -103,7 +107,7 @@ namespace Entity
         {
             _movable.StopMoving();
             // face target
-            if (_movable.FaceTarget(_target.gameObject, true, out _))
+            if (_movable.FaceTarget(Target.gameObject, true, out _))
             {
                 // faces target
                 // perform hit
@@ -122,7 +126,7 @@ namespace Entity
             if (Status == AttackStatus.Hit)
             {
                 // deal damage
-                Damageable damageable = _target.GetComponent<Damageable>();
+                Damageable damageable = Target.GetComponent<Damageable>();
                 // Add damage boost from weapon
                 damageable.Hit(damage + InventoryManager.Instance.DamageBoostFromEquipable);
             }
@@ -132,7 +136,7 @@ namespace Entity
             if (resetAfterHit)
             {
                 // reset aggro independent of (un-)successful hit
-                _target = null;
+                Target = null;
             }
         }
 
@@ -143,8 +147,7 @@ namespace Entity
         /// <param name="target">The target to be attacked</param>
         public void StartAttack(Damageable target)
         {
-            print("start attack");
-            _target = target;
+            Target = target;
         }
 
         /// <summary>
@@ -152,7 +155,7 @@ namespace Entity
         /// </summary>
         public void StopAttack()
         {
-            _target = null;
+            Target = null;
         }
 
         /// <summary>
@@ -171,10 +174,10 @@ namespace Entity
                 if (_distanceToTarget < attackRange)
                 {
                     // check rotation as well
-                    _movable.FaceTarget(_target.gameObject, false, out float difference);
+                    _movable.FaceTarget(Target.gameObject, false, out float difference);
                     return difference < hitRotationTolerance ? AttackStatus.Hit : AttackStatus.Miss;
                 }
-
+                OnPlayerAttackPerformed?.Invoke();
                 return AttackStatus.Miss;
             }
 
