@@ -15,13 +15,16 @@ namespace Utils.ElementInteraction
         [Tooltip("Used for showing this on top of other UI-Elements")] [SerializeField]
         private Canvas canvas;
 
-        [Tooltip("Used for finding UI elements with rays")] [SerializeField]
+        [Tooltip("Used for deactivating when dragging")] [SerializeField]
         private GraphicRaycaster graphicRaycaster;
 
         [Tooltip("The highest parent element that will be moved")] [SerializeField]
         private Transform parent;
 
-        public GraphicRaycaster GraphicRaycaster { get; private set; }
+        /// <summary>
+        /// Used for finding UI elements with rays.
+        /// </summary>
+        public GraphicRaycaster HighestGraphicRaycaster { get; private set; }
 
         /// <summary>
         /// Will be triggered when the user stops dragging.
@@ -56,8 +59,8 @@ namespace Utils.ElementInteraction
         private void Awake()
         {
             // Get the highest GraphicRaycaster (in hierarchy)
-            GraphicRaycaster = GetComponentsInParent<GraphicRaycaster>().Last();
-            if (GraphicRaycaster == null)
+            HighestGraphicRaycaster = GetComponentsInParent<GraphicRaycaster>().Last();
+            if (HighestGraphicRaycaster == null)
                 Debug.LogError("There is no GraphicsRaycaster attached to the Canvas. Please add one!");
         }
 
