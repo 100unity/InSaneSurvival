@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using Utils;
 
 namespace Entity.Player.Sanity
 {
@@ -42,8 +43,7 @@ namespace Entity.Player.Sanity
         
 
         private int _sanity;
-        // have different frequencies for different effects
-        private bool[] _isGrowing;
+        private Pulser _pulser;
 
         //filters:
         private PostProcessVolume _postProcessVolume;
@@ -69,7 +69,7 @@ namespace Entity.Player.Sanity
         
         private void Awake()
         {
-            _isGrowing = new bool[3];
+            _pulser = new Pulser();
             _postProcessVolume = GetComponent<PostProcessVolume>();
             _postProcessVolume.profile.TryGetSettings(out _colorGrading);
             _postProcessVolume.profile.TryGetSettings(out _motionBlur);
@@ -83,15 +83,9 @@ namespace Entity.Player.Sanity
             ClampAll();
         }
 
-        private void OnEnable()
-        {
-            PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
-        }
+        private void OnEnable() => PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
 
-        private void OnDisable()
-        {
-            PlayerState.OnPlayerSanityUpdate -= OnSanityUpdated;
-        }
+        private void OnDisable() => PlayerState.OnPlayerSanityUpdate -= OnSanityUpdated;
 
         /// <summary>
         /// Pulses all pulses. Masks them. Sets current values in post processing profile.
@@ -123,12 +117,12 @@ namespace Entity.Player.Sanity
         }
 
         /// <summary>
-        /// Imitates a different pulse for vignette andd aberration.
+        /// Uses the pulser to imitate a different pulse for vignette and aberration.
         /// </summary>
         private void PulseAll()
         {
-            _vignettePulse = Pulse(_vignettePulse, vignettePulseFrequency, vignettePulseIntensity, ref _isGrowing[0]);
-            _aberrationPulse = Pulse(_aberrationPulse, aberrationPulseFrequency, aberrationPulseIntensity, ref _isGrowing[1]);
+            _vignettePulse = _pulser.Pulse("vignette", _vignettePulse, vignettePulseFrequency, vignettePulseIntensity);
+            _aberrationPulse = _pulser.Pulse("aberration", _aberrationPulse, aberrationPulseFrequency, aberrationPulseIntensity);
         }
 
         /// <summary>
@@ -142,31 +136,6 @@ namespace Entity.Player.Sanity
             _currentShutterAngle = (int)(_baseShutterAngle + y * maxShutterAngle);
             _currentVignetteIntensity = _vignetteBaseIntensity + y * _vignettePulse;
             _currentAberrationIntensity = _aberrationBaseIntensity + y * _aberrationPulse;
-        }
-
-        /// <summary>
-        /// Pulse a value with a certain frequency and intensity.
-        /// </summary>
-        /// <param name="valueToBePulsed">The value pulsing should be applied to.</param>
-        /// <param name="pulseFrequency">The frequency of the pulse.</param>
-        /// <param name="pulseIntensity">The intensity of the pulse.</param>
-        /// <param name="isGrowing">The boolean to be used for creating the pulse effect.</param>
-        /// <returns></returns>
-        private float Pulse(float valueToBePulsed, float pulseFrequency, float pulseIntensity, ref bool isGrowing)
-        {
-            if (isGrowing)
-            {
-                valueToBePulsed += Time.deltaTime * pulseFrequency;
-                if (valueToBePulsed > pulseIntensity)
-                    isGrowing = false;
-            }
-            else
-            {
-                valueToBePulsed -= Time.deltaTime * (pulseFrequency / 2);
-                if (valueToBePulsed <= 0)
-                    isGrowing = true;
-            }
-            return valueToBePulsed;
         }
     }
 }
