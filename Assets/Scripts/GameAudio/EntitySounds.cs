@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entity
+namespace GameAudio
 {
     [RequireComponent(typeof(AudioSource))]
     public class EntitySounds : MonoBehaviour
