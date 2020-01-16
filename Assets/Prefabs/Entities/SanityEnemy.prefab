@@ -165,7 +165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6890635537345273850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734d4756a84944c2b60e4e19cf9a70d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1666e29586194b6b9c4dc15dff02b1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &9047338808857409610
@@ -348,10 +348,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9047338808857409602}
     m_Modifications:
-    - target: {fileID: 100046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
-      propertyPath: m_Name
-      value: Graphics
-      objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -407,6 +403,10 @@ PrefabInstance:
     - target: {fileID: 400046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_LocalScale.z
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 100046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
+      propertyPath: m_Name
+      value: Graphics
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_Controller
