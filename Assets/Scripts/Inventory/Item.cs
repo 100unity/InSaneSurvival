@@ -19,16 +19,10 @@ namespace Inventory
         [Tooltip("Small/Medium/Long description of this item")] [TextArea] [SerializeField]
         private string description;
 
-        [Tooltip("All effects that this item has on the player or what the player can do with it")]
-        [TextArea]
-        [SerializeField]
-        private string effectText;
-
         public Sprite Icon => icon;
         public int MaxStackSize => maxStackSize;
         public string ItemName => itemName;
         public string Description => description;
-        public string EffectText => effectText;
 
         public virtual bool Use()
         {

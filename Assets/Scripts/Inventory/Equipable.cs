@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 using Utils;
 
@@ -14,6 +15,16 @@ namespace Inventory
         [Tooltip("The damage that will be added to the normal attack when this is equipped")] [SerializeField]
         private int damageBoost;
 
+        [Tooltip("Defines the amount of uses.")] [SerializeField]
+        private int maxUses;
+
+        /// <summary>
+        /// Event that will be triggered whenever the amount of uses is changed.
+        /// </summary>
+        public event UsesStatus OnUsesChange;
+
+        public delegate void UsesStatus(int currentUses, int maxUses);
+
         /// <summary>
         /// The damage boost of this equipable
         /// </summary>
@@ -23,6 +34,12 @@ namespace Inventory
         /// A list of all abilities this equipable has
         /// </summary>
         private List<EquipableAbility> _abilities;
+
+        /// <summary>
+        /// The currently amount of uses.
+        /// </summary>
+        private int _currentUses;
+
 
         /// <summary>
         /// Get all abilities from the MultiSelect
@@ -43,6 +60,19 @@ namespace Inventory
         {
             Debug.Log("Equipping the item " + name);
             return true;
+        }
+
+        /// <summary>
+        /// Increases the amount of uses of this item.
+        /// </summary>
+        /// <param name="amount">The increase of uses. By default 1</param>
+        public void IncreaseUses(int amount = 1)
+        {
+            _currentUses += amount;
+            if (_currentUses > maxUses)
+                InventoryManager.Instance.RemoveItem(this);
+            else
+                OnUsesChange?.Invoke(_currentUses, maxUses);
         }
 
         /// <summary>

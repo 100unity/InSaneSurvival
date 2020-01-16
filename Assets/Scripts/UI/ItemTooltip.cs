@@ -1,4 +1,5 @@
-﻿using Inventory.UI;
+﻿using Inventory;
+using Inventory.UI;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -30,6 +31,11 @@ namespace UI
         protected TextMeshProUGUI txtCondition;
 
         /// <summary>
+        /// Defines the different states that will be shown respectively to the current uses of an equipable.
+        /// </summary>
+        private static readonly string[] ConditionTexts = new[] {"Great", "Good", "Used", "Breaking"};
+
+        /// <summary>
         /// Wait until the item is set and set the texts.
         /// </summary>
         protected override void Awake()
@@ -41,6 +47,11 @@ namespace UI
                     ? itemButton.Item.name
                     : itemButton.Item.ItemName);
                 txtDescription.SetText(itemButton.Item.Description);
+                // If the item is an equipable, update the condition.
+                if (itemButton.Item is Equipable equipable)
+                    equipable.OnUsesChange += UsesChanged;
+                else
+                    txtCondition.gameObject.SetActive(false);
             });
         }
 
@@ -72,6 +83,20 @@ namespace UI
         {
             IsDeactivated = true;
             IsShowing = false;
+        }
+
+        /// <summary>
+        /// Updates the condition using the texts from <see cref="ConditionTexts"/>.
+        /// </summary>
+        /// <param name="currentUses">The current amount of uses of the equipable</param>
+        /// <param name="maxUses">The max amount of uses of the equipable</param>
+        private void UsesChanged(int currentUses, int maxUses)
+        {
+            float ratio = currentUses / (float) maxUses;
+            if (ratio >= 1)
+                return;
+            string newCondition = ConditionTexts[(int) (ratio * ConditionTexts.Length)];
+            txtCondition.SetText($"Condition: {newCondition}");
         }
     }
 }

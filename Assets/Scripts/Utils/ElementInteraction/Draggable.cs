@@ -50,7 +50,6 @@ namespace Utils.ElementInteraction
                 graphicRaycaster.enabled = !value;
                 canvas.overrideSorting = value;
                 canvas.sortingOrder = value ? 1 : 0;
-                Cursor.visible = !value;
             }
         }
 
@@ -91,6 +90,7 @@ namespace Utils.ElementInteraction
         {
             OnEndDragging?.Invoke(eventData);
             IsBeingMoved = false;
+            Cursor.visible = true;
         }
 
         /// <summary>

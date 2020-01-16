@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 08573cc6260d7974c8dc8759f8cb9127, type: 3}
   maxStackSize: 1
+  itemName: 
   description: 
-  effectText: 
   equipableAbility: 0
   damageBoost: 5
+  maxUses: 15
