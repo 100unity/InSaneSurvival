@@ -58,13 +58,19 @@ namespace Crafting
         /// <summary>
         /// Checks if this recipe can be crafted. If so makes it white, else red.
         /// </summary>
-        private void OnItemUpdate() =>
-            SetCanCraft(_recipe.CanCraft());
+        private void OnItemUpdate() => SetCanCraft(_recipe.CanCraft(out bool hasCraftingStation), hasCraftingStation);
 
         /// <summary>
         /// Sets the color of the image to visually show if this recipe can be crafted
         /// </summary>
-        private void SetCanCraft(bool canCraft) =>
-            imgBackground.color = canCraft ? Consts.Colors.White : Consts.Colors.Red;
+        private void SetCanCraft(bool canCraft, bool hasCraftingStation)
+        {
+            if (canCraft)
+                imgBackground.color = Consts.Colors.White;
+            else if (hasCraftingStation)
+                imgBackground.color = Consts.Colors.Red;
+            else
+                imgBackground.color = Consts.Colors.Grey;
+        }
     }
 }
