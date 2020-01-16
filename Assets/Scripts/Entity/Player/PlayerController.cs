@@ -1,14 +1,14 @@
 ﻿using System;
-using Crafting;
 using AbstractClasses;
+using Crafting;
 using Interactables;
+using Inventory.UI;
 using Managers;
-using UI;
 using UI.Menus;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Utils;
-using UnityEngine.EventSystems;
 
 namespace Entity.Player
 {
@@ -17,9 +17,6 @@ namespace Entity.Player
     {
         [Tooltip("The clickable layers. Defines where the player can click")] [SerializeField]
         private LayerMask clickableLayers;
-
-        [Tooltip("Defines where the player can move")] [SerializeField]
-        private LayerMask groundLayer;
 
         [Tooltip("An effect that will be displayed whenever the player clicks to move")] [SerializeField]
         private GameObject clickEffect;
@@ -43,8 +40,13 @@ namespace Entity.Player
         private CraftingUI craftingUI;
 
         public delegate void PlayerPositionChanged(Vector3 newPosition);
-
         public static event PlayerPositionChanged OnPlayerPositionUpdate;
+
+        public delegate void CameraDistanceChanged(float newDistance);
+        public static event CameraDistanceChanged OnCameraDistanceChange;
+
+        public float CameraDistance => cameraDistance.y;
+        public Range CameraDistanceRange => cameraDistanceRange;
 
         //Component references
         private Camera _camera;
@@ -145,7 +147,7 @@ namespace Entity.Player
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            
+
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             // only change target / move, if not performing a hit
@@ -189,7 +191,7 @@ namespace Entity.Player
             // Create click point effect
             Instantiate(clickEffect, hit.point, Quaternion.identity);
 
-			OnPlayerPositionUpdate?.Invoke(transform.position);
+            OnPlayerPositionUpdate?.Invoke(transform.position);
         }
 
         /// <summary>
@@ -199,7 +201,7 @@ namespace Entity.Player
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            
+
             _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
             UpdateCameraAngle();
         }
@@ -225,6 +227,7 @@ namespace Entity.Player
                 cameraDistanceRange.max);
             _cameraPosition = new Vector3((float) Math.Sin(radian) * cameraDistance.x, cameraDistance.y,
                 (float) -Math.Cos(radian) * cameraDistance.x);
+            OnCameraDistanceChange?.Invoke(_cameraPosition.y);
         }
 
         /// <summary>
