@@ -27,6 +27,7 @@ namespace Constants
             public static Color Red = new Color(1f, 0.4f, 0.4f, 1);
             public static Color RedFaded = new Color(1f, 0.4f, 0.4f, 0.4f);
             public static Color Green = new Color(0.19f, 0.93f, 0.62f, 1);
+            public static Color Grey = new Color(0.41f, 0.41f, 0.41f);
         }
 
         public static class Tooltip
@@ -44,7 +45,7 @@ namespace Constants
             public const string HIT_TRIGGER = "hit";
             public const string DIE_TRIGGER = "die";
             public const string INTERACT_TRIGGER = "interact";
-            
+
             public const string SLEEP_BOOL = "isSleeping";
             public const string OPEN_BOOL = "open";
 
