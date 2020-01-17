@@ -223,22 +223,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sanityMath:
-    severity: 0.00005
+    severity: 0.00006
     lowImpactSeverity: 0.4
-    gainFactor: 0.3
+    gainFactor: 0.1
     stats:
     - Type: 0
-      Boundary: 80
-      Severity: 0.75
-      Rate: 0
+      Boundary: 70
+      Severity: 1
+      Rate: -25
     - Type: 1
       Boundary: 60
-      Severity: 0.25
-      Rate: 0
+      Severity: 0.3
+      Rate: 3.0000002
     - Type: 2
       Boundary: 60
-      Severity: 0.35
-      Rate: 0
+      Severity: 0.7
+      Rate: -22.4
   healMultiplier: 4
   healBonusDuration: 20
   applyCampfireBonus: 1
