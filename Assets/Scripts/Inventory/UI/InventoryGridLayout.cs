@@ -74,7 +74,7 @@ namespace Inventory.UI
             Destroy(toRemove.Value.gameObject);
 
             // Set position in grid
-            item.transform.parent = transform;
+            item.transform.SetParent(transform);
             item.transform.SetSiblingIndex(freeSlotIndex);
             UpdateEmptySlots();
         }

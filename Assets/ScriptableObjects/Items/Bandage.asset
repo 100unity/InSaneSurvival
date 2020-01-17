@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddbf48c44c41f54ca084202f466156a, type: 3}
   m_Name: Bandage
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: ab97eea803c1fb642921225713e2020a, type: 3}
+  icon: {fileID: 21300000, guid: 33d61d1797e07ed479b4c3a6b625e086, type: 3}
   maxStackSize: 10
+  description: You should probably ask someone with a pair of thumbs to help you with
+    this.
+  effectText: <color=#79FF85>+ Heals you a bit.</color>
   healthValue: 10
   saturationValue: 0
   hydrationValue: 0

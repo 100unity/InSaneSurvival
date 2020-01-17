@@ -7,7 +7,9 @@ namespace Inventory
     [CreateAssetMenu(fileName = "New Consumable", menuName = "Inventory/Item/Consumable")]
     public class Consumable : Item
     {
-        [SerializeField] private int healthValue;
+        [Header("Consumable")] [SerializeField]
+        private int healthValue;
+
         [SerializeField] private int saturationValue;
         [SerializeField] private int hydrationValue;
 
