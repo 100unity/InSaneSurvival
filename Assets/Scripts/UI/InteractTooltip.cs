@@ -61,7 +61,7 @@ namespace UI
         private int iconOffset;
 
         [Tooltip("Cursor sprite when interaction with the object (texture must be a Cursor in import settings)")]
-        public Texture2D mouseCursor;
+        private Texture2D mouseCursor;
 
         // Reference Components
         private Renderer _renderer;
