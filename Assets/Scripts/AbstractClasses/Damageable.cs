@@ -1,4 +1,5 @@
 ﻿using Constants;
+using Entity.Enemy;
 using UnityEngine;
 
 namespace AbstractClasses
@@ -16,7 +17,8 @@ namespace AbstractClasses
         /// Marks the player as hit after being hit.
         /// </summary>
         /// <param name="damage">The damage dealt to player</param>
-        public virtual void Hit(int damage)
+        /// <param name="attacker">The EnemyController of the attacker if it's an NPC.</param>
+        public virtual void Hit(int damage, EnemyController attacker = null)
         {
             animator.SetTrigger(HitTrigger);
         }

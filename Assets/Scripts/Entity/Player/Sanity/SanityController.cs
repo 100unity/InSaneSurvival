@@ -81,6 +81,9 @@ namespace Entity.Player.Sanity
         // a timer counting up to stop deactivate the heal bonus after a certain time
         private float _healBonusStopTimer;
 
+        // the enemy the player is currently in combat with (fighting/being hit)
+        private EnemyController _enemy;
+
         private void Awake()
         {
             _playerState = GetComponent<PlayerState>();
@@ -123,7 +126,7 @@ namespace Entity.Player.Sanity
                 if (_fightTime >= criticalFightTime)
                 {
                     // check if last attacked target was aggressive
-                    if (_attackLogic.EnemyController.IsAggressive)
+                    if (_enemy.IsAggressive)
                         AddUpEventTick(fightMalus);
                     else
                         AddUpEventTick(fightNonAggressivesMalus);
@@ -175,6 +178,7 @@ namespace Entity.Player.Sanity
         {
             if (!_isFighting)
                 _isFighting = true;
+            _enemy = _attackLogic.lastAttacked;
         }
 
         /// <summary>
@@ -182,11 +186,17 @@ namespace Entity.Player.Sanity
         /// apply a hit malus.
         /// Also make the player stay in / enter combat if he is being hit.
         /// </summary>
-        private void OnPlayerHit()
+        /// <param name="attacker">The EnemyController of the attacker</param>
+        private void OnPlayerHit(EnemyController attacker)
         {
             // enter combat
             if (!_isFighting)
                 _isFighting = true;
+
+            // get the EnemyController passed here, so that e.g. if you attack a non-aggressive,
+            // run away and then get hit by an aggressive (which you don't fight back/runaway), you don't get the non-aggressive malus
+            // also necessary to prevent nullref if not having attacked at all, but get hit
+            _enemy = attacker;
 
             _hitCounter += 1;
             if (_hitCounter >= criticalHitCount)
