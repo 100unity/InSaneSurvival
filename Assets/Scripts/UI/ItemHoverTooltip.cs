@@ -13,7 +13,7 @@ namespace UI
     /// Extends <see cref="HoverTooltip"/> by adding disabling-functionality on dragging and setting the texts of the
     /// tooltip.
     /// </summary>
-    public class ItemTooltip : HoverTooltip
+    public class ItemHoverTooltip : HoverTooltip
     {
         [Header("UIItemTooltip")] [Tooltip("Used for getting the item-information")] [SerializeField]
         private ItemButton itemButton;
@@ -43,9 +43,7 @@ namespace UI
             base.Awake();
             CoroutineManager.Instance.WaitUntil(() => itemButton.Item != null, () =>
             {
-                txtTitle.SetText(string.IsNullOrEmpty(itemButton.Item.ItemName)
-                    ? itemButton.Item.name
-                    : itemButton.Item.ItemName);
+                txtTitle.SetText(itemButton.Item.ItemName);
                 txtDescription.SetText(itemButton.Item.Description);
                 // If the item is an equipable, update the condition.
                 if (itemButton.Item is Equipable equipable)

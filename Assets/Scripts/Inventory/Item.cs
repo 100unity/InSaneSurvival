@@ -21,7 +21,7 @@ namespace Inventory
 
         public Sprite Icon => icon;
         public int MaxStackSize => maxStackSize;
-        public string ItemName => itemName;
+        public string ItemName => string.IsNullOrEmpty(itemName) ? name : itemName;
         public string Description => description;
 
         public virtual bool Use()
