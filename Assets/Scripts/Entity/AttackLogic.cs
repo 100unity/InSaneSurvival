@@ -38,7 +38,7 @@ namespace Entity
         public Damageable Target { get; private set; }
 
         /// <summary>
-        /// The EnemyController if it's an NPC.
+        /// The EnemyController of the last attacked target if it's an NPC.
         /// </summary>
         public EnemyController EnemyController { get; private set; }
 
