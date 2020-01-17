@@ -37,6 +37,11 @@ namespace Entity
         public AttackStatus Status { get; private set; }
         public Damageable Target { get; private set; }
 
+        /// <summary>
+        /// The EnemyController if it's an NPC.
+        /// </summary>
+        public EnemyController EnemyController { get; private set; }
+
         // component references
         private Movable _movable;
 
@@ -126,9 +131,8 @@ namespace Entity
             if (Status == AttackStatus.Hit)
             {
                 // deal damage
-                Damageable damageable = Target.GetComponent<Damageable>();
                 // Add damage boost from weapon
-                damageable.Hit(damage + InventoryManager.Instance.DamageBoostFromEquipable);
+                Target.Hit(damage + InventoryManager.Instance.DamageBoostFromEquipable);
             }
 
             // end hit
@@ -145,9 +149,11 @@ namespace Entity
         /// performs a hit on it and either resets or continues attacking.
         /// </summary>
         /// <param name="target">The target to be attacked</param>
-        public void StartAttack(Damageable target)
+        /// <param name="enemyController">If an the attacked instance is an NPC, pass its EnemyController</param>
+        public void StartAttack(Damageable target, EnemyController enemyController = null)
         {
             Target = target;
+            EnemyController = enemyController;
         }
 
         /// <summary>
@@ -168,6 +174,7 @@ namespace Entity
 
             if (_timer > attackTime)
             {
+                OnPlayerAttackPerformed?.Invoke();
                 // animation finished
                 _timer = 0;
                 // target still in range?
@@ -177,7 +184,6 @@ namespace Entity
                     _movable.FaceTarget(Target.gameObject, false, out float difference);
                     return difference < hitRotationTolerance ? AttackStatus.Hit : AttackStatus.Miss;
                 }
-                OnPlayerAttackPerformed?.Invoke();
                 return AttackStatus.Miss;
             }
 

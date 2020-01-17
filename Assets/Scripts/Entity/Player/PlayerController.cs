@@ -1,6 +1,7 @@
 ﻿using System;
 using AbstractClasses;
 using Crafting;
+using Entity.Enemy;
 using Interactables;
 using Inventory.UI;
 using Managers;
@@ -170,7 +171,7 @@ namespace Entity.Player
                 {
                     _interactLogic.RemoveFocus();
                     // implementation NOT capable of area damage
-                    _attackLogic.StartAttack(damageable);
+                    _attackLogic.StartAttack(damageable, objectHit.GetComponent<EnemyController>());
                 }
 
                 else if (objectHit.TryGetComponent(out Interactable interactable))

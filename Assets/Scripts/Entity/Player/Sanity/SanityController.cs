@@ -16,7 +16,7 @@ namespace Entity.Player.Sanity
         private SanityMath sanityMath;
 
         [Header("More positive impacts")]
-        [Tooltip("Scales the gain factor of positive ticks caused by sufficient health, saturation and hydration.")]
+        [Tooltip("Scales the gain factor of positive ticks built up by sufficient health, saturation and hydration.")]
         [SerializeField]
         private float healMultiplier;
 
@@ -28,7 +28,12 @@ namespace Entity.Player.Sanity
         [SerializeField]
         private bool applyCampfireBonus;
 
+
         [Header("More negative event ticks")]
+        [Tooltip("The time in seconds you have to be in combat to get a fight malus.")]
+        [SerializeField]
+        private float criticalFightTime;
+
         [Tooltip("The malus for being in a fight for a certain time.")]
         [SerializeField]
         private float fightMalus;
@@ -37,21 +42,17 @@ namespace Entity.Player.Sanity
         [SerializeField]
         private float fightNonAggressivesMalus;
 
-        [Tooltip("The time you have to be in combat to get a fight malus.")]
-        [SerializeField]
-        private float criticalFightTime;
-
         [Tooltip("The time you have to be out of combat (not attacking, not being hit) to be considered out of combat.")]
         [SerializeField]
-        private float attackStopTime;
-
-        [Tooltip("The malus for being hit a certain number of times.")]
-        [SerializeField]
-        private float hitMalus;
+        private float fightStopTime;
 
         [Tooltip("The number of times to be hit to get a hit malus.")]
         [SerializeField]
         private int criticalHitCount;
+
+        [Tooltip("The malus for being hit a certain number of times. (Kind of a \"long fight\" malus.)")]
+        [SerializeField]
+        private float hitMalus;
 
 
         private PlayerState _playerState;
@@ -121,10 +122,8 @@ namespace Entity.Player.Sanity
                 _fightTime += Time.deltaTime;
                 if (_fightTime >= criticalFightTime)
                 {
-                    if (_attackLogic.Target.gameObject.GetComponent<EnemyController>().IsAggressive)
-                        // please tell me the correct way of doing it, I thought of using the reference 
-                        // to AttackLogic that we have here, but it only has Movables which it doesn't 
-                        // make sense to give a property IsAggressive... also instanceof stuff is not really in the sense of OOP
+                    // check if last attacked target was aggressive
+                    if (_attackLogic.EnemyController.IsAggressive)
                         AddUpEventTick(fightMalus);
                     else
                         AddUpEventTick(fightNonAggressivesMalus);
@@ -181,10 +180,14 @@ namespace Entity.Player.Sanity
         /// <summary>
         /// Count up the hits performed on the player. If <see cref="criticalHitCount"/> is reached,
         /// apply a hit malus.
-        /// Also make the player stay in combat if he is being hit.
+        /// Also make the player stay in / enter combat if he is being hit.
         /// </summary>
         private void OnPlayerHit()
         {
+            // enter combat
+            if (!_isFighting)
+                _isFighting = true;
+
             _hitCounter += 1;
             if (_hitCounter >= criticalHitCount)
             {
@@ -221,7 +224,7 @@ namespace Entity.Player.Sanity
                 _attackStopTimer += Time.deltaTime;
             else
                 _attackStopTimer = 0;
-            if (_attackStopTimer >= attackStopTime)
+            if (_attackStopTimer >= fightStopTime)
             {
                 _isFighting = false;
                 _fightTime = 0;
