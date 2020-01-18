@@ -94,14 +94,6 @@ namespace Entity
             else
             {
                 // chase target
-                //Vector3 rawExtents = _targetCollider.bounds.extents;
-                //Vector3 extents = Vector3.RotateTowards(rawExtents, _target.transform.rotation.eulerAngles, 10, rawExtents.magnitude);
-                //Debug.DrawRay(_target.transform.position, rawExtents, Color.red, 10);
-                //Debug.DrawRay(_target.transform.position, extents, Color.red);
-                //Vector3 movePosition = new Vector3(_target.transform.position.x - extents.x, _target.transform.position.y, _target.transform.position.z - extents.z);
-                //Vector3 direction = (_target.transform.position - transform.position).normalized;
-                //Vector3 minus = new Vector3(Math.Abs(direction.x) * rawExtents.x, 0, Math.Abs(direction.z) * rawExtents.z);
-                //Vector3 movePosition = _target.transform.position - minus;
                 _movable.Move(_target.transform.position);
             }
         }
