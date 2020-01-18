@@ -165,7 +165,6 @@ namespace UI
             // Display of text/tooltip that follows the mouse
             if (!hideTooltip && followingMouseCursor && _over)
             {
-                Debug.Log(_tooltipStyle.lineHeight);
                 _cameraDistance = Vector3.Distance(Camera.main.transform.position, this.transform.position);
                 // Resized the text relative to the camera distance and size of the tooltip
                 _tooltipStyle.fontSize = _tooltipStyleShadow.fontSize = Mathf.RoundToInt(tooltipSize - _cameraDistance / 3);
@@ -214,6 +213,8 @@ namespace UI
             _t = 0f;
             _over = true;
             _currentText = tooltipText;
+
+            //Change back the cursor texture when hovering over the object
             if (mouseCursor != null)
             {
                 Cursor.SetCursor(mouseCursor, Vector2.zero, CursorMode.Auto);
@@ -228,6 +229,8 @@ namespace UI
             _t = 0f;
             _over = false;
             _currentText = "";
+
+            //Change back the cursor texture when cursor exit the object
             if (mouseCursor != null)
             {
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
