@@ -1,74 +1,51 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using Inventory;
 using Managers;
+using UnityEngine;
 using Utils;
 
 namespace Interactables
 {
     public class Harvestable : Interactable
     {
-        [Tooltip("The items being dropped on a successful harvest.")]
-        [SerializeField] 
-        private List<Item> drops;
-        
-        [Tooltip("How much of each item you get (the first item in the drops list is connected to the first quantity in this list.")]
-        [SerializeField]
-        private List<int> quantities;
+        [Tooltip("The items being dropped on a successful harvest.")] [SerializeField]
+        private List<ItemResourceData> drops;
 
-        [Tooltip("Time in seconds needed to harvest this resource.")]
-        [SerializeField] 
+        [Tooltip("Time in seconds needed to harvest this resource.")] [SerializeField]
         private float gatherTime;
-        
+
         private double _gatherTimePassed;
-        
-        [Tooltip("Should this resource be only harvestable once?")]
-        [SerializeField] 
+
+        [Tooltip("Should this resource be only harvestable once?")] [SerializeField]
         private bool destroyAfterHarvest;
 
         private GameObject _parent;
-        
-        [Tooltip("Time in seconds needed until this resource is allowed to respawn again.")]
-        [SerializeField] 
+
+        [Tooltip("Time in seconds needed until this resource is allowed to respawn again.")] [SerializeField]
         private float respawnTime;
 
-        [SerializeField] [HideInInspector]
-        private bool isRespawning;
-        [SerializeField] [HideInInspector]
-        private double respawnTimePassed;
+        [SerializeField] [HideInInspector] private bool isRespawning;
+        [SerializeField] [HideInInspector] private double respawnTimePassed;
 
-        [Tooltip("The GameObject that is supposed to replace this resource while it respawns.")]
-        [SerializeField] 
+        [Tooltip("The GameObject that is supposed to replace this resource while it respawns.")] [SerializeField]
         private GameObject replacement;
-        
-        [Tooltip("Need a camera reference so resources don't respawn while the player can see them.")]
-        [SerializeField] 
-        private Camera mainCam;
-        
-        [Tooltip("Select abilities needed (if any) in order to harvest this resource.")] [SerializeField] [EnumMultiSelect] 
+
+        [Tooltip("Select ability needed in order to harvest this resource.")] [SerializeField]
         private Equipable.EquipableAbility neededAbility;
 
         private MeshRenderer _ownMeshRenderer;
         private BoxCollider _ownCollider;
         private MeshRenderer _replacementMeshRenderer;
+        private Camera _mainCam;
 
-        private Dictionary<Item, int> _itemsWithQuantities;
-        
-        private List<Equipable.EquipableAbility>  _neededAbility;
-        
         private void Awake()
         {
-            if (mainCam == null) // in case it was forgotten to set via the editor
-            {
-                mainCam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-            }
-            
+            _mainCam = Camera.main;
+
             _ownMeshRenderer = GetComponent<MeshRenderer>();
             _ownCollider = GetComponent<BoxCollider>();
-            
+
             // TODO: Fix this or find another solution
             float numberToUse = 0;
             float x = _ownCollider.size.x;
@@ -82,22 +59,15 @@ namespace Interactables
             {
                 numberToUse = z;
             }
-            SetRadius((numberToUse * offset)); 
-            
+
+            SetRadius((numberToUse * offset));
+
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
 
             if (destroyAfterHarvest) _parent = transform.parent.gameObject;
-            
-            _itemsWithQuantities = new Dictionary<Item, int>();
-            for (int i = 0; i < drops.Count; i++)
-            {
-                _itemsWithQuantities.Add(drops[i], quantities[i]);
-            }
-            
-            _neededAbility = GetSelectedElements(); 
-            
+
             // if item was respawning before save, keep it respawning
-            if(isRespawning) CoroutineManager.Instance.WaitForSeconds(1.0f/60.0f,() => StartCoroutine(Respawn())); 
+            if (isRespawning) CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
         }
 
         /// <summary>
@@ -106,26 +76,22 @@ namespace Interactables
         /// </summary>
         public override void Interact()
         {
-            if (_neededAbility.Count != 0) // check for needed abilities ony if this resource has any
+            Equipable equipped = InventoryManager.Instance.CurrentlyEquippedItem;
+            if (equipped == null)
             {
-                Equipable equipped = InventoryManager.Instance.CurrentlyEquippedItem;
-                if (equipped == null)
-                {
-                    Debug.Log("Missing ability/No item equipped.");
-                    return;
-                }
-                foreach (Equipable.EquipableAbility ability in _neededAbility)
-                {
-                    if (!equipped.HasAbility(ability))
-                    {
-                        // show that ability is missing
-                        Debug.Log("Missing ability");
-                        return;
-                    }
-                }
+                Debug.Log("Missing ability/No item equipped.");
+                return;
             }
+
+            if (!equipped.HasAbility(neededAbility))
+            {
+                // show that ability is missing
+                Debug.Log("Missing ability");
+                return;
+            }
+
             _gatherTimePassed = 0;
-            CoroutineManager.Instance.WaitForSeconds(1.0f/60.0f,() => StartCoroutine(Gather()));
+            CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Gather()));
         }
 
         /// <summary>
@@ -138,18 +104,19 @@ namespace Interactables
         /// </summary>
         private IEnumerator Gather()
         {
-            while (HasInteracted && (_gatherTimePassed < gatherTime)) 
-            { 
+            while (HasInteracted && (_gatherTimePassed < gatherTime))
+            {
                 _gatherTimePassed += Time.deltaTime;
                 if (_gatherTimePassed >= gatherTime)
                 {
                     AddItems();
-                    if(destroyAfterHarvest) GameObject.Destroy(_parent);
+                    if (destroyAfterHarvest) GameObject.Destroy(_parent);
                     else
                     {
-                        CoroutineManager.Instance.WaitForSeconds(1.0f/60.0f,() => StartCoroutine(Respawn())); 
+                        CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
                     }
                 }
+
                 yield return null;
             }
         }
@@ -159,11 +126,11 @@ namespace Interactables
         /// </summary>
         private void AddItems()
         {
-            foreach (KeyValuePair<Item, int> entry in _itemsWithQuantities)
+            foreach (ItemResourceData drop in drops)
             {
-                for (int i = 0; i < entry.Value; i++)
+                for (int i = 0; i < drop.amount; i++)
                 {
-                    if (!InventoryManager.Instance.AddItem(entry.Key))
+                    if (!InventoryManager.Instance.AddItem(drop.item))
                     {
                         // Item could not be added to the inventory, drop it to the ground or show an indicator for no space
                         // For now, just skip to the next item(if there is any) and see if this one can be added
@@ -181,14 +148,15 @@ namespace Interactables
         private IEnumerator Respawn()
         {
             isRespawning = true;
-            _ownMeshRenderer.enabled = false; 
-            _ownCollider.enabled = false; 
+            _ownMeshRenderer.enabled = false;
+            _ownCollider.enabled = false;
             _replacementMeshRenderer.enabled = true;
-            while (respawnTimePassed < respawnTime || _ownMeshRenderer.InFrustum(mainCam))
+            while (respawnTimePassed < respawnTime || _ownMeshRenderer.InFrustum(_mainCam))
             {
                 respawnTimePassed += Time.deltaTime;
                 yield return null;
             }
+
             isRespawning = false;
             respawnTimePassed = 0;
 
@@ -196,22 +164,5 @@ namespace Interactables
             _ownCollider.enabled = true;
             _replacementMeshRenderer.enabled = false;
         }
-        
-        // TODO: Code duplication because it's also used in Equipables
-        private List<Equipable.EquipableAbility> GetSelectedElements()
-        {
-            List<Equipable.EquipableAbility> selectedElements = new List<Equipable.EquipableAbility>();
-            for (int i = 0; i < Enum.GetValues(typeof(Equipable.EquipableAbility)).Length; i++)
-            {
-                int layer = 1 << i;
-                if (((int) neededAbility & layer) != 0)
-                {
-                    selectedElements.Add((Equipable.EquipableAbility) i);
-                }
-            }
-
-            return selectedElements;
-        }
     }
 }
-

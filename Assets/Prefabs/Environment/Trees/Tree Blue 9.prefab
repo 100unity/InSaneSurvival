@@ -111,15 +111,16 @@ MonoBehaviour:
   hasInteracted: 0
   player: {fileID: 0}
   drops:
-  - {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
-  quantities: 05000000
+  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
+    amount: 3
   gatherTime: 3
-  destroyAfterGather: 0
+  destroyAfterHarvest: 0
   respawnTime: 10
   isRespawning: 0
   respawnTimePassed: 0
   replacement: {fileID: 9198609481186505352}
   mainCam: {fileID: 0}
+  neededAbility: 0
 --- !u!1 &6482878847694471280
 GameObject:
   m_ObjectHideFlags: 0

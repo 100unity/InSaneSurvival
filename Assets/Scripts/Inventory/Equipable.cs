@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -33,7 +32,7 @@ namespace Inventory
         public bool HasAbility(EquipableAbility ability)
         {
             if (_abilities == null)
-                _abilities = GetSelectedElements();
+                _abilities = equipableAbility.GetSelectedElements();
             return _abilities.Contains(ability);
         }
 
@@ -44,25 +43,6 @@ namespace Inventory
         {
             Debug.Log("Equipping the item " + name);
             return true;
-        }
-
-        /// <summary>
-        /// Gets all Abilities selected in the MultiSelect
-        /// </summary>
-        /// <returns>A list of all selected abilities</returns>
-        private List<EquipableAbility> GetSelectedElements()
-        {
-            List<EquipableAbility> selectedElements = new List<EquipableAbility>();
-            for (int i = 0; i < Enum.GetValues(typeof(EquipableAbility)).Length; i++)
-            {
-                int layer = 1 << i;
-                if (((int) equipableAbility & layer) != 0)
-                {
-                    selectedElements.Add((EquipableAbility) i);
-                }
-            }
-
-            return selectedElements;
         }
 
 
