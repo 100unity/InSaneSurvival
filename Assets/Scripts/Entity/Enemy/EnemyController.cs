@@ -44,6 +44,7 @@ namespace Entity.Enemy
         private Renderer graphicsRenderer;
 
         public Renderer Renderer => graphicsRenderer;
+        public bool IsAggressive => isAggressive;
 
         // component references
         private WanderAI _wanderAI;

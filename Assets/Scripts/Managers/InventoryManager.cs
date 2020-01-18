@@ -42,7 +42,7 @@ namespace Managers
         /// <summary>
         /// The currently equipped item
         /// </summary>
-        private Equipable CurrentlyEquippedItem { get; set; }
+        public Equipable CurrentlyEquippedItem { get; set; }
 
         /// <summary>
         /// Adds an item to the player's inventory.
