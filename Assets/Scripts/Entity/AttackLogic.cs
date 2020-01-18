@@ -48,7 +48,6 @@ namespace Entity
         private EnemyController _enemyController;
 
         private float _timer;
-        private BoxCollider _targetCollider;
         private float _distanceToTarget;
         private static readonly int AttackTrigger = Animator.StringToHash(Consts.Animation.ATTACK_TRIGGER);
 
