@@ -32,7 +32,7 @@ namespace Interactables
         // This will make character going to target object and stop when it is close enough
         private void SetTarget(Interactable newTarget)
         {
-            _movable.SetStoppingDistance(newTarget.Radius);   
+            _movable.SetStoppingDistance(newTarget.Radius/2);   
             target = newTarget.transform;
         }
 

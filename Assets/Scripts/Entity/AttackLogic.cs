@@ -40,10 +40,11 @@ namespace Entity
         /// <summary>
         /// The EnemyController of the last attacked target if it's an NPC.
         /// </summary>
-        public EnemyController EnemyController { get; private set; }
+        public EnemyController lastAttacked { get; private set; }
 
         // component references
         private Movable _movable;
+        private EnemyController _enemyController;
 
         private float _timer;
         private float _distanceToTarget;
@@ -53,6 +54,7 @@ namespace Entity
         {
             // init components
             _movable = GetComponent<Movable>();
+            _enemyController = GetComponent<EnemyController>();
         }
 
         private void OnEnable()
@@ -132,7 +134,8 @@ namespace Entity
             {
                 // deal damage
                 // Add damage boost from weapon
-                Target.Hit(damage + InventoryManager.Instance.DamageBoostFromEquipable);
+                int boostedDamage = damage + InventoryManager.Instance.DamageBoostFromEquipable;
+                Target.Hit(boostedDamage, _enemyController);
             }
 
             // end hit
@@ -153,7 +156,7 @@ namespace Entity
         public void StartAttack(Damageable target, EnemyController enemyController = null)
         {
             Target = target;
-            EnemyController = enemyController;
+            lastAttacked = enemyController;
         }
 
         /// <summary>

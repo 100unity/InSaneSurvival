@@ -54,8 +54,9 @@ namespace Entity.Enemy {
         /// <summary>
         /// Run away if NPC is not aggressive. Only do hit animation if not running away.
         /// </summary>
-        /// <param name="damage"></param>
-        public override void Hit(int damage)
+        /// <param name="damage">The damage dealt</param>
+        /// <param name="_">EnemyController is not used because this is an NPC.</param>
+        public override void Hit(int damage, EnemyController _)
         {
             ChangeHealth(-damage);
             if (health <= 0)

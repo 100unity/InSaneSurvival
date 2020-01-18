@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Inventory;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -52,6 +54,25 @@ namespace Utils
         {
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
             return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
+        }
+
+        /// <summary>
+        /// Gets all Abilities selected in the MultiSelect
+        /// </summary>
+        /// <returns>A list of all selected abilities</returns>
+        public static List<Equipable.EquipableAbility> GetSelectedElements(this Equipable.EquipableAbility ability)
+        {
+            List<Equipable.EquipableAbility> selectedElements = new List<Equipable.EquipableAbility>();
+            for (int i = 0; i < Enum.GetValues(typeof(Equipable.EquipableAbility)).Length; i++)
+            {
+                int layer = 1 << i;
+                if (((int) ability & layer) != 0)
+                {
+                    selectedElements.Add((Equipable.EquipableAbility) i);
+                }
+            }
+
+            return selectedElements;
         }
     }
 }
