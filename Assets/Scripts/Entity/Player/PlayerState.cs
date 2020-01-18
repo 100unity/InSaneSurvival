@@ -1,4 +1,5 @@
 ﻿using AbstractClasses;
+using Entity.Enemy;
 using Inventory;
 using Remote;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Entity.Player
     {
         public delegate void PlayerStateChanged(int newValue);
 
+        public delegate void PlayerEvents();
+        public delegate void PlayerEventHit(EnemyController attacker);
         public delegate void PlayerIsDead();
 
         //Player State values
@@ -30,6 +33,8 @@ namespace Entity.Player
         public static event PlayerStateChanged OnPlayerSaturationUpdate;
         public static event PlayerStateChanged OnPlayerHydrationUpdate;
         public static event PlayerStateChanged OnPlayerSanityUpdate;
+        public static event PlayerEventHit OnPlayerHit;
+        public static event PlayerEvents OnPlayerHealed;
         public static event PlayerIsDead OnPlayerDeath;
 
         private void Awake()
@@ -111,10 +116,12 @@ namespace Entity.Player
         /// Does damage to the player.
         /// </summary>
         /// <param name="damage">The damage dealt to player</param>
-        public override void Hit(int damage)
+        /// <param name="attacker">The EnemyController of the enemy</param>
+        public override void Hit(int damage, EnemyController attacker)
         {
             base.Hit(damage);
             ChangePlayerHealth(-damage);
+            OnPlayerHit?.Invoke(attacker);
         }
 
         /// <summary>
@@ -125,6 +132,7 @@ namespace Entity.Player
         public void Heal(int amount)
         {
             ChangePlayerHealth(amount);
+            OnPlayerHealed?.Invoke();
         }
 
         public bool Consume(Consumable item)
@@ -141,7 +149,6 @@ namespace Entity.Player
         public override void Die()
         {
             OnPlayerDeath?.Invoke();
-            Debug.Log("Player is dead");
         }
     }
 }
