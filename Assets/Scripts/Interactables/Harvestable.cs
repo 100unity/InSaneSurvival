@@ -61,21 +61,18 @@ namespace Interactables
         public override void Interact()
         {
             Equipable equipped = InventoryManager.Instance.CurrentlyEquippedItem;
-            if (equipped == null)
-            {
-                Debug.Log("Missing ability/No item equipped.");
-                return;
-            }
 
-            if (!equipped.HasAbility(neededAbility))
+            if (neededAbility == Equipable.EquipableAbility.None ||
+                equipped != null && equipped.HasAbility(neededAbility))
             {
-                // show that ability is missing
+                _gatherTimePassed = 0;
+                CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Gather()));
+            }
+            else
+            {
+                // TODO: Show needed item.
                 Debug.Log("Missing ability");
-                return;
             }
-
-            _gatherTimePassed = 0;
-            CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Gather()));
         }
 
         /// <summary>
