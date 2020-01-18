@@ -2,6 +2,7 @@
 using AbstractClasses;
 using Constants;
 using Managers;
+using System;
 using Entity.Enemy;
 
 namespace Entity
@@ -32,7 +33,7 @@ namespace Entity
         [Tooltip("Animator for playing the attack animation")] [SerializeField]
         private Animator animator;
 
-        public enum AttackStatus { Hit, Miss, NotFinished, None }
+        public enum AttackStatus { Hit, Miss, NotFinished, None, TargetReached }
 
         public AttackStatus Status { get; private set; }
         public Damageable Target { get; private set; }
@@ -88,7 +89,7 @@ namespace Entity
         private void Attack()
         {
             _distanceToTarget = Vector3.Distance(Target.transform.position, transform.position);
-            if (_distanceToTarget < attackRange && Status == AttackStatus.None)
+            if (_distanceToTarget < attackRange && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
             {
                 IsInRange();
             }
@@ -113,6 +114,7 @@ namespace Entity
         private void IsInRange()
         {
             _movable.StopMoving();
+            Status = AttackStatus.TargetReached;
             // face target
             if (_movable.FaceTarget(Target.gameObject, true, out _))
             {
