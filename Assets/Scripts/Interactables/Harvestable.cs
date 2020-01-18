@@ -35,7 +35,7 @@ namespace Interactables
         private Equipable.EquipableAbility neededAbility;
 
         private MeshRenderer _ownMeshRenderer;
-        private BoxCollider _ownCollider;
+        private MeshCollider _ownCollider;
         private MeshRenderer _replacementMeshRenderer;
         private Camera _mainCam;
 
@@ -44,24 +44,8 @@ namespace Interactables
             _mainCam = Camera.main;
 
             _ownMeshRenderer = GetComponent<MeshRenderer>();
-            _ownCollider = GetComponent<BoxCollider>();
-
-            // TODO: Fix this or find another solution
-            float numberToUse = 0;
-            float x = _ownCollider.size.x;
-            float z = _ownCollider.size.z;
-            float offset = 1.5f;
-            if (x > z)
-            {
-                numberToUse = x;
-            }
-            else
-            {
-                numberToUse = z;
-            }
-
-            SetRadius((numberToUse * offset));
-
+            _ownCollider = GetComponent<MeshCollider>();
+            
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
 
             if (destroyAfterHarvest) _parent = transform.parent.gameObject;
