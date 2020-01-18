@@ -20,6 +20,9 @@ namespace Crafting
         [Tooltip("The crafting recipe resource prefab")] [SerializeField]
         private CraftingRecipeResource craftingRecipeResourcePrefab;
 
+        /// <summary>
+        /// The recipe this CraftingRecipeUI represents.
+        /// </summary>
         public CraftingRecipe Recipe => _recipe;
 
         /// <summary>

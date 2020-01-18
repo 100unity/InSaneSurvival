@@ -27,7 +27,7 @@ namespace UI
         [Tooltip("The description text component")] [SerializeField]
         protected TextMeshProUGUI txtDescription;
 
-        [Tooltip("The effect text component")] [SerializeField]
+        [Tooltip("The condition text component. Only visible for equipable items")] [SerializeField]
         protected TextMeshProUGUI txtCondition;
 
         /// <summary>

@@ -66,6 +66,7 @@ namespace Inventory
         /// Increases the amount of uses of this item.
         /// </summary>
         /// <param name="amount">The increase of uses. By default 1</param>
+        /// TODO: Call this when attacking and when harvesting.
         public void IncreaseUses(int amount = 1)
         {
             _currentUses += amount;
