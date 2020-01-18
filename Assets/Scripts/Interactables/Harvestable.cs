@@ -45,7 +45,7 @@ namespace Interactables
 
             _ownMeshRenderer = GetComponent<MeshRenderer>();
             _ownCollider = GetComponent<MeshCollider>();
-            
+
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
 
             if (destroyAfterHarvest) _parent = transform.parent.gameObject;
@@ -94,7 +94,7 @@ namespace Interactables
                 if (_gatherTimePassed >= gatherTime)
                 {
                     AddItems();
-                    if (destroyAfterHarvest) GameObject.Destroy(_parent);
+                    if (destroyAfterHarvest) Destroy(_parent);
                     else
                     {
                         CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));

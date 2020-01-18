@@ -33,7 +33,7 @@ namespace Inventory
         {
             if (_abilities == null)
                 _abilities = equipableAbility.GetSelectedElements();
-            return _abilities.Contains(ability);
+            return _abilities.Contains(ability) || ability == EquipableAbility.None;
         }
 
         /// <summary>
@@ -54,7 +54,8 @@ namespace Inventory
         public enum EquipableAbility
         {
             Chop,
-            Mine
+            Mine,
+            None
         }
 
         #endregion
