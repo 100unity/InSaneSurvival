@@ -48,7 +48,12 @@ namespace Entity.Enemy {
             Destroy(gameObject, 5f);
         }
 
-        public override void Hit(int damage)
+        /// <summary>
+        /// NPC was hit.
+        /// </summary>
+        /// <param name="damage">The damage dealt</param>
+        /// <param name="_">EnemyController is not used because this is an NPC.</param>
+        public override void Hit(int damage, EnemyController _)
         {
             base.Hit(damage);
             ChangeHealth(-damage);

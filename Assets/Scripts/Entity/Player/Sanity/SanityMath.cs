@@ -27,6 +27,7 @@ namespace Entity.Player.Sanity
         [SerializeField]
         private Stat[] stats;
 
+        public float GainFactor { get { return gainFactor; } set { gainFactor = value; } }
 
         // the total change rate
         private float _changeRate;

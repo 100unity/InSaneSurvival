@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -25,16 +24,17 @@ namespace Inventory
         private List<EquipableAbility> _abilities;
 
         /// <summary>
-        /// Get all abilities from the MultiSelect
-        /// </summary>
-        private void Awake() => _abilities = GetSelectedElements();
-
-        /// <summary>
-        /// Checks if this item has the given ability
+        /// Get all abilities from the MultiSelect (if null) and
+        /// checks if this item has the given ability
         /// </summary>
         /// <param name="ability">The ability to check</param>
         /// <returns>Whether it has the given ability or not</returns>
-        public bool HasAbility(EquipableAbility ability) => _abilities.Contains(ability);
+        public bool HasAbility(EquipableAbility ability)
+        {
+            if (_abilities == null)
+                _abilities = equipableAbility.GetSelectedElements();
+            return _abilities.Contains(ability) || ability == EquipableAbility.None;
+        }
 
         /// <summary>
         /// Placeholder function for now.
@@ -43,25 +43,6 @@ namespace Inventory
         {
             Debug.Log("Equipping the item " + name);
             return true;
-        }
-
-        /// <summary>
-        /// Gets all Abilities selected in the MultiSelect
-        /// </summary>
-        /// <returns>A list of all selected abilities</returns>
-        private List<EquipableAbility> GetSelectedElements()
-        {
-            List<EquipableAbility> selectedElements = new List<EquipableAbility>();
-            for (int i = 0; i < Enum.GetValues(typeof(EquipableAbility)).Length; i++)
-            {
-                int layer = 1 << i;
-                if (((int) equipableAbility & layer) != 0)
-                {
-                    selectedElements.Add((EquipableAbility) i);
-                }
-            }
-
-            return selectedElements;
         }
 
 
@@ -73,7 +54,8 @@ namespace Inventory
         public enum EquipableAbility
         {
             Chop,
-            Mine
+            Mine,
+            None
         }
 
         #endregion
