@@ -9,11 +9,15 @@ namespace Interactables
 
         public float Radius => radius;
 
+        public void SetRadius(float value) => radius = value;
+
         [Tooltip("Is this interactable currently being focused?")]
         [SerializeField] private bool isFocus;
 
         [Tooltip("Have we already interacted with the object?")]
         [SerializeField] private bool hasInteracted;
+
+        public bool HasInteracted => hasInteracted;
 
         [SerializeField] private Transform player;    // Reference to the player transform
 
