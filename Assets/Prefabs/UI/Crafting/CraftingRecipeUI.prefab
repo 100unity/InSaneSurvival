@@ -88,7 +88,8 @@ MonoBehaviour:
   flippedOffset: {x: 30, y: -15}
   craftingRecipe: {fileID: 5330057578649661358}
   txtTitle: {fileID: 7488051857419638004}
-  resourceParent: {fileID: 4710150841682141709}
+  txtCraftingStation: {fileID: 5160970230159015496}
+  resourceParent: {fileID: 4792052853311551851}
   craftingHoverTooltipResourcePrefab: {fileID: 2168643664214519933, guid: 8abbfce5bf1d5a741a4a79bf9acfcda5,
     type: 3}
 --- !u!1 &2309883947739214124
@@ -612,15 +613,33 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1947816452728432892}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &4710150841682141709 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6509347989951253233, guid: 1a239589d4d06f64f8743a947b3f0255,
+--- !u!114 &4792052853311551851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6451619840888279447, guid: 1a239589d4d06f64f8743a947b3f0255,
     type: 3}
   m_PrefabInstance: {fileID: 1947816452728432892}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5845474910875723003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7488051857419638004 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
+    type: 3}
+  m_PrefabInstance: {fileID: 1947816452728432892}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5160970230159015496 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6671937347215709876, guid: 1a239589d4d06f64f8743a947b3f0255,
     type: 3}
   m_PrefabInstance: {fileID: 1947816452728432892}
   m_PrefabAsset: {fileID: 0}
