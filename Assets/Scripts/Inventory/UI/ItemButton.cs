@@ -14,9 +14,6 @@ namespace Inventory.UI
         [Tooltip("The icon of item")] [SerializeField]
         private Image icon;
 
-        [Tooltip("The name of the item")] [SerializeField]
-        private TextMeshProUGUI nameLabel;
-
         [Tooltip("The current quantity of this item")] [SerializeField]
         private TextMeshProUGUI countLabel;
 
@@ -69,9 +66,6 @@ namespace Inventory.UI
             Item = item;
             icon.sprite = Item.Icon;
             Count = 1;
-
-            // TODO: Remove this if we have icons for all items
-            nameLabel.SetText(Item.name);
         }
 
         /// <summary>

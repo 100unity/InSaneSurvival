@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eba810f194bea0468b3318491a21203, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 0867d764fc2d7b644bb47d5a476a0056, type: 3}
+  icon: {fileID: 21300000, guid: 9ec4c1e5479fce04cb754676513ab677, type: 3}
   maxStackSize: 20
+  description: 
+  effectText: 
