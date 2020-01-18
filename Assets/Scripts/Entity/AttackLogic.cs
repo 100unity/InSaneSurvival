@@ -2,6 +2,7 @@
 using AbstractClasses;
 using Constants;
 using Managers;
+using System;
 
 namespace Entity
 {
@@ -28,7 +29,7 @@ namespace Entity
         [Tooltip("Animator for playing the attack animation")] [SerializeField]
         private Animator animator;
 
-        public enum AttackStatus { Hit, Miss, NotFinished, None }
+        public enum AttackStatus { Hit, Miss, NotFinished, None, TargetReached }
 
         public AttackStatus Status { get; private set; }
 
@@ -37,6 +38,7 @@ namespace Entity
 
         private float _timer;
         private Damageable _target;
+        private BoxCollider _targetCollider;
         private float _distanceToTarget;
         private static readonly int AttackTrigger = Animator.StringToHash(Consts.Animation.ATTACK_TRIGGER);
 
@@ -77,7 +79,7 @@ namespace Entity
         private void Attack()
         {
             _distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
-            if (_distanceToTarget < attackRange && Status == AttackStatus.None)
+            if (_distanceToTarget < attackRange && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
             {
                 IsInRange();
             }
@@ -92,6 +94,14 @@ namespace Entity
             else
             {
                 // chase target
+                //Vector3 rawExtents = _targetCollider.bounds.extents;
+                //Vector3 extents = Vector3.RotateTowards(rawExtents, _target.transform.rotation.eulerAngles, 10, rawExtents.magnitude);
+                //Debug.DrawRay(_target.transform.position, rawExtents, Color.red, 10);
+                //Debug.DrawRay(_target.transform.position, extents, Color.red);
+                //Vector3 movePosition = new Vector3(_target.transform.position.x - extents.x, _target.transform.position.y, _target.transform.position.z - extents.z);
+                //Vector3 direction = (_target.transform.position - transform.position).normalized;
+                //Vector3 minus = new Vector3(Math.Abs(direction.x) * rawExtents.x, 0, Math.Abs(direction.z) * rawExtents.z);
+                //Vector3 movePosition = _target.transform.position - minus;
                 _movable.Move(_target.transform.position);
             }
         }
@@ -102,6 +112,7 @@ namespace Entity
         private void IsInRange()
         {
             _movable.StopMoving();
+            Status = AttackStatus.TargetReached;
             // face target
             if (_movable.FaceTarget(_target.gameObject, true, out _))
             {
@@ -143,8 +154,8 @@ namespace Entity
         /// <param name="target">The target to be attacked</param>
         public void StartAttack(Damageable target)
         {
-            print("start attack");
             _target = target;
+            _targetCollider = target.gameObject.GetComponent<BoxCollider>();
         }
 
         /// <summary>

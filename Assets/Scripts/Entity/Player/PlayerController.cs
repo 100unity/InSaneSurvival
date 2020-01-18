@@ -159,10 +159,8 @@ namespace Entity.Player
                 return;
 
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
-                _attackLogic.Status == AttackLogic.AttackStatus.None)
+            
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers))
             {
                 GameObject objectHit = hit.collider.gameObject;
 
