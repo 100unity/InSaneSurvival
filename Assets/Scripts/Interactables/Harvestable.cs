@@ -7,6 +7,7 @@ using Utils;
 
 namespace Interactables
 {
+    [System.Serializable]
     public class Harvestable : Interactable
     {
         [Tooltip("The items being dropped on a successful harvest.")] [SerializeField]
@@ -71,7 +72,7 @@ namespace Interactables
             else
             {
                 // TODO: Show needed item.
-                Debug.Log("Missing ability");
+                Debug.Log("Missing ability " +neededAbility+ " | " + equipped.name + " " + equipped.HasAbility(Equipable.EquipableAbility.Chop));
             }
         }
 
