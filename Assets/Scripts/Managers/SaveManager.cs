@@ -1,18 +1,21 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Buildings;
 using Entity.Player;
 using GameTime;
- using Interactables;
- using Inventory;
+using Interactables;
+using Inventory;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils.Saves;
 
 namespace Managers
 {
-    public class SaveManager: Singleton<SaveManager>
+    public class SaveManager : Singleton<SaveManager>
     {
+        private string _path = Application.persistentDataPath;
+
         /// <summary>
         /// saves the current state of the game to JSON
         /// </summary>
@@ -34,10 +37,10 @@ namespace Managers
 
                 //get a json-able list of items in the player's inventory
                 List<Item> inventoryData = inventoryController.GetItems();
-                
+
                 //get all campsites
                 List<Campsite> campsites = CampsiteManager.Instance.campsites;
-                
+
                 //get all buildings
                 Building[] buildings = FindObjectsOfType<Building>();
                 BuildingBlueprint[] blueprints = FindObjectsOfType<BuildingBlueprint>();
@@ -45,7 +48,7 @@ namespace Managers
                 Clock clock = DayNightManager.Instance.GetComponent<Clock>();
                 float time = clock.TimeOfDay;
                 int daynumber = clock.Days;
-                
+
                 //get all harvestables
                 Harvestable[] harvestables = FindObjectsOfType<Harvestable>();
                 List<SavedHarvestable> sh = new List<SavedHarvestable>();
@@ -53,15 +56,16 @@ namespace Managers
                 {
                     sh.Add(new SavedHarvestable(h, h.IsRespawning, h.RespawnTimePassed));
                 }
-                
+
                 // build a JSON-Object
                 Save save = new Save();
 
-                save.SetPlayerState(playerPosition, state.GetHealth(), state.GetSaturation(), state.GetHydration(), state.GetSanity());
+                save.SetPlayerState(playerPosition, state.GetHealth(), state.GetSaturation(), state.GetHydration(),
+                    state.GetSanity());
                 save.SetWorldState(time, daynumber);
                 save.SetInventory(inventoryData);
                 save.buildVersion = Application.version;
-                
+
                 save.campsites = new List<SavedCampsite>();
                 campsites.ForEach(cs => save.campsites.Add(new SavedCampsite(cs, cs.IsUnlocked)));
 
@@ -86,7 +90,7 @@ namespace Managers
             {
                 // get save object
                 Save save = Read(fileName);
-                
+
                 // get game components
                 GameObject player = PlayerManager.Instance.GetPlayer();
                 InventoryController inventoryController = InventoryManager.Instance.GetInvController();
@@ -94,7 +98,7 @@ namespace Managers
 
                 // set player position
                 player.GetComponent<NavMeshAgent>().Warp(save.playerPosition);
-                
+
                 // set player state
                 PlayerState state = player.GetComponent<PlayerState>();
                 state.SetHealth(save.playerHealth);
@@ -105,7 +109,7 @@ namespace Managers
                 // set time
                 timeManager.SetTimeOfDay(save.timeOfDay);
                 timeManager.SetDayNumber(save.dayNumber);
-                
+
                 // set campsites and blueprints
                 List<SavedCampsite> savedCampsites = save.campsites;
                 savedCampsites.ForEach(cs =>
@@ -118,10 +122,12 @@ namespace Managers
                         if (sbp.blueprintActive && sbp.buildingActive)
                         {
                             sbp.building.IsBuilt = true;
-                            sbp.blueprint.gameObject.GetComponentInChildren<BlueprintTooltip>().gameObject.SetActive(false);
+                            sbp.blueprint.gameObject.GetComponentInChildren<BlueprintTooltip>().gameObject
+                                .SetActive(false);
                             //sbp.blueprint.ShowBlueprint();
                             //sbp.blueprint.ShowBuilding();
-                        } else if (sbp.blueprintActive && !sbp.buildingActive)
+                        }
+                        else if (sbp.blueprintActive && !sbp.buildingActive)
                         {
                             sbp.building.IsBuilt = false;
                             //sbp.blueprint.ShowBlueprint();
@@ -129,10 +135,10 @@ namespace Managers
                     });
                     cs.SetState();
                 });
-                
+
                 //set harvestables
                 save.harvestables.ForEach(h => { h.SetState(); });
-                
+
                 // set inventory
                 inventoryController.SetItems(save.items);
 
@@ -143,22 +149,24 @@ namespace Managers
                 Debug.Log(e);
             }
         }
-        
-        
+
+
         //JSON - Utility functions - interaction with File system...
-        
+
         private void Write(Save save, string fileName)
         {
             string json = JsonUtility.ToJson(save);
-            if(fileName == "") System.IO.File.WriteAllText(@"C:\Users\Public\save.json", json);
-            else System.IO.File.WriteAllText(@"C:\Users\Public\"+fileName+".json", json);
-            
+            if (fileName == "") System.IO.File.WriteAllText(@"" + _path + "/save.json", json);
+            else System.IO.File.WriteAllText(@"" + _path + "/" + fileName + ".json", json);
+
             Debug.Log("save written to file");
         }
 
         private Save Read(string fileName)
         {
-            string json = fileName == "" ? System.IO.File.ReadAllText(@"C:\Users\Public\save.json") : System.IO.File.ReadAllText(@"C:\Users\Public\"+fileName+".json");
+            string json = fileName == ""
+                ? System.IO.File.ReadAllText(@"" + _path + "/save.json")
+                : System.IO.File.ReadAllText(@"" + _path + "/" + fileName + ".json");
             return JsonUtility.FromJson<Save>(json);
         }
     }

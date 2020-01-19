@@ -1,15 +1,15 @@
-﻿﻿using System.Collections.Generic;
- using Buildings;
+﻿using System.Collections.Generic;
+using Buildings;
 
 namespace Utils.Saves
 {
     [System.Serializable]
     public class SavedCampsite
     {
-        
         public Campsite campsite;
         public bool isUnlocked;
         public List<SavedBlueprint> blueprints;
+
         public SavedCampsite(Campsite campsite, bool isUnlocked)
         {
             this.campsite = campsite;

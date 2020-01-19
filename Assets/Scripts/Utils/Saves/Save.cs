@@ -17,7 +17,7 @@ namespace Utils.Saves
 
         //player state
         public Vector3 playerPosition;
-        
+
         public int playerHealth;
         public int playerSaturation;
         public int playerHydration;
@@ -25,11 +25,11 @@ namespace Utils.Saves
 
         //inventory data
         public List<Item> items;
-        
+
         //world state data
         public float timeOfDay;
         public int dayNumber;
-        
+
         //word buildings data
         public List<SavedCampsite> campsites;
 

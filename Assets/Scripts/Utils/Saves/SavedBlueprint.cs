@@ -7,7 +7,7 @@ namespace Utils.Saves
     {
         public BuildingBlueprint blueprint;
         public Building building;
-        
+
         public bool blueprintActive;
         public bool buildingActive;
 
