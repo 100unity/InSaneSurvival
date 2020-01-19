@@ -55,6 +55,21 @@ namespace Interactables
             if (isRespawning) CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
         }
 
+        public bool IsRespawning => isRespawning;
+
+        public double RespawnTimePassed => respawnTimePassed;
+
+        public void SetFromSave(bool isRespawning, double respawnTimePassed)
+        {
+            this.isRespawning = isRespawning;
+            this.respawnTimePassed = respawnTimePassed;
+
+            if (this.isRespawning)
+            {
+                CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
+            }
+        }
+
         /// <summary>
         /// Checks if the player has the ability to harvest this resource.
         /// If so, it resets the <see cref="_gatherTimePassed"/> and starts the <see cref="Gather"/> coroutine.
@@ -72,7 +87,7 @@ namespace Interactables
             else
             {
                 // TODO: Show needed item.
-                Debug.Log("Missing ability " +neededAbility+ " | " + equipped.name + " " + equipped.HasAbility(Equipable.EquipableAbility.Chop));
+                Debug.Log("Missing ability " +neededAbility);
             }
         }
 
@@ -129,6 +144,8 @@ namespace Interactables
         /// </summary>
         private IEnumerator Respawn()
         {
+            Debug.Log("respawn started");
+            
             isRespawning = true;
             _ownMeshRenderer.enabled = false;
             _ownCollider.enabled = false;
@@ -138,6 +155,8 @@ namespace Interactables
                 respawnTimePassed += Time.deltaTime;
                 yield return null;
             }
+
+            Debug.Log("respawned");
 
             isRespawning = false;
             respawnTimePassed = 0;

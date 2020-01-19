@@ -62,8 +62,7 @@ namespace Inventory
 
         public void SetItems(List<Item> itemList)
         {
-            items = itemList;
-            foreach (var item in items)
+            foreach (var item in itemList)
             {
                 AddItem(item);
             }

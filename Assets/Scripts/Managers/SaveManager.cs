@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Buildings;
 using Entity.Player;
 using GameTime;
-using Inventory;
+ using Interactables;
+ using Inventory;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils.Saves;
@@ -12,6 +13,10 @@ namespace Managers
 {
     public class SaveManager: Singleton<SaveManager>
     {
+        /// <summary>
+        /// saves the current state of the game to JSON
+        /// </summary>
+        /// <param name="fileName"></param>
         public void Save(string fileName)
         {
             Debug.Log("save initiated");
@@ -41,6 +46,14 @@ namespace Managers
                 float time = clock.TimeOfDay;
                 int daynumber = clock.Days;
                 
+                //get all harvestables
+                Harvestable[] harvestables = FindObjectsOfType<Harvestable>();
+                List<SavedHarvestable> sh = new List<SavedHarvestable>();
+                foreach (Harvestable h in harvestables)
+                {
+                    sh.Add(new SavedHarvestable(h, h.IsRespawning, h.RespawnTimePassed));
+                }
+                
                 // build a JSON-Object
                 Save save = new Save();
 
@@ -52,6 +65,8 @@ namespace Managers
                 save.campsites = new List<SavedCampsite>();
                 campsites.ForEach(cs => save.campsites.Add(new SavedCampsite(cs, cs.IsUnlocked)));
 
+                save.harvestables = sh;
+
                 Write(save, fileName);
             }
             catch (Exception e)
@@ -60,6 +75,10 @@ namespace Managers
             }
         }
 
+        /// <summary>
+        /// loads the savegame from the file & sets the states of gameobjects sequentially afterwards...
+        /// </summary>
+        /// <param name="fileName"></param>
         public void Load(string fileName)
         {
             Debug.Log("loading initiated");
@@ -72,7 +91,6 @@ namespace Managers
                 GameObject player = PlayerManager.Instance.GetPlayer();
                 InventoryController inventoryController = InventoryManager.Instance.GetInvController();
                 DayNightManager timeManager = DayNightManager.Instance;
-                CampsiteManager campsiteManager = CampsiteManager.Instance;
 
                 // set player position
                 player.GetComponent<NavMeshAgent>().Warp(save.playerPosition);
@@ -83,9 +101,6 @@ namespace Managers
                 state.SetHydration(save.playerHydration);
                 state.SetSanity(save.playerSanity);
                 state.SetSaturation(save.playerSaturation);
-                
-                // set inventory
-                inventoryController.SetItems(save.items);
 
                 // set time
                 timeManager.SetTimeOfDay(save.timeOfDay);
@@ -115,8 +130,12 @@ namespace Managers
                     cs.SetState();
                 });
                 
+                //set harvestables
+                save.harvestables.ForEach(h => { h.SetState(); });
                 
-                
+                // set inventory
+                inventoryController.SetItems(save.items);
+
                 Debug.Log("save recreated");
             }
             catch (Exception e)
@@ -125,11 +144,8 @@ namespace Managers
             }
         }
         
-        //Buildings -  Utility functions
         
-        
-        
-        //JSON - Utility functions
+        //JSON - Utility functions - interaction with File system...
         
         private void Write(Save save, string fileName)
         {

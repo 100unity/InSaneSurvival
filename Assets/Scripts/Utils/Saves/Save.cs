@@ -34,6 +34,7 @@ namespace Utils.Saves
         public List<SavedCampsite> campsites;
 
         //world resource data
+        public List<SavedHarvestable> harvestables;
 
         public Save()
         {
@@ -56,6 +57,6 @@ namespace Utils.Saves
             dayNumber = day;
         }
 
-        public void SetInventory(List<Item> itemList) => this.items = itemList;
+        public void SetInventory(List<Item> itemList) => items = itemList;
     }
 }

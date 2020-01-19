@@ -1,5 +1,4 @@
 ﻿using Buildings;
-using UnityEngine.Serialization;
 
 namespace Utils.Saves
 {
