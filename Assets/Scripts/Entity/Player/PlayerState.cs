@@ -35,6 +35,7 @@ namespace Entity.Player
         public static event PlayerStateChanged OnPlayerSanityUpdate;
         public static event PlayerEventHit OnPlayerHit;
         public static event PlayerEvents OnPlayerHealed;
+
         public static event PlayerIsDead OnPlayerDeath;
 
         private void Awake()
