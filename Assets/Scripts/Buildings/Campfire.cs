@@ -1,5 +1,7 @@
+using System;
 using Constants;
 using Entity.Player;
+using Managers;
 using UnityEngine;
 
 namespace Buildings
@@ -14,22 +16,25 @@ namespace Buildings
         private float damageInterval;
 
         private float _timer;
+        private PlayerState _playerState;
 
+        private void Awake() => _playerState = PlayerManager.Instance.GetPlayer().GetComponent<PlayerState>();
+        
         private void OnTriggerStay(Collider other)
         {
-            if (!other.tag.Equals(Consts.Tags.PLAYER)) return;
+            if (!other.CompareTag(Consts.Tags.PLAYER)) return;
             
             _timer += Time.deltaTime;
             if (_timer < damageInterval) return;
             
-            other.GetComponent<PlayerState>().Hit(damage);
+            _playerState.Hit(damage);
             _timer = 0;
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.tag.Equals(Consts.Tags.PLAYER))
-                _timer = 0;
+            if (!other.CompareTag(Consts.Tags.PLAYER)) return;
+            _timer = 0;
         }
     }
 }
