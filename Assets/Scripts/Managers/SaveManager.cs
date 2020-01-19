@@ -14,8 +14,6 @@ namespace Managers
 {
     public class SaveManager : Singleton<SaveManager>
     {
-        private string _path = Application.persistentDataPath;
-
         /// <summary>
         /// saves the current state of the game to JSON
         /// </summary>
@@ -155,18 +153,20 @@ namespace Managers
 
         private void Write(Save save, string fileName)
         {
+            string path = Application.persistentDataPath;
             string json = JsonUtility.ToJson(save);
-            if (fileName == "") System.IO.File.WriteAllText(@"" + _path + "/save.json", json);
-            else System.IO.File.WriteAllText(@"" + _path + "/" + fileName + ".json", json);
+            if (fileName == "") System.IO.File.WriteAllText(@"" + path + "/save.json", json);
+            else System.IO.File.WriteAllText(@"" + path + "/" + fileName + ".json", json);
 
             Debug.Log("save written to file");
         }
 
         private Save Read(string fileName)
         {
+            string path = Application.persistentDataPath;
             string json = fileName == ""
-                ? System.IO.File.ReadAllText(@"" + _path + "/save.json")
-                : System.IO.File.ReadAllText(@"" + _path + "/" + fileName + ".json");
+                ? System.IO.File.ReadAllText(@"" + path + "/save.json")
+                : System.IO.File.ReadAllText(@"" + path + "/" + fileName + ".json");
             return JsonUtility.FromJson<Save>(json);
         }
     }
