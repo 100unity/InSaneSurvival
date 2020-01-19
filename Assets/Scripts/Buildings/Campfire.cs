@@ -1,4 +1,3 @@
-using System;
 using Constants;
 using Entity.Player;
 using Managers;
@@ -19,14 +18,14 @@ namespace Buildings
         private PlayerState _playerState;
 
         private void Awake() => _playerState = PlayerManager.Instance.GetPlayer().GetComponent<PlayerState>();
-        
+
         private void OnTriggerStay(Collider other)
         {
             if (!other.CompareTag(Consts.Tags.PLAYER)) return;
-            
+
             _timer += Time.deltaTime;
             if (_timer < damageInterval) return;
-            
+
             _playerState.Hit(damage);
             _timer = 0;
         }
