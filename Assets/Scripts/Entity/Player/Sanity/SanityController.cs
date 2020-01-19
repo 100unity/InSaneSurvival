@@ -92,9 +92,9 @@ namespace Entity.Player.Sanity
         
         private void OnEnable()
         {
-            PlayerState.OnPlayerHealthUpdate += (int health) => sanityMath.InfluenceSanityByStat(StatType.Health, health);
-            PlayerState.OnPlayerSaturationUpdate += (int saturation) => sanityMath.InfluenceSanityByStat(StatType.Saturation, saturation);
-            PlayerState.OnPlayerHydrationUpdate += (int hydration) => sanityMath.InfluenceSanityByStat(StatType.Hydration, hydration);
+            PlayerState.OnPlayerHealthUpdate += OnHealthUpdated;
+            PlayerState.OnPlayerSaturationUpdate += OnSaturationUpdated;
+            PlayerState.OnPlayerHydrationUpdate += OnHydrationUpdated;
             AttackLogic.OnPlayerAttackPerformed += OnAttackPerformed;
             PlayerState.OnPlayerHit += OnPlayerHit;
             PlayerState.OnPlayerHealed += OnPlayerHealed;
@@ -102,9 +102,9 @@ namespace Entity.Player.Sanity
 
         private void OnDisable()
         {
-            PlayerState.OnPlayerHealthUpdate -= (int health) => sanityMath.InfluenceSanityByStat(StatType.Health, health);
-            PlayerState.OnPlayerSaturationUpdate -= (int saturation) => sanityMath.InfluenceSanityByStat(StatType.Saturation, saturation);
-            PlayerState.OnPlayerHydrationUpdate -= (int hydration) => sanityMath.InfluenceSanityByStat(StatType.Hydration, hydration);
+            PlayerState.OnPlayerHealthUpdate -= OnHealthUpdated;
+            PlayerState.OnPlayerSaturationUpdate -= OnSaturationUpdated;
+            PlayerState.OnPlayerHydrationUpdate -= OnHydrationUpdated;
             AttackLogic.OnPlayerAttackPerformed -= OnAttackPerformed;
             PlayerState.OnPlayerHit -= OnPlayerHit;
             PlayerState.OnPlayerHealed -= OnPlayerHealed;
@@ -142,6 +142,10 @@ namespace Entity.Player.Sanity
             if (applyCampfireBonus)
                 CheckCampfireRange();
         }
+
+        private void OnHealthUpdated(int health) => sanityMath.InfluenceSanityByStat(StatType.Health, health);
+        private void OnSaturationUpdated(int saturation) => sanityMath.InfluenceSanityByStat(StatType.Saturation, saturation);
+        private void OnHydrationUpdated(int hydration) => sanityMath.InfluenceSanityByStat(StatType.Hydration, hydration);
 
         /// <summary>
         /// Depending on the player's needs (health, saturation, hydration), sum up a tick 
@@ -193,7 +197,7 @@ namespace Entity.Player.Sanity
             if (!_isFighting)
                 _isFighting = true;
 
-            // get the EnemyController passed here, so that e.g. if you attack a non-aggressive,
+			// get the EnemyController passed here, so that e.g. if you attack a non-aggressive,
             // run away and then get hit by an aggressive (which you don't fight back/runaway), you don't get the non-aggressive malus
             // also necessary to prevent nullref if not having attacked at all, but get hit
             _enemy = attacker;

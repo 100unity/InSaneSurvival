@@ -45,6 +45,7 @@ namespace Entity.Enemy
 
         public Renderer Renderer => graphicsRenderer;
         public bool IsAggressive => isAggressive;
+        public Area WanderArea => wanderArea;
 
         // component references
         private WanderAI _wanderAI;
@@ -53,6 +54,7 @@ namespace Entity.Enemy
         private float _timer;
         private bool _isChasing;
         private float _initialSpeed;
+        private bool _runningAway;
 
 
         protected override void Awake()
@@ -111,6 +113,11 @@ namespace Entity.Enemy
             _timer += Time.deltaTime;
             if (_timer >= wanderTimer)
             {
+                if (_runningAway)
+                {
+                    _runningAway = false;
+                    NavMeshAgent.speed = _initialSpeed;
+                }
                 MoveToNextPoint();
                 _timer = 0;
             }
@@ -159,7 +166,15 @@ namespace Entity.Enemy
             }
         }
 
-        public Area WanderArea => wanderArea;
+        /// <summary>
+        /// Run away. (Move to next point with running speed.)
+        /// </summary>
+        public void RunAway()
+        {
+            _runningAway = true;
+            NavMeshAgent.speed = runningSpeed;
+            MoveToNextPoint();
+        }
 
         /// <summary>
         /// Draws wire spheres to display lookRadius, wander area and escapeRadius.
