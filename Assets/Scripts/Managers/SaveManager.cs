@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Buildings;
 using Entity.Player;
 using GameTime;
@@ -20,7 +19,6 @@ namespace Managers
         /// <param name="fileName"></param>
         public void Save(string fileName)
         {
-            Debug.Log("save initiated");
             try
             {
                 // grab required components to extract data from
@@ -83,7 +81,6 @@ namespace Managers
         /// <param name="fileName"></param>
         public void Load(string fileName)
         {
-            Debug.Log("loading initiated");
             try
             {
                 // get save object
@@ -139,8 +136,6 @@ namespace Managers
 
                 // set inventory
                 inventoryController.SetItems(save.items);
-
-                Debug.Log("save recreated");
             }
             catch (Exception e)
             {
@@ -157,8 +152,6 @@ namespace Managers
             string json = JsonUtility.ToJson(save);
             if (fileName == "") System.IO.File.WriteAllText(@"" + path + "/save.json", json);
             else System.IO.File.WriteAllText(@"" + path + "/" + fileName + ".json", json);
-
-            Debug.Log("save written to file");
         }
 
         private Save Read(string fileName)

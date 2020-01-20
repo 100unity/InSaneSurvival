@@ -87,7 +87,6 @@ namespace Interactables
             else
             {
                 // TODO: Show needed item.
-                Debug.Log("Missing ability " +neededAbility);
             }
         }
 
@@ -144,8 +143,6 @@ namespace Interactables
         /// </summary>
         private IEnumerator Respawn()
         {
-            Debug.Log("respawn started");
-            
             isRespawning = true;
             _ownMeshRenderer.enabled = false;
             _ownCollider.enabled = false;
@@ -155,9 +152,7 @@ namespace Interactables
                 respawnTimePassed += Time.deltaTime;
                 yield return null;
             }
-
-            Debug.Log("respawned");
-
+            
             isRespawning = false;
             respawnTimePassed = 0;
 

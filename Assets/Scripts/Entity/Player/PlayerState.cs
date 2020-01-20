@@ -38,15 +38,6 @@ namespace Entity.Player
 
         public static event PlayerIsDead OnPlayerDeath;
 
-        private void Awake()
-        {
-            // send event on initial values
-            /*OnPlayerHealthUpdate?.Invoke(health);
-            OnPlayerSaturationUpdate?.Invoke(saturation);
-            OnPlayerHydrationUpdate?.Invoke(hydration);
-            OnPlayerSanityUpdate?.Invoke(sanity);*/
-        }
-
         private void OnEnable()
         {
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
