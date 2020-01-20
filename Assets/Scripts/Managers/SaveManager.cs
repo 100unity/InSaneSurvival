@@ -119,13 +119,10 @@ namespace Managers
                             sbp.building.IsBuilt = true;
                             sbp.blueprint.gameObject.GetComponentInChildren<BlueprintTooltip>().gameObject
                                 .SetActive(false);
-                            //sbp.blueprint.ShowBlueprint();
-                            //sbp.blueprint.ShowBuilding();
                         }
                         else if (sbp.blueprintActive && !sbp.buildingActive)
                         {
                             sbp.building.IsBuilt = false;
-                            //sbp.blueprint.ShowBlueprint();
                         }
                     });
                     cs.SetState();
@@ -146,7 +143,7 @@ namespace Managers
 
         //JSON - Utility functions - interaction with File system...
 
-        private void Write(Save save, string fileName)
+        private void Write(Save save, string fileName = "")
         {
             string path = Application.persistentDataPath;
             string json = JsonUtility.ToJson(save);
