@@ -88,6 +88,9 @@ namespace Entity.Player.Sanity
         {
             _playerState = GetComponent<PlayerState>();
             _attackLogic = GetComponent<AttackLogic>();
+            OnHealthUpdated(100);
+            OnSaturationUpdated(100);
+            OnHydrationUpdated(100);
         }
         
         private void OnEnable()

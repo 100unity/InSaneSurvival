@@ -81,6 +81,7 @@ namespace Entity.Player.Sanity
             _vignetteBaseIntensity = _vignette.intensity.value;
             _baseShutterAngle = (int)_motionBlur.shutterAngle.value;
             ClampAll();
+            OnSanityUpdated(100);
         }
 
         private void OnEnable() => PlayerState.OnPlayerSanityUpdate += OnSanityUpdated;
