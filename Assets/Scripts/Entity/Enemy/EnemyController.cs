@@ -1,4 +1,6 @@
-﻿using AbstractClasses;
+﻿using System.Collections.Generic;
+using AbstractClasses;
+using Inventory;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -43,9 +45,13 @@ namespace Entity.Enemy
         [SerializeField]
         private Renderer graphicsRenderer;
 
+        [Header("Drops")] [Tooltip("Items that will be dropped when killing this emeny")] [SerializeField]
+        private List<ItemResourceData> itemDrops;
+
         public Renderer Renderer => graphicsRenderer;
         public bool IsAggressive => isAggressive;
         public Area WanderArea => wanderArea;
+        public List<ItemResourceData> ItemDrops => itemDrops;
 
         // component references
         private WanderAI _wanderAI;
@@ -192,18 +198,5 @@ namespace Entity.Enemy
                 Gizmos.DrawWireSphere(transform.position, escapeRadius);
             }
         }
-
-        /* maybe this is useful at another place?
-            // restrict walkable area
-            Vector3 newLocation = transform.position;
-            float walkDistance = Vector3.Distance(newLocation, _centerPosition);
-
-            if (walkDistance > patrolRadius)
-            {
-                Vector3 fromCenterToPosition = newLocation - _centerPosition;
-                fromCenterToPosition = fromCenterToPosition * (patrolRadius / walkDistance);
-                newLocation = _centerPosition + fromCenterToPosition;
-                gameObject.transform.position = newLocation;
-            }*/
     }
 }

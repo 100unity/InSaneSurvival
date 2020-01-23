@@ -1,4 +1,6 @@
 ﻿using AbstractClasses;
+using Inventory;
+using Managers;
 using UnityEngine;
 using Utils;
 
@@ -49,6 +51,12 @@ namespace Entity.Enemy {
             base.Die();
             _attackLogic.enabled = false;
             Destroy(gameObject, 5f);
+            CoroutineManager.Instance.WaitForSeconds(5, () =>
+            {
+                foreach (ItemResourceData resourceData in _enemyController.ItemDrops)
+                    for (int i = 0; i < resourceData.amount; i++)
+                        InventoryManager.Instance.AddItem(resourceData.item);
+            });
         }
 
         /// <summary>
