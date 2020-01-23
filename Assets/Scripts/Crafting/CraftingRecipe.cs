@@ -29,6 +29,11 @@ namespace Crafting
         public string CreatedItemName => string.IsNullOrEmpty(recipeName) ? createdItem.item.name : recipeName;
 
         /// <summary>
+        /// The needed crafting station for this recipe.
+        /// </summary>
+        public CraftingManager.CraftingStation CraftingStation => craftingStation;
+
+        /// <summary>
         /// All needed items for crafting the new item(s) with this recipe
         /// </summary>
         public List<ItemResourceData> NeededItems => neededItems;

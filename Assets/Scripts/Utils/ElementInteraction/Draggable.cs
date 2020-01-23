@@ -77,7 +77,11 @@ namespace Utils.ElementInteraction
         /// <summary>
         /// Follows the mouse position
         /// </summary>
-        public void OnDrag(PointerEventData eventData) => parent.position = eventData.position;
+        public void OnDrag(PointerEventData eventData)
+        {
+            parent.position = eventData.position;
+            Cursor.visible = false;
+        }
 
         /// <summary>
         /// Invokes the <see cref="OnEndDrag"/> event
@@ -86,6 +90,7 @@ namespace Utils.ElementInteraction
         {
             OnEndDragging?.Invoke(eventData);
             IsBeingMoved = false;
+            Cursor.visible = true;
         }
 
         /// <summary>

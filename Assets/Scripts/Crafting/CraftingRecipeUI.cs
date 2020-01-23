@@ -21,6 +21,11 @@ namespace Crafting
         private CraftingRecipeResource craftingRecipeResourcePrefab;
 
         /// <summary>
+        /// The recipe this CraftingRecipeUI represents.
+        /// </summary>
+        public CraftingRecipe Recipe => _recipe;
+
+        /// <summary>
         /// The recipe of this CraftingRecipeUI element
         /// </summary>
         private CraftingRecipe _recipe;
