@@ -182,7 +182,8 @@ namespace Entity.Player.Sanity
         {
             if (!_isFighting)
                 _isFighting = true;
-            _enemy = _attackLogic.lastAttacked;
+            if (_attackLogic.lastAttacked != null)
+                _enemy = _attackLogic.lastAttacked;
         }
 
         /// <summary>
