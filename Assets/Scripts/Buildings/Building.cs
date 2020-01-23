@@ -21,6 +21,9 @@ namespace Buildings
         [SerializeField]
         private bool isAlreadyBuilt;
 
+        [Tooltip("The additional behaviour to enable after the building is built")] [SerializeField]
+        private GameObject additionalBehaviour;
+
         public Renderer BuildingRenderer => buildingRenderer;
 
         /// <summary>
@@ -61,6 +64,8 @@ namespace Buildings
         /// </summary>
         protected virtual void OnBuild()
         {
+            if (additionalBehaviour)
+                additionalBehaviour.SetActive(true);
         }
     }
 }
