@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Constants;
 using Inventory;
 using Managers;
+using UI;
 using UnityEngine;
 using Utils;
 
@@ -82,12 +84,11 @@ namespace Interactables
                 equipped != null && equipped.HasAbility(neededAbility))
             {
                 _gatherTimePassed = 0;
+                PlayerManager.Instance.GetPlayerController().TriggerAnimation(Consts.Animation.INTERACT_TRIGGER);
                 CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Gather()));
             }
             else
-            {
-                // TODO: Show needed item.
-            }
+                CoroutineManager.Instance.WaitForSeconds(1, UIManager.Instance.SpeechBubble.ShowErrorSpeechBubble);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Interactables
         /// </summary>
         private IEnumerator Gather()
         {
-            while (HasInteracted && (_gatherTimePassed < gatherTime))
+            while (HasInteracted && _gatherTimePassed < gatherTime)
             {
                 _gatherTimePassed += Time.deltaTime;
                 if (_gatherTimePassed >= gatherTime)
@@ -152,7 +153,7 @@ namespace Interactables
                 respawnTimePassed += Time.deltaTime;
                 yield return null;
             }
-            
+
             isRespawning = false;
             respawnTimePassed = 0;
 

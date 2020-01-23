@@ -88,6 +88,9 @@ namespace Entity.Player.Sanity
         {
             _playerState = GetComponent<PlayerState>();
             _attackLogic = GetComponent<AttackLogic>();
+            OnHealthUpdated(100);
+            OnSaturationUpdated(100);
+            OnHydrationUpdated(100);
         }
         
         private void OnEnable()
@@ -182,7 +185,8 @@ namespace Entity.Player.Sanity
         {
             if (!_isFighting)
                 _isFighting = true;
-            _enemy = _attackLogic.lastAttacked;
+            if (_attackLogic.lastAttacked != null)
+                _enemy = _attackLogic.lastAttacked;
         }
 
         /// <summary>
