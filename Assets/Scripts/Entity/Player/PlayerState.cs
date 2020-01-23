@@ -1,4 +1,4 @@
-using AbstractClasses;
+﻿using AbstractClasses;
 using Entity.Enemy;
 using Inventory;
 using Remote;
@@ -11,7 +11,9 @@ namespace Entity.Player
         public delegate void PlayerStateChanged(int newValue);
 
         public delegate void PlayerEvents();
+
         public delegate void PlayerEventHit(EnemyController attacker);
+
         public delegate void PlayerIsDead();
 
         //Player State values
@@ -53,7 +55,7 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
             RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
         }
-        
+
         public int GetHealth() => health;
         public int GetSaturation() => saturation;
         public int GetHydration() => hydration;
@@ -138,7 +140,7 @@ namespace Entity.Player
         /// </summary>
         /// <param name="damage">The damage dealt to player</param>
         /// <param name="attacker">The EnemyController of the enemy</param>
-        public override void Hit(int damage, EnemyController attacker)
+        public override void Hit(int damage, EnemyController attacker = null)
         {
             base.Hit(damage);
             ChangePlayerHealth(-damage);
