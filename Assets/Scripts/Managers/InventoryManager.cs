@@ -2,6 +2,7 @@
 using Interfaces;
 using Inventory;
 using Inventory.UI;
+using UI;
 using UnityEngine;
 
 namespace Managers
@@ -13,7 +14,7 @@ namespace Managers
     {
         [Tooltip("Player's inventory")] [SerializeField]
         private InventoryController playerInventory;
-        
+
         /// <summary>
         /// The current ItemHandler that holds all items.
         /// </summary>
@@ -55,7 +56,7 @@ namespace Managers
             playerInventory.AddItem(item);
             return true;
         }
-        
+
         public InventoryController GetInvController() => playerInventory;
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace Managers
         public void SetCurrentlyEquipped(ItemButton itemButton)
         {
             CurrentlyEquippedItem = itemButton ? (Equipable) itemButton.Item : null;
+            UIManager.Instance.WearingIndicator.SetIcon(itemButton ? itemButton.Item.Icon : null);
             if (_currentlyEquippedItemButton != null)
                 _currentlyEquippedItemButton.Unequip();
             _currentlyEquippedItemButton = itemButton;
