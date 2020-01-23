@@ -27,6 +27,8 @@ namespace AbstractClasses
         protected NavMeshAgent NavMeshAgent;
         private static readonly int MovementSpeed = Animator.StringToHash(Consts.Animation.MOVEMENT_SPEED_FLOAT);
 
+        protected Animator Animator => animator;
+
         protected virtual void Awake() => NavMeshAgent = GetComponent<NavMeshAgent>();
 
         protected virtual void Update()
@@ -41,7 +43,7 @@ namespace AbstractClasses
         private void UpdateRotation()
         {
             Quaternion oldRotation = graphicsTransform.rotation;
-            
+
             if (!Physics.Raycast(graphicsTransform.position, Vector3.down, out RaycastHit hit, 100))
                 return;
             // Ground hit, update rotation

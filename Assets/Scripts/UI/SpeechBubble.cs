@@ -8,7 +8,7 @@ namespace UI
     {
         [Tooltip("The speech bubble content to show")] [SerializeField]
         private GameObject speechBubbleContent;
-        
+
         [Tooltip("The image component of the speech bubble")] [SerializeField]
         private Image image;
 
@@ -17,15 +17,23 @@ namespace UI
 
         [Tooltip("The player controller to get the camera distance range from")] [SerializeField]
         private PlayerController playerController;
-        
+
         [Tooltip("The translation factor for moving the speech bubble on camera distance changes")] [SerializeField]
         private float translationFactor;
+
+        [Tooltip("The icon to display for interactions that are currently not possible")] [SerializeField]
+        private Sprite errorIcon;
 
         private void Start() => UpdatePosition(playerController.CameraDistance);
 
         private void OnEnable() => PlayerController.OnCameraDistanceChange += UpdatePosition;
 
         private void OnDisable() => PlayerController.OnCameraDistanceChange -= UpdatePosition;
+
+        /// <summary>
+        /// Shows a speech bubble with an error icon
+        /// </summary>
+        public void ShowErrorSpeechBubble() => ShowSpeechBubble(errorIcon);
 
         /// <summary>
         /// Displays a speech bubble with the specified image in it above the player's head
@@ -50,7 +58,8 @@ namespace UI
         private void UpdatePosition(float cameraDistance)
         {
             float normalizedCameraDistance = (cameraDistance - playerController.CameraDistanceRange.min) /
-                                             (playerController.CameraDistanceRange.max - playerController.CameraDistanceRange.min);
+                                             (playerController.CameraDistanceRange.max -
+                                              playerController.CameraDistanceRange.min);
             Vector3 position = speechBubbleContent.transform.localPosition;
             position.y = normalizedCameraDistance * translationFactor;
             speechBubbleContent.transform.localPosition = position;
