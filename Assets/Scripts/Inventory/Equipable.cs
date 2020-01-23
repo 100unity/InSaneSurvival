@@ -31,7 +31,7 @@ namespace Inventory
         /// <returns>Whether it has the given ability or not</returns>
         public bool HasAbility(EquipableAbility ability)
         {
-            if (_abilities == null)
+            if (_abilities.Count == 0)
                 _abilities = equipableAbility.GetSelectedElements();
             return _abilities.Contains(ability) || ability == EquipableAbility.None;
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using Entity.Player;
-using Entity.Player.Sanity;
+using Managers;
 using UnityEngine;
 
 namespace Remote
@@ -10,13 +10,15 @@ namespace Remote
     {
         public delegate void PlayerStateChanged(int newValue);
 
+        public delegate void GameTimeChanged(float newTime);
+
         private TcpClient _client;
         private NetworkStream _stream;
 
         [SerializeField] private string ip;
         [SerializeField] private int port;
         [SerializeField] private bool use;
-        
+
         public static event PlayerStateChanged OnPlayerHealthRemoteUpdate;
         public static event PlayerStateChanged OnPlayerSaturationRemoteUpdate;
         public static event PlayerStateChanged OnPlayerHydrationRemoteUpdate;
@@ -30,7 +32,7 @@ namespace Remote
             PlayerState.OnPlayerSanityUpdate += SanityUpdated;
             PlayerController.OnPlayerPositionUpdate += PositionUpdated;
         }
-        
+
         private void OnDisable()
         {
             PlayerState.OnPlayerHealthUpdate -= HealthUpdated;
@@ -54,9 +56,8 @@ namespace Remote
             {
                 Disconnect();
             }
-            
         }
-        
+
         //server connection
         private async void Connect(string server)
         {
@@ -65,21 +66,22 @@ namespace Remote
                 _client = new TcpClient(server, port);
 
                 _stream = _client.GetStream();
-                
-                while (_client.Connected) {
-                    byte[ ] buffer = new byte[_client.ReceiveBufferSize];
+
+                while (_client.Connected)
+                {
+                    byte[] buffer = new byte[_client.ReceiveBufferSize];
                     int read = await _stream.ReadAsync(buffer, 0, buffer.Length);
-                    if (read > 0 ){
+                    if (read > 0)
+                    {
                         string responseData = System.Text.Encoding.ASCII.GetString(buffer, 0, read);
                         MessageReceived(responseData);
                     }
                 }
-                
             }
             catch (Exception e)
             {
                 use = false;
-                Debug.Log("Connection to Remote Server failed");
+                Debug.Log("Connection to Remote Server failed because: " + e.Message);
             }
         }
 
@@ -99,16 +101,30 @@ namespace Remote
                 string[] parameters = message.Split('/');
                 switch (parameters[0])
                 {
-                    case "HP": OnPlayerHealthRemoteUpdate?.Invoke(int.Parse(parameters[1])); 
+                    case "HP":
+                        OnPlayerHealthRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
-                    case "HNG": OnPlayerSaturationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
+                    case "HNG":
+                        OnPlayerSaturationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
-                    case "THR": OnPlayerHydrationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
+                    case "THR":
+                        OnPlayerHydrationRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
-                    case "SNT": OnPlayerSanityRemoteUpdate?.Invoke(int.Parse(parameters[1]));
+                    case "SNT":
+                        OnPlayerSanityRemoteUpdate?.Invoke(int.Parse(parameters[1]));
+                        break;
+                    case "SAVE":
+                        SaveManager.Instance.Save(parameters[1]);
+                        SendString("saving initiated");
+                        break;
+                    case "LOAD":
+                        SaveManager.Instance.Load(parameters[1]);
+                        SendString("loading initiated");
+                        break;
+                    case "TIME":
+                        DayNightManager.Instance.SetTimeOfDay(float.Parse(parameters[1]));
                         break;
                 }
-                    
             }
         }
 
@@ -117,21 +133,21 @@ namespace Remote
             _stream.Close();
             _client.Close();
         }
-        
+
         //event listeners
         private void HealthUpdated(int newValue)
         {
-            SendString("HP/"+newValue);
+            SendString("HP/" + newValue);
         }
 
         private void SaturationUpdated(int newValue)
         {
-            SendString("HNG/"+newValue);
+            SendString("HNG/" + newValue);
         }
 
         private void HydrationUpdated(int newValue)
         {
-            SendString("THR/"+newValue);
+            SendString("THR/" + newValue);
         }
 
         private void SanityUpdated(int newValue)
@@ -141,7 +157,7 @@ namespace Remote
 
         private void PositionUpdated(Vector3 newPosition)
         {
-            SendString("POS/"+newPosition.x+"/"+newPosition.y+"/"+newPosition.z);
+            SendString("POS/" + newPosition.x + "/" + newPosition.y + "/" + newPosition.z);
         }
     }
 }

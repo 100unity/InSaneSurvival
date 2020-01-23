@@ -26,6 +26,8 @@ namespace Managers
         /// <param name="newTimeOfDay">The new time of the day</param>
         public void SetTimeOfDay(float newTimeOfDay) => clock.SetTimeOfDay(newTimeOfDay);
 
+        public void SetDayNumber(int dayNumber) => clock.SetDayNumber(dayNumber);
+
         /// <summary>
         /// Sets the <see cref="Clock.TimeOfDay"/> over a specified time, using the <see cref="animationCurve"/>.
         /// </summary>

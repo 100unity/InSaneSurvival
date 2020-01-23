@@ -1,4 +1,4 @@
-﻿using AbstractClasses;
+using AbstractClasses;
 using Entity.Enemy;
 using Inventory;
 using Remote;
@@ -38,15 +38,6 @@ namespace Entity.Player
 
         public static event PlayerIsDead OnPlayerDeath;
 
-        private void Awake()
-        {
-            // send event on initial values
-            OnPlayerHealthUpdate?.Invoke(health);
-            OnPlayerSaturationUpdate?.Invoke(saturation);
-            OnPlayerHydrationUpdate?.Invoke(hydration);
-            OnPlayerSanityUpdate?.Invoke(sanity);
-        }
-
         private void OnEnable()
         {
             RemoteStatusHandler.OnPlayerHealthRemoteUpdate += ChangePlayerHealth;
@@ -61,6 +52,35 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerHydrationRemoteUpdate -= ChangePlayerHydration;
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
             RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
+        }
+        
+        public int GetHealth() => health;
+        public int GetSaturation() => saturation;
+        public int GetHydration() => hydration;
+        public int GetSanity() => sanity;
+
+        public void SetHealth(int value)
+        {
+            health = value;
+            OnPlayerHealthUpdate?.Invoke(value);
+        }
+
+        public void SetSaturation(int value)
+        {
+            saturation = value;
+            OnPlayerSaturationUpdate?.Invoke(value);
+        }
+
+        public void SetHydration(int value)
+        {
+            hydration = value;
+            OnPlayerHydrationUpdate?.Invoke(value);
+        }
+
+        public void SetSanity(int value)
+        {
+            sanity = value;
+            OnPlayerSanityUpdate?.Invoke(value);
         }
 
         //Interface
