@@ -5,6 +5,7 @@ using Utils;
 namespace Entity.Enemy {
     
     [RequireComponent(typeof(AttackLogic))]
+    [RequireComponent(typeof(EnemyController))]
     public class EnemyState : Damageable
     {
         [Tooltip("0 - dead")]
@@ -28,11 +29,13 @@ namespace Entity.Enemy {
         private readonly System.Random _random = new System.Random();
         private int _maxHealth;
         private AttackLogic _attackLogic;
+        private EnemyController _enemyController;
 
         private void Awake()
         {
             _maxHealth = health;
             _attackLogic = GetComponent<AttackLogic>();
+            _enemyController = GetComponent<EnemyController>();
         }
 
         private void Update()
@@ -48,10 +51,22 @@ namespace Entity.Enemy {
             Destroy(gameObject, 5f);
         }
 
-        public override void Hit(int damage)
+        /// <summary>
+        /// Run away if NPC is not aggressive. Only do hit animation if not running away.
+        /// </summary>
+        /// <param name="damage">The damage dealt</param>
+        /// <param name="_">EnemyController is not used because this is an NPC.</param>
+        public override void Hit(int damage, EnemyController _)
         {
-            base.Hit(damage);
             ChangeHealth(-damage);
+            if (health <= 0)
+                return;
+            
+            if (!_enemyController.IsAggressive)
+                _enemyController.RunAway();
+            // don't do hit animation if running away
+            else
+                base.Hit(damage);
         }
 
         private void ChangeHealth(int changeBy)

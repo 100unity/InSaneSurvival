@@ -6,6 +6,7 @@ namespace Buildings
     /// <summary>
     /// Simple building behaviour.
     /// </summary>
+    [System.Serializable]
     public abstract class Building : MonoBehaviour
     {
         [Header("Building-Base")]
@@ -21,6 +22,9 @@ namespace Buildings
         [SerializeField]
         private bool isAlreadyBuilt;
 
+        [Tooltip("The additional behaviour to enable after the building is built")] [SerializeField]
+        private GameObject additionalBehaviour;
+
         public Renderer BuildingRenderer => buildingRenderer;
 
         /// <summary>
@@ -31,7 +35,7 @@ namespace Buildings
         /// <summary>
         /// Whether the building is build or not. Invokes <see cref="OnBuild"/>
         /// </summary>
-        public bool IsBuilt { get; private set; }
+        public bool IsBuilt { get; set; }
 
 
         private void Awake() => IsBuilt = isAlreadyBuilt;
@@ -61,6 +65,8 @@ namespace Buildings
         /// </summary>
         protected virtual void OnBuild()
         {
+            if (additionalBehaviour)
+                additionalBehaviour.SetActive(true);
         }
     }
 }

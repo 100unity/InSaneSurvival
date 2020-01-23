@@ -13,7 +13,7 @@ namespace Managers
     {
         [Tooltip("Player's inventory")] [SerializeField]
         private InventoryController playerInventory;
-
+        
         /// <summary>
         /// The current ItemHandler that holds all items.
         /// </summary>
@@ -42,7 +42,7 @@ namespace Managers
         /// <summary>
         /// The currently equipped item
         /// </summary>
-        private Equipable CurrentlyEquippedItem { get; set; }
+        public Equipable CurrentlyEquippedItem { get; set; }
 
         /// <summary>
         /// Adds an item to the player's inventory.
@@ -55,6 +55,8 @@ namespace Managers
             playerInventory.AddItem(item);
             return true;
         }
+        
+        public InventoryController GetInvController() => playerInventory;
 
         /// <summary>
         /// Removes an item from the player's inventory.

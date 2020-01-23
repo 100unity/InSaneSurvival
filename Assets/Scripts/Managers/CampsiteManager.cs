@@ -10,6 +10,6 @@ namespace Managers
     public class CampsiteManager : Singleton<CampsiteManager>
     {
         [Tooltip("All campsites in the scene")] [SerializeField]
-        private List<Campsite> campsites;
+        public List<Campsite> campsites;
     }
 }

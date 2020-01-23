@@ -57,5 +57,15 @@ namespace Inventory
             int currentAmount = items.Count(currentItem => currentItem == item);
             return currentAmount >= amount;
         }
+
+        public List<Item> GetItems() => items;
+
+        public void SetItems(List<Item> itemList)
+        {
+            foreach (var item in itemList)
+            {
+                AddItem(item);
+            }
+        }
     }
 }

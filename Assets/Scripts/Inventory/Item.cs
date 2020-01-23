@@ -3,7 +3,7 @@
 namespace Inventory
 {
     [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item/Item(General)")]
-    public class Item : ScriptableObject
+    [System.Serializable] public class Item : ScriptableObject
     {
         [Header("Item base")]
         [Tooltip("The sprite that will be shown everywhere this item is displayed")]

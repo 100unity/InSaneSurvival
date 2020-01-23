@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Remote;
+using UnityEngine;
 
 namespace GameTime
 {
@@ -49,13 +51,19 @@ namespace GameTime
             NormalizeTimeCurve();
             _baseTickRate = 24 / (dayLength / 60); // calculating basic tick rate
         }
-
+        
         private void Update()
         {
             UpdateTimeScale();
             UpdateTime();
             InvokeDayTimeEvent();
         }
+        
+        /// <summary>
+        /// Sets the daynumber - used for loading savegames
+        /// </summary>
+        /// <param name="day"></param>
+        public void SetDayNumber(int day) => this._days = day;
 
         /// <summary>
         /// Sets the time of the day instantly.

@@ -4,6 +4,11 @@ namespace Constants
 {
     public static class Consts
     {
+        public static class Tags
+        {
+            public const string PLAYER = "Player";
+        }
+        
         public static class Scene
         {
             public const int MAIN_MENU = 0;

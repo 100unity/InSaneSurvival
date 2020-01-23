@@ -1,6 +1,7 @@
 ﻿using System;
 using AbstractClasses;
 using Crafting;
+using Entity.Enemy;
 using Interactables;
 using Inventory.UI;
 using Managers;
@@ -159,10 +160,8 @@ namespace Entity.Player
                 return;
 
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            // only change target / move, if not performing a hit
-            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers) &&
-                _attackLogic.Status == AttackLogic.AttackStatus.None)
+            
+            if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers))
             {
                 GameObject objectHit = hit.collider.gameObject;
 
@@ -170,7 +169,7 @@ namespace Entity.Player
                 {
                     _interactLogic.RemoveFocus();
                     // implementation NOT capable of area damage
-                    _attackLogic.StartAttack(damageable);
+                    _attackLogic.StartAttack(damageable, objectHit.GetComponent<EnemyController>());
                 }
 
                 else if (objectHit.TryGetComponent(out Interactable interactable))

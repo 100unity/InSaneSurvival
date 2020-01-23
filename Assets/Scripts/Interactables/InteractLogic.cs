@@ -18,6 +18,7 @@ namespace Interactables
         private Transform target;
 
         private Movable _movable;
+        private float _initialStoppingDistance;
 
         private void Awake()
         {
@@ -29,17 +30,21 @@ namespace Interactables
             // Check and makes character facing the target object when moving toward it
             if (target != null) _movable.FaceTarget(target.gameObject, true, out _);
         }
+
+        // this is start because in Awake Movable is not yet ready
+        private void Start() => _initialStoppingDistance = _movable.GetStoppingDistance();
+
         // This will make character going to target object and stop when it is close enough
         private void SetTarget(Interactable newTarget)
         {
-            _movable.SetStoppingDistance(newTarget.Radius);   
+            _movable.SetStoppingDistance(newTarget.Radius/2);   
             target = newTarget.transform;
         }
 
         // Makes character not targeting the object anymore
         private void StopTarget()
         {
-            _movable.SetStoppingDistance(0f);
+            _movable.SetStoppingDistance(_initialStoppingDistance);
             target = null;
         }
 

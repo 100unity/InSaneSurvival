@@ -91,5 +91,10 @@ namespace AbstractClasses
         {
             NavMeshAgent.stoppingDistance = distance;
         }
+
+        public float GetStoppingDistance()
+        {
+            return NavMeshAgent.stoppingDistance;
+        }
     }
 }

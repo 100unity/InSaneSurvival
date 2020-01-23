@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Managers;
 using UnityEngine;
@@ -47,11 +47,16 @@ namespace Inventory
         private void Awake() => _abilities = GetSelectedElements();
 
         /// <summary>
-        /// Checks if this item has the given ability
-        /// </summary>
+        /// Get all abilities from the MultiSelect (if null) and
+        /// checks if this item has the given ability
         /// <param name="ability">The ability to check</param>
         /// <returns>Whether it has the given ability or not</returns>
-        public bool HasAbility(EquipableAbility ability) => _abilities.Contains(ability);
+        public bool HasAbility(EquipableAbility ability)
+        {
+            if (_abilities.Count == 0)
+                _abilities = equipableAbility.GetSelectedElements();
+            return _abilities.Contains(ability) || ability == EquipableAbility.None;
+        }
 
         /// <summary>
         /// Placeholder function for now.
@@ -95,7 +100,6 @@ namespace Inventory
             return selectedElements;
         }
 
-
         #region Inner-Class
 
         /// <summary>
@@ -104,7 +108,8 @@ namespace Inventory
         public enum EquipableAbility
         {
             Chop,
-            Mine
+            Mine,
+            None
         }
 
         #endregion

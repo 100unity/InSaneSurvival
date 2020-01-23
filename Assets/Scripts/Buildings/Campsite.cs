@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace Buildings
 {
+    [System.Serializable]
     public class Campsite : MonoBehaviour
     {
         [Header("Campsite")] [Tooltip("All building blueprints of this campsite")] [SerializeField]
-        private List<BuildingBlueprint> buildingBlueprints;
+        public List<BuildingBlueprint> buildingBlueprints;
 
         [Tooltip("The model of the campsite. Used to hide it after unlocking")] [SerializeField]
         private GameObject campsiteModel;
