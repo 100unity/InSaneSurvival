@@ -11,10 +11,18 @@ namespace UI
         
         private void Start()
         {
-            StartCoroutine( FadeOut(2, whitePanel));
-            playerCharacterAnimator.SetBool ("isDead", true);
+            StartCoroutine(FadeOut(2, whitePanel));
+            StartCoroutine(PlayerDying());
         }
 
+        // calling the die animation
+        private IEnumerator PlayerDying()
+        {
+            playerCharacterAnimator.speed = 0.4f;
+            yield return new WaitForSeconds(2);
+            playerCharacterAnimator.SetBool ("die", true);
+        }
+        
         // fade out UI Objects
         private IEnumerator FadeOut(float fadeDuration, Image elementToFade)
         {
