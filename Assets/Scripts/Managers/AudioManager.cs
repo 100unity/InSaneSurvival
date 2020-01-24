@@ -8,7 +8,7 @@ namespace Managers
     /**
      * Play sounds with 'AudioManager.Instance.Play("name");'
      */
-    public class AudioManager : Singleton<AudioManager>
+    public class AudioManager : SingletonImmortal<AudioManager>
     {
         [SerializeField][Tooltip("Container for all sounds")]
         private List<Sound> sounds;

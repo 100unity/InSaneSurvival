@@ -19,7 +19,7 @@ namespace UI
         private IEnumerator PlayerDying()
         {
             playerCharacterAnimator.speed = 0.4f;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             playerCharacterAnimator.SetBool ("die", true);
         }
         

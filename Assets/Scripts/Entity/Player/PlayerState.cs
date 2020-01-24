@@ -1,4 +1,5 @@
-﻿using AbstractClasses;
+﻿using System;
+using AbstractClasses;
 using Entity.Enemy;
 using Inventory;
 using Remote;
@@ -30,6 +31,8 @@ namespace Entity.Player
         private int sanity;
 
         public int Sanity => sanity;
+
+        private bool _playerIsDead;
 
         public static event PlayerStateChanged OnPlayerHealthUpdate;
         public static event PlayerStateChanged OnPlayerSaturationUpdate;
@@ -83,6 +86,11 @@ namespace Entity.Player
         {
             sanity = value;
             OnPlayerSanityUpdate?.Invoke(value);
+        }
+
+        private void Awake()
+        {
+            _playerIsDead = false;
         }
 
         //Interface
@@ -171,7 +179,14 @@ namespace Entity.Player
 
         public override void Die()
         {
-            OnPlayerDeath?.Invoke();
+            //This is a quick fix, to prevent invoking "OnPlayerDeath" an infinite amount of times
+            //TODO: rm condition, class variable and awake(), once a "disengage mechanic" has been added to "AttackLogic"
+            if (!_playerIsDead)
+            {
+                _playerIsDead = true;
+                OnPlayerDeath?.Invoke();
+            }
+            
         }
     }
 }

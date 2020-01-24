@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Constants;
 using Entity.Player;
+using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ namespace UI
         private void LoadScene()
         {
             canvas.gameObject.SetActive(true);
-            StartCoroutine(FadeThenLoad(2.5f, whitePanel));
+            StartCoroutine(FadeThenLoad(1.5f, whitePanel));
         }
 
         // Fades in the white overlay and when finished loads "DeathScene"
@@ -45,17 +46,11 @@ namespace UI
 
             yield return new WaitForSeconds(fadeDuration);
 
+            FadeOutAmbientSound();
             Load();
             PlayerState.OnPlayerDeath -= LoadScene;
         }
-
-        // sets alpha of the overlay back to 0
-        private void ResetPanelAlpha()
-        {
-            whitePanel.color = new Color(1, 1, 1, 0);
-            canvas.gameObject.SetActive(false);
-        }
-
+        
         // loads "DeathScene"
         private void Load()
         {
@@ -66,8 +61,12 @@ namespace UI
         private void SceneLoadCompleted(Scene scene, LoadSceneMode mode)
         {
             if (scene.buildIndex != Consts.Scene.DEATH) return;
-            ResetPanelAlpha();
             SceneManager.sceneLoaded -= SceneLoadCompleted;
+        }
+
+        private void FadeOutAmbientSound()
+        {
+            AudioManager.Instance.FadeOutPlaying(2);
         }
     }
 }
