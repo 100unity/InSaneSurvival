@@ -32,8 +32,6 @@ namespace Entity.Player
 
         public int Sanity => sanity;
 
-        private bool _playerIsDead;
-
         public static event PlayerStateChanged OnPlayerHealthUpdate;
         public static event PlayerStateChanged OnPlayerSaturationUpdate;
         public static event PlayerStateChanged OnPlayerHydrationUpdate;
@@ -88,12 +86,7 @@ namespace Entity.Player
             OnPlayerSanityUpdate?.Invoke(value);
         }
 
-        private void Awake()
-        {
-            _playerIsDead = false;
-        }
 
-        //Interface
         private void ChangePlayerHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
@@ -191,14 +184,8 @@ namespace Entity.Player
 
         public override void Die()
         {
-            //This is a quick fix, to prevent invoking "OnPlayerDeath" an infinite amount of times
-            //TODO: rm condition, class variable and awake(), once a "disengage mechanic" has been added to "AttackLogic"
-            if (!_playerIsDead)
-            {
-                _playerIsDead = true;
-                OnPlayerDeath?.Invoke();
-            }
-            
+            base.Die();
+            OnPlayerDeath?.Invoke();
         }
     }
 }
