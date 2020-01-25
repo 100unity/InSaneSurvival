@@ -21,9 +21,13 @@ namespace UI
         [Tooltip("The speech bubble to use for displaying hints")] [SerializeField]
         private SpeechBubble speechBubble;
 
+        [Tooltip("The wearing indicator for displaying equipped items")] [SerializeField]
+        private WearingIndicator wearingIndicator;
+
         public InventoryUI InventoryUI => inventoryUI;
         public CraftingUI CraftingUI => craftingUI;
         public SpeechBubble SpeechBubble => speechBubble;
+        public WearingIndicator WearingIndicator => wearingIndicator;
 
         private void OnEnable()
         {
