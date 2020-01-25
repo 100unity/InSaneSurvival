@@ -18,18 +18,11 @@ namespace Interactables
         [Tooltip("Time in seconds needed to harvest this resource.")] [SerializeField]
         private float gatherTime;
 
-        private double _gatherTimePassed;
-
         [Tooltip("Should this resource be only harvestable once?")] [SerializeField]
-        private bool destroyAfterHarvest;
-
-        private GameObject _parent;
+        protected bool destroyAfterHarvest;
 
         [Tooltip("Time in seconds needed until this resource is allowed to respawn again.")] [SerializeField]
-        private float respawnTime;
-
-        [SerializeField] [HideInInspector] private bool isRespawning;
-        [SerializeField] [HideInInspector] private double respawnTimePassed;
+        protected float respawnTime;
 
         [Tooltip("The GameObject that is supposed to replace this resource while it respawns.")] [SerializeField]
         private GameObject replacement;
@@ -37,28 +30,33 @@ namespace Interactables
         [Tooltip("Select ability needed in order to harvest this resource.")] [SerializeField]
         private Equipable.EquipableAbility neededAbility;
 
+        [SerializeField] [HideInInspector] protected bool isRespawning;
+        [SerializeField] [HideInInspector] protected double respawnTimePassed;
+
+        protected GameObject Parent;
+        protected Camera MainCam;
+
+        private double _gatherTimePassed;
         private MeshRenderer _ownMeshRenderer;
         private MeshCollider _ownCollider;
         private MeshRenderer _replacementMeshRenderer;
-        private Camera _mainCam;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            _mainCam = Camera.main;
+            MainCam = Camera.main;
 
             _ownMeshRenderer = GetComponent<MeshRenderer>();
             _ownCollider = GetComponent<MeshCollider>();
 
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
 
-            if (destroyAfterHarvest) _parent = transform.parent.gameObject;
+            if (destroyAfterHarvest) Parent = transform.parent.gameObject;
 
-            // if item was respawning before save, keep it respawning
+            // If item was respawning before save, keep it respawning
             if (isRespawning) CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
         }
 
         public bool IsRespawning => isRespawning;
-
         public double RespawnTimePassed => respawnTimePassed;
 
         public void SetFromSave(bool isRespawning, double respawnTimePassed)
@@ -67,9 +65,7 @@ namespace Interactables
             this.respawnTimePassed = respawnTimePassed;
 
             if (this.isRespawning)
-            {
                 CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
-            }
         }
 
         /// <summary>
@@ -104,14 +100,14 @@ namespace Interactables
             while (HasInteracted && _gatherTimePassed < gatherTime)
             {
                 _gatherTimePassed += Time.deltaTime;
+
                 if (_gatherTimePassed >= gatherTime)
                 {
                     AddItems();
-                    if (destroyAfterHarvest) Destroy(_parent);
+                    if (destroyAfterHarvest)
+                        Destroy(Parent);
                     else
-                    {
                         CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
-                    }
                 }
 
                 yield return null;
@@ -129,7 +125,7 @@ namespace Interactables
                 {
                     if (!InventoryManager.Instance.AddItem(drop.item))
                     {
-                        // Item could not be added to the inventory, drop it to the ground or show an indicator for no space
+                        // TODO: Drop item to the ground
                         // For now, just skip to the next item(if there is any) and see if this one can be added
                         break;
                     }
@@ -138,17 +134,19 @@ namespace Interactables
         }
 
         /// <summary>
-        /// Increases the <see cref="_respawnTimePassed"/> to the limit of <see cref="respawnTime"/>.
+        /// Increases the <see cref="respawnTimePassed"/> to the limit of <see cref="respawnTime"/>.
         /// When that limit is reached and the resource is not in the camera of the player,
         /// it turns its graphics back on.
         /// </summary>
-        private IEnumerator Respawn()
+        protected virtual IEnumerator Respawn()
         {
-            isRespawning = true;
             _ownMeshRenderer.enabled = false;
             _ownCollider.enabled = false;
             _replacementMeshRenderer.enabled = true;
-            while (respawnTimePassed < respawnTime || _ownMeshRenderer.InFrustum(_mainCam))
+
+            isRespawning = true;
+
+            while (respawnTimePassed < respawnTime || _ownMeshRenderer.InFrustum(MainCam))
             {
                 respawnTimePassed += Time.deltaTime;
                 yield return null;
