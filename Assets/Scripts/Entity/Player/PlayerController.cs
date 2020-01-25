@@ -1,10 +1,9 @@
 ﻿using System;
 using AbstractClasses;
-using Crafting;
 using Entity.Enemy;
 using Interactables;
-using Inventory.UI;
 using Managers;
+using UI;
 using UI.Menus;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -33,12 +32,6 @@ namespace Entity.Player
 
         [Tooltip("The min- and max-distance of the camera")] [SerializeField]
         private Range cameraDistanceRange;
-
-        [Tooltip("The inventory UI to toggle when pressing the inventory key")] [SerializeField]
-        private InventoryUI inventoryUI;
-
-        [Tooltip("The crafting UI to be toggled when pressing the crafting key")] [SerializeField]
-        private CraftingUI craftingUI;
 
         public delegate void PlayerPositionChanged(Vector3 newPosition);
 
@@ -137,11 +130,17 @@ namespace Entity.Player
             _controls.PlayerControls.RotateCamera.performed += RotateCamera;
             _controls.PlayerControls.Zoom.performed += Zoom;
             _controls.PlayerControls.Pause.performed += TogglePause;
-            _controls.PlayerControls.Inventory.performed += ctx => inventoryUI.ToggleInventory();
+            _controls.PlayerControls.Inventory.performed += ctx => UIManager.Instance.InventoryUI.ToggleInventory();
             _controls.PlayerControls.Crafting.performed += ToggleCrafting;
 
             _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
+
+        /// <summary>
+        /// Triggers an animation on the player animator by setting the appropriate trigger
+        /// </summary>
+        /// <param name="triggerName">The name of the trigger to set</param>
+        public void TriggerAnimation(string triggerName) => Animator.SetTrigger(triggerName);
 
         /// <summary>
         /// Let's the GameManager know, that the player pressed pause.
@@ -160,7 +159,7 @@ namespace Entity.Player
                 return;
 
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            
+
             if (Physics.Raycast(clickRay, out RaycastHit hit, 10000, clickableLayers))
             {
                 GameObject objectHit = hit.collider.gameObject;
@@ -228,7 +227,7 @@ namespace Entity.Player
         /// <summary>
         /// Shows/Hides the crafting menu
         /// </summary>
-        private void ToggleCrafting(InputAction.CallbackContext obj) => craftingUI.Toggle();
+        private void ToggleCrafting(InputAction.CallbackContext obj) => UIManager.Instance.CraftingUI.Toggle();
 
         /// <summary>
         /// Sets the distance of the camera to the player

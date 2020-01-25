@@ -69,6 +69,11 @@ MonoBehaviour:
   showEscapeRadius: 1
   targetFinder: {fileID: 6970089841446486794}
   graphicsRenderer: {fileID: 8351342211094259593}
+  itemDrops:
+  - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
+    amount: 3
+  - item: {fileID: 11400000, guid: ebd901bb98b190740af556ae817824db, type: 2}
+    amount: 1
 --- !u!114 &4583121872170788062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +339,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -393,10 +398,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1510608199083388096}
     m_Modifications:
-    - target: {fileID: 100064, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
-      propertyPath: m_Name
-      value: Graphics
-      objectReference: {fileID: 0}
     - target: {fileID: 400064, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -452,6 +453,10 @@ PrefabInstance:
     - target: {fileID: 400064, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 100064, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
+      propertyPath: m_Name
+      value: Graphics
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 27288711b766645469e4ece2fe1caffd, type: 3}
       propertyPath: m_Controller

@@ -11,6 +11,10 @@ namespace Entity.Player.Sanity
         public enum StatType { Health, Saturation, Hydration };
         public delegate void PlayerStateChanged(int newValue);
 
+        [Tooltip("The factor that scales negative sanity ticks and applies them on health if sanity == 0.")]
+        [SerializeField]
+        private float insaneDamage;
+
         [Tooltip("Handles the math and holds stats influencing the player's sanity.")]
         [SerializeField]
         private SanityMath sanityMath;
@@ -88,6 +92,9 @@ namespace Entity.Player.Sanity
         {
             _playerState = GetComponent<PlayerState>();
             _attackLogic = GetComponent<AttackLogic>();
+            OnHealthUpdated(100);
+            OnSaturationUpdated(100);
+            OnHydrationUpdated(100);
         }
         
         private void OnEnable()
@@ -117,7 +124,7 @@ namespace Entity.Player.Sanity
         private void Update()
         {
             // character needs
-            TickSanity();
+            SumUpNeedsTick();
 
             // character events
             if (_isFighting)
@@ -153,7 +160,7 @@ namespace Entity.Player.Sanity
         /// Only sum up a positive tick if player doesn't have full sanity. Ticks are either
         /// positive or negative 1. If summed up tick, change player sanity.
         /// </summary>
-        private void TickSanity()
+        private void SumUpNeedsTick()
         {
             _needsTick += sanityMath.GetCurrentChange();
             if (_playerState.Sanity == 100 && _needsTick > 0)
@@ -164,14 +171,34 @@ namespace Entity.Player.Sanity
             }
             if (_needsTick >= 1)
             {
-                _playerState.ChangePlayerSanity(1);
+                Tick(1);
                 _needsTick = 0;
             }
             else if (_needsTick <= -1)
             {
-                if (!_pauseTick)
-                    _playerState.ChangePlayerSanity(-1);
+                // do negative tick if not paused and decrease health if sanity == 0 no matter of pauseTick
+                if (!_pauseTick || _playerState.Sanity == 0)
+                    Tick(-1);
                 _needsTick = 0;
+            }
+        }
+
+        /// <summary>
+        /// Tick sanity. If sanity == 0, decrease health.
+        /// </summary>
+        /// <param name="changeBy"></param>
+        private void Tick(int changeBy)
+        {
+            // always apply changes if sanity > 0 or if positive change
+            if (changeBy > 0 || _playerState.Sanity > 0)
+            {
+                _playerState.ChangePlayerSanity(changeBy);
+                return;
+            }
+            // affect health if sanity == 0
+            if (_playerState.Sanity == 0)
+            {
+                _playerState.ChangePlayerHealth((int) (changeBy * insaneDamage));
             }
         }
 
@@ -182,7 +209,8 @@ namespace Entity.Player.Sanity
         {
             if (!_isFighting)
                 _isFighting = true;
-            _enemy = _attackLogic.lastAttacked;
+            if (_attackLogic.lastAttacked != null)
+                _enemy = _attackLogic.lastAttacked;
         }
 
         /// <summary>
@@ -222,7 +250,7 @@ namespace Entity.Player.Sanity
             if (_eventTick >= 1)
             {
                 int changeBy = (int) _eventTick;
-                _playerState.ChangePlayerSanity(-changeBy);
+                Tick(-changeBy);
                 _eventTick -= changeBy;
             }
         }

@@ -8,7 +8,7 @@ namespace Constants
         {
             public const string PLAYER = "Player";
         }
-        
+
         public static class Scene
         {
             public const int MAIN_MENU = 0;
@@ -33,6 +33,7 @@ namespace Constants
             public static Color RedFaded = new Color(1f, 0.4f, 0.4f, 0.4f);
             public static Color Green = new Color(0.19f, 0.93f, 0.62f, 1);
             public static Color Grey = new Color(0.41f, 0.41f, 0.41f);
+            public static Color Transparent = new Color(1, 1, 1, 0);
         }
 
         public static class Tooltip
