@@ -8,6 +8,7 @@ namespace Entity.Player
 {
     [RequireComponent(typeof(PlayerState))]
     [RequireComponent(typeof(Movable))]
+    [RequireComponent(typeof(AttackLogic))]
     public class NeedsController : MonoBehaviour
     {
         public delegate void PlayerStateChanged(int newValue);
@@ -40,9 +41,18 @@ namespace Entity.Player
         [SerializeField]
         private float criticalMoveTime;
 
+        [Tooltip("A number that scales the saturation tick if fighting. Just applied if not moving (running away).")]
+        [SerializeField]
+        private float fightMalusSaturation;
+
+        [Tooltip("A number that scales the hydration tick if fighting. Just applied if not moving (running away).")]
+        [SerializeField]
+        private float fightMalusHydration;
+
 
         private PlayerState _playerState;
         private Movable _movable;
+        private AttackLogic _attackLogic;
 
         private Probability _probability;
         private float _nextSaturationTick;
@@ -53,6 +63,7 @@ namespace Entity.Player
         {
             _playerState = GetComponent<PlayerState>();
             _movable = GetComponent<Movable>();
+            _attackLogic = GetComponent<AttackLogic>();
             _probability = new Probability();
         }
 
@@ -99,7 +110,8 @@ namespace Entity.Player
         }
 
         /// <summary>
-        /// Scales the tick depending on whether the player is moving and applies it.
+        /// Scales the tick depending on whether the player is moving or fighting.
+        /// When the player is moving, fight malus is not applied.
         /// </summary>
         private void ScaleTick()
         {
@@ -116,6 +128,14 @@ namespace Entity.Player
                     scaledHydrationTick *= longMoveMalus;
                 }
             }
+            // don't apply fight malus, when running away (in a fight)
+            // just apply if really fighting (mind that IsFighting is true a certain time after having killed an enemy)
+            else if (_attackLogic.IsFighting)
+            {
+                scaledSaturationTick *= fightMalusSaturation;
+                scaledHydrationTick *= fightMalusHydration;
+            }
+            Debug.Log(scaledSaturationTick);
             _nextSaturationTick += scaledSaturationTick;
             _nextHydrationTick += scaledHydrationTick;
         }

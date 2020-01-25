@@ -268,6 +268,8 @@ MonoBehaviour:
   moveMalusHydration: 1.5
   longMoveMalus: 1.5
   criticalMoveTime: 13
+  fightMalusSaturation: 2.5
+  fightMalusHydration: 1.75
 --- !u!114 &6126187404098910141
 MonoBehaviour:
   m_ObjectHideFlags: 0
