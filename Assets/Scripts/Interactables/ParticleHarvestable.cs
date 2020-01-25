@@ -12,7 +12,7 @@ namespace Interactables
         protected override void Awake()
         {
             MainCam = Camera.main;
-            OwnCollider = GetComponent<MeshCollider>();
+            OwnCollider = GetComponent<Collider>();
 
             if (destroyAfterHarvest)
                 Parent = transform.parent.gameObject;
