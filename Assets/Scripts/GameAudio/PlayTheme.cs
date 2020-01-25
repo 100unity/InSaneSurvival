@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Constants;
 using Managers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameAudio
 {
@@ -8,10 +9,22 @@ namespace GameAudio
     {
         [SerializeField][Tooltip("Name of the theme song audio")]
         private string themeSong;
-        
-        void Start()
+
+        private void Awake()
         {
-        AudioManager.Instance.FadeIn(themeSong,3);
+            SceneManager.sceneUnloaded += MenuSceneUnloaded;
+        }
+
+        private void Start()
+        {
+            AudioManager.Instance.FadeIn(themeSong,3);
+        }
+
+        private void MenuSceneUnloaded(Scene scene) 
+        {
+            if (scene.buildIndex != Consts.Scene.MAIN_MENU) return;
+            AudioManager.Instance.FadeOut(themeSong,10);   
+            SceneManager.sceneUnloaded -= MenuSceneUnloaded;
         }
     }
 }

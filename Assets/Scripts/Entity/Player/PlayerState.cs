@@ -138,13 +138,25 @@ namespace Entity.Player
         /// <summary>
         /// Does damage to the player.
         /// </summary>
-        /// <param name="damage">The damage dealt to player</param>
+        /// <param name="damage">The damage dealt to the player</param>
         /// <param name="attacker">The EnemyController of the enemy</param>
         public override void Hit(int damage, EnemyController attacker = null)
         {
             base.Hit(damage);
             ChangePlayerHealth(-damage);
             OnPlayerHit?.Invoke(attacker);
+        }
+
+        /// <summary>
+        /// Does damage to the player.
+        /// </summary>
+        /// <param name="damage">The damage dealth to the player</param>
+        /// <param name="health">The health of the player after damage is dealt</param>
+        /// <param name="attacker">The EnemyController of the enemy</param>
+        public override void Hit(int damage, out int health, EnemyController attacker = null)
+        {
+            Hit(damage, attacker);
+            health = this.health;
         }
 
         /// <summary>
@@ -171,6 +183,7 @@ namespace Entity.Player
 
         public override void Die()
         {
+            base.Die();
             OnPlayerDeath?.Invoke();
         }
     }
