@@ -30,7 +30,10 @@ namespace Interactables
             isRespawning = true;
 
             while (respawnTimePassed < respawnTime)
+            {
+                respawnTimePassed += Time.deltaTime;
                 yield return null;
+            }
 
             isRespawning = false;
             respawnTimePassed = 0;

@@ -35,7 +35,7 @@ namespace Interactables
 
         protected GameObject Parent;
         protected Camera MainCam;
-        protected MeshCollider OwnCollider;
+        protected Collider OwnCollider;
 
         private double _gatherTimePassed;
         private MeshRenderer _ownMeshRenderer;
