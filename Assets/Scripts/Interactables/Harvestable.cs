@@ -45,7 +45,7 @@ namespace Interactables
         {
             MainCam = Camera.main;
 
-            OwnCollider = GetComponent<MeshCollider>();
+            OwnCollider = GetComponent<Collider>();
             _ownMeshRenderer = GetComponent<MeshRenderer>();
 
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
