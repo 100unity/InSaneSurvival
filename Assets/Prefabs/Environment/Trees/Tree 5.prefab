@@ -1,31 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &9110870324770250505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1442250070878297554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9cbd8b7d984b444f90f466cb8349d50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 8.61
-  isFocus: 0
-  hasInteracted: 0
-  player: {fileID: 0}
-  drops:
-  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
-    amount: 5
-  gatherTime: 5
-  destroyAfterHarvest: 0
-  respawnTime: 120
-  isRespawning: 0
-  respawnTimePassed: 0
-  replacement: {fileID: 6899045538435739544}
-  neededAbility: 0
 --- !u!64 &4402641862930258658
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -40,6 +14,32 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 24db40d512c8d154e9e5674cb1ec18ca, type: 3}
+--- !u!114 &9110870324770250505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442250070878297554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cbd8b7d984b444f90f466cb8349d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3.01
+  isFocus: 0
+  hasInteracted: 0
+  player: {fileID: 0}
+  drops:
+  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
+    amount: 5
+  gatherTime: 5
+  destroyAfterHarvest: 0
+  respawnTime: 120
+  isRespawning: 0
+  respawnTimePassed: 0
+  replacement: {fileID: 6899045538435739544}
+  neededAbility: 0
 --- !u!1 &4552556786368187399
 GameObject:
   m_ObjectHideFlags: 0

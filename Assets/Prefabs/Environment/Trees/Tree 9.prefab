@@ -31,32 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5449553050690221964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2466474735799369768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9cbd8b7d984b444f90f466cb8349d50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 8
-  isFocus: 0
-  hasInteracted: 0
-  player: {fileID: 0}
-  drops:
-  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
-    amount: 5
-  gatherTime: 5
-  destroyAfterHarvest: 0
-  respawnTime: 60
-  isRespawning: 0
-  respawnTimePassed: 0
-  replacement: {fileID: 1394524004373295689}
-  neededAbility: 0
 --- !u!64 &3287686918660636717
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -71,6 +45,32 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 8da1a134a308c954eb32d9f7de858f8a, type: 3}
+--- !u!114 &5449553050690221964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2466474735799369768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cbd8b7d984b444f90f466cb8349d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3.5
+  isFocus: 0
+  hasInteracted: 0
+  player: {fileID: 0}
+  drops:
+  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
+    amount: 5
+  gatherTime: 5
+  destroyAfterHarvest: 0
+  respawnTime: 60
+  isRespawning: 0
+  respawnTimePassed: 0
+  replacement: {fileID: 1394524004373295689}
+  neededAbility: 0
 --- !u!1001 &1394524004373329129
 PrefabInstance:
   m_ObjectHideFlags: 0
