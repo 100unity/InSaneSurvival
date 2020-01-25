@@ -247,7 +247,6 @@ MonoBehaviour:
   criticalFightTime: 11
   fightMalus: 0.25
   fightNonAggressivesMalus: 0.75
-  fightStopTime: 16
   criticalHitCount: 20
   hitMalus: 1
 --- !u!114 &6947953766860188759
@@ -366,6 +365,7 @@ MonoBehaviour:
   attackTime: 1.1
   hitRotationTolerance: 40
   resetAfterHit: 1
+  fightStopTime: 16
   animator: {fileID: 466687203411084045}
 --- !u!114 &4832682374285577335
 MonoBehaviour:

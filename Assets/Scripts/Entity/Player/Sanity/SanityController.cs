@@ -1,4 +1,5 @@
-﻿using Entity.Enemy;
+﻿using AbstractClasses;
+using Entity.Enemy;
 using Managers;
 using UnityEngine;
 
@@ -9,7 +10,6 @@ namespace Entity.Player.Sanity
     public class SanityController : MonoBehaviour
     {
         public enum StatType { Health, Saturation, Hydration };
-        public delegate void PlayerStateChanged(int newValue);
 
         [Tooltip("Handles the math and holds stats influencing the player's sanity.")]
         [SerializeField]
@@ -42,10 +42,6 @@ namespace Entity.Player.Sanity
         [SerializeField]
         private float fightNonAggressivesMalus;
 
-        [Tooltip("The time you have to be out of combat (not attacking, not being hit) to be considered out of combat.")]
-        [SerializeField]
-        private float fightStopTime;
-
         [Tooltip("The number of times to be hit to get a hit malus.")]
         [SerializeField]
         private int criticalHitCount;
@@ -65,15 +61,12 @@ namespace Entity.Player.Sanity
         private bool _pauseTick;
         // depending on events on the player build up a negative tick
         private float _eventTick;
-        // whether the player is considered to be in combat
-        private bool _isFighting;
         // the time the player has been in combat up until now
         private float _fightTime; 
         // (if you attack a hostile NPC but change targets to a friendly NPC just before criticalFightTime 
         // is reached, you'll get the fightNonAgressivesTick)
 
-        // the time the player has stopped fighting while being in combat
-        private float _attackStopTimer;
+        
         // the number of hits performed on the player
         private int _hitCounter;
         // whether heal bonus is currently active
@@ -98,8 +91,8 @@ namespace Entity.Player.Sanity
             PlayerState.OnPlayerHealthUpdate += OnHealthUpdated;
             PlayerState.OnPlayerSaturationUpdate += OnSaturationUpdated;
             PlayerState.OnPlayerHydrationUpdate += OnHydrationUpdated;
-            AttackLogic.OnPlayerAttackPerformed += OnAttackPerformed;
-            PlayerState.OnPlayerHit += OnPlayerHit;
+            AttackLogic.OnAttackPerformed += CheckAttackPerformed;
+            Damageable.OnPlayerHit += OnPlayerHit;
             PlayerState.OnPlayerHealed += OnPlayerHealed;
         }
 
@@ -108,8 +101,8 @@ namespace Entity.Player.Sanity
             PlayerState.OnPlayerHealthUpdate -= OnHealthUpdated;
             PlayerState.OnPlayerSaturationUpdate -= OnSaturationUpdated;
             PlayerState.OnPlayerHydrationUpdate -= OnHydrationUpdated;
-            AttackLogic.OnPlayerAttackPerformed -= OnAttackPerformed;
-            PlayerState.OnPlayerHit -= OnPlayerHit;
+            AttackLogic.OnAttackPerformed -= CheckAttackPerformed;
+            Damageable.OnPlayerHit -= OnPlayerHit;
             PlayerState.OnPlayerHealed -= OnPlayerHealed;
         }
 
@@ -123,7 +116,7 @@ namespace Entity.Player.Sanity
             TickSanity();
 
             // character events
-            if (_isFighting)
+            if (_attackLogic.IsFighting)
             {
                 _fightTime += Time.deltaTime;
                 if (_fightTime >= criticalFightTime)
@@ -136,7 +129,12 @@ namespace Entity.Player.Sanity
                     // start new fight
                     _fightTime = 0;
                 }
-                MightEndFighting();
+            }
+            else
+            {
+                _fightTime = 0;
+                // reset hit counter as well
+                _hitCounter = 0;
             }
 
             if (_healBonus)
@@ -179,12 +177,20 @@ namespace Entity.Player.Sanity
         }
 
         /// <summary>
-        /// Set player's status to fighting as soon as he performs an attack.
+        /// Check if this entity performed the attack.
+        /// </summary>
+        /// <param name="attacker">The attacker that performed the attack</param>
+        private void CheckAttackPerformed(AttackLogic attacker)
+        {
+            if (attacker.gameObject == gameObject)
+                OnAttackPerformed();
+        }
+
+        /// <summary>
+        /// Remember last attacked enemy.
         /// </summary>
         private void OnAttackPerformed()
         {
-            if (!_isFighting)
-                _isFighting = true;
             if (_attackLogic.lastAttacked != null)
                 _enemy = _attackLogic.lastAttacked;
         }
@@ -192,16 +198,11 @@ namespace Entity.Player.Sanity
         /// <summary>
         /// Count up the hits performed on the player. If <see cref="criticalHitCount"/> is reached,
         /// apply a hit malus.
-        /// Also make the player stay in / enter combat if he is being hit.
         /// </summary>
         /// <param name="attacker">The EnemyController of the attacker</param>
         private void OnPlayerHit(EnemyController attacker)
         {
-            // enter combat
-            if (!_isFighting)
-                _isFighting = true;
-
-			// get the EnemyController passed here, so that e.g. if you attack a non-aggressive,
+            // get the EnemyController passed here, so that e.g. if you attack a non-aggressive,
             // run away and then get hit by an aggressive (which you don't fight back/runaway), you don't get the non-aggressive malus
             // also necessary to prevent nullref if not having attacked at all, but get hit
             _enemy = attacker;
@@ -212,8 +213,6 @@ namespace Entity.Player.Sanity
                 AddUpEventTick(hitMalus);
                 _hitCounter = 0;
             }
-            // also reset the attack stop timer due to still being in combat
-            _attackStopTimer = 0;
         }
 
         /// <summary>
@@ -231,26 +230,6 @@ namespace Entity.Player.Sanity
             }
         }
 
-        /// <summary>
-        /// Set the player's status to not fighting if he has been out of
-        /// combat (not hit, not attacking) for a certain time.
-        /// Also reset the hit counter if player gets out of combat.
-        /// </summary>
-        private void MightEndFighting()
-        {
-            if (_attackLogic.Target == null)
-                _attackStopTimer += Time.deltaTime;
-            else
-                _attackStopTimer = 0;
-            if (_attackStopTimer >= fightStopTime)
-            {
-                _isFighting = false;
-                _fightTime = 0;
-                _attackStopTimer = 0;
-                // reset hit counter as well
-                _hitCounter = 0;
-            }
-        }
 
         /// <summary>
         /// If not already in heal state, a bonus to sanity 
