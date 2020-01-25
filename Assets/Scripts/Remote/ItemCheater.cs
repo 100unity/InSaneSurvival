@@ -1,5 +1,4 @@
-﻿using System;
-using Inventory;
+﻿using Inventory;
 using Managers;
 using UnityEngine;
 
