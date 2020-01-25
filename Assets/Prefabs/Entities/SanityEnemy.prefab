@@ -116,7 +116,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -348,10 +348,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9047338808857409602}
     m_Modifications:
-    - target: {fileID: 100046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
-      propertyPath: m_Name
-      value: Graphics
-      objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -407,6 +403,10 @@ PrefabInstance:
     - target: {fileID: 400046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_LocalScale.z
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 100046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
+      propertyPath: m_Name
+      value: Graphics
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_Controller

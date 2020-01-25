@@ -26,7 +26,6 @@ namespace Inventory
         /// Adds an item to the player's inventory and invokes <see cref="ItemsUpdated"/>.
         /// </summary>
         /// <param name="item">The item to add</param>
-        /// <param name="amount">The amount to be added</param>
         public void AddItem(Item item)
         {
             items.Add(item);
@@ -38,7 +37,6 @@ namespace Inventory
         /// Removes an item from the player's inventory and invokes <see cref="ItemsUpdated"/>.
         /// </summary>
         /// <param name="item">The item to be removed</param>
-        /// <param name="amount">The amount to be removed</param>
         public void RemoveItem(Item item)
         {
             items.Remove(item);

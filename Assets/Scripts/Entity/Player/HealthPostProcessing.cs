@@ -65,7 +65,14 @@ namespace Entity.Player
         private void Update()
         {
             if (_sanity < sanityCap)
+            {
+                _postProcessVolume.priority = -1;
                 return;
+            }
+            else if (_postProcessVolume.priority == -1)
+            {
+                _postProcessVolume.priority = 1;
+            }
 
             float y = intensityCurve.Evaluate(_health / 100f);
             float currentVignettePulseFrequency = maxVignettePulseFrequency * y;
