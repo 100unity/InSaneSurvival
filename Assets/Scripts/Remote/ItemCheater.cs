@@ -9,6 +9,7 @@ namespace Remote
     {
         [SerializeField] private Item wood;
         [SerializeField] private Item stone;
+        [SerializeField] private Item iron;
 
         private InventoryManager _inventoryManager;
 
@@ -27,6 +28,17 @@ namespace Remote
                 case "STONE":
                     AddStone();
                     break;
+                case "IRON":
+                    AddIron();
+                    break;
+            }
+        }
+
+        private void AddIron()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                _inventoryManager.AddItem(iron);
             }
         }
 

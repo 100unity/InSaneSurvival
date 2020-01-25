@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 9ec4c1e5479fce04cb754676513ab677, type: 3}
-  maxStackSize: 20
+  maxStackSize: 30
+  itemName: 
   description: 
-  effectText: 
