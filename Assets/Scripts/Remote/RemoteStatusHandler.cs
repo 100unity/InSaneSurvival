@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using Entity.Player;
+using Inventory;
 using Managers;
 using UnityEngine;
 
@@ -123,6 +124,12 @@ namespace Remote
                         break;
                     case "TIME":
                         DayNightManager.Instance.SetTimeOfDay(float.Parse(parameters[1]));
+                        break;
+                    case "ITEM":
+                        GetComponent<ItemCheater>().AddItems(parameters[1]);
+                        break;
+                    default:
+                        SendString("invalid command");
                         break;
                 }
             }

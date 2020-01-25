@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8720530238762120494}
   - component: {fileID: 8720530238762120495}
+  - component: {fileID: 1438771571607802969}
   m_Layer: 0
   m_Name: Remote
   m_TagString: Untagged
@@ -46,3 +47,17 @@ MonoBehaviour:
   ip: localhost
   port: 12000
   use: 1
+--- !u!114 &1438771571607802969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8720530238762120480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4927b658414b00a320aa45edfc905c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wood: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
+  stone: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
