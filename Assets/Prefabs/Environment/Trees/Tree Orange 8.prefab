@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7915708545393546980}
   - component: {fileID: 3981003580357975716}
   - component: {fileID: 40292789861211352}
+  - component: {fileID: 8084458037695903344}
   m_Layer: 0
   m_Name: Tree Orange 8
   m_TagString: Untagged
@@ -117,10 +118,35 @@ MonoBehaviour:
   gatherTime: 3
   destroyAfterHarvest: 0
   respawnTime: 99
-  isRespawning: 0
-  respawnTimePassed: 0
   replacement: {fileID: 3667711673408603797}
   neededAbility: 0
+  isRespawning: 0
+  respawnTimePassed: 0
+--- !u!114 &8084458037695903344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915708545391544356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 1
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 1
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 2800000, guid: 0566a43cc9e4ede47b375e3402078c08, type: 3}
+  iconSize: 40
+  iconOffset: 25
 --- !u!1 &9008696042882691246
 GameObject:
   m_ObjectHideFlags: 0

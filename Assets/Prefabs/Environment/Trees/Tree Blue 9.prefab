@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 137685530425940609}
   - component: {fileID: 5951426744684022805}
   - component: {fileID: 5776275584252279181}
+  - component: {fileID: 1540226810490066050}
   m_Layer: 0
   m_Name: Tree Blue 9
   m_TagString: Untagged
@@ -103,10 +104,10 @@ MonoBehaviour:
   gatherTime: 3
   destroyAfterHarvest: 0
   respawnTime: 10
-  isRespawning: 0
-  respawnTimePassed: 0
   replacement: {fileID: 9198609481186505352}
   neededAbility: 0
+  isRespawning: 0
+  respawnTimePassed: 0
 --- !u!64 &5776275584252279181
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -121,6 +122,31 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: e6591e16f56822a4fbca9185b96d369b, type: 3}
+--- !u!114 &1540226810490066050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137685530423673921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 1
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 1
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 2800000, guid: 0566a43cc9e4ede47b375e3402078c08, type: 3}
+  iconSize: 40
+  iconOffset: 25
 --- !u!1 &6482878847694471280
 GameObject:
   m_ObjectHideFlags: 0

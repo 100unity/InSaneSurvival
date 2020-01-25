@@ -67,10 +67,35 @@ MonoBehaviour:
   gatherTime: 4
   destroyAfterHarvest: 0
   respawnTime: 60
-  isRespawning: 0
-  respawnTimePassed: 0
   replacement: {fileID: 1178476983656562848}
   neededAbility: 0
+  isRespawning: 0
+  respawnTimePassed: 0
+--- !u!114 &7868952836197577818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7698228833688161774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 1
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 1
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 2800000, guid: 0566a43cc9e4ede47b375e3402078c08, type: 3}
+  iconSize: 40
+  iconOffset: 25
 --- !u!1001 &1178476983656596992
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7136820107028039626}
   - component: {fileID: 6605349658380214992}
   - component: {fileID: 4730465554523770370}
+  - component: {fileID: 4341470314568181388}
   m_Layer: 0
   m_Name: Tree Blue 10
   m_TagString: Untagged
@@ -148,10 +149,35 @@ MonoBehaviour:
   gatherTime: 2
   destroyAfterHarvest: 0
   respawnTime: 75
-  isRespawning: 0
-  respawnTimePassed: 0
   replacement: {fileID: 5535212036906633801}
   neededAbility: 0
+  isRespawning: 0
+  respawnTimePassed: 0
+--- !u!114 &4341470314568181388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136820107030239498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 1
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 1
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 2800000, guid: 0566a43cc9e4ede47b375e3402078c08, type: 3}
+  iconSize: 40
+  iconOffset: 25
 --- !u!1001 &5535212036906601705
 PrefabInstance:
   m_ObjectHideFlags: 0
