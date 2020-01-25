@@ -86,7 +86,7 @@ namespace Entity.Player
         }
 
         //Interface
-        private void ChangePlayerHealth(int changeBy)
+        public void ChangePlayerHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
             if (updatedValue > 100) updatedValue = 100;

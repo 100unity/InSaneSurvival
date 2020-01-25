@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e962a3e486bf84bb8321da94c7b25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  insaneDamage: 6
   sanityMath:
     severity: 0.00006
     lowImpactSeverity: 0.4
@@ -279,8 +280,6 @@ MonoBehaviour:
   cameraDistanceRange:
     min: 3
     max: 10
-  inventoryUI: {fileID: 240218050177758290}
-  craftingUI: {fileID: 725042129556747380}
 --- !u!195 &6126187404098910138
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -707,18 +706,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9df5d19eb07a9804a96f230bf905b704, type: 3}
---- !u!114 &725042129556747380 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2534910834049080152, guid: 9df5d19eb07a9804a96f230bf905b704,
-    type: 3}
-  m_PrefabInstance: {fileID: 2963951298852220716}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 640dbaaec6a62034b8611b20811c1058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1245374304537478918 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4065175225237497898, guid: 9df5d19eb07a9804a96f230bf905b704,
@@ -850,18 +837,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4781742353962350925}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &240218050177758290 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4686352054319762719, guid: 7a8a0fc9d153348aa88e48613c9304bb,
-    type: 3}
-  m_PrefabInstance: {fileID: 4781742353962350925}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eea2e7a63edc94cea9c77f7b0d5b65de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5960864385242162898
 PrefabInstance:
   m_ObjectHideFlags: 0
