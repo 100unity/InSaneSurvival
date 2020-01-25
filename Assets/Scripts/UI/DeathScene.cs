@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
 {
     public class DeathScene : MonoBehaviour
     {
-        [SerializeField][Tooltip("White overlay that fades in the scene")] private Image whitePanel;
+        [SerializeField][Tooltip("White overlay that fades in the scene")] private Image overlay;
         [SerializeField][Tooltip("Model of the players character")] private Animator playerCharacterAnimator;
         
         private void Start()
         {
-            StartCoroutine(FadeOut(2, whitePanel));
+            StartCoroutine(FadeOut(2, overlay));
             StartCoroutine(PlayerDying());
         }
 

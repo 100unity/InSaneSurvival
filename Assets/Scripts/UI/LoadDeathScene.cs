@@ -4,19 +4,16 @@ using Entity.Player;
 using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
 {
     public class LoadDeathScene : MonoBehaviour
     {
-        [SerializeField] [Tooltip("The canvas for enabling/disabling")]
-        private Canvas canvas;
-
         [SerializeField] [Tooltip("White overlay that fades in")]
-        private Image whitePanel;
-
-
+        private GameObject overlay;
+        
         private void Awake()
         {
             PlayerState.OnPlayerDeath += LoadScene;
@@ -24,8 +21,8 @@ namespace UI
 
         private void LoadScene()
         {
-            canvas.gameObject.SetActive(true);
-            StartCoroutine(FadeThenLoad(1.5f, whitePanel));
+            overlay.SetActive(true);
+            StartCoroutine(FadeThenLoad(1.5f, overlay.GetComponent<Image>()));
         }
 
         // Fades in the white overlay and when finished loads "DeathScene"

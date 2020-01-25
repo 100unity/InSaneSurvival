@@ -490,12 +490,12 @@ GameObject:
   - component: {fileID: 6641712008108597295}
   - component: {fileID: 5432178566093181983}
   m_Layer: 5
-  m_Name: whitePanel
+  m_Name: Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1874558391447054372
 RectTransform:
   m_ObjectHideFlags: 0
