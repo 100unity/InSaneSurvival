@@ -77,6 +77,18 @@ namespace Entity.Enemy {
                 base.Hit(damage);
         }
 
+        /// <summary>
+        /// Run away if NPC is not aggressive. Only do hit animation if not running away.
+        /// </summary>
+        /// <param name="damage">The damage dealt</param>
+        /// <param name="health">The health after damage was dealt.</param>
+        /// <param name="_">EnemyController is not used because this is an NPC.</param>
+        public override void Hit(int damage, out int health, EnemyController _)
+        {
+            Hit(damage, _);
+            health = this.health;
+        }
+
         private void ChangeHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
