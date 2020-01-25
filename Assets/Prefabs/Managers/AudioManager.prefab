@@ -45,8 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b0f5a87e65247f1a476fda246ab24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
-  audioSources: {fileID: 0}
+  sounds:
+  - name: daytime
+    clip: {fileID: 8300000, guid: 55b3948d57f934b41ba067f1b72b858f, type: 3}
+    volume: 0.3
+    loop: 1
+    source: {fileID: 0}
+  - name: nighttime
+    clip: {fileID: 8300000, guid: 8d1fab9002809b24db2093808ec4382b, type: 3}
+    volume: 0.3
+    loop: 1
+    source: {fileID: 0}
+  - name: moonlight
+    clip: {fileID: 8300000, guid: 339091a2c7883a64ab8c5b59625522da, type: 3}
+    volume: 0.3
+    loop: 1
+    source: {fileID: 0}
+  audioSources: {fileID: 7058954467443417514}
 --- !u!1 &4911869876185031915
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,9 +106,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clock: {fileID: 0}
-  dayTimeAmbience: 
-  nightTimeAmbience: 
-  moonLightAmbience: 
+  dayTimeAmbience: daytime
+  nightTimeAmbience: nighttime
+  moonLightAmbience: moonlight
 --- !u!1 &7058954467443417514
 GameObject:
   m_ObjectHideFlags: 0
