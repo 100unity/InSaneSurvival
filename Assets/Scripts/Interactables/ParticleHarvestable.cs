@@ -12,6 +12,7 @@ namespace Interactables
         protected override void Awake()
         {
             MainCam = Camera.main;
+            OwnCollider = GetComponent<MeshCollider>();
 
             if (destroyAfterHarvest)
                 Parent = transform.parent.gameObject;
@@ -24,6 +25,7 @@ namespace Interactables
         protected override IEnumerator Respawn()
         {
             particles.Stop();
+            OwnCollider.enabled = false;
 
             isRespawning = true;
 
@@ -33,6 +35,7 @@ namespace Interactables
             isRespawning = false;
             respawnTimePassed = 0;
 
+            OwnCollider.enabled = true;
             particles.Play();
         }
     }

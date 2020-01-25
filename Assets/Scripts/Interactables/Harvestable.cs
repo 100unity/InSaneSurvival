@@ -35,18 +35,18 @@ namespace Interactables
 
         protected GameObject Parent;
         protected Camera MainCam;
+        protected MeshCollider OwnCollider;
 
         private double _gatherTimePassed;
         private MeshRenderer _ownMeshRenderer;
-        private MeshCollider _ownCollider;
         private MeshRenderer _replacementMeshRenderer;
 
         protected virtual void Awake()
         {
             MainCam = Camera.main;
 
+            OwnCollider = GetComponent<MeshCollider>();
             _ownMeshRenderer = GetComponent<MeshRenderer>();
-            _ownCollider = GetComponent<MeshCollider>();
 
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
 
@@ -141,7 +141,7 @@ namespace Interactables
         protected virtual IEnumerator Respawn()
         {
             _ownMeshRenderer.enabled = false;
-            _ownCollider.enabled = false;
+            OwnCollider.enabled = false;
             _replacementMeshRenderer.enabled = true;
 
             isRespawning = true;
@@ -156,7 +156,7 @@ namespace Interactables
             respawnTimePassed = 0;
 
             _ownMeshRenderer.enabled = true;
-            _ownCollider.enabled = true;
+            OwnCollider.enabled = true;
             _replacementMeshRenderer.enabled = false;
         }
     }
