@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1616974203}
   - component: {fileID: 1616974206}
   - component: {fileID: 1616974204}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: EffectCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,7 +382,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 300
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -424,7 +424,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 8484758891574652332}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147483648
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0

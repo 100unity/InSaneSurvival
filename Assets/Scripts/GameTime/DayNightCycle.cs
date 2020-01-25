@@ -23,6 +23,9 @@ namespace GameTime
         [SerializeField][Tooltip("tilt of the sun (and moon)")] [Range(-45f, 45f)]
         private float tilt; // could vary depending seasons in the future
         
+        [SerializeField][Tooltip("A gradient that changes the fog color depending of day time")]
+        private Gradient fogColor;
+        
         private float _intensity;
 
         private void Update()
@@ -57,6 +60,7 @@ namespace GameTime
         private void AdjustSunColor()
         {
             sunLight.color = sunColor.Evaluate(_intensity);
+            RenderSettings.fogColor = fogColor.Evaluate(_intensity);
         }
     }
 }

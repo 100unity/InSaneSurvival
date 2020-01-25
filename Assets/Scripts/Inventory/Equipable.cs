@@ -49,6 +49,7 @@ namespace Inventory
         /// <summary>
         /// Get all abilities from the MultiSelect (if null) and
         /// checks if this item has the given ability
+        /// </summary>
         /// <param name="ability">The ability to check</param>
         /// <returns>Whether it has the given ability or not</returns>
         public bool HasAbility(EquipableAbility ability)
@@ -71,7 +72,6 @@ namespace Inventory
         /// Increases the amount of uses of this item.
         /// </summary>
         /// <param name="amount">The increase of uses. By default 1</param>
-        /// TODO: Call this when attacking and when harvesting.
         public void IncreaseUses(int amount = 1)
         {
             _currentUses += amount;

@@ -107,6 +107,7 @@ namespace Interactables
                 if (_gatherTimePassed >= gatherTime)
                 {
                     AddItems();
+                    InventoryManager.Instance.CurrentlyEquippedItem.IncreaseUses();
                     if (destroyAfterHarvest) Destroy(_parent);
                     else
                     {
