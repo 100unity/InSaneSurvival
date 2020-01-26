@@ -10,8 +10,7 @@ namespace Entity
     [RequireComponent(typeof(Movable))]
     public class AttackLogic : MonoBehaviour
     {
-        public delegate void PlayerAttackPerformed();
-        public static event PlayerAttackPerformed OnPlayerAttackPerformed;
+        public delegate void AttackPerformed(AttackLogic attacker);
 
         [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
@@ -22,18 +21,29 @@ namespace Entity
         [Tooltip("The time needed for an attack in seconds")] [SerializeField]
         private double attackTime;
 
-        [Tooltip(
-            "The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
+        [Tooltip("The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
         [SerializeField]
         private double hitRotationTolerance;
 
         [Tooltip("Stops attacking the target after a (un-)successful hit")] [SerializeField]
         private bool resetAfterHit;
 
+        [Tooltip("The time you have to be out of combat (not attacking, not being hit) to be considered out of combat.")]
+        [SerializeField]
+        private float fightStopTime;
+
         [Tooltip("Animator for playing the attack animation")] [SerializeField]
         private Animator animator;
 
+
+        public static event AttackPerformed OnAttackPerformed;
+
         public enum AttackStatus { Hit, Miss, NotFinished, None, TargetReached }
+
+        /// <summary>
+        /// Whether this entity is considered to be in combat.
+        /// </summary>
+        public bool IsFighting { get; private set; }
 
         public AttackStatus Status { get; private set; }
         public Damageable Target { get; private set; }
@@ -47,6 +57,9 @@ namespace Entity
         private Movable _movable;
         private EnemyController _enemyController;
 
+        // the time this entity has stopped fighting (+ was not hit) while being in combat
+        private float _attackStopTimer;
+
         private float _timer;
         private float _distanceToTarget;
         private static readonly int AttackTrigger = Animator.StringToHash(Consts.Animation.ATTACK_TRIGGER);
@@ -55,12 +68,19 @@ namespace Entity
         {
             // init components
             _movable = GetComponent<Movable>();
+            // try get this, null if player
             _enemyController = GetComponent<EnemyController>();
         }
 
         private void OnEnable()
         {
             Status = AttackStatus.None;
+            Damageable.OnHit += CheckHit;
+        }
+
+        private void OnDisable()
+        {
+            Damageable.OnHit -= CheckHit;
         }
 
         /// <summary>
@@ -78,6 +98,29 @@ namespace Entity
                 _timer = 0;
                 _distanceToTarget = 0;
                 Status = AttackStatus.None;
+            }
+
+            if (IsFighting)
+            {
+                MightEndFighting();
+            }
+        }
+
+
+        /// <summary>
+        /// Set the <see cref="IsFighting"/> to false if this entity has been out of
+        /// combat (not hit, not attacking) for a certain time.
+        /// </summary>
+        private void MightEndFighting()
+        {
+            if (Target == null)
+                _attackStopTimer += Time.deltaTime;
+            else
+                _attackStopTimer = 0;
+            if (_attackStopTimer >= fightStopTime)
+            {
+                IsFighting = false;
+                _attackStopTimer = 0;
             }
         }
 
@@ -135,9 +178,11 @@ namespace Entity
             if (Status == AttackStatus.Hit)
             {
                 // deal damage
-                // Add damage boost from weapon
-                int boostedDamage = damage + InventoryManager.Instance.DamageBoostFromEquipable;
-                Target.Hit(boostedDamage, out int targetHealth, _enemyController);
+                int damageDealt = damage;
+                // add damage boost from weapon if is player
+                if (_enemyController == null)
+                    damageDealt += InventoryManager.Instance.DamageBoostFromEquipable;
+                Target.Hit(damageDealt, out int targetHealth, _enemyController);
                 if (targetHealth <= 0)
                     StopAttack();
             }
@@ -181,9 +226,7 @@ namespace Entity
 
             if (_timer > attackTime)
             {
-                OnPlayerAttackPerformed?.Invoke();
-                // animation finished
-                _timer = 0;
+                AttackWasPerformed();
                 // target still in range?
                 if (_distanceToTarget < attackRange)
                 {
@@ -195,6 +238,42 @@ namespace Entity
             }
 
             return AttackStatus.NotFinished;
+        }
+
+        /// <summary>
+        /// Set <see cref="IsFighting"/> to true as soon as an attack is performed.
+        /// </summary>
+        private void AttackWasPerformed()
+        {
+            _timer = 0;
+            if (!IsFighting)
+                IsFighting = true;
+            OnAttackPerformed?.Invoke(this);
+        }
+
+        /// <summary>
+        /// Check if this entity was hit.
+        /// </summary>
+        /// <param name="hit">The entity that was hit.</param>
+        private void CheckHit(Damageable hit)
+        {
+            if (hit.gameObject == gameObject)
+            {
+                OnHit();
+            }
+        }
+
+        /// <summary>
+        /// Make this entity stay in / enter combat.
+        /// </summary>
+        private void OnHit()
+        {
+            // enter combat
+            if (!IsFighting)
+                IsFighting = true;
+
+            // also reset the attack stop timer due to still being in combat
+            _attackStopTimer = 0;
         }
     }
 }
