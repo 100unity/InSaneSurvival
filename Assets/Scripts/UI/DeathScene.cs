@@ -1,20 +1,29 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
 {
     public class DeathScene : MonoBehaviour
     {
-        [SerializeField][Tooltip("White overlay that fades in the scene")] private Image whitePanel;
+        [SerializeField][Tooltip("White overlay that fades in the scene")] private Image overlay;
         [SerializeField][Tooltip("Model of the players character")] private Animator playerCharacterAnimator;
         
         private void Start()
         {
-            StartCoroutine( FadeOut(2, whitePanel));
-            playerCharacterAnimator.SetBool ("isDead", true);
+            StartCoroutine(FadeOut(2, overlay));
+            StartCoroutine(PlayerDying());
         }
 
+        // calling the die animation
+        private IEnumerator PlayerDying()
+        {
+            playerCharacterAnimator.speed = 0.4f;
+            yield return new WaitForSeconds(1);
+            playerCharacterAnimator.SetBool ("die", true);
+        }
+        
         // fade out UI Objects
         private IEnumerator FadeOut(float fadeDuration, Image elementToFade)
         {

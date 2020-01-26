@@ -182,7 +182,11 @@ namespace Entity
                 // add damage boost from weapon if is player
                 if (_enemyController == null)
                     damageDealt += InventoryManager.Instance.DamageBoostFromEquipable;
-                Target.Hit(damageDealt, _enemyController);
+                Target.Hit(damageDealt, out int targetHealth, _enemyController);
+                if (targetHealth <= 0)
+                    StopAttack();
+                if (targetHealth <= 0)
+                    StopAttack();
             }
 
             // end hit

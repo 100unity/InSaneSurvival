@@ -34,6 +34,14 @@ namespace AbstractClasses
                 OnPlayerHit?.Invoke(attacker);
         }
 
+        /// <summary>
+        /// Does damage to the player. Implementation should call base.Hit(damage, attacker)
+        /// </summary>
+        /// <param name="damage">The damage dealth to the player</param>
+        /// <param name="health">The health of the entity after damage is dealt</param>
+        /// <param name="attacker">The EnemyController of the attacker if it's an NPC.</param>
+        public abstract void Hit(int damage, out int health, EnemyController attacker = null);
+
         public virtual void Die()
         {
             animator.SetTrigger(DieTrigger);

@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e962a3e486bf84bb8321da94c7b25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  insaneDamage: 6
   sanityMath:
     severity: 0.00006
     lowImpactSeverity: 0.4
