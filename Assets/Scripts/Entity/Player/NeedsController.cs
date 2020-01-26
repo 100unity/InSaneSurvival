@@ -135,7 +135,6 @@ namespace Entity.Player
                 scaledSaturationTick *= fightMalusSaturation;
                 scaledHydrationTick *= fightMalusHydration;
             }
-            Debug.Log(scaledSaturationTick);
             _nextSaturationTick += scaledSaturationTick;
             _nextHydrationTick += scaledHydrationTick;
         }
