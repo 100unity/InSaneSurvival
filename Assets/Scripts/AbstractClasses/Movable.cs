@@ -26,6 +26,7 @@ namespace AbstractClasses
 
         protected NavMeshAgent NavMeshAgent;
         private static readonly int MovementSpeed = Animator.StringToHash(Consts.Animation.MOVEMENT_SPEED_FLOAT);
+        private bool _isDisabled;
 
         protected Animator Animator => animator;
 
@@ -76,6 +77,8 @@ namespace AbstractClasses
         /// <param name="position">The position to move to</param>
         public void Move(Vector3 position)
         {
+            if (_isDisabled)
+                return;
             // Set destination for nav mesh agent
             NavMeshAgent.SetDestination(position);
             NavMeshAgent.isStopped = false;
@@ -100,5 +103,10 @@ namespace AbstractClasses
         }
 
         public bool IsMoving() => NavMeshAgent.velocity.magnitude > 0;
+
+        /// <summary>
+        /// Disable movement.
+        /// </summary>
+        public void DisableMovement() => _isDisabled = true;
     }
 }
