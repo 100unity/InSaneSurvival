@@ -56,8 +56,8 @@ namespace Managers
                 // build a JSON-Object
                 Save save = new Save();
 
-                save.SetPlayerState(playerPosition, state.GetHealth(), state.GetSaturation(), state.GetHydration(),
-                    state.GetSanity());
+                save.SetPlayerState(playerPosition, state.Health, state.Saturation, state.Hydration,
+                    state.Sanity);
                 save.SetWorldState(time, daynumber);
                 save.SetInventory(inventoryData);
                 save.buildVersion = Application.version;
@@ -96,10 +96,10 @@ namespace Managers
 
                 // set player state
                 PlayerState state = player.GetComponent<PlayerState>();
-                state.SetHealth(save.playerHealth);
-                state.SetHydration(save.playerHydration);
-                state.SetSanity(save.playerSanity);
-                state.SetSaturation(save.playerSaturation);
+                state.Health = save.playerHealth;
+                state.Hydration = save.playerHydration;
+                state.Sanity = save.playerSanity;
+                state.Saturation = save.playerSaturation;
 
                 // set time
                 timeManager.SetTimeOfDay(save.timeOfDay);

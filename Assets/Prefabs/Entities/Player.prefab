@@ -265,6 +265,7 @@ MonoBehaviour:
   tickProbability: 0.06
   saturationTick: 0.04
   hydrationTick: 0.014
+  healthDecreaseScale: 2.5
   moveMalusSaturation: 2
   moveMalusHydration: 1.5
   longMoveMalus: 1.5
@@ -1142,6 +1143,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
+    - target: {fileID: 8925312529435403638, guid: 5a222cef04b644d79853525c21650fe3,
+        type: 3}
+      propertyPath: m_Name
+      value: WearingIndicator
+      objectReference: {fileID: 0}
     - target: {fileID: 6851690105828889913, guid: 5a222cef04b644d79853525c21650fe3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1246,11 +1252,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925312529435403638, guid: 5a222cef04b644d79853525c21650fe3,
-        type: 3}
-      propertyPath: m_Name
-      value: WearingIndicator
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a222cef04b644d79853525c21650fe3, type: 3}
