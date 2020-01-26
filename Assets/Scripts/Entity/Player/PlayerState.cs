@@ -12,8 +12,6 @@ namespace Entity.Player
 
         public delegate void PlayerEvents();
 
-        public delegate void PlayerEventHit(EnemyController attacker);
-
         public delegate void PlayerIsDead();
 
         //Player State values
@@ -35,7 +33,6 @@ namespace Entity.Player
         public static event PlayerStateChanged OnPlayerSaturationUpdate;
         public static event PlayerStateChanged OnPlayerHydrationUpdate;
         public static event PlayerStateChanged OnPlayerSanityUpdate;
-        public static event PlayerEventHit OnPlayerHit;
         public static event PlayerEvents OnPlayerHealed;
 
         public static event PlayerIsDead OnPlayerDeath;
@@ -142,9 +139,8 @@ namespace Entity.Player
         /// <param name="attacker">The EnemyController of the enemy</param>
         public override void Hit(int damage, EnemyController attacker = null)
         {
-            base.Hit(damage);
+            base.Hit(damage, attacker);
             ChangePlayerHealth(-damage);
-            OnPlayerHit?.Invoke(attacker);
         }
 
         /// <summary>

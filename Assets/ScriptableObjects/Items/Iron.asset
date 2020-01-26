@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Iron
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 8de1dc4846d4228428ae13c48ac51b42, type: 3}
-  maxStackSize: 10
+  maxStackSize: 30
+  itemName: 
   description: 
-  effectText: 
