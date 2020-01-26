@@ -106,7 +106,7 @@ namespace Entity.Player
                     if (_playerState.Hydration <= 0)
                         _playerState.ChangePlayerHealth((int) (hydrationChange * healthDecreaseScale));
                     else
-                        _playerState.ChangePlayerSaturation(hydrationChange);
+                        _playerState.ChangePlayerHydration(hydrationChange);
                 }
             }
         }
