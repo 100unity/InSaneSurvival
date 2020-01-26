@@ -86,7 +86,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arm_boar|idle_1
+  m_Name: Arm_stag|idle_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -103,7 +103,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400024, guid: c60e723c6afb0fc449ecfd3661b47008, type: 3}
+  m_Motion: {fileID: 7400000, guid: b68bbaf913c0a4a5f86581118ef0d904, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -116,7 +116,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arm_boar|hit_1
+  m_Name: Arm_stag|hit_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -131,7 +131,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 86021827ce2b745c6b7813b96c0c34d2, type: 2}
+  m_Motion: {fileID: 7400000, guid: 7f05922f684b84580b44751f105712d6, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -144,7 +144,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arm_boar|walk_1
+  m_Name: Arm_stag|walk_1
   m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
@@ -158,7 +158,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ce5a32c7bee2342c8ad87155ab154caa, type: 2}
+  m_Motion: {fileID: 7400000, guid: f28c38aeff5974f59945abf0c8eb9997, type: 2}
   m_Tag: 
   m_SpeedParameter: movementSpeed
   m_MirrorParameter: 
@@ -351,7 +351,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Boar
+  m_Name: Stag
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: movementSpeed
@@ -483,7 +483,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arm_boar|dead_1
+  m_Name: Arm_stag|dead_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -496,7 +496,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b56ff6815e99c430c826b36008901c75, type: 2}
+  m_Motion: {fileID: 7400000, guid: 137c8af6d2d894322bb2444e1efa0738, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
