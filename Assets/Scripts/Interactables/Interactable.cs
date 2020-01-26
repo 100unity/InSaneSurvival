@@ -21,11 +21,13 @@ namespace Interactables
 
         [SerializeField] private Transform player;    // Reference to the player transform
 
+        private Vector3 Position => transform.position - transform.localPosition;
+
         private void Update()
         {
             if (isFocus)    // If currently being focused
             {
-                float distance = Vector3.Distance(player.position, transform.position);
+                float distance = Vector3.Distance(player.position, Position);
                 // If we haven't already interacted and the player is close enough
                 if (!hasInteracted && distance <= radius)
                 {
@@ -68,7 +70,7 @@ namespace Interactables
         void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, radius);
+            Gizmos.DrawWireSphere(Position, radius);
         }
     }
 }
