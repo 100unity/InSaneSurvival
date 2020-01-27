@@ -125,14 +125,14 @@ namespace Entity
         }
 
         /// <summary>
-        /// Attacks the target. If the target is not in attacking range, chases it. If the target is near
+        /// Attacks the target. If the target is not in stopping range, chases it. If the target is near
         /// performs a hit on it. If currently performing a hit, waits for finishing the hit and deals 
         /// damage if hit was successful. Either resets afterwards or continues chasing / attacking target.
         /// </summary>
         private void Attack()
         {
             _distanceToTarget = Vector3.Distance(Target.transform.position, transform.position);
-            if (_distanceToTarget < attackRange && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
+            if (_distanceToTarget < _movable.GetStoppingDistance() && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
             {
                 IsInRange();
             }
