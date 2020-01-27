@@ -208,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 161257360946877889}
   - component: {fileID: 8260252226361051809}
+  - component: {fileID: 299024658073941017}
   m_Layer: 0
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -251,6 +252,20 @@ MonoBehaviour:
   optionsBackButton: {fileID: 6232011940029454098}
   mainMenuButton: {fileID: 3084379069904600929}
   quitButton: {fileID: 4615952642645421674}
+--- !u!114 &299024658073941017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147527446219302713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79fb94aaa047b9b40ba2705fe820f81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnHoverSound: uiHover
+  btnClickSound: uiClick
 --- !u!1 &3582652009993236474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,6 +1596,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5585251464864307701}
     m_Modifications:
+    - target: {fileID: 3079361501047116241, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_Name
+      value: OptionMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079361501047116241, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3079361501047116246, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1686,17 +1711,32 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3115180459802783399, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115180459802783399, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115180459802783399, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205747862104080985, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205747862104080985, guid: 1c81e42cf6bc47643aec06e3f903be30,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3079361501013541428, guid: 1c81e42cf6bc47643aec06e3f903be30,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3079361501047116241, guid: 1c81e42cf6bc47643aec06e3f903be30,
-        type: 3}
-      propertyPath: m_Name
-      value: OptionMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 3079361501047116241, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1984,31 +2024,6 @@ PrefabInstance:
     - target: {fileID: 3079361500877910973, guid: 1c81e42cf6bc47643aec06e3f903be30,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3115180459802783399, guid: 1c81e42cf6bc47643aec06e3f903be30,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3115180459802783399, guid: 1c81e42cf6bc47643aec06e3f903be30,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3115180459802783399, guid: 1c81e42cf6bc47643aec06e3f903be30,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2205747862104080985, guid: 1c81e42cf6bc47643aec06e3f903be30,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2205747862104080985, guid: 1c81e42cf6bc47643aec06e3f903be30,
-        type: 3}
-      propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
