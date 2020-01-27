@@ -56,6 +56,7 @@ namespace Constants
             public const string OPEN_BOOL = "open";
 
             public const string MOVEMENT_SPEED_FLOAT = "movementSpeed";
+            public const string ATTACK_SPEED_FLOAT = "attackSpeed";
         }
     }
 }
