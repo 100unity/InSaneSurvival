@@ -71,9 +71,7 @@ MonoBehaviour:
   graphicsRenderer: {fileID: 8134761728784779444}
   itemDrops:
   - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
-    amount: 3
-  - item: {fileID: 11400000, guid: ebd901bb98b190740af556ae817824db, type: 2}
-    amount: 1
+    amount: 2
 --- !u!114 &4583121872170788062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +89,7 @@ MonoBehaviour:
   attackTime: 1.2
   hitRotationTolerance: 30
   resetAfterHit: 0
+  fightStopTime: 0
   animator: {fileID: 8134761728789001844}
 --- !u!114 &629533310
 MonoBehaviour:

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using AbstractClasses;
-using Inventory;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -9,40 +8,31 @@ namespace Entity.Enemy
 {
     public class EnemyController : Movable
     {
-        [Tooltip("The area the enemy wanders in.")]
-        [SerializeField]
+        [Tooltip("The area the enemy wanders in.")] [SerializeField]
         private Area wanderArea;
 
-        [Tooltip("The frequency at which the NPC walks to a new point in the wander area.")]
-        [SerializeField]
+        [Tooltip("The frequency at which the NPC walks to a new point in the wander area.")] [SerializeField]
         private float wanderTimer;
 
-        [Tooltip("Whether the area should be fixed on enable.")]
-        [SerializeField]
+        [Tooltip("Whether the area should be fixed on enable.")] [SerializeField]
         private bool freezeArea;
 
-        [Tooltip("The speed the NPC chases targets with.")]
-        [SerializeField]
+        [Tooltip("The speed the NPC chases targets with.")] [SerializeField]
         private float runningSpeed;
 
-        [Tooltip("Determine whether the NPC attacks and chases the player.")]
-        [SerializeField]
+        [Tooltip("Determine whether the NPC attacks and chases the player.")] [SerializeField]
         private bool isAggressive;
 
-        [Tooltip("The radius around the NPC in which a player can escape.")]
-        [SerializeField]
+        [Tooltip("The radius around the NPC in which a player can escape.")] [SerializeField]
         private float escapeRadius;
 
-        [Tooltip("Show escape radius in scene view.")]
-        [SerializeField]
+        [Tooltip("Show escape radius in scene view.")] [SerializeField]
         private bool showEscapeRadius;
 
-        [Tooltip("TargetFinderComponent - Finds nearby targets")]
-        [SerializeField]
+        [Tooltip("TargetFinderComponent - Finds nearby targets")] [SerializeField]
         private TargetFinder targetFinder;
 
-        [Tooltip("The renderer that renders the graphics of this object.")]
-        [SerializeField]
+        [Tooltip("The renderer that renders the graphics of this object.")] [SerializeField]
         private Renderer graphicsRenderer;
 
         [Header("Drops")] [Tooltip("Items that will be dropped when killing this emeny")] [SerializeField]
@@ -56,7 +46,7 @@ namespace Entity.Enemy
         // component references
         private WanderAI _wanderAI;
         private AttackLogic _attackLogic;
-        
+
         private float _timer;
         private bool _isChasing;
         private float _initialSpeed;
@@ -68,9 +58,12 @@ namespace Entity.Enemy
             base.Awake();
             // init components
             _wanderAI = new WanderAI();
-            _attackLogic = GetComponent<AttackLogic>();
-            if (_attackLogic == null)
-                Debug.LogError("NPC is not able to attack without an AttackLogic component.");
+            if (isAggressive)
+            {
+                _attackLogic = GetComponent<AttackLogic>();
+                if (!_attackLogic)
+                    Debug.LogError("NPC is not able to attack without an AttackLogic component.");
+            }
         }
 
         /// <summary>
@@ -92,7 +85,7 @@ namespace Entity.Enemy
         protected override void Update()
         {
             base.Update();
-            
+
             if (!_isChasing)
                 Wander();
 
@@ -124,6 +117,7 @@ namespace Entity.Enemy
                     _runningAway = false;
                     NavMeshAgent.speed = _initialSpeed;
                 }
+
                 MoveToNextPoint();
                 _timer = 0;
             }
