@@ -46,12 +46,11 @@ namespace Buildings
         /// </summary>
         private void Awake()
         {
+            _oldMats = new List<Material>();
+            SetBlueprintMaterial();
+
             // Hide by default
             gameObject.SetActive(false);
-
-            _oldMats = new List<Material>();
-
-            SetBlueprintMaterial();
         }
 
         public void ShowBlueprint() => gameObject.SetActive(true);
@@ -83,6 +82,7 @@ namespace Buildings
                 _oldMats.Add(new Material(blueprintMat));
 
                 blueprintMat.shader = Shader.Find("Standard");
+                Debug.Log(blueprintMat.shader.name);
                 // Set rendering mode to transparent
                 blueprintMat.SetInt(SrcBlend, (int) UnityEngine.Rendering.BlendMode.One);
                 blueprintMat.SetInt(DstBlend, (int) UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -95,6 +95,7 @@ namespace Buildings
                 Color color = blueprintMat.color;
                 color.a = fadeStrength;
                 blueprintMat.color = color;
+                Debug.Log(blueprintMat.color);
             }
         }
     }
