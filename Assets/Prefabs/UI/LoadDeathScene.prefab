@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7660531033080715016}
   - component: {fileID: 2190603540007102039}
   m_Layer: 0
-  m_Name: WhitePanel
+  m_Name: Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,5 +216,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78907e76c43b3eb44ae6c4b2c2db1ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 4536272936198705275}
-  whitePanel: {fileID: 2190603540007102039}
+  overlay: {fileID: 554344936017211800}

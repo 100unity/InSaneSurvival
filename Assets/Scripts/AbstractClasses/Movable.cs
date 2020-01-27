@@ -98,5 +98,7 @@ namespace AbstractClasses
         {
             return NavMeshAgent.stoppingDistance;
         }
+
+        public bool IsMoving() => NavMeshAgent.velocity.magnitude > 0;
     }
 }

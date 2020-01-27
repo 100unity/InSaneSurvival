@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using GameAudio;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Managers
 {
     /**
      * Play sounds with 'AudioManager.Instance.Play("name");'
      */
-    public class AudioManager : Singleton<AudioManager>
+    public class AudioManager : SingletonImmortal<AudioManager>
     {
         [SerializeField][Tooltip("Container for all sounds")]
         private List<Sound> sounds;
+        
+        [SerializeField][Tooltip("Main mixer")]
+        private AudioMixerGroup mainMixerMaster;
 
         [SerializeField]
         private GameObject audioSources;
@@ -27,6 +31,7 @@ namespace Managers
                 s.source.clip = s.clip;
                 s.source.volume = s.volume;
                 s.source.loop = s.loop;
+                s.source.outputAudioMixerGroup = mainMixerMaster;
             }
         }
         

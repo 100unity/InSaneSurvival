@@ -124,6 +124,12 @@ namespace Remote
                     case "TIME":
                         DayNightManager.Instance.SetTimeOfDay(float.Parse(parameters[1]));
                         break;
+                    case "ITEM":
+                        GetComponent<ItemCheater>().AddItems(parameters[1]);
+                        break;
+                    default:
+                        SendString("invalid command");
+                        break;
                 }
             }
         }
