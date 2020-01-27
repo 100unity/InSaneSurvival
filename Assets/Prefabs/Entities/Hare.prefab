@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc151df84d5a7a4fb860079b2f52530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 5
-  rotationTolerance: 10
+  rotationSpeed: 9
+  rotationTolerance: 15
   animator: {fileID: 8621092685651523813}
   groundLayer:
     serializedVersion: 2
@@ -60,12 +60,12 @@ MonoBehaviour:
   wanderArea:
     center: {fileID: 1510608199083388096}
     radius: 15
-  wanderTimer: 20
+  wanderTimer: 16
   freezeArea: 1
-  runningSpeed: 4
+  runningSpeed: 6
   isAggressive: 0
   escapeRadius: 12
-  showEscapeRadius: 1
+  showEscapeRadius: 0
   targetFinder: {fileID: 6970089841446486794}
   graphicsRenderer: {fileID: 8621092685647431205}
   itemDrops:
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8621092685651523813}
-  health: 20
+  health: 7
   regenerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -136,7 +136,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  regenerationProbability: 0.002
+  regenerationProbability: 0.009
   targetFinder: {fileID: 6970089841446486794}
 --- !u!195 &1510608199083388100
 NavMeshAgent:
@@ -147,12 +147,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1510608199083388104}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.28
+  m_Radius: 0.22
   m_Speed: 2
   m_Acceleration: 15
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_AngularSpeed: 250
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

@@ -58,7 +58,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &1970759235325501904
 AudioSource:
@@ -219,8 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc151df84d5a7a4fb860079b2f52530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 5
-  rotationTolerance: 10
+  rotationSpeed: 9
+  rotationTolerance: 15
   animator: {fileID: 6890635537354632276}
   groundLayer:
     serializedVersion: 2
@@ -231,12 +231,13 @@ MonoBehaviour:
     radius: 15
   wanderTimer: 5
   freezeArea: 0
-  runningSpeed: 4
+  runningSpeed: 7
   isAggressive: 1
-  escapeRadius: 12
+  escapeRadius: 25
   showEscapeRadius: 1
   targetFinder: {fileID: 703374465066555272}
   graphicsRenderer: {fileID: 6890635537358869140}
+  itemDrops: []
 --- !u!114 &6260810102751981660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,11 +250,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa35902a700a3c4fa0f8326cfd2b2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
-  attackRange: 3
+  damage: 3
+  attackRange: 3.5
+  stoppingOffset: 1.5
   attackTime: 1
-  hitRotationTolerance: 30
+  hitRotationTolerance: 60
   resetAfterHit: 0
+  fightStopTime: 12
   animator: {fileID: 6890635537354632276}
 --- !u!114 &7599921752325537532
 MonoBehaviour:
@@ -268,7 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6890635537354632276}
-  health: 0
+  health: 30
   regenerationCurve:
     serializedVersion: 2
     m_Curve: []
@@ -287,10 +290,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.31
-  m_Speed: 3
+  m_Speed: 5
   m_Acceleration: 15
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 260
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -348,6 +351,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9047338808857409602}
     m_Modifications:
+    - target: {fileID: 100046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
+      propertyPath: m_Name
+      value: Graphics
+      objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -403,10 +410,6 @@ PrefabInstance:
     - target: {fileID: 400046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_LocalScale.z
       value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 100046, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
-      propertyPath: m_Name
-      value: Graphics
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: c8a560101cbff8745b2edc10489b31bb, type: 3}
       propertyPath: m_Controller

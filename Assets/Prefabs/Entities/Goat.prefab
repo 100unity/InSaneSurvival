@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc151df84d5a7a4fb860079b2f52530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 5
-  rotationTolerance: 10
+  rotationSpeed: 7
+  rotationTolerance: 15
   animator: {fileID: 4945405106530602323}
   groundLayer:
     serializedVersion: 2
@@ -59,13 +59,13 @@ MonoBehaviour:
   graphicsTransform: {fileID: 4945405106540389119}
   wanderArea:
     center: {fileID: 1510608199083388096}
-    radius: 15
+    radius: 20
   wanderTimer: 20
   freezeArea: 1
   runningSpeed: 4
   isAggressive: 0
   escapeRadius: 12
-  showEscapeRadius: 1
+  showEscapeRadius: 0
   targetFinder: {fileID: 6970089841446486794}
   graphicsRenderer: {fileID: 4945405106534822803}
   itemDrops:
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4945405106530602323}
-  health: 20
+  health: 25
   regenerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -147,12 +147,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1510608199083388104}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.69
-  m_Speed: 1.5
+  m_Radius: 0.54
+  m_Speed: 2
   m_Acceleration: 15
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_AngularSpeed: 140
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -381,6 +381,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Graphics
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 7bb3fc90a0b306a49b08c7c2075c6ee9, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b4803fb5918004547926743e6aa585ed, type: 2}
     - target: {fileID: 400076, guid: 7bb3fc90a0b306a49b08c7c2075c6ee9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -437,10 +441,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.4
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 7bb3fc90a0b306a49b08c7c2075c6ee9, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: b4803fb5918004547926743e6aa585ed, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bb3fc90a0b306a49b08c7c2075c6ee9, type: 3}
 --- !u!1 &4945405106540101343 stripped
