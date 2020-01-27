@@ -88,7 +88,7 @@ MonoBehaviour:
   attackRange: 4.5
   stoppingOffset: 2.3
   attackTime: 1.5
-  hitRotationTolerance: 80
+  hitRotationTolerance: 100
   resetAfterHit: 0
   fightStopTime: 12
   animator: {fileID: 8134761728789001844}

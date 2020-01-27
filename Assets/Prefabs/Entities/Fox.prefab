@@ -85,8 +85,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
-  attackRange: 3.5
-  stoppingOffset: 1.5
+  attackRange: 2.5
+  stoppingOffset: 0.5
   attackTime: 0.8
   hitRotationTolerance: 70
   resetAfterHit: 0
