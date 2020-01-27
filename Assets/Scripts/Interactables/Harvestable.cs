@@ -81,6 +81,7 @@ namespace Interactables
             {
                 _gatherTimePassed = 0;
                 PlayerManager.Instance.GetPlayerController().TriggerAnimation(Consts.Animation.INTERACT_TRIGGER);
+                InventoryManager.Instance.CurrentlyEquippedItem.IncreaseUses();
                 CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Gather()));
             }
             else
