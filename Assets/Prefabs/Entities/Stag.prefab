@@ -118,7 +118,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1510608199083388096}
   - component: {fileID: 1510608199083388106}
-  - component: {fileID: 4583121872170788062}
   - component: {fileID: 629533310}
   - component: {fileID: 1510608199083388100}
   - component: {fileID: 1510608199083388107}
@@ -179,27 +178,7 @@ MonoBehaviour:
   graphicsRenderer: {fileID: 1048219366177768972}
   itemDrops:
   - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
-    amount: 3
-  - item: {fileID: 11400000, guid: ebd901bb98b190740af556ae817824db, type: 2}
     amount: 1
---- !u!114 &4583121872170788062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1510608199083388104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa35902a700a3c4fa0f8326cfd2b2f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 2
-  attackRange: 3.7
-  attackTime: 1.2
-  hitRotationTolerance: 30
-  resetAfterHit: 0
-  animator: {fileID: 1048219366182090956}
 --- !u!114 &629533310
 MonoBehaviour:
   m_ObjectHideFlags: 0
