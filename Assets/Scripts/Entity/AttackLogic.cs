@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using AbstractClasses;
+﻿using AbstractClasses;
 using Constants;
-using Managers;
-using System;
 using Entity.Enemy;
+using Managers;
+using UnityEngine;
 
 namespace Entity
 {
@@ -21,14 +20,16 @@ namespace Entity
         [Tooltip("The time needed for an attack in seconds")] [SerializeField]
         private double attackTime;
 
-        [Tooltip("The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
+        [Tooltip(
+            "The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
         [SerializeField]
         private double hitRotationTolerance;
 
         [Tooltip("Stops attacking the target after a (un-)successful hit")] [SerializeField]
         private bool resetAfterHit;
 
-        [Tooltip("The time you have to be out of combat (not attacking, not being hit) to be considered out of combat.")]
+        [Tooltip(
+            "The time you have to be out of combat (not attacking, not being hit) to be considered out of combat.")]
         [SerializeField]
         private float fightStopTime;
 
@@ -204,6 +205,12 @@ namespace Entity
         /// <param name="enemyController">If an the attacked instance is an NPC, pass its EnemyController</param>
         public void StartAttack(Damageable target, EnemyController enemyController = null)
         {
+            if (target.IsDead)
+            {
+                StopAttack();
+                return;
+            }
+
             Target = target;
             lastAttacked = enemyController;
         }
@@ -234,6 +241,7 @@ namespace Entity
                     _movable.FaceTarget(Target.gameObject, false, out float difference);
                     return difference < hitRotationTolerance ? AttackStatus.Hit : AttackStatus.Miss;
                 }
+
                 return AttackStatus.Miss;
             }
 
