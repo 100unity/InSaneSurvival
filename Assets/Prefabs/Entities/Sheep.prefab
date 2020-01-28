@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 5
-  rotationTolerance: 10
+  rotationTolerance: 15
   animator: {fileID: 126135928738199635}
   groundLayer:
     serializedVersion: 2
@@ -168,12 +168,12 @@ MonoBehaviour:
   wanderArea:
     center: {fileID: 1510608199083388096}
     radius: 15
-  wanderTimer: 20
+  wanderTimer: 30
   freezeArea: 1
   runningSpeed: 4
   isAggressive: 0
   escapeRadius: 12
-  showEscapeRadius: 1
+  showEscapeRadius: 0
   targetFinder: {fileID: 6970089841446486794}
   graphicsRenderer: {fileID: 126135928734041747}
   itemDrops:
@@ -255,12 +255,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1510608199083388104}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.84
+  m_Radius: 0.69
   m_Speed: 1.5
   m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -309,7 +309,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.69, y: 1.22, z: 2.1}
-  m_Center: {x: 0, y: 0.61, z: 0.25}
+  m_Center: {x: 0, y: 0.61, z: 0.12}
 --- !u!1 &3435760118962587146
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400070, guid: ba322b0cf29bcf240b226dc270ccc9de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 400070, guid: ba322b0cf29bcf240b226dc270ccc9de, type: 3}
       propertyPath: m_LocalRotation.x

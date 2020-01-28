@@ -1,5 +1,7 @@
+using System;
 using Constants;
 using Entity.Player;
+using GameTime;
 using Managers;
 using UnityEngine;
 
@@ -14,10 +16,36 @@ namespace Buildings
         [Tooltip("The interval in which to apply the damage to the player")] [SerializeField]
         private float damageInterval;
 
+        [Tooltip("The light of the fire.")]
+        [SerializeField]
+        private GameObject campfireFlames;
+
         private float _timer;
         private PlayerState _playerState;
 
-        private void Awake() => _playerState = PlayerManager.Instance.GetPlayer().GetComponent<PlayerState>();
+        private void Awake() => _playerState = PlayerManager.Instance.GetPlayerState();
+        
+        private void OnEnable()
+        {
+            Clock.SunRise += DisableLight;
+            Clock.SunSet += EnableLight;
+        }
+
+        private void OnDisable()
+        {
+            Clock.SunRise -= DisableLight;
+            Clock.SunSet -= EnableLight;
+        }
+
+        private void DisableLight()
+        {
+            campfireFlames.SetActive(false);
+        }
+
+        private void EnableLight()
+        {
+            campfireFlames.SetActive(true);
+        }
 
         private void OnTriggerStay(Collider other)
         {
