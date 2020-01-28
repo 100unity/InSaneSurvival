@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eba810f194bea0468b3318491a21203, type: 3}
   m_Name: Claws
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ce7c2fe6724d87641ba8856a82a0f75c, type: 3}
   maxStackSize: 10
   itemName: Claws
   description: Some spoils from your legendary battles.
