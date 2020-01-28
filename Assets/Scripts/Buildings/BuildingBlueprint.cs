@@ -46,12 +46,11 @@ namespace Buildings
         /// </summary>
         private void Awake()
         {
+            _oldMats = new List<Material>();
+            SetBlueprintMaterial();
+
             // Hide by default
             gameObject.SetActive(false);
-
-            _oldMats = new List<Material>();
-
-            SetBlueprintMaterial();
         }
 
         public void ShowBlueprint() => gameObject.SetActive(true);

@@ -66,6 +66,7 @@ namespace Utils
                 canvas.overrideSorting = value;
                 canvas.sortingOrder = value ? 10 : 0;
                 Cursor.visible = !value;
+                Time = float.MaxValue;
             }
         }
 
@@ -73,6 +74,11 @@ namespace Utils
         /// Deactivate tooltip by default.
         /// </summary>
         protected virtual void Awake() => tooltipGameObject.SetActive(false);
+
+        /// <summary>
+        /// Enable cursor if this element is deactivated.
+        /// </summary>
+        protected virtual void OnDisable() => IsShowing = false;
 
         /// <summary>
         /// Checks the restrictions, enables the tooltip and moves it.
@@ -96,11 +102,7 @@ namespace Utils
         /// Resets the time the player moved over the element and hides it.
         /// </summary>
         /// <param name="eventData"></param>
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            Time = float.MaxValue;
-            IsShowing = false;
-        }
+        public void OnPointerExit(PointerEventData eventData) => IsShowing = false;
 
         /// <summary>
         /// Moves the tooltip to the mouse position and applies the <see cref="offset"/>.
