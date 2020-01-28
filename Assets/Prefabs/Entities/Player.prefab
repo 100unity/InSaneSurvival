@@ -265,6 +265,7 @@ MonoBehaviour:
   tickProbability: 0.06
   saturationTick: 0.04
   hydrationTick: 0.014
+  healthDecreaseScale: 2.5
   moveMalusSaturation: 2
   moveMalusHydration: 1.5
   longMoveMalus: 1.5

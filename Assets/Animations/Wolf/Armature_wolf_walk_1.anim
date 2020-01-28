@@ -38002,7 +38002,7 @@ AnimationClip:
   - time: 0.33333334
     functionName: PlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 3dedaefee64c044f48e7d37badfd7420,
+    objectReferenceParameter: {fileID: 8300000, guid: fb44e67e6fa70b644a0d3122f7662d94,
       type: 3}
     floatParameter: 0
     intParameter: 0
@@ -38010,7 +38010,7 @@ AnimationClip:
   - time: 0.45833334
     functionName: PlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 3dedaefee64c044f48e7d37badfd7420,
+    objectReferenceParameter: {fileID: 8300000, guid: 162940f25565b3049a124400c3892750,
       type: 3}
     floatParameter: 0
     intParameter: 0
@@ -38018,7 +38018,7 @@ AnimationClip:
   - time: 0.9166667
     functionName: PlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 3dedaefee64c044f48e7d37badfd7420,
+    objectReferenceParameter: {fileID: 8300000, guid: fb44e67e6fa70b644a0d3122f7662d94,
       type: 3}
     floatParameter: 0
     intParameter: 0
@@ -38026,7 +38026,7 @@ AnimationClip:
   - time: 1.0416666
     functionName: PlaySound
     data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 3dedaefee64c044f48e7d37badfd7420,
+    objectReferenceParameter: {fileID: 8300000, guid: 162940f25565b3049a124400c3892750,
       type: 3}
     floatParameter: 0
     intParameter: 0

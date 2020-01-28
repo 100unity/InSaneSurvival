@@ -62,7 +62,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: ambBirds
     clip: {fileID: 8300000, guid: 55b3948d57f934b41ba067f1b72b858f, type: 3}
-    volume: 0.2
+    volume: 0.05
     loop: 1
     source: {fileID: 0}
   - name: ambCrickets
