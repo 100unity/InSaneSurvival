@@ -53,8 +53,19 @@ namespace Buildings
             gameObject.SetActive(false);
         }
 
-        public void ShowBlueprint() => gameObject.SetActive(true);
+        /// <summary>
+        /// Shows the blueprint. If the building is already built, the building will be activated.
+        /// </summary>
+        public void ShowBlueprint()
+        {
+            gameObject.SetActive(true);
+            if (building.IsBuilt)
+                ShowBuilding();
+        }
 
+        /// <summary>
+        /// Shows the blueprint and activates the building.
+        /// </summary>
         public void ShowBuilding()
         {
             gameObject.SetActive(true);
