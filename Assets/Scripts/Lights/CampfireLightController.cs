@@ -1,9 +1,9 @@
-﻿using GameTime;
-using UnityEngine;
+﻿using UnityEngine;
 using Utils;
 
 namespace Lights
 {
+    [RequireComponent(typeof(Light))]
     public class CampfireLightController : MonoBehaviour
     {
         [Tooltip("The range of the flare frequency.")]
