@@ -27,7 +27,6 @@ namespace Entity.Player
         [Tooltip("100: sane, 0: insane")] [Range(0, 100)] [SerializeField]
         private int sanity;
 
-        public int Sanity => sanity;
 
         public static event PlayerStateChanged OnPlayerHealthUpdate;
         public static event PlayerStateChanged OnPlayerSaturationUpdate;
@@ -36,6 +35,43 @@ namespace Entity.Player
         public static event PlayerEvents OnPlayerHealed;
 
         public static event PlayerIsDead OnPlayerDeath;
+
+        public int Sanity
+        {
+            get => sanity;
+            set
+            {
+                sanity = value;
+                OnPlayerSanityUpdate?.Invoke(value);
+            }
+        }
+        public int Health
+        {
+            get => health;
+            set
+            {
+                health = value;
+                OnPlayerHealthUpdate?.Invoke(value);
+            }
+        }
+        public int Saturation
+        {
+            get => saturation;
+            set
+            {
+                saturation = value;
+                OnPlayerSaturationUpdate?.Invoke(value);
+            }
+        }
+        public int Hydration
+        {
+            get => hydration;
+            set
+            {
+                hydration = value;
+                OnPlayerHydrationUpdate?.Invoke(value);
+            }
+        }
 
         private void OnEnable()
         {
@@ -52,37 +88,7 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
             RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
         }
-
-        public int GetHealth() => health;
-        public int GetSaturation() => saturation;
-        public int GetHydration() => hydration;
-        public int GetSanity() => sanity;
-
-        public void SetHealth(int value)
-        {
-            health = value;
-            OnPlayerHealthUpdate?.Invoke(value);
-        }
-
-        public void SetSaturation(int value)
-        {
-            saturation = value;
-            OnPlayerSaturationUpdate?.Invoke(value);
-        }
-
-        public void SetHydration(int value)
-        {
-            hydration = value;
-            OnPlayerHydrationUpdate?.Invoke(value);
-        }
-
-        public void SetSanity(int value)
-        {
-            sanity = value;
-            OnPlayerSanityUpdate?.Invoke(value);
-        }
-
-        //Interface
+        
         public void ChangePlayerHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
