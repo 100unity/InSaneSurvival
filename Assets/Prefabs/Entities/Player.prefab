@@ -310,19 +310,19 @@ NavMeshAgent:
   m_GameObject: {fileID: 6126187404098910136}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.72
+  m_Radius: 0.74
   m_Speed: 5
   m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 0.5
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 0
   m_Height: 1.28
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &6126187404098910140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,9 +364,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  attackRange: 3.7
+  attackRange: 4
+  stoppingOffset: 0.1
   attackTime: 1.1
-  hitRotationTolerance: 40
+  hitRotationTolerance: 50
   resetAfterHit: 1
   fightStopTime: 16
   animator: {fileID: 466687203411084045}
@@ -394,7 +395,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.56, y: 1.28, z: 2.15}
-  m_Center: {x: 0, y: 0.63, z: 0.05}
+  m_Center: {x: 0, y: 0.63, z: -0.07}
 --- !u!54 &195173908942274782
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1142,6 +1143,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
+    - target: {fileID: 8925312529435403638, guid: 5a222cef04b644d79853525c21650fe3,
+        type: 3}
+      propertyPath: m_Name
+      value: WearingIndicator
+      objectReference: {fileID: 0}
     - target: {fileID: 6851690105828889913, guid: 5a222cef04b644d79853525c21650fe3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1246,11 +1252,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925312529435403638, guid: 5a222cef04b644d79853525c21650fe3,
-        type: 3}
-      propertyPath: m_Name
-      value: WearingIndicator
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a222cef04b644d79853525c21650fe3, type: 3}

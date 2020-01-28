@@ -158,8 +158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc151df84d5a7a4fb860079b2f52530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 5
-  rotationTolerance: 10
+  rotationSpeed: 6
+  rotationTolerance: 15
   animator: {fileID: 1048219366182090956}
   groundLayer:
     serializedVersion: 2
@@ -167,13 +167,13 @@ MonoBehaviour:
   graphicsTransform: {fileID: 1048219366172202828}
   wanderArea:
     center: {fileID: 1510608199083388096}
-    radius: 15
-  wanderTimer: 20
-  freezeArea: 1
+    radius: 25
+  wanderTimer: 19
+  freezeArea: 0
   runningSpeed: 4
   isAggressive: 0
   escapeRadius: 12
-  showEscapeRadius: 1
+  showEscapeRadius: 0
   targetFinder: {fileID: 6970089841446486794}
   graphicsRenderer: {fileID: 1048219366177768972}
   itemDrops:
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1048219366182090956}
-  health: 20
+  health: 40
   regenerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -244,7 +244,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  regenerationProbability: 0.002
+  regenerationProbability: 0.004
   targetFinder: {fileID: 6970089841446486794}
 --- !u!195 &1510608199083388100
 NavMeshAgent:
@@ -255,12 +255,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1510608199083388104}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.22
-  m_Speed: 2
+  m_Radius: 1.07
+  m_Speed: 4
   m_Acceleration: 15
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_AngularSpeed: 190
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -309,7 +309,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.66, y: 2.02, z: 2.63}
-  m_Center: {x: 0, y: 0.99, z: -0.03}
+  m_Center: {x: 0, y: 0.99, z: 0.03}
 --- !u!1 &3435760118962587146
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: f788afae0bd523946aa0bf6d09835163, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.476
+      value: -0.402
       objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: f788afae0bd523946aa0bf6d09835163, type: 3}
       propertyPath: m_LocalRotation.x

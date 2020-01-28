@@ -14,8 +14,11 @@ namespace Entity
         [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
 
-        [Tooltip("The maximum distance between attacker and target in order to deal damage")] [SerializeField]
+        [Tooltip("The maximum distance between attacker and target in order to deal damage. MIND the size of the NPC.")] [SerializeField]
         private float attackRange;
+
+        [Tooltip("Will be subtracted from the attack range and used for stopping movement when near.")] [SerializeField]
+        private float stoppingOffset;
 
         [Tooltip("The time needed for an attack in seconds")] [SerializeField]
         private double attackTime;
@@ -129,14 +132,14 @@ namespace Entity
         }
 
         /// <summary>
-        /// Attacks the target. If the target is not in attacking range, chases it. If the target is near
+        /// Attacks the target. If the target is not in stopping range, chases it. If the target is near
         /// performs a hit on it. If currently performing a hit, waits for finishing the hit and deals 
         /// damage if hit was successful. Either resets afterwards or continues chasing / attacking target.
         /// </summary>
         private void Attack()
         {
             _distanceToTarget = Vector3.Distance(Target.transform.position, transform.position);
-            if (_distanceToTarget < attackRange && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
+            if (_distanceToTarget < attackRange - stoppingOffset && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
             {
                 IsInRange();
             }
