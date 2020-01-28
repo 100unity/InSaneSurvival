@@ -50,8 +50,8 @@ MonoBehaviour:
   spawnProbability: 0
   toSpawn: {fileID: 9047338808857409608, guid: b398bb82e93d77645a8dc4dcfd528a8e, type: 3}
   mainCamera: {fileID: 0}
-  spawnDimensionScale: 0.000015
-  despawnDimensionScale: 0.008
+  spawnDimensionScale: 0.0004
+  despawnDimensionScale: 0.011
   probabilityScaleCurve:
     serializedVersion: 2
     m_Curve:
@@ -65,8 +65,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.3270338
     - serializedVersion: 3
-      time: 0.50008285
-      value: 0.40049326
+      time: 0.42217147
+      value: 0.45844615
       inSlope: -2.5213604
       outSlope: -2.5213604
       tangentMode: 0
@@ -74,13 +74,22 @@ MonoBehaviour:
       inWeight: 0.10002776
       outWeight: 0.060026854
     - serializedVersion: 3
-      time: 0.99998474
-      value: 0.0003181228
-      inSlope: -0.13055603
-      outSlope: -0.13055603
+      time: 0.4257393
+      value: 0.0006736219
+      inSlope: 0.0076548606
+      outSlope: 0.0076548606
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.1555383
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.99998474
+      value: 0.0003181228
+      inSlope: 0.00000035298095
+      outSlope: 0.00000035298095
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12062623
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2

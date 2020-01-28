@@ -62,7 +62,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: ambBirds
     clip: {fileID: 8300000, guid: 55b3948d57f934b41ba067f1b72b858f, type: 3}
-    volume: 0.2
+    volume: 0.05
     loop: 1
     source: {fileID: 0}
   - name: ambCrickets
@@ -74,6 +74,16 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 339091a2c7883a64ab8c5b59625522da, type: 3}
     volume: 0.5
     loop: 1
+    source: {fileID: 0}
+  - name: uiBuild
+    clip: {fileID: 8300000, guid: ec5a62d21771fba468f5ac0d8846cab8, type: 3}
+    volume: 0.7
+    loop: 0
+    source: {fileID: 0}
+  - name: uiUnlock
+    clip: {fileID: 8300000, guid: 1075a1b324c17a747bbcda3caa15b602, type: 3}
+    volume: 0.7
+    loop: 0
     source: {fileID: 0}
   mainMixerMaster: {fileID: 24300002, guid: f12cc519cfc3f9a4ba9048f9939b00ea, type: 2}
   audioSources: {fileID: 7058954467443417514}

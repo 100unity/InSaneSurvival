@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using AbstractClasses;
+﻿using AbstractClasses;
 using Constants;
-using Managers;
-using System;
 using Entity.Enemy;
+using Managers;
+using UnityEngine;
 
 namespace Entity
 {
@@ -15,20 +14,25 @@ namespace Entity
         [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
 
-        [Tooltip("The maximum distance between attacker and target in order to deal damage")] [SerializeField]
+        [Tooltip("The maximum distance between attacker and target in order to deal damage. MIND the size of the NPC.")] [SerializeField]
         private float attackRange;
+
+        [Tooltip("Will be subtracted from the attack range and used for stopping movement when near.")] [SerializeField]
+        private float stoppingOffset;
 
         [Tooltip("The time needed for an attack in seconds")] [SerializeField]
         private double attackTime;
 
-        [Tooltip("The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
+        [Tooltip(
+            "The maximum difference in degrees for the attacker between look direction and target direction in order to perform a successful hit")]
         [SerializeField]
         private double hitRotationTolerance;
 
         [Tooltip("Stops attacking the target after a (un-)successful hit")] [SerializeField]
         private bool resetAfterHit;
 
-        [Tooltip("The time you have to be out of combat (not attacking, not being hit) to be considered out of combat.")]
+        [Tooltip(
+            "The time you have to be out of combat (not attacking, not being hit) to be considered out of combat.")]
         [SerializeField]
         private float fightStopTime;
 
@@ -63,6 +67,7 @@ namespace Entity
         private float _timer;
         private float _distanceToTarget;
         private static readonly int AttackTrigger = Animator.StringToHash(Consts.Animation.ATTACK_TRIGGER);
+        private static readonly int AttackSpeed = Animator.StringToHash(Consts.Animation.ATTACK_SPEED_FLOAT);
 
         private void Awake()
         {
@@ -70,6 +75,8 @@ namespace Entity
             _movable = GetComponent<Movable>();
             // try get this, null if player
             _enemyController = GetComponent<EnemyController>();
+            // Set animation speed for attacks based on attack time
+            animator.SetFloat(AttackSpeed, 1 / (float) attackTime);
         }
 
         private void OnEnable()
@@ -125,14 +132,14 @@ namespace Entity
         }
 
         /// <summary>
-        /// Attacks the target. If the target is not in attacking range, chases it. If the target is near
+        /// Attacks the target. If the target is not in stopping range, chases it. If the target is near
         /// performs a hit on it. If currently performing a hit, waits for finishing the hit and deals 
         /// damage if hit was successful. Either resets afterwards or continues chasing / attacking target.
         /// </summary>
         private void Attack()
         {
             _distanceToTarget = Vector3.Distance(Target.transform.position, transform.position);
-            if (_distanceToTarget < attackRange && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
+            if (_distanceToTarget < attackRange - stoppingOffset && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
             {
                 IsInRange();
             }
@@ -204,6 +211,12 @@ namespace Entity
         /// <param name="enemyController">If an the attacked instance is an NPC, pass its EnemyController</param>
         public void StartAttack(Damageable target, EnemyController enemyController = null)
         {
+            if (target.IsDead)
+            {
+                StopAttack();
+                return;
+            }
+
             Target = target;
             lastAttacked = enemyController;
         }
@@ -234,6 +247,7 @@ namespace Entity
                     _movable.FaceTarget(Target.gameObject, false, out float difference);
                     return difference < hitRotationTolerance ? AttackStatus.Hit : AttackStatus.Miss;
                 }
+
                 return AttackStatus.Miss;
             }
 

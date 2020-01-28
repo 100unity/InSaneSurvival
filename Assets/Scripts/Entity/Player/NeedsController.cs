@@ -25,6 +25,10 @@ namespace Entity.Player
         [SerializeField]
         private float hydrationTick;
 
+        [Tooltip("A factor that scales the need tick and applies it on the player's health if the value of the need is at 0.")]
+        [SerializeField]
+        private float healthDecreaseScale;
+
         [Tooltip("A number that scales the saturation tick if moving.")]
         [SerializeField]
         private float moveMalusSaturation;
@@ -69,7 +73,7 @@ namespace Entity.Player
 
         private void Update()
         {
-            Tick();
+            TickAll();
             if (_movable.IsMoving())
                 _moveTimer += Time.deltaTime;
             else
@@ -77,22 +81,32 @@ namespace Entity.Player
         }
 
         /// <summary>
-        /// With a certain probability, increases saturation and hydration tick. 
+        /// With a certain probability, increase saturation and hydration tick. 
         /// If the tick is big enough, apply it to corresponding character need.
+        /// If the need is already at a value of 0, decrease health.
         /// </summary>
-        private void Tick()
+        private void TickAll()
         {
             if (_probability.GetProbability(tickProbability))
             {
                 ScaleTick();
+                
                 if (_nextSaturationTick >= 1)
                 {
-                    _playerState.ChangePlayerSaturation(GetNegativeChange(ref _nextSaturationTick));
+                    int saturationChange = GetNegativeChange(ref _nextSaturationTick);
+                    if (_playerState.Saturation <= 0)
+                        _playerState.ChangePlayerHealth((int) (saturationChange * healthDecreaseScale));
+                    else
+                        _playerState.ChangePlayerSaturation(saturationChange);
                 }
 
                 if (_nextHydrationTick >= 1)
                 {
-                    _playerState.ChangePlayerSaturation(GetNegativeChange(ref _nextHydrationTick));
+                    int hydrationChange = GetNegativeChange(ref _nextHydrationTick);
+                    if (_playerState.Hydration <= 0)
+                        _playerState.ChangePlayerHealth((int) (hydrationChange * healthDecreaseScale));
+                    else
+                        _playerState.ChangePlayerHydration(hydrationChange);
                 }
             }
         }
