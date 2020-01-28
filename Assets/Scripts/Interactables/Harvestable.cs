@@ -48,9 +48,8 @@ namespace Interactables
             OwnCollider = GetComponent<Collider>();
             _ownMeshRenderer = GetComponent<MeshRenderer>();
 
-            _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
-
             if (destroyAfterHarvest) Parent = transform.parent.gameObject;
+            else _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
 
             // If item was respawning before save, keep it respawning
             if (isRespawning) CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
