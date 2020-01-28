@@ -56,6 +56,12 @@ namespace Buildings
                 return;
             }
 
+            if (blueprint.Building.IsBuilt)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+
             base.Update();
         }
 
