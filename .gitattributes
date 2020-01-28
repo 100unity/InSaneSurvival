@@ -25,6 +25,8 @@
 *.cubemap            binary
 *.unitypackage       binary
 
+*[Nn]av[Mm]esh.asset -unityyaml binary
+
 # 3D models
 *.3dm                binary
 *.3ds                binary
