@@ -60,7 +60,12 @@ namespace Buildings
         }
 
 
-        private void OnEnable() => InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
+        []
+        private void OnEnable()
+        {
+            InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
+            ItemsUpdated();
+        }
 
         private void OnDisable() => InventoryManager.Instance.ItemHandler.ItemsUpdated -= ItemsUpdated;
 
