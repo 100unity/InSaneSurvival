@@ -22,6 +22,25 @@ namespace Inventory
         /// <inheritdoc cref="IItemHandler.ItemsUpdated"/>
         public event Action ItemsUpdated;
 
+        public Item item1;
+        public Item item2;
+        public Item item3;
+        public Item item42;
+        public Item item323;
+        public Item item423;
+        private void Awake()
+        {
+            for(int i=0; i<15; i++)
+            {
+                AddItem(item1);
+                AddItem(item2);
+                AddItem(item3);
+                AddItem(item42);
+                AddItem(item323);
+                AddItem(item423);
+            }
+        }
+
         /// <summary>
         /// Adds an item to the player's inventory and invokes <see cref="ItemsUpdated"/>.
         /// </summary>
