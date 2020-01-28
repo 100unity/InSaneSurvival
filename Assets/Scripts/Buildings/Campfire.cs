@@ -23,10 +23,7 @@ namespace Buildings
         private float _timer;
         private PlayerState _playerState;
 
-        private void Awake()
-        {
-            _playerState = PlayerManager.Instance.GetPlayer().GetComponent<PlayerState>();
-        }
+        private void Awake() => _playerState = PlayerManager.Instance.GetPlayerState();
         
         private void OnEnable()
         {
