@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 5
-  rotationTolerance: 10
+  rotationTolerance: 15
   animator: {fileID: 8134761728789001844}
   groundLayer:
     serializedVersion: 2
@@ -60,8 +60,8 @@ MonoBehaviour:
   graphicsTransform: {fileID: 8134761728782096884}
   wanderArea:
     center: {fileID: 1510608199083388096}
-    radius: 15
-  wanderTimer: 20
+    radius: 25
+  wanderTimer: 13
   freezeArea: 1
   runningSpeed: 4
   isAggressive: 1
@@ -71,9 +71,7 @@ MonoBehaviour:
   graphicsRenderer: {fileID: 8134761728784779444}
   itemDrops:
   - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
-    amount: 3
-  - item: {fileID: 11400000, guid: ebd901bb98b190740af556ae817824db, type: 2}
-    amount: 1
+    amount: 2
 --- !u!114 &4583121872170788062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,11 +84,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa35902a700a3c4fa0f8326cfd2b2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
-  attackRange: 3.7
-  attackTime: 1.2
-  hitRotationTolerance: 30
+  damage: 23
+  attackRange: 4.5
+  stoppingOffset: 2.3
+  attackTime: 1.5
+  hitRotationTolerance: 100
   resetAfterHit: 0
+  fightStopTime: 12
   animator: {fileID: 8134761728789001844}
 --- !u!114 &629533310
 MonoBehaviour:
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8134761728789001844}
-  health: 20
+  health: 40
   regenerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -157,7 +157,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  regenerationProbability: 0.002
+  regenerationProbability: 0.003
   targetFinder: {fileID: 6970089841446486794}
 --- !u!195 &1510608199083388100
 NavMeshAgent:
@@ -168,12 +168,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1510608199083388104}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.26
-  m_Speed: 2
+  m_Radius: 1.1
+  m_Speed: 3.5
   m_Acceleration: 15
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_AngularSpeed: 240
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -222,7 +222,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.81, y: 1.63, z: 2.78}
-  m_Center: {x: 0, y: 0.8, z: 0.015}
+  m_Center: {x: 0, y: 0.8, z: 0.1}
 --- !u!1 &3435760118962587146
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 8
+  m_Radius: 9
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &7133521112774440895
 AudioSource:
@@ -412,7 +412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: c60e723c6afb0fc449ecfd3661b47008, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.084
       objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: c60e723c6afb0fc449ecfd3661b47008, type: 3}
       propertyPath: m_LocalRotation.x
