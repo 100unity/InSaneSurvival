@@ -7,10 +7,10 @@ namespace AbstractClasses
     public abstract class Damageable : MonoBehaviour
     {
         public delegate void PlayerHit(EnemyController attacker);
+
         public delegate void EventHit(Damageable hit);
 
-        [Tooltip("Animator for playing the hit animation")]
-        [SerializeField]
+        [Tooltip("Animator for playing the hit animation")] [SerializeField]
         private Animator animator;
 
         private static readonly int HitTrigger = Animator.StringToHash(Consts.Animation.HIT_TRIGGER);
@@ -18,6 +18,11 @@ namespace AbstractClasses
 
         public static event EventHit OnHit;
         public static event PlayerHit OnPlayerHit;
+
+        /// <summary>
+        /// Used to prevent attacking a dead damageable.
+        /// </summary>
+        public bool IsDead { get; private set; }
 
         /// <summary>
         /// This entity was hit. Invoke <see cref="OnPlayerHit"/> if this entity is the player.
@@ -44,6 +49,7 @@ namespace AbstractClasses
 
         public virtual void Die()
         {
+            IsDead = true;
             animator.SetTrigger(DieTrigger);
         }
     }

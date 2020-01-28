@@ -211,6 +211,12 @@ namespace Entity
         /// <param name="enemyController">If an the attacked instance is an NPC, pass its EnemyController</param>
         public void StartAttack(Damageable target, EnemyController enemyController = null)
         {
+            if (target.IsDead)
+            {
+                StopAttack();
+                return;
+            }
+
             Target = target;
             lastAttacked = enemyController;
         }
