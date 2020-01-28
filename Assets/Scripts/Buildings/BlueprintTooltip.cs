@@ -59,8 +59,6 @@ namespace Buildings
             base.Update();
         }
 
-
-        []
         private void OnEnable()
         {
             InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
