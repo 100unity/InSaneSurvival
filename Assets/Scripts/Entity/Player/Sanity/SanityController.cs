@@ -15,6 +15,14 @@ namespace Entity.Player.Sanity
         [SerializeField]
         private float insaneDamage;
 
+        [Tooltip("The name of the sanity sound.")]
+        [SerializeField]
+        private string sanitySound;
+
+        [Tooltip("The sanity sound should start or stop playing when passed.")]
+        [SerializeField]
+        private int soundCap;
+
         [Tooltip("Handles the math and holds stats influencing the player's sanity.")] [SerializeField]
         private SanityMath sanityMath;
 
@@ -82,6 +90,9 @@ namespace Entity.Player.Sanity
 
         // the enemy the player is currently in combat with (fighting/being hit)
         private EnemyController _enemy;
+
+        // the sanity sound is playing
+        private bool _isPlaying;
 
         private void Awake()
         {
@@ -188,7 +199,8 @@ namespace Entity.Player.Sanity
         }
 
         /// <summary>
-        /// Tick sanity. If sanity == 0, decrease health.
+        /// Tick sanity. If sanity == 0, decrease health. 
+        /// Play sanity sound if sanity < <see cref="soundCap"/>.
         /// </summary>
         /// <param name="changeBy"></param>
         private void Tick(int changeBy)
@@ -196,13 +208,44 @@ namespace Entity.Player.Sanity
             // always apply changes if sanity > 0 or if positive change
             if (changeBy > 0 || _playerState.Sanity > 0)
             {
+                int oldSanity = _playerState.Sanity;
                 _playerState.ChangePlayerSanity(changeBy);
+                ManageSound(oldSanity, _playerState.Sanity);
                 return;
             }
 
             // affect health if sanity == 0
             if (_playerState.Sanity == 0)
                 _playerState.ChangePlayerHealth((int) (changeBy * insaneDamage));
+        }
+
+        /// <summary>
+        /// Start sanity sound, if sanity goes below sound cap.
+        /// Stop it, if sanity goes above sound cap.
+        /// </summary>
+        /// <param name="oldSanity">The sanity before the tick.</param>
+        /// <param name="newSanity">The sanity including the new tick.</param>
+        private void ManageSound(int oldSanity, int newSanity)
+        {
+            bool canDeactivate = false, canActivate = false;
+
+            // sanity is growing and sanity sound plays
+            if (oldSanity < newSanity && _isPlaying)
+                canDeactivate = true;
+            // sanity is dropping and sanity sound does not play
+            else if (oldSanity > newSanity && !_isPlaying)
+                canActivate = true;
+
+            if (canDeactivate && _playerState.Sanity >= soundCap)
+            {
+                AudioManager.Instance.FadeOut(sanitySound, 10);
+                _isPlaying = false;
+            }
+            else if (canActivate && _playerState.Sanity <= soundCap)
+            {
+                AudioManager.Instance.FadeIn(sanitySound, 10);
+                _isPlaying = true;
+            }
         }
 
         /// <summary>
