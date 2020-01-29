@@ -1,6 +1,7 @@
 ﻿using AbstractClasses;
 using Constants;
 using Entity.Enemy;
+using Inventory;
 using Managers;
 using UnityEngine;
 
@@ -188,7 +189,14 @@ namespace Entity
                 int damageDealt = damage;
                 // add damage boost from weapon if is player
                 if (_enemyController == null)
-                    damageDealt += InventoryManager.Instance.DamageBoostFromEquipable;
+                {
+                    Equipable equippedItem = InventoryManager.Instance.CurrentlyEquippedItem;
+                    if (equippedItem)
+                    {
+                        InventoryManager.Instance.CurrentlyEquippedItemButton.IncreaseUses();
+                        damageDealt += equippedItem.DamageBoost;
+                    }
+                }
                 Target.Hit(damageDealt, out int targetHealth, _enemyController);
                 if (targetHealth <= 0)
                     StopAttack();

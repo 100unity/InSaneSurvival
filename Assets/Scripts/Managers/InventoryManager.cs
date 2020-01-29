@@ -36,14 +36,26 @@ namespace Managers
         public HashSet<Item> NotFullItemStacks { get; set; }
 
         /// <summary>
-        /// The currently equipped ItemButton (Visually equipped item)
+        /// The currently equipped ItemButton (Visually equipped item).
         /// </summary>
         private ItemButton _currentlyEquippedItemButton;
 
         /// <summary>
-        /// The currently equipped item
+        /// The currently equipped item.
         /// </summary>
         public Equipable CurrentlyEquippedItem { get; set; }
+
+        /// <summary>
+        /// The ItemButton of the currently equipped item.
+        /// </summary>
+        public ItemButton CurrentlyEquippedItemButton => _currentlyEquippedItemButton;
+
+        /// <summary>
+        /// Event for when an equipable is used up.
+        /// </summary>
+        public event EquipableRemoved OnEquipableRemoved;
+
+        public delegate void EquipableRemoved(ItemButton itemButton);
 
         /// <summary>
         /// Adds an item to the player's inventory.
@@ -68,6 +80,17 @@ namespace Managers
         {
             for (int i = 0; i < amount; i++)
                 playerInventory.RemoveItem(item);
+        }
+
+        /// <summary>
+        /// Removes an entire item button from the player's inventory.
+        /// </summary>
+        /// <param name="itemButton">The item to be removed</param>
+        public void RemoveItemButton(ItemButton itemButton)
+        {
+            for (int i = 0; i < itemButton.Count; i++)
+                playerInventory.RemoveItemSilently(itemButton.Item);
+            OnEquipableRemoved?.Invoke(itemButton);
         }
 
         /// <summary>
