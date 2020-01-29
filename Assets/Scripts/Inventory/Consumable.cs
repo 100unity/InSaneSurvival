@@ -12,12 +12,15 @@ namespace Inventory
 
         [SerializeField] private int saturationValue;
         [SerializeField] private int hydrationValue;
+        [SerializeField] private string soundOnUse;
 
         public int HealthValue => healthValue;
 
         public int SaturationValue => saturationValue;
 
         public int HydrationValue => hydrationValue;
+        
+        public string SoundOnUse => soundOnUse;
 
         /// <summary>
         /// Gets the PlayerState of the player, and changes its values depending on the item values.

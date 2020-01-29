@@ -1,3 +1,4 @@
+using System;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -24,6 +25,13 @@ namespace Inventory.UI
         private Swappable swappable;
 
         /// <summary>
+        /// Event that will be triggered whenever the amount of uses is changed.
+        /// </summary>
+        public event UsesStatus OnUsesChange;
+
+        public delegate void UsesStatus(int currentUses, int maxUses);
+
+        /// <summary>
         /// The number of items on the item stack. Also updates the label in the inventory UI when changed.
         /// </summary>
         public int Count
@@ -45,6 +53,16 @@ namespace Inventory.UI
         /// The amount of this item
         /// </summary>
         private int _count;
+        
+        /// <summary>
+        /// If this is an equipable, this is not null.
+        /// </summary>
+        private Equipable _equipable;
+        
+        /// <summary>
+        /// The currently amount of uses.
+        /// </summary>
+        private int _currentUses;
 
         /// <summary>
         /// Checks if the item is visually equipped
@@ -66,6 +84,23 @@ namespace Inventory.UI
             Item = item;
             icon.sprite = Item.Icon;
             Count = 1;
+            if (item is Equipable equipable) 
+                _equipable = equipable;
+        }
+        
+        /// <summary>
+        /// Increases the amount of uses of this item.
+        /// </summary>
+        /// <param name="amount">The increase of uses. By default 1</param>
+        public void IncreaseUses(int amount = 1)
+        {
+            if(_equipable == null)
+                return;
+            _currentUses += amount;
+            if (_currentUses >= _equipable.MaxUses)
+                InventoryManager.Instance.RemoveItemButton(this);
+            else
+                OnUsesChange?.Invoke(_currentUses, _equipable.MaxUses);
         }
 
         /// <summary>
@@ -98,6 +133,8 @@ namespace Inventory.UI
             Item.Use();
             if (Item is Equipable)
                 ToggleIsEquipped();
+            else if(Item is Consumable consumable)
+                AudioManager.Instance.Play(consumable.SoundOnUse);
         }
 
         /// <summary>

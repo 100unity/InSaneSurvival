@@ -20,9 +20,9 @@ namespace Utils
         {
             if (probability < 0 || probability > 1f)
                 throw new Exception("Wrong usage of Probability");
-            if (probability == 0)
+            if (Math.Abs(probability) < 0.00001)
                 return false;
-            if (probability == 1)
+            if (Math.Abs(probability - 1) < 0.00001)
                 return true;
 
             float percentage = probability * 100;
@@ -38,6 +38,7 @@ namespace Utils
                     // 1 old percent = 100 new percent
                     return GetProbability(percentage);
                 }
+
                 return false;
             }
         }

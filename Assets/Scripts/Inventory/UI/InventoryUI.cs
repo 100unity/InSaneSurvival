@@ -47,6 +47,7 @@ namespace Inventory.UI
             InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
             InventoryManager.Instance.ItemHandler.ItemAdded += ItemAdded;
             InventoryManager.Instance.ItemHandler.ItemRemoved += ItemRemoved;
+            InventoryManager.Instance.OnItemButtonRemove += RemoveItemButton;
             Swappable.OnAfterSwap += SwapCompleted;
         }
 
@@ -58,6 +59,7 @@ namespace Inventory.UI
             InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
             InventoryManager.Instance.ItemHandler.ItemAdded -= ItemAdded;
             InventoryManager.Instance.ItemHandler.ItemRemoved -= ItemRemoved;
+            InventoryManager.Instance.OnItemButtonRemove -= RemoveItemButton;
             Swappable.OnAfterSwap -= SwapCompleted;
         }
 
@@ -136,9 +138,18 @@ namespace Inventory.UI
             // Skip deletion if amount is left
             if (itemButtonInList.Count > 0) return;
 
-            itemGrid.AddEmptySlotAt(itemButtonInList.transform.GetSiblingIndex());
-            DestroyImmediate(itemButtonInList.gameObject);
-            _items.Remove(itemButtonInList);
+            RemoveItemButton(itemButtonInList);
+        }
+
+        /// <summary>
+        /// Removes an ItemButton from the UI and adds an empty space.
+        /// </summary>
+        /// <param name="itemButton"></param>
+        private void RemoveItemButton(ItemButton itemButton)
+        {
+            itemGrid.AddEmptySlotAt(itemButton.transform.GetSiblingIndex());
+            DestroyImmediate(itemButton.gameObject);
+            _items.Remove(itemButton);
         }
 
         /// <summary>
