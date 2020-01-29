@@ -98,6 +98,8 @@ namespace Inventory.UI
             Item.Use();
             if (Item is Equipable)
                 ToggleIsEquipped();
+            else if(Item is Consumable consumable)
+                AudioManager.Instance.Play(consumable.SoundOnUse);
         }
 
         /// <summary>

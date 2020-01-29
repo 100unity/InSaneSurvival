@@ -112,7 +112,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: uiConfused
     clip: {fileID: 8300000, guid: 4657a8e46964c744aab4db613df7c39c, type: 3}
-    volume: 0.6
+    volume: 0.1
     loop: 0
     source: {fileID: 0}
   mainMixerMaster: {fileID: 24300002, guid: f12cc519cfc3f9a4ba9048f9939b00ea, type: 2}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eba810f194bea0468b3318491a21203, type: 3}
   m_Name: Wool
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: ce7c2fe6724d87641ba8856a82a0f75c, type: 3}
+  icon: {fileID: 21300000, guid: 0ea00171c1f8b5f4ab22389238d40420, type: 3}
   maxStackSize: 20
   itemName: 
-  description: IT'S SO FLUFFY!!
+  description: It's so fluffy!!
