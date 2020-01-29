@@ -20,3 +20,4 @@ MonoBehaviour:
   healthValue: 10
   saturationValue: 0
   hydrationValue: 0
+  soundOnUse: uiBandage

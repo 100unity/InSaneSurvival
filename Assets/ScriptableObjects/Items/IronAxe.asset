@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 1e26e85a575ab744bae883b76425b1d0, type: 3}
   maxStackSize: 1
   itemName: 
-  description: 
+  description: A trustworthy Axe only a king would wield.
   equipableAbility: 1
   damageBoost: 2
   maxUses: 10
