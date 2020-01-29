@@ -143,6 +143,13 @@ namespace Entity.Player
         public void TriggerAnimation(string triggerName) => Animator.SetTrigger(triggerName);
 
         /// <summary>
+        /// Sets the animator property with the specified name to the given value.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to set</param>
+        /// <param name="value">The value to set the property to</param>
+        public void SetAnimationFloat(string propertyName, float value) => Animator.SetFloat(propertyName, value);
+
+        /// <summary>
         /// Let's the GameManager know, that the player pressed pause.
         /// </summary>
         private void TogglePause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();

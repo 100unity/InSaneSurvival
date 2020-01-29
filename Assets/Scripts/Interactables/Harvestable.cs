@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Constants;
+using Entity.Player;
 using Inventory;
 using Managers;
 using UI;
@@ -80,7 +81,9 @@ namespace Interactables
                 equipped != null && equipped.HasAbility(neededAbility))
             {
                 _gatherTimePassed = 0;
-                PlayerManager.Instance.GetPlayerController().TriggerAnimation(Consts.Animation.INTERACT_TRIGGER);
+                PlayerController playerController = PlayerManager.Instance.GetPlayerController();
+                playerController.SetAnimationFloat(Consts.Animation.INTERACT_SPEED_FLOAT, 1 / gatherTime);
+                playerController.TriggerAnimation(Consts.Animation.INTERACT_TRIGGER);
                 CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Gather()));
             }
             else
