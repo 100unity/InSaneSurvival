@@ -242,7 +242,6 @@ MonoBehaviour:
       Boundary: 60
       Severity: 0.7
       Rate: -22.4
-  tickProbability: 1
   healMultiplier: 4
   healBonusDuration: 20
   applyCampfireBonus: 1
@@ -297,7 +296,7 @@ MonoBehaviour:
     m_Bits: 524545
   clickEffect: {fileID: 3687566934736743005, guid: 303d5b1eeeba949aca04be0bec872f12,
     type: 3}
-  cameraRotationSpeed: 0.3
+  cameraRotationSpeed: 0.05
   invertRotation: 1
   cameraDistance: {x: 7, y: 3}
   cameraDistanceRange:
