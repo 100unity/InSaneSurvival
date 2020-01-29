@@ -108,12 +108,8 @@ namespace Interactables
 
                 if (_gatherTimePassed >= gatherTime)
                 {
-                    Equipable equippedItem = InventoryManager.Instance.CurrentlyEquippedItem;
-                    if (equippedItem)
-                        InventoryManager.Instance.CurrentlyEquippedItem.IncreaseUses();
                     AddItems();
-                    Equipable equippedItem = InventoryManager.Instance.CurrentlyEquippedItem;
-                    if (equippedItem)
+                    if (InventoryManager.Instance.CurrentlyEquippedItemButton != null)
                         InventoryManager.Instance.CurrentlyEquippedItemButton.IncreaseUses();
                     if (destroyAfterHarvest)
                         Destroy(Parent);
