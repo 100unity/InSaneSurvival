@@ -27,7 +27,7 @@ namespace Inventory
         public string ItemName => string.IsNullOrEmpty(itemName) ? ItemNameWithSpaces : itemName;
         public string Description => description;
         /// <summary>
-        /// See: https://stackoverflow.com/questions/5796383/insert-spaces-between-words-on-a-camel-cased-token
+        /// See: https://stackoverflow.com/a/155487
         /// </summary>
         private string ItemNameWithSpaces => Regex.Replace(name, "(\\B[A-Z])", " $1");
 
