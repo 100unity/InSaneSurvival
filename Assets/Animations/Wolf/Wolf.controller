@@ -188,12 +188,12 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -3783628171888453539}
-    second:
-    - {fileID: 2635162327827462279}
   - first: {fileID: 385909715774538565}
     second:
     - {fileID: -7475989333429691625}
+  - first: {fileID: -3783628171888453539}
+    second:
+    - {fileID: 2635162327827462279}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
@@ -233,7 +233,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Armature_wolf|Search_1
-  m_Speed: 1
+  m_Speed: 4.583
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1677469214996008947}
@@ -242,13 +242,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400026, guid: ae495434e84223e4986a98db34c5941a, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: interactSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -658,6 +658,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: attackSpeed
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: interactSpeed
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0

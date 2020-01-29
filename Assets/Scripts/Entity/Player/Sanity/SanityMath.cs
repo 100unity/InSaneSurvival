@@ -11,23 +11,24 @@ namespace Entity.Player.Sanity
     [Serializable]
     public class SanityMath
     {
-        [Tooltip("The total severity at which sanity changes. Scales the change rate")]
-        [SerializeField]
+        [Tooltip("The total severity at which sanity changes. Scales the change rate")] [SerializeField]
         private float severity;
 
         [Tooltip("If one or more stats have a negative impact, weight other stats with this percentage.")]
         [SerializeField]
         private float lowImpactSeverity;
 
-        [Tooltip("Determines how fast player gains sanity. Scales current stat value * stat severity")]
-        [SerializeField]
+        [Tooltip("Determines how fast player gains sanity. Scales current stat value * stat severity")] [SerializeField]
         private float gainFactor;
 
-        [Tooltip("Stats that have an impact on sanity.")]
-        [SerializeField]
+        [Tooltip("Stats that have an impact on sanity.")] [SerializeField]
         private Stat[] stats;
 
-        public float GainFactor { get { return gainFactor; } set { gainFactor = value; } }
+        public float GainFactor
+        {
+            get => gainFactor;
+            set => gainFactor = value;
+        }
 
         // the total change rate
         private float _changeRate;
@@ -35,10 +36,7 @@ namespace Entity.Player.Sanity
         /// <summary>
         /// Gets the current sanity change which should be added to the next tick.
         /// </summary>
-        public float GetCurrentChange()
-        {
-            return _changeRate * severity;
-        }
+        public float GetCurrentChange() => _changeRate * severity;
 
         /// <summary>
         /// Influences sanity by stat and its current value. It changes the stat's rate. It will get negative
@@ -83,17 +81,12 @@ namespace Entity.Player.Sanity
         /// <summary>
         /// Gets the stat from <see cref="stats"/>
         /// </summary>
-        private Stat GetStatByType(SanityController.StatType statType)
-        {
-            return stats.Where(s => s.Type == statType).FirstOrDefault();
-        }
+        private Stat GetStatByType(SanityController.StatType statType) =>
+            stats.FirstOrDefault(s => s.Type == statType);
 
         /// <summary>
         /// Checks if all stat rates are positive
         /// </summary>
-        private bool AllRatesPositive()
-        {
-            return stats.All(s => s.Rate >= 0);
-        }
+        private bool AllRatesPositive() => stats.All(s => s.Rate >= 0);
     }
 }
