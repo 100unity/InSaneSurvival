@@ -1,4 +1,5 @@
 using Entity.Player;
+using Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,10 @@ namespace UI
 
         [Tooltip("The icon to display for interactions that are currently not possible")] [SerializeField]
         private Sprite errorIcon;
-
+        
+        [Tooltip("PLays the sound when the speech bubble shows")] [SerializeField]
+        private string speechBubbleSound;
+        
         private void Start() => UpdatePosition(playerController.CameraDistance);
 
         private void OnEnable() => PlayerController.OnCameraDistanceChange += UpdatePosition;
@@ -44,6 +48,7 @@ namespace UI
             // Setup image and display speech bubble for displayTime
             image.sprite = imageToDisplay;
             speechBubbleContent.SetActive(true);
+            AudioManager.Instance.Play(speechBubbleSound);
             Invoke(nameof(HideSpeechBubble), displayTime);
         }
 

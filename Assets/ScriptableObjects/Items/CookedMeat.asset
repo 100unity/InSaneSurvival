@@ -19,3 +19,4 @@ MonoBehaviour:
   healthValue: 0
   saturationValue: 20
   hydrationValue: 0
+  soundOnUse: uiEat
