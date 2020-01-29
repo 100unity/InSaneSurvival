@@ -41,6 +41,7 @@ namespace Interactables
         private double _gatherTimePassed;
         private MeshRenderer _ownMeshRenderer;
         private MeshRenderer _replacementMeshRenderer;
+        private PlayerController _playerController;
 
         protected virtual void Awake()
         {
@@ -48,13 +49,15 @@ namespace Interactables
 
             OwnCollider = GetComponent<Collider>();
             _ownMeshRenderer = GetComponent<MeshRenderer>();
-
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
+            _playerController = PlayerManager.Instance.GetPlayerController();
 
-            if (destroyAfterHarvest) Parent = transform.parent.gameObject;
+            if (destroyAfterHarvest) 
+                Parent = transform.parent.gameObject;
 
             // If item was respawning before save, keep it respawning
-            if (isRespawning) CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
+            if (isRespawning) 
+                CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
         }
 
         public bool IsRespawning => isRespawning;
@@ -81,9 +84,8 @@ namespace Interactables
                 equipped != null && equipped.HasAbility(neededAbility))
             {
                 _gatherTimePassed = 0;
-                PlayerController playerController = PlayerManager.Instance.GetPlayerController();
-                playerController.SetAnimationFloat(Consts.Animation.INTERACT_SPEED_FLOAT, 1 / gatherTime);
-                playerController.TriggerAnimation(Consts.Animation.INTERACT_TRIGGER);
+                _playerController.SetAnimationFloat(Consts.Animation.INTERACT_SPEED_FLOAT, 1 / gatherTime);
+                _playerController.TriggerAnimation(Consts.Animation.INTERACT_TRIGGER);
                 CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Gather()));
             }
             else

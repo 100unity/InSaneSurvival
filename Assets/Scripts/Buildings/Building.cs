@@ -38,7 +38,7 @@ namespace Buildings
         public bool IsBuilt { get; set; }
 
 
-        private void Awake() => IsBuilt = isAlreadyBuilt;
+        protected virtual void Awake() => IsBuilt = isAlreadyBuilt;
 
         /// <summary>
         /// Updates <see cref="PlayerInReach"/>.
@@ -49,10 +49,13 @@ namespace Buildings
         /// <summary>
         /// Can be overriden to define an interaction action.
         /// </summary>
-        public virtual void Interact()
+        public void Interact()
         {
             if (!PlayerInReach) return;
+            OnInteract();
         }
+
+        protected abstract void OnInteract();
 
         public void Build()
         {
