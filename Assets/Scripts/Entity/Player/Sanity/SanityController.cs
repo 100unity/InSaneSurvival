@@ -220,8 +220,8 @@ namespace Entity.Player.Sanity
         /// </summary>
         private void OnAttackPerformed()
         {
-            if (_attackLogic.lastAttacked != null)
-                _enemy = _attackLogic.lastAttacked;
+            if (_attackLogic.LastAttacked != null)
+                _enemy = _attackLogic.LastAttacked;
         }
 
         /// <summary>
