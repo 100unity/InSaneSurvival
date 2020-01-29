@@ -52,8 +52,10 @@ namespace Interactables
             _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
             _playerController = PlayerManager.Instance.GetPlayerController();
 
-            if (destroyAfterHarvest) 
+            if (destroyAfterHarvest)
                 Parent = transform.parent.gameObject;
+            else 
+                _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
 
             // If item was respawning before save, keep it respawning
             if (isRespawning) 
