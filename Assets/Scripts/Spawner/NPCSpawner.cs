@@ -52,7 +52,8 @@ namespace Spawner
 
         protected virtual void Update()
         {
-            if (transform.childCount < maximumConcurrentEnemies && _probability.GetProbability(spawnProbability))
+            if (transform.childCount < maximumConcurrentEnemies &&
+                _probability.GetProbability(spawnProbability * Time.deltaTime))
                 TrySpawn();
         }
 

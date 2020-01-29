@@ -14,7 +14,8 @@ namespace Entity
         [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
 
-        [Tooltip("The maximum distance between attacker and target in order to deal damage. MIND the size of the NPC.")] [SerializeField]
+        [Tooltip("The maximum distance between attacker and target in order to deal damage. MIND the size of the NPC.")]
+        [SerializeField]
         private float attackRange;
 
         [Tooltip("Will be subtracted from the attack range and used for stopping movement when near.")] [SerializeField]
@@ -96,9 +97,7 @@ namespace Entity
         private void Update()
         {
             if (Target != null)
-            {
                 Attack();
-            }
             else
             {
                 // if target despawns, the player should not freeze
@@ -108,9 +107,7 @@ namespace Entity
             }
 
             if (IsFighting)
-            {
                 MightEndFighting();
-            }
         }
 
 
@@ -139,7 +136,8 @@ namespace Entity
         private void Attack()
         {
             _distanceToTarget = Vector3.Distance(Target.transform.position, transform.position);
-            if (_distanceToTarget < attackRange - stoppingOffset && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
+            if (_distanceToTarget < attackRange - stoppingOffset && Status == AttackStatus.None ||
+                Status == AttackStatus.TargetReached)
             {
                 IsInRange();
             }
