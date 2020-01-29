@@ -1,5 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &7927137620778165503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491908074881381992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 1
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 1
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 2800000, guid: 27e49978c0f70764da00075faae41a0a, type: 3}
+  iconSize: 30
+  iconOffset: 30
 --- !u!1 &1597766793671583826
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +130,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02497d6d9410c3547886559b126cabac, type: 3}
+--- !u!1 &491908074881381992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2403706723660555408, guid: 02497d6d9410c3547886559b126cabac,
+    type: 3}
+  m_PrefabInstance: {fileID: 2848585373728248568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3497258490515522683 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1657596651601630851, guid: 02497d6d9410c3547886559b126cabac,
