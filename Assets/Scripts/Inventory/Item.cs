@@ -27,7 +27,7 @@ namespace Inventory
         public string ItemName => string.IsNullOrEmpty(itemName) ? ItemNameWithSpaces : itemName;
         public string Description => description;
         /// <summary>
-        /// See: https://stackoverflow.com/a/155487
+        /// See: https://stackoverflow.com/a/155340
         /// </summary>
         private string ItemNameWithSpaces => Regex.Replace(name, "(\\B[A-Z])", " $1");
 
