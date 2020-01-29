@@ -33,6 +33,9 @@ namespace AbstractClasses
 
         protected virtual void Update()
         {
+            if (NavMeshAgent.remainingDistance < 0.1)
+                StopMoving();
+
             UpdateRotation();
             animator.SetFloat(MovementSpeed, NavMeshAgent.velocity.magnitude);
         }
@@ -84,20 +87,11 @@ namespace AbstractClasses
         /// <summary>
         /// Stops moving.
         /// </summary>
-        public void StopMoving()
-        {
-            NavMeshAgent.isStopped = true;
-        }
+        public void StopMoving() => NavMeshAgent.isStopped = true;
 
-        public void SetStoppingDistance(float distance)
-        {
-            NavMeshAgent.stoppingDistance = distance;
-        }
+        public void SetStoppingDistance(float distance) => NavMeshAgent.stoppingDistance = distance;
 
-        public float GetStoppingDistance()
-        {
-            return NavMeshAgent.stoppingDistance;
-        }
+        public float GetStoppingDistance() => NavMeshAgent.stoppingDistance;
 
         public bool IsMoving() => NavMeshAgent.velocity.magnitude > 0;
     }

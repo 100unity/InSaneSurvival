@@ -26,5 +26,7 @@ namespace Buildings
             else if (CraftingManager.Instance.HasCraftingStation(craftingStation))
                 CraftingManager.Instance.RemoveCraftingStation(craftingStation);
         }
+
+        protected override void OnInteract() { }
     }
 }

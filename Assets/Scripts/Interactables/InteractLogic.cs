@@ -3,20 +3,14 @@ using UnityEngine;
 
 namespace Interactables
 {
+    /// <summary>
+    /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..)
+    /// (Won't conflict with character attacking enemy or moving on the map)
+    /// </summary>
     public class InteractLogic : MonoBehaviour
     {
-        /// <summary>
-        /// These are functions for character to interact with all objects in the game (ex: moving, following, pick up items, open crate, etc..)
-        /// (Won't conflict with character attacking enemy or moving on the map)
-        /// </summary>
-        /// 
-
-        [Tooltip("Showing the object player is focusing")]
-        private Interactable focus;
-
-        [Tooltip("Showing the object target player is interacting")]
-        private Transform target;
-
+        private Interactable _focus;
+        private Transform _target;
         private Movable _movable;
         private float _initialStoppingDistance;
 
@@ -28,7 +22,8 @@ namespace Interactables
         private void Update()
         {
             // Check and makes character facing the target object when moving toward it
-            if (target != null) _movable.FaceTarget(target.gameObject, true, out _);
+            if (_target != null)
+                _movable.FaceTarget(_target.gameObject, true, out _);
         }
 
         // this is start because in Awake Movable is not yet ready
@@ -37,37 +32,37 @@ namespace Interactables
         // This will make character going to target object and stop when it is close enough
         private void SetTarget(Interactable newTarget)
         {
-            _movable.SetStoppingDistance(newTarget.Radius/2);   
-            target = newTarget.transform;
+            _movable.SetStoppingDistance(newTarget.Radius / 2);
+            _target = newTarget.transform;
         }
 
         // Makes character not targeting the object anymore
         private void StopTarget()
         {
             _movable.SetStoppingDistance(_initialStoppingDistance);
-            target = null;
+            _target = null;
         }
 
         // Set focus when interact
         public void StartInteract(Interactable newFocus)
         {
-            if (newFocus != focus)
+            if (newFocus != _focus)
             {
-                if (focus != null) focus.OnDefocused();
-                focus = newFocus;
+                if (_focus != null) _focus.OnDefocused();
+                _focus = newFocus;
                 SetTarget(newFocus);
             }
 
             newFocus.OnFocused(transform);
 
-            _movable.Move(target.transform.position); 
+            _movable.Move(_target.transform.position);
         }
 
         // Remove focus when not interact
         public void RemoveFocus()
         {
-            if (focus != null) focus.OnDefocused();
-            focus = null;
+            if (_focus != null) _focus.OnDefocused();
+            _focus = null;
             StopTarget();
         }
     }

@@ -21,11 +21,6 @@ namespace Managers
         public IItemHandler ItemHandler => playerInventory;
 
         /// <summary>
-        /// The damage boost of the currently equipped weapon. Returns 0 if no item is equipped.
-        /// </summary>
-        public int DamageBoostFromEquipable => CurrentlyEquippedItem ? CurrentlyEquippedItem.DamageBoost : 0;
-
-        /// <summary>
         /// Whether the inventory still has empty slots. Used for determining if an item can be added.
         /// </summary>
         public bool HasEmptySlots { get; set; }
