@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using Utils;
 
@@ -10,16 +11,14 @@ namespace Entity.Player
         [SerializeField]
         private AnimationCurve intensityCurve;
 
-        [Tooltip("Maximum frequency of vignette pulsing.")]
-        [SerializeField]
+        [Tooltip("Maximum frequency of vignette pulsing.")] [SerializeField]
         private float maxVignettePulseFrequency;
 
-        [Tooltip("Intensity of the vignette pulse.")]
-        [SerializeField]
-        [Range(0, 1)]
+        [Tooltip("Intensity of the vignette pulse.")] [SerializeField] [Range(0, 1)]
         private float vignettePulseIntensity;
 
-        [Tooltip("The minimum sanity the player can have in order to display the red screen. If sanity goes below, red screen is not shown, but sanity vignette takes over.")]
+        [Tooltip(
+            "The minimum sanity the player can have in order to display the red screen. If sanity goes below, red screen is not shown, but sanity vignette takes over.")]
         [SerializeField]
         [Range(0, 100)]
         private float sanityCap;
@@ -69,16 +68,16 @@ namespace Entity.Player
                 _postProcessVolume.priority = -1;
                 return;
             }
-            else if (_postProcessVolume.priority == -1)
-            {
+
+            if (Math.Abs(_postProcessVolume.priority + 1) < 0.001)
                 _postProcessVolume.priority = 1;
-            }
 
             float y = intensityCurve.Evaluate(_health / 100f);
             float currentVignettePulseFrequency = maxVignettePulseFrequency * y;
 
             // pulse
-            _vignettePulse = _pulser.Pulse("vignette", _vignettePulse, currentVignettePulseFrequency, vignettePulseIntensity);
+            _vignettePulse = _pulser.Pulse("vignette", _vignettePulse, currentVignettePulseFrequency,
+                vignettePulseIntensity);
             // update with masked value
             _vignette.intensity.value = _vignetteBaseIntensity + y * _vignettePulse;
         }

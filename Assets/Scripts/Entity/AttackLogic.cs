@@ -1,6 +1,7 @@
 ﻿using AbstractClasses;
 using Constants;
 using Entity.Enemy;
+using Inventory;
 using Managers;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ namespace Entity
         [Tooltip("The base damage dealt")] [SerializeField]
         private int damage;
 
-        [Tooltip("The maximum distance between attacker and target in order to deal damage. MIND the size of the NPC.")] [SerializeField]
+        [Tooltip("The maximum distance between attacker and target in order to deal damage. MIND the size of the NPC.")]
+        [SerializeField]
         private float attackRange;
 
         [Tooltip("Will be subtracted from the attack range and used for stopping movement when near.")] [SerializeField]
@@ -50,12 +52,11 @@ namespace Entity
         public bool IsFighting { get; private set; }
 
         public AttackStatus Status { get; private set; }
-        public Damageable Target { get; private set; }
 
         /// <summary>
         /// The EnemyController of the last attacked target if it's an NPC.
         /// </summary>
-        public EnemyController lastAttacked { get; private set; }
+        public EnemyController LastAttacked { get; private set; }
 
         // component references
         private Movable _movable;
@@ -64,6 +65,7 @@ namespace Entity
         // the time this entity has stopped fighting (+ was not hit) while being in combat
         private float _attackStopTimer;
 
+        private Damageable _target;
         private float _timer;
         private float _distanceToTarget;
         private static readonly int AttackTrigger = Animator.StringToHash(Consts.Animation.ATTACK_TRIGGER);
@@ -95,10 +97,8 @@ namespace Entity
         /// </summary>
         private void Update()
         {
-            if (Target != null)
-            {
+            if (_target != null)
                 Attack();
-            }
             else
             {
                 // if target despawns, the player should not freeze
@@ -108,9 +108,7 @@ namespace Entity
             }
 
             if (IsFighting)
-            {
                 MightEndFighting();
-            }
         }
 
 
@@ -120,7 +118,7 @@ namespace Entity
         /// </summary>
         private void MightEndFighting()
         {
-            if (Target == null)
+            if (_target == null)
                 _attackStopTimer += Time.deltaTime;
             else
                 _attackStopTimer = 0;
@@ -138,8 +136,9 @@ namespace Entity
         /// </summary>
         private void Attack()
         {
-            _distanceToTarget = Vector3.Distance(Target.transform.position, transform.position);
-            if (_distanceToTarget < attackRange - stoppingOffset && Status == AttackStatus.None || Status == AttackStatus.TargetReached)
+            _distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
+            if (_distanceToTarget < attackRange - stoppingOffset && Status == AttackStatus.None ||
+                Status == AttackStatus.TargetReached)
             {
                 IsInRange();
             }
@@ -154,7 +153,7 @@ namespace Entity
             else
             {
                 // chase target
-                _movable.Move(Target.transform.position);
+                _movable.Move(_target.transform.position);
             }
         }
 
@@ -166,7 +165,7 @@ namespace Entity
             _movable.StopMoving();
             Status = AttackStatus.TargetReached;
             // face target
-            if (_movable.FaceTarget(Target.gameObject, true, out _))
+            if (_movable.FaceTarget(_target.gameObject, true, out _))
             {
                 // faces target
                 // perform hit
@@ -188,8 +187,16 @@ namespace Entity
                 int damageDealt = damage;
                 // add damage boost from weapon if is player
                 if (_enemyController == null)
-                    damageDealt += InventoryManager.Instance.DamageBoostFromEquipable;
-                Target.Hit(damageDealt, out int targetHealth, _enemyController);
+                {
+                    Equipable equippedItem = InventoryManager.Instance.CurrentlyEquippedItem;
+                    if (equippedItem)
+                    {
+                        equippedItem.IncreaseUses();
+                        damageDealt += equippedItem.DamageBoost;
+                    }
+                }
+
+                _target.Hit(damageDealt, out int targetHealth, _enemyController);
                 if (targetHealth <= 0)
                     StopAttack();
             }
@@ -199,7 +206,7 @@ namespace Entity
             if (resetAfterHit)
             {
                 // reset aggro independent of (un-)successful hit
-                Target = null;
+                _target = null;
             }
         }
 
@@ -217,8 +224,8 @@ namespace Entity
                 return;
             }
 
-            Target = target;
-            lastAttacked = enemyController;
+            _target = target;
+            LastAttacked = enemyController;
         }
 
         /// <summary>
@@ -226,7 +233,7 @@ namespace Entity
         /// </summary>
         public void StopAttack()
         {
-            Target = null;
+            _target = null;
         }
 
         /// <summary>
@@ -244,7 +251,7 @@ namespace Entity
                 if (_distanceToTarget < attackRange)
                 {
                     // check rotation as well
-                    _movable.FaceTarget(Target.gameObject, false, out float difference);
+                    _movable.FaceTarget(_target.gameObject, false, out float difference);
                     return difference < hitRotationTolerance ? AttackStatus.Hit : AttackStatus.Miss;
                 }
 

@@ -57,6 +57,7 @@ namespace Constants
 
             public const string MOVEMENT_SPEED_FLOAT = "movementSpeed";
             public const string ATTACK_SPEED_FLOAT = "attackSpeed";
+            public const string INTERACT_SPEED_FLOAT = "interactSpeed";
         }
     }
 }
