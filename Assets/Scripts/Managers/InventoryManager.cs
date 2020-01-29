@@ -51,11 +51,11 @@ namespace Managers
         public ItemButton CurrentlyEquippedItemButton => _currentlyEquippedItemButton;
 
         /// <summary>
-        /// Event for when an equipable is used up.
+        /// Event for when an item button is deleted.
         /// </summary>
-        public event EquipableRemoved OnEquipableRemoved;
+        public event ItemButtonRemove OnItemButtonRemove;
 
-        public delegate void EquipableRemoved(ItemButton itemButton);
+        public delegate void ItemButtonRemove(ItemButton itemButton);
 
         /// <summary>
         /// Adds an item to the player's inventory.
@@ -90,7 +90,9 @@ namespace Managers
         {
             for (int i = 0; i < itemButton.Count; i++)
                 playerInventory.RemoveItemSilently(itemButton.Item);
-            OnEquipableRemoved?.Invoke(itemButton);
+            OnItemButtonRemove?.Invoke(itemButton);
+            if(itemButton.Item is Equipable)
+                SetCurrentlyEquipped(null);
         }
 
         /// <summary>

@@ -103,6 +103,7 @@ namespace Interactables
 
                 if (_gatherTimePassed >= gatherTime)
                 {
+                    AddItems();
                     Equipable equippedItem = InventoryManager.Instance.CurrentlyEquippedItem;
                     if (equippedItem)
                         InventoryManager.Instance.CurrentlyEquippedItemButton.IncreaseUses();

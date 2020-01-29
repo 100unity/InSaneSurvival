@@ -47,7 +47,7 @@ namespace Inventory.UI
             InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
             InventoryManager.Instance.ItemHandler.ItemAdded += ItemAdded;
             InventoryManager.Instance.ItemHandler.ItemRemoved += ItemRemoved;
-            InventoryManager.Instance.OnEquipableRemoved += RemoveItemButton;
+            InventoryManager.Instance.OnItemButtonRemove += RemoveItemButton;
             Swappable.OnAfterSwap += SwapCompleted;
         }
 
@@ -59,7 +59,7 @@ namespace Inventory.UI
             InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
             InventoryManager.Instance.ItemHandler.ItemAdded -= ItemAdded;
             InventoryManager.Instance.ItemHandler.ItemRemoved -= ItemRemoved;
-            InventoryManager.Instance.OnEquipableRemoved -= RemoveItemButton;
+            InventoryManager.Instance.OnItemButtonRemove -= RemoveItemButton;
             Swappable.OnAfterSwap -= SwapCompleted;
         }
 
