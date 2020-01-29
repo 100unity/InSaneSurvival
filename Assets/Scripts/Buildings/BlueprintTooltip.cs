@@ -56,11 +56,20 @@ namespace Buildings
                 return;
             }
 
+            if (blueprint.Building.IsBuilt)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+
             base.Update();
         }
 
-
-        private void OnEnable() => InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
+        private void OnEnable()
+        {
+            InventoryManager.Instance.ItemHandler.ItemsUpdated += ItemsUpdated;
+            ItemsUpdated();
+        }
 
         private void OnDisable() => InventoryManager.Instance.ItemHandler.ItemsUpdated -= ItemsUpdated;
 

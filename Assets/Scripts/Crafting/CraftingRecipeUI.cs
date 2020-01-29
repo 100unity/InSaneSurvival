@@ -1,6 +1,8 @@
-﻿using Constants;
+﻿using System;
+using Constants;
 using Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utils;
 
@@ -19,6 +21,15 @@ namespace Crafting
 
         [Tooltip("The crafting recipe resource prefab")] [SerializeField]
         private CraftingRecipeResource craftingRecipeResourcePrefab;
+
+        [Tooltip("The sound to play when crafting is successful")] [SerializeField]
+        private string craftSuccessSound;
+        
+         [Tooltip("The sound to play when crafting has failed")] [SerializeField]
+        private string craftFailSound;
+
+        private string _uiClickSound;
+        
 
         /// <summary>
         /// The recipe this CraftingRecipeUI represents.
@@ -47,7 +58,10 @@ namespace Crafting
                 Instantiate(craftingRecipeResourcePrefab, recipeResourceList.transform)
                     .InitResource(resourceData.item.name, resourceData.amount, resourceData.item.Icon);
             craftButton.onClick.RemoveAllListeners();
+            craftButton.onClick.AddListener(PlayCraftingSound);
             craftButton.onClick.AddListener(() => _recipe.Craft());
+            
+            
 
             InventoryManager.Instance.ItemHandler.ItemsUpdated += OnItemUpdate;
         }
@@ -64,9 +78,26 @@ namespace Crafting
             SetCanCraft(_recipe.CanCraft());
 
         /// <summary>
-        /// Sets the color of the image to visually show if this recipe can be crafted
+        /// Sets the color of the image to visually show if this recipe can be crafted & sets the sound which is playing when you click the recipe
         /// </summary>
-        private void SetCanCraft(bool canCraft) =>
-            imgCraftItem.color = canCraft ? Consts.Colors.White : Color.black;
+        private void SetCanCraft(bool canCraft)
+        {
+            if (canCraft)
+            {
+                imgCraftItem.color = Consts.Colors.White;
+                _uiClickSound = craftSuccessSound;
+            }
+            else
+            {
+                imgCraftItem.color = Color.black;
+                _uiClickSound = craftFailSound;
+            }
+        }
+        
+        /// <summary>
+        /// PLays the crafting sound
+        /// </summary>
+        private void PlayCraftingSound() => AudioManager.Instance.Play(_uiClickSound);
+        
     }
 }
