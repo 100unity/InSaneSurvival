@@ -15,7 +15,7 @@ namespace Managers
         public enum CraftingStation { None, CraftingBench, Campfire, Anvil }
 
         /// <summary>
-        /// Will be invoked when something related to crafting changes (e.g. <see cref="CurrentCraftingStation"/>).
+        /// Will be invoked when something related to crafting changes (e.g. <see cref="_craftingStations"/>).
         /// </summary>
         public event CraftingDelegate OnCraftingUpdate;
 
