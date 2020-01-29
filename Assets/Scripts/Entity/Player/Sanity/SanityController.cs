@@ -288,7 +288,7 @@ namespace Entity.Player.Sanity
         /// </summary>
         private void CheckCampfireRange()
         {
-            _pauseTick = CraftingManager.Instance.HasCraftingStation(CraftingManager.CraftingStation.Fire);
+            _pauseTick = CraftingManager.Instance.HasCraftingStation(CraftingManager.CraftingStation.Campfire);
         }
     }
 }
