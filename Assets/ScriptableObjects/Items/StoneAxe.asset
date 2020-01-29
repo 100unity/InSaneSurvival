@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433a787e3a2a2404ca18409922208c86, type: 3}
   m_Name: StoneAxe
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 1e26e85a575ab744bae883b76425b1d0, type: 3}
+  icon: {fileID: 21300000, guid: 827af524f3abe2f44bab3a1793789aee, type: 3}
   maxStackSize: 1
   itemName: 
-  description: 'A trustworthy Axe only a king would wield.
+  description: 'A pathetic object. Probably falls apart by looking at it.
 
 '
   equipableAbility: 1
