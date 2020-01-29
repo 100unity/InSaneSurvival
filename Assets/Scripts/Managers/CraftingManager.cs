@@ -12,10 +12,10 @@ namespace Managers
         /// <summary>
         /// Crafting stations that limit the crafting of specific items to them.
         /// </summary>
-        public enum CraftingStation { None, CraftingBench, Fire, Anvil }
+        public enum CraftingStation { None, CraftingBench, Campfire, Anvil }
 
         /// <summary>
-        /// Will be invoked when something related to crafting changes (e.g. <see cref="CurrentCraftingStation"/>).
+        /// Will be invoked when something related to crafting changes (e.g. <see cref="_craftingStations"/>).
         /// </summary>
         public event CraftingDelegate OnCraftingUpdate;
 

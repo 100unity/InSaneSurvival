@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 433a787e3a2a2404ca18409922208c86, type: 3}
-  m_Name: Pickaxe
+  m_Name: StoneAxe
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 27e49978c0f70764da00075faae41a0a, type: 3}
+  icon: {fileID: 21300000, guid: 1e26e85a575ab744bae883b76425b1d0, type: 3}
   maxStackSize: 1
   itemName: 
-  description: 
-  equipableAbility: 2
-  damageBoost: 1
-  maxUses: 8
+  description: 'A trustworthy Axe only a king would wield.
+
+'
+  equipableAbility: 1
+  damageBoost: 2
+  maxUses: 4
