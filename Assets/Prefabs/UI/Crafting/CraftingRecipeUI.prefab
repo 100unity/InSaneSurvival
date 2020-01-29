@@ -68,6 +68,8 @@ MonoBehaviour:
   craftButton: {fileID: 6966223168451593898}
   craftingRecipeResourcePrefab: {fileID: 4987473723129198034, guid: a89be3425693cc146b2f8bef32bbd569,
     type: 3}
+  craftSuccessSound: uiCraftSuccess
+  craftFailSound: uiCraftFail
 --- !u!114 &684174519789575771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +429,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: CraftingHoverTooltip
       objectReference: {fileID: 0}
+    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7696003959110352258, guid: 1a239589d4d06f64f8743a947b3f0255,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -532,36 +559,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8999018629554617352, guid: 1a239589d4d06f64f8743a947b3f0255,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1064354182204555259, guid: 1a239589d4d06f64f8743a947b3f0255,
-        type: 3}
-      propertyPath: craftingRecipe
-      value: 
-      objectReference: {fileID: 5330057578649661358}
     - target: {fileID: 6509347989951253233, guid: 1a239589d4d06f64f8743a947b3f0255,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -587,6 +584,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1064354182204555259, guid: 1a239589d4d06f64f8743a947b3f0255,
+        type: 3}
+      propertyPath: craftingRecipe
+      value: 
+      objectReference: {fileID: 5330057578649661358}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a239589d4d06f64f8743a947b3f0255, type: 3}
 --- !u!1 &2164131212008302060 stripped
