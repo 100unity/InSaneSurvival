@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: b71ade93c1476784f93dad2ffdfa42ee, type: 3}
   maxStackSize: 10
+  itemName: 
   description: One hell of a tasty apple. In fact so tasty, a wolf would turn into
     a vegeterian!
-  effectText: <color=#79FF85>+ Fills your stomach a bit</color>
   healthValue: 0
   saturationValue: 5
   hydrationValue: 0
+  soundOnUse: uiEat

@@ -1,6 +1,4 @@
-﻿using System;
-using Remote;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameTime
 {
@@ -18,10 +16,10 @@ namespace GameTime
         private float timeOfDay;
 
         public float TimeOfDay => timeOfDay;
-        
+
         private bool _isNight;
-        public bool IsNight =>_isNight;
-        
+        public bool IsNight => _isNight;
+
         private bool _moonShines;
 
         private int _days;
@@ -39,7 +37,7 @@ namespace GameTime
         private AnimationCurve timeCurve;
 
         private float _timeCurveNormalization;
-        
+
         public static event DayTimeEvent SunRise;
         public static event DayTimeEvent SunSet;
         public static event DayTimeEvent MoonRise;
@@ -51,19 +49,19 @@ namespace GameTime
             NormalizeTimeCurve();
             _baseTickRate = 24 / (dayLength / 60); // calculating basic tick rate
         }
-        
+
         private void Update()
         {
             UpdateTimeScale();
             UpdateTime();
             InvokeDayTimeEvent();
         }
-        
+
         /// <summary>
         /// Sets the daynumber - used for loading savegames
         /// </summary>
         /// <param name="day"></param>
-        public void SetDayNumber(int day) => this._days = day;
+        public void SetDayNumber(int day) => _days = day;
 
         /// <summary>
         /// Sets the time of the day instantly.
@@ -103,7 +101,7 @@ namespace GameTime
                 }
             }
         }
-        
+
         /// <summary>
         /// Triggers Events for Sunrise and Sunset
         /// </summary>
@@ -114,7 +112,7 @@ namespace GameTime
                 _isNight = !_isNight;
                 SunRise?.Invoke();
             }
-            
+
             if (!_isNight && timeOfDay >= 0.70)
             {
                 _isNight = !_isNight;
@@ -132,9 +130,8 @@ namespace GameTime
                 _moonShines = !_moonShines;
                 MoonSet?.Invoke();
             }
-            
         }
-        
+
         /// <summary>
         /// Calculates the mean of timeCurve
         /// </summary>
@@ -151,7 +148,7 @@ namespace GameTime
 
             _timeCurveNormalization = curveTotal / numberOfSteps;
         }
-        
+
         /// <summary>
         /// Checks if it is day or night and sets "_isNight" accordingly
         /// </summary>

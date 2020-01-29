@@ -21,11 +21,6 @@ namespace Managers
         public IItemHandler ItemHandler => playerInventory;
 
         /// <summary>
-        /// The damage boost of the currently equipped weapon. Returns 0 if no item is equipped.
-        /// </summary>
-        public int DamageBoostFromEquipable => CurrentlyEquippedItem ? CurrentlyEquippedItem.DamageBoost : 0;
-
-        /// <summary>
         /// Whether the inventory still has empty slots. Used for determining if an item can be added.
         /// </summary>
         public bool HasEmptySlots { get; set; }
@@ -36,14 +31,26 @@ namespace Managers
         public HashSet<Item> NotFullItemStacks { get; set; }
 
         /// <summary>
-        /// The currently equipped ItemButton (Visually equipped item)
+        /// The currently equipped ItemButton (Visually equipped item).
         /// </summary>
         private ItemButton _currentlyEquippedItemButton;
 
         /// <summary>
-        /// The currently equipped item
+        /// The currently equipped item.
         /// </summary>
         public Equipable CurrentlyEquippedItem { get; set; }
+
+        /// <summary>
+        /// The ItemButton of the currently equipped item.
+        /// </summary>
+        public ItemButton CurrentlyEquippedItemButton => _currentlyEquippedItemButton;
+
+        /// <summary>
+        /// Event for when an item button is deleted.
+        /// </summary>
+        public event ItemButtonRemove OnItemButtonRemove;
+
+        public delegate void ItemButtonRemove(ItemButton itemButton);
 
         /// <summary>
         /// Adds an item to the player's inventory.
@@ -68,6 +75,19 @@ namespace Managers
         {
             for (int i = 0; i < amount; i++)
                 playerInventory.RemoveItem(item);
+        }
+
+        /// <summary>
+        /// Removes an entire item button from the player's inventory.
+        /// </summary>
+        /// <param name="itemButton">The item to be removed</param>
+        public void RemoveItemButton(ItemButton itemButton)
+        {
+            for (int i = 0; i < itemButton.Count; i++)
+                playerInventory.RemoveItemSilently(itemButton.Item);
+            OnItemButtonRemove?.Invoke(itemButton);
+            if(itemButton.Item is Equipable)
+                SetCurrentlyEquipped(null);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using GameTime;
 using UnityEngine;
 
@@ -33,16 +34,17 @@ namespace Managers
         /// </summary>
         /// <param name="newTimeOfDay">The new time of the day</param>
         /// <param name="animationTime">The animation time</param>
-        public void SetDayTimeWithAnimation(float newTimeOfDay, float animationTime)
+        /// <param name="onFinished">An action to trigger when the animation has finished playing</param>
+        public void SetDayTimeWithAnimation(float newTimeOfDay, float animationTime, Action onFinished = null)
         {
             if (_isAnimating) return;
-            StartCoroutine(DayTimeAnimation(newTimeOfDay, animationTime));
+            StartCoroutine(DayTimeAnimation(newTimeOfDay, animationTime, onFinished));
         }
 
         /// <summary>
         /// The Coroutine for <see cref="SetDayTimeWithAnimation"/>.
         /// </summary>
-        private IEnumerator DayTimeAnimation(float newTimeOfDay, float animationTime)
+        private IEnumerator DayTimeAnimation(float newTimeOfDay, float animationTime, Action onFinished = null)
         {
             // Prevents multiple animations
             _isAnimating = true;
@@ -70,6 +72,7 @@ namespace Managers
             }
 
             _isAnimating = false;
+            onFinished?.Invoke();
         }
     }
 }

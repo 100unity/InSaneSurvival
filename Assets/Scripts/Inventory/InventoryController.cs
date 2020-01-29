@@ -43,6 +43,12 @@ namespace Inventory
             ItemRemoved?.Invoke(item);
             ItemsUpdated?.Invoke();
         }
+        
+        /// <summary>
+        /// Removes an item from the player's inventory without triggering any events.
+        /// </summary>
+        /// <param name="item">The item to be removed</param>
+        public void RemoveItemSilently(Item item) => items.Remove(item);
 
         /// <summary>
         /// Refreshes the items by invoking the <see cref="ItemsUpdated"/> event with default and 0.
