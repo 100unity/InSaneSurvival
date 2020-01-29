@@ -191,7 +191,7 @@ namespace Entity
                     Equipable equippedItem = InventoryManager.Instance.CurrentlyEquippedItem;
                     if (equippedItem)
                     {
-                        equippedItem.IncreaseUses();
+                        InventoryManager.Instance.CurrentlyEquippedItemButton.IncreaseUses();
                         damageDealt += equippedItem.DamageBoost;
                     }
                 }

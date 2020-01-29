@@ -19,27 +19,19 @@ namespace Inventory
         private int maxUses;
 
         /// <summary>
-        /// Event that will be triggered whenever the amount of uses is changed.
-        /// </summary>
-        public event UsesStatus OnUsesChange;
-
-        public delegate void UsesStatus(int currentUses, int maxUses);
-
-        /// <summary>
         /// The damage boost of this equipable
         /// </summary>
         public int DamageBoost => damageBoost;
 
         /// <summary>
+        /// The max amount of uses.
+        /// </summary>
+        public int MaxUses => maxUses;
+
+        /// <summary>
         /// A list of all abilities this equipable has
         /// </summary>
         private List<EquipableAbility> _abilities;
-
-        /// <summary>
-        /// The currently amount of uses.
-        /// </summary>
-        private int _currentUses;
-
 
         /// <summary>
         /// Get all abilities from the MultiSelect
@@ -49,6 +41,7 @@ namespace Inventory
         /// <summary>
         /// Get all abilities from the MultiSelect (if null) and
         /// checks if this item has the given ability
+        /// </summary>
         /// <param name="ability">The ability to check</param>
         /// <returns>Whether it has the given ability or not</returns>
         public bool HasAbility(EquipableAbility ability)
@@ -65,19 +58,6 @@ namespace Inventory
         {
             Debug.Log("Equipping the item " + name);
             return true;
-        }
-
-        /// <summary>
-        /// Increases the amount of uses of this item.
-        /// </summary>
-        /// <param name="amount">The increase of uses. By default 1</param>
-        public void IncreaseUses(int amount = 1)
-        {
-            _currentUses += amount;
-            if (_currentUses > maxUses)
-                InventoryManager.Instance.RemoveItem(this);
-            else
-                OnUsesChange?.Invoke(_currentUses, maxUses);
         }
 
         /// <summary>
