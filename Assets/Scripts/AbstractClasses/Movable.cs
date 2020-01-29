@@ -65,11 +65,20 @@ namespace AbstractClasses
         public bool FaceTarget(GameObject target, bool shouldTurn, out float difference)
         {
             Vector3 direction = (target.transform.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            difference = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
-            bool facesTarget = difference < rotationTolerance;
-            if (!facesTarget && shouldTurn)
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            Vector3 lookRotationVector = new Vector3(direction.x, 0f, direction.z);
+            bool facesTarget = true;
+            difference = 0;
+            if (lookRotationVector != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(lookRotationVector);
+                difference = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
+                facesTarget = difference < rotationTolerance;
+
+                if (!facesTarget && shouldTurn)
+                    transform.rotation =
+                        Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            }
+
             return facesTarget;
         }
 
