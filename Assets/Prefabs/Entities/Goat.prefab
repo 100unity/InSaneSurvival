@@ -71,6 +71,8 @@ MonoBehaviour:
   itemDrops:
   - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
     amount: 1
+  - item: {fileID: 11400000, guid: 8e4b1ba039a7f0849b8ea176ed127654, type: 2}
+    amount: 1
 --- !u!114 &629533310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +138,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  regenerationProbability: 0.002
+  regenerationProbability: 0.02
   targetFinder: {fileID: 6970089841446486794}
 --- !u!195 &1510608199083388100
 NavMeshAgent:
@@ -381,10 +383,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Graphics
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 7bb3fc90a0b306a49b08c7c2075c6ee9, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: b4803fb5918004547926743e6aa585ed, type: 2}
     - target: {fileID: 400076, guid: 7bb3fc90a0b306a49b08c7c2075c6ee9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -441,6 +439,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.4
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 7bb3fc90a0b306a49b08c7c2075c6ee9, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b4803fb5918004547926743e6aa585ed, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bb3fc90a0b306a49b08c7c2075c6ee9, type: 3}
 --- !u!1 &4945405106540101343 stripped

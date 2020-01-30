@@ -33,6 +33,9 @@ namespace AbstractClasses
 
         protected virtual void Update()
         {
+            if (NavMeshAgent.remainingDistance < 0.1)
+                StopMoving();
+
             UpdateRotation();
             animator.SetFloat(MovementSpeed, NavMeshAgent.velocity.magnitude);
         }
@@ -62,11 +65,20 @@ namespace AbstractClasses
         public bool FaceTarget(GameObject target, bool shouldTurn, out float difference)
         {
             Vector3 direction = (target.transform.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            difference = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
-            bool facesTarget = difference < rotationTolerance;
-            if (!facesTarget && shouldTurn)
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            Vector3 lookRotationVector = new Vector3(direction.x, 0f, direction.z);
+            bool facesTarget = true;
+            difference = 0;
+            if (lookRotationVector != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(lookRotationVector);
+                difference = Mathf.Abs(lookRotation.eulerAngles.magnitude - transform.rotation.eulerAngles.magnitude);
+                facesTarget = difference < rotationTolerance;
+
+                if (!facesTarget && shouldTurn)
+                    transform.rotation =
+                        Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            }
+
             return facesTarget;
         }
 
@@ -84,20 +96,11 @@ namespace AbstractClasses
         /// <summary>
         /// Stops moving.
         /// </summary>
-        public void StopMoving()
-        {
-            NavMeshAgent.isStopped = true;
-        }
+        public void StopMoving() => NavMeshAgent.isStopped = true;
 
-        public void SetStoppingDistance(float distance)
-        {
-            NavMeshAgent.stoppingDistance = distance;
-        }
+        public void SetStoppingDistance(float distance) => NavMeshAgent.stoppingDistance = distance;
 
-        public float GetStoppingDistance()
-        {
-            return NavMeshAgent.stoppingDistance;
-        }
+        public float GetStoppingDistance() => NavMeshAgent.stoppingDistance;
 
         public bool IsMoving() => NavMeshAgent.velocity.magnitude > 0;
     }

@@ -85,6 +85,41 @@ MonoBehaviour:
     volume: 0.7
     loop: 0
     source: {fileID: 0}
+  - name: uiCraftSuccess
+    clip: {fileID: 8300000, guid: d2bd0e622a12153458bcf476d85a0377, type: 3}
+    volume: 0.6
+    loop: 0
+    source: {fileID: 0}
+  - name: uiCraftFail
+    clip: {fileID: 8300000, guid: be98f45801a68d84e9f5665b31dd0b90, type: 3}
+    volume: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: uiEat
+    clip: {fileID: 8300000, guid: 74580eea3350bfd4fae5ac855a4dbde3, type: 3}
+    volume: 0.6
+    loop: 0
+    source: {fileID: 0}
+  - name: uiDrink
+    clip: {fileID: 8300000, guid: 1332d5238496bfc4d92ee20d8d135525, type: 3}
+    volume: 0.6
+    loop: 0
+    source: {fileID: 0}
+  - name: uiBandage
+    clip: {fileID: 8300000, guid: d2e7477af26980e4f9fbaa6b03d612f0, type: 3}
+    volume: 0.6
+    loop: 0
+    source: {fileID: 0}
+  - name: uiConfused
+    clip: {fileID: 8300000, guid: 4657a8e46964c744aab4db613df7c39c, type: 3}
+    volume: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: sanity_noise
+    clip: {fileID: 8300000, guid: b469ae6bbfccfe84494bde405cb54524, type: 3}
+    volume: 0.06
+    loop: 1
+    source: {fileID: 0}
   mainMixerMaster: {fileID: 24300002, guid: f12cc519cfc3f9a4ba9048f9939b00ea, type: 2}
   audioSources: {fileID: 7058954467443417514}
 --- !u!1 &7058954467443417514

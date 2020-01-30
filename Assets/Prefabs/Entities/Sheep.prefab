@@ -179,6 +179,8 @@ MonoBehaviour:
   itemDrops:
   - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
     amount: 1
+  - item: {fileID: 11400000, guid: 8e4b1ba039a7f0849b8ea176ed127654, type: 2}
+    amount: 2
 --- !u!114 &629533310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +246,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  regenerationProbability: 0.002
+  regenerationProbability: 0.02
   targetFinder: {fileID: 6970089841446486794}
 --- !u!195 &1510608199083388100
 NavMeshAgent:

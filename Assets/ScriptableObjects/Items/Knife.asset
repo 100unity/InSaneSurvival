@@ -18,4 +18,4 @@ MonoBehaviour:
   description: 
   equipableAbility: 0
   damageBoost: 3
-  maxUses: 15
+  maxUses: 5

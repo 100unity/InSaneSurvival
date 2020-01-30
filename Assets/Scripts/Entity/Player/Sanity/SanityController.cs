@@ -15,8 +15,15 @@ namespace Entity.Player.Sanity
         [SerializeField]
         private float insaneDamage;
 
-        [Tooltip("Handles the math and holds stats influencing the player's sanity.")]
+        [Tooltip("The name of the sanity sound.")]
         [SerializeField]
+        private string sanitySound;
+
+        [Tooltip("The sanity sound should start or stop playing when passed.")]
+        [SerializeField]
+        private int soundCap;
+
+        [Tooltip("Handles the math and holds stats influencing the player's sanity.")] [SerializeField]
         private SanityMath sanityMath;
 
         [Header("More positive impacts")]
@@ -24,11 +31,11 @@ namespace Entity.Player.Sanity
         [SerializeField]
         private float healMultiplier;
 
-        [Tooltip("The duration of the heal bonus in seconds.")]
-        [SerializeField]
+        [Tooltip("The duration of the heal bonus in seconds.")] [SerializeField]
         private float healBonusDuration;
 
-        [Tooltip("Stop any negative sanity changes caused by insufficient health, saturation, hydration when in range of a campfire.")]
+        [Tooltip(
+            "Stop any negative sanity changes caused by insufficient health, saturation, hydration when in range of a campfire.")]
         [SerializeField]
         private bool applyCampfireBonus;
 
@@ -38,16 +45,13 @@ namespace Entity.Player.Sanity
         [SerializeField]
         private float criticalFightTime;
 
-        [Tooltip("The malus for being in a fight for a certain time.")]
-        [SerializeField]
+        [Tooltip("The malus for being in a fight for a certain time.")] [SerializeField]
         private float fightMalus;
 
-        [Tooltip("The malus for being in a fight with friendly NPCs for a certain time.")]
-        [SerializeField]
+        [Tooltip("The malus for being in a fight with friendly NPCs for a certain time.")] [SerializeField]
         private float fightNonAggressivesMalus;
 
-        [Tooltip("The number of times to be hit to get a hit malus.")]
-        [SerializeField]
+        [Tooltip("The number of times to be hit to get a hit malus.")] [SerializeField]
         private int criticalHitCount;
 
         [Tooltip("The malus for being hit a certain number of times. (Kind of a \"long fight\" malus.)")]
@@ -56,30 +60,39 @@ namespace Entity.Player.Sanity
 
 
         private PlayerState _playerState;
+
         // for getting the target
         private AttackLogic _attackLogic;
 
         // depending on the player's needs build up to 1 or -1 for the next tick
         private float _needsTick;
+
         // for pausing any negative ticks caused by the player's needs
         private bool _pauseTick;
+
         // depending on events on the player build up a negative tick
         private float _eventTick;
+
         // the time the player has been in combat up until now
-        private float _fightTime; 
+        private float _fightTime;
         // (if you attack a hostile NPC but change targets to a friendly NPC just before criticalFightTime 
         // is reached, you'll get the fightNonAgressivesTick)
 
-        
+
         // the number of hits performed on the player
         private int _hitCounter;
+
         // whether heal bonus is currently active
         private bool _healBonus;
+
         // a timer counting up to stop deactivate the heal bonus after a certain time
         private float _healBonusStopTimer;
 
         // the enemy the player is currently in combat with (fighting/being hit)
         private EnemyController _enemy;
+
+        // the sanity sound is playing
+        private bool _isPlaying;
 
         private void Awake()
         {
@@ -89,7 +102,7 @@ namespace Entity.Player.Sanity
             OnSaturationUpdated(100);
             OnHydrationUpdated(100);
         }
-        
+
         private void OnEnable()
         {
             PlayerState.OnPlayerHealthUpdate += OnHealthUpdated;
@@ -149,24 +162,28 @@ namespace Entity.Player.Sanity
         }
 
         private void OnHealthUpdated(int health) => sanityMath.InfluenceSanityByStat(StatType.Health, health);
-        private void OnSaturationUpdated(int saturation) => sanityMath.InfluenceSanityByStat(StatType.Saturation, saturation);
-        private void OnHydrationUpdated(int hydration) => sanityMath.InfluenceSanityByStat(StatType.Hydration, hydration);
+
+        private void OnSaturationUpdated(int saturation) =>
+            sanityMath.InfluenceSanityByStat(StatType.Saturation, saturation);
+
+        private void OnHydrationUpdated(int hydration) =>
+            sanityMath.InfluenceSanityByStat(StatType.Hydration, hydration);
 
         /// <summary>
-        /// Depending on the player's needs (health, saturation, hydration), sum up a tick 
-        /// weighting the total change rate with <see cref="severity"/>. 
+        /// Depending on the player's needs (health, saturation, hydration), sum up a tick.
         /// Only sum up a positive tick if player doesn't have full sanity. Ticks are either
         /// positive or negative 1. If summed up tick, change player sanity.
         /// </summary>
         private void SumUpNeedsTick()
         {
-            _needsTick += sanityMath.GetCurrentChange();
+            _needsTick += sanityMath.GetCurrentChange() * Time.deltaTime;
             if (_playerState.Sanity == 100 && _needsTick > 0)
             {
                 // don't build up a positive tick value when sanity == 100
                 _needsTick = 0;
                 return;
             }
+
             if (_needsTick >= 1)
             {
                 Tick(1);
@@ -182,7 +199,8 @@ namespace Entity.Player.Sanity
         }
 
         /// <summary>
-        /// Tick sanity. If sanity == 0, decrease health.
+        /// Tick sanity. If sanity == 0, decrease health. 
+        /// Play sanity sound if sanity < <see cref="soundCap"/>.
         /// </summary>
         /// <param name="changeBy"></param>
         private void Tick(int changeBy)
@@ -190,16 +208,46 @@ namespace Entity.Player.Sanity
             // always apply changes if sanity > 0 or if positive change
             if (changeBy > 0 || _playerState.Sanity > 0)
             {
+                int oldSanity = _playerState.Sanity;
                 _playerState.ChangePlayerSanity(changeBy);
+                ManageSound(oldSanity, _playerState.Sanity);
                 return;
             }
+
             // affect health if sanity == 0
             if (_playerState.Sanity == 0)
-            {
                 _playerState.ChangePlayerHealth((int) (changeBy * insaneDamage));
+        }
+
+        /// <summary>
+        /// Start sanity sound, if sanity goes below sound cap.
+        /// Stop it, if sanity goes above sound cap.
+        /// </summary>
+        /// <param name="oldSanity">The sanity before the tick.</param>
+        /// <param name="newSanity">The sanity including the new tick.</param>
+        private void ManageSound(int oldSanity, int newSanity)
+        {
+            bool canDeactivate = false, canActivate = false;
+
+            // sanity is growing and sanity sound plays
+            if (oldSanity < newSanity && _isPlaying)
+                canDeactivate = true;
+            // sanity is dropping and sanity sound does not play
+            else if (oldSanity > newSanity && !_isPlaying)
+                canActivate = true;
+
+            if (canDeactivate && _playerState.Sanity >= soundCap)
+            {
+                AudioManager.Instance.FadeOut(sanitySound, 10);
+                _isPlaying = false;
+            }
+            else if (canActivate && _playerState.Sanity <= soundCap)
+            {
+                AudioManager.Instance.FadeIn(sanitySound, 10);
+                _isPlaying = true;
             }
         }
-		
+
         /// <summary>
         /// Check if this entity performed the attack.
         /// </summary>
@@ -215,8 +263,8 @@ namespace Entity.Player.Sanity
         /// </summary>
         private void OnAttackPerformed()
         {
-            if (_attackLogic.lastAttacked != null)
-                _enemy = _attackLogic.lastAttacked;
+            if (_attackLogic.LastAttacked != null)
+                _enemy = _attackLogic.LastAttacked;
         }
 
         /// <summary>
@@ -263,7 +311,7 @@ namespace Entity.Player.Sanity
         {
             if (!_healBonus)
             {
-                sanityMath.GainFactor = sanityMath.GainFactor * healMultiplier;
+                sanityMath.GainFactor *= healMultiplier;
                 _healBonus = true;
             }
         }
@@ -288,7 +336,7 @@ namespace Entity.Player.Sanity
         /// </summary>
         private void CheckCampfireRange()
         {
-            _pauseTick = CraftingManager.Instance.HasCraftingStation(CraftingManager.CraftingStation.Fire);
+            _pauseTick = CraftingManager.Instance.HasCraftingStation(CraftingManager.CraftingStation.Campfire);
         }
     }
 }

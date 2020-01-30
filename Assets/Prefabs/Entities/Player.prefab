@@ -225,8 +225,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   insaneDamage: 6
+  sanitySound: sanity_noise
+  soundCap: 27
   sanityMath:
-    severity: 0.00006
+    severity: 0.0012
     lowImpactSeverity: 0.4
     gainFactor: 0.1
     stats:
@@ -262,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f255a6bff1a27d4fba7d93be05bb0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickProbability: 0.06
+  tickProbability: 0.6
   saturationTick: 0.04
   hydrationTick: 0.014
   healthDecreaseScale: 2.5
@@ -296,7 +298,7 @@ MonoBehaviour:
     m_Bits: 524545
   clickEffect: {fileID: 3687566934736743005, guid: 303d5b1eeeba949aca04be0bec872f12,
     type: 3}
-  cameraRotationSpeed: 0.3
+  cameraRotationSpeed: 0.05
   invertRotation: 1
   cameraDistance: {x: 7, y: 3}
   cameraDistanceRange:
@@ -614,11 +616,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
-    - target: {fileID: 6175961162185614715, guid: 9df5d19eb07a9804a96f230bf905b704,
-        type: 3}
-      propertyPath: m_Name
-      value: CraftingUI
-      objectReference: {fileID: 0}
     - target: {fileID: 4065175225237497898, guid: 9df5d19eb07a9804a96f230bf905b704,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -723,6 +720,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175961162185614715, guid: 9df5d19eb07a9804a96f230bf905b704,
+        type: 3}
+      propertyPath: m_Name
+      value: CraftingUI
       objectReference: {fileID: 0}
     - target: {fileID: 1358884243312397464, guid: 9df5d19eb07a9804a96f230bf905b704,
         type: 3}
@@ -889,11 +891,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
-    - target: {fileID: 6367347880368899950, guid: d04fb0230baa9d84fb848b4b92f33456,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerGUI
-      objectReference: {fileID: 0}
     - target: {fileID: 6367347880368899858, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -999,6 +996,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6367347880368899950, guid: d04fb0230baa9d84fb848b4b92f33456,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerGUI
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d04fb0230baa9d84fb848b4b92f33456, type: 3}
 --- !u!224 &784861889176494528 stripped
@@ -1014,11 +1016,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
-    - target: {fileID: 1757607776424889163, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
-        type: 3}
-      propertyPath: m_Name
-      value: SpeechBubble
-      objectReference: {fileID: 0}
     - target: {fileID: 1385837920800683127, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1124,6 +1121,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1757607776424889163, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
+        type: 3}
+      propertyPath: m_Name
+      value: SpeechBubble
+      objectReference: {fileID: 0}
     - target: {fileID: 2396523189984196907, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
         type: 3}
       propertyPath: playerController
@@ -1144,11 +1146,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
-    - target: {fileID: 8925312529435403638, guid: 5a222cef04b644d79853525c21650fe3,
-        type: 3}
-      propertyPath: m_Name
-      value: WearingIndicator
-      objectReference: {fileID: 0}
     - target: {fileID: 6851690105828889913, guid: 5a222cef04b644d79853525c21650fe3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1253,6 +1250,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925312529435403638, guid: 5a222cef04b644d79853525c21650fe3,
+        type: 3}
+      propertyPath: m_Name
+      value: WearingIndicator
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a222cef04b644d79853525c21650fe3, type: 3}

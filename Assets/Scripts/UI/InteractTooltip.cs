@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Constants;
+using UnityEngine.EventSystems;
 
 namespace UI
 {
@@ -61,6 +62,7 @@ namespace UI
         private int iconOffset;
 
         [Tooltip("Cursor sprite when interaction with the object (texture must be a Cursor in import settings)")]
+        [SerializeField]
         private Texture2D mouseCursor;
 
         // Reference Components
@@ -122,6 +124,7 @@ namespace UI
         /// </summary>
         private void Update()
         {
+            
             if (_over && _t < 1f)
             {
                 // Fade in highlight color
@@ -148,7 +151,11 @@ namespace UI
         // Called when mouse over this object
         private void OnMouseEnter()
         {
-            ShowTooltip();
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+            else
+            {
+                ShowTooltip();
+            }
         }
 
         // Called when mouse exit this object

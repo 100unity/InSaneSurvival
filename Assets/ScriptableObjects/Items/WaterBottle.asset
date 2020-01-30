@@ -19,3 +19,4 @@ MonoBehaviour:
   healthValue: 0
   saturationValue: 0
   hydrationValue: 10
+  soundOnUse: uiDrink

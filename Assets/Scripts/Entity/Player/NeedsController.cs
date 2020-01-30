@@ -1,6 +1,4 @@
 ﻿using AbstractClasses;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -13,31 +11,28 @@ namespace Entity.Player
     {
         public delegate void PlayerStateChanged(int newValue);
 
-        [Tooltip("The probability in each frame to add up ticks for saturation and hydration.")]
-        [SerializeField]
+        [Tooltip("The probability in each frame to add up ticks for saturation and hydration.")] [SerializeField]
         private float tickProbability;
 
-        [Tooltip("The tick size that is added up for saturation.")]
-        [SerializeField]
+        [Tooltip("The tick size that is added up for saturation.")] [SerializeField]
         private float saturationTick;
 
-        [Tooltip("The tick size that is added up for hydration.")]
-        [SerializeField]
+        [Tooltip("The tick size that is added up for hydration.")] [SerializeField]
         private float hydrationTick;
 
-        [Tooltip("A factor that scales the need tick and applies it on the player's health if the value of the need is at 0.")]
+        [Tooltip(
+            "A factor that scales the need tick and applies it on the player's health if the value of the need is at 0.")]
         [SerializeField]
         private float healthDecreaseScale;
 
-        [Tooltip("A number that scales the saturation tick if moving.")]
-        [SerializeField]
+        [Tooltip("A number that scales the saturation tick if moving.")] [SerializeField]
         private float moveMalusSaturation;
 
-        [Tooltip("A number that scales the hydration tick if moving.")]
-        [SerializeField]
+        [Tooltip("A number that scales the hydration tick if moving.")] [SerializeField]
         private float moveMalusHydration;
 
-        [Tooltip("A number that scales saturation and hydration tick if moving for a certain time. Is applied on top of the normal move mali.")]
+        [Tooltip(
+            "A number that scales saturation and hydration tick if moving for a certain time. Is applied on top of the normal move mali.")]
         [SerializeField]
         private float longMoveMalus;
 
@@ -87,10 +82,10 @@ namespace Entity.Player
         /// </summary>
         private void TickAll()
         {
-            if (_probability.GetProbability(tickProbability))
+            if (_probability.GetProbability(tickProbability * Time.deltaTime))
             {
                 ScaleTick();
-                
+
                 if (_nextSaturationTick >= 1)
                 {
                     int saturationChange = GetNegativeChange(ref _nextSaturationTick);
@@ -118,7 +113,7 @@ namespace Entity.Player
         /// <returns>The change to be applied to the character need. Is probably 1.</returns>
         private int GetNegativeChange(ref float nextTick)
         {
-            int changeBy = (int)nextTick;
+            int changeBy = (int) nextTick;
             nextTick -= changeBy;
             return -changeBy;
         }
@@ -149,9 +144,9 @@ namespace Entity.Player
                 scaledSaturationTick *= fightMalusSaturation;
                 scaledHydrationTick *= fightMalusHydration;
             }
+
             _nextSaturationTick += scaledSaturationTick;
             _nextHydrationTick += scaledHydrationTick;
         }
     }
 }
-

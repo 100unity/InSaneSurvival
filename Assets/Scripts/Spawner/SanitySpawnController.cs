@@ -54,7 +54,7 @@ namespace Spawner
         {
             // calculate despawn probability
             float despawnProbability = probabilityScaleCurve.Evaluate(1 - _sanity) * despawnDimensionScale;
-            if (_probability.GetProbability(despawnProbability))
+            if (_probability.GetProbability(despawnProbability * Time.deltaTime))
             {
                 Destroy(_spawned.First().Value);
                 _spawned.Remove(_spawned.First().Key);

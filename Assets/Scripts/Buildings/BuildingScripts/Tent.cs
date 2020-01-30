@@ -1,4 +1,6 @@
-﻿using Managers;
+﻿using Constants;
+using Entity.Player;
+using Managers;
 using UnityEngine;
 
 namespace Buildings.BuildingScripts
@@ -14,13 +16,23 @@ namespace Buildings.BuildingScripts
         [Tooltip("The animation duration for the animation. Used by animation... Animation")] [SerializeField]
         private float animationTime;
 
+        private PlayerController _playerController;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _playerController = PlayerManager.Instance.GetPlayerController();
+        }
+
         /// <summary>
         /// Changes the time of the day to the specified one using the <see cref="DayNightManager"/>.
         /// </summary>
-        public override void Interact()
+        protected override void OnInteract()
         {
-            base.Interact();
-            DayNightManager.Instance.SetDayTimeWithAnimation(newTime, animationTime);
+            _playerController.SetAnimationBool(Consts.Animation.SLEEP_BOOL, true);
+            SaveManager.Save("");
+            DayNightManager.Instance.SetDayTimeWithAnimation(newTime, animationTime,
+                () => _playerController.SetAnimationBool(Consts.Animation.SLEEP_BOOL, false));
         }
     }
 }

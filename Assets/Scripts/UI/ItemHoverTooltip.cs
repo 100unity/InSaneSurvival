@@ -46,8 +46,8 @@ namespace UI
                 txtTitle.SetText(itemButton.Item.ItemName);
                 txtDescription.SetText(itemButton.Item.Description);
                 // If the item is an equipable, update the condition.
-                if (itemButton.Item is Equipable equipable)
-                    equipable.OnUsesChange += UsesChanged;
+                if (itemButton.Item is Equipable)
+                    itemButton.OnUsesChange += UsesChanged;
                 else
                     txtCondition.gameObject.SetActive(false);
             });
