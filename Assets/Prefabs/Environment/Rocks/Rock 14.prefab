@@ -65,7 +65,7 @@ MonoBehaviour:
   maxScale: 0.76
   drops:
   - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
-    amount: 1
+    amount: 2
   gatherTime: 3
   destroyAfterHarvest: 1
   respawnTime: 0
