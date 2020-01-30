@@ -45,34 +45,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 4d6a697a2fdc0c641b4a563f0ac3d02b, type: 3}
---- !u!114 &3484855007767550776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8498112712641304546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9cbd8b7d984b444f90f466cb8349d50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 1
-  isFocus: 0
-  hasInteracted: 0
-  player: {fileID: 0}
-  checkScale: 1
-  maxScale: 0.8
-  drops:
-  - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
-    amount: 1
-  gatherTime: 3
-  destroyAfterHarvest: 1
-  respawnTime: 0
-  replacement: {fileID: 0}
-  neededAbility: 1
-  isRespawning: 0
-  respawnTimePassed: 0
 --- !u!114 &1496065079958202541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +71,34 @@ MonoBehaviour:
   iconSize: 40
   iconOffset: 25
   mouseCursor: {fileID: 2800000, guid: 58a97f527b2703a48a52be6cfdc5b6fa, type: 3}
+--- !u!114 &3484855007767550776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498112712641304546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cbd8b7d984b444f90f466cb8349d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  isFocus: 0
+  hasInteracted: 0
+  player: {fileID: 0}
+  checkScale: 1
+  maxScale: 0.8
+  drops:
+  - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
+    amount: 2
+  gatherTime: 3
+  destroyAfterHarvest: 1
+  respawnTime: 0
+  replacement: {fileID: 0}
+  neededAbility: 1
+  isRespawning: 0
+  respawnTimePassed: 0
 --- !u!1001 &8498112712641270082
 PrefabInstance:
   m_ObjectHideFlags: 0

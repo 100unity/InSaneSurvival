@@ -143,12 +143,14 @@ MonoBehaviour:
   isFocus: 0
   hasInteracted: 0
   player: {fileID: 0}
+  checkScale: 0
+  maxScale: 0
   drops:
   - item: {fileID: 11400000, guid: 159d045c2c4a0d644b74b0b11dc22f2c, type: 2}
-    amount: 2
+    amount: 3
   gatherTime: 2
   destroyAfterHarvest: 0
-  respawnTime: 5
+  respawnTime: 300
   replacement: {fileID: 3181237105950869100}
   neededAbility: 2
   isRespawning: 0

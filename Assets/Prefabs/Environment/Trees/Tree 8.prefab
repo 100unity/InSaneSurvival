@@ -61,12 +61,14 @@ MonoBehaviour:
   isFocus: 0
   hasInteracted: 0
   player: {fileID: 0}
+  checkScale: 0
+  maxScale: 0
   drops:
   - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
-    amount: 4
+    amount: 2
   gatherTime: 4
   destroyAfterHarvest: 0
-  respawnTime: 60
+  respawnTime: 600
   replacement: {fileID: 1178476983656562848}
   neededAbility: 0
   isRespawning: 0
@@ -235,6 +237,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: b56c09ab3e7ead14c9314cefb708a1bd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5529063085702620079, guid: b56c09ab3e7ead14c9314cefb708a1bd,
         type: 3}
       propertyPath: m_RootOrder
@@ -244,10 +250,6 @@ PrefabInstance:
         type: 3}
       propertyPath: radius
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: b56c09ab3e7ead14c9314cefb708a1bd, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b56c09ab3e7ead14c9314cefb708a1bd, type: 3}

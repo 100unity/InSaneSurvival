@@ -151,6 +151,12 @@ namespace Inventory.UI
         /// <returns>True: Swaps the elements, False: Stacks them</returns>
         private bool Stack(Swappable otherSwappable)
         {
+            if (otherSwappable.TryGetComponent(out Trash _))
+            {
+                InventoryManager.Instance.RemoveItemButton(this);
+                return false;
+            }
+
             // If full stack or not an itemButton, skip
             if (!otherSwappable.TryGetComponent(out Stackable otherStackable) ||
                 !otherStackable.ItemButton.CanAddOne() || !CanAddOne())

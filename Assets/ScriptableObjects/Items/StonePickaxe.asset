@@ -18,4 +18,4 @@ MonoBehaviour:
   description: Defenitely not what a dwarf would mine with.
   equipableAbility: 2
   damageBoost: 1
-  maxUses: 4
+  maxUses: 10

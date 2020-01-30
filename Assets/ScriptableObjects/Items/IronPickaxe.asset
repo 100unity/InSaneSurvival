@@ -19,4 +19,4 @@ MonoBehaviour:
     made of iron.
   equipableAbility: 2
   damageBoost: 1
-  maxUses: 10
+  maxUses: 50
