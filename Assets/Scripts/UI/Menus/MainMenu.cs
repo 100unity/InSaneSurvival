@@ -86,7 +86,7 @@ namespace UI.Menus
         /// </summary>
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            SaveManager.Instance.Load(saveGameFile);
+            SaveManager.Load(saveGameFile);
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }

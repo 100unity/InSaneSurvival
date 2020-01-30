@@ -92,7 +92,7 @@ Material:
     - _FoamDist: 0.107
     - _Frequency: 10
     - _GlossMapScale: 0.131
-    - _Glossiness: 0.8
+    - _Glossiness: 0.6
     - _GlossyReflections: 0
     - _HeightFactor: 0.38
     - _HeightStart: 4.23
@@ -118,7 +118,7 @@ Material:
     - _WaveSpeed: 0.01
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.17969386, g: 0.48717004, b: 0.587, a: 0.8509804}
+    - _Color: {r: 0.17969386, g: 0.48717004, b: 0.587, a: 0.8627451}
     - _EmissionColor: {r: 0.0625, g: 0.0625, b: 0.0625, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}

@@ -1,4 +1,5 @@
-﻿using AbstractClasses;
+﻿using System;
+using AbstractClasses;
 using Entity.Enemy;
 using Inventory;
 using Remote;
@@ -71,6 +72,12 @@ namespace Entity.Player
                 hydration = value;
                 OnPlayerHydrationUpdate?.Invoke(value);
             }
+        }
+
+        private void OnValidate()
+        {
+            if(Application.isPlaying)
+                OnPlayerSanityUpdate?.Invoke(sanity);
         }
 
         private void OnEnable()
