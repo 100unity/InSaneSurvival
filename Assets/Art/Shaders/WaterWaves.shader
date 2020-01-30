@@ -8,8 +8,8 @@
         _Metallic ("Metallic", Range(0,1)) = 0.0
         
         //Custom
-        _Frequency ("Frequency", Float) = 0.1
-        _Power("Power - High and low of wave", Float) = 1
+        _Frequency ("Frequency - Speed of WaveMovement", Float) = 0.1
+        _Power("Power - Height of Wave", Float) = 1
         
     }
     SubShader
@@ -38,7 +38,6 @@
         half _Metallic;
         fixed4 _Color;
         
-        float _Scale;
         float _Frequency;
         float _Power;
 
@@ -49,6 +48,7 @@
             // put more per-instance properties here
         UNITY_INSTANCING_BUFFER_END(Props)
         
+        // See https://forum.unity.com/threads/generate-random-float-between-0-and-1-in-shader.610810/
         float random (float2 uv)
         {
             return frac(sin(dot(uv,float2(12.9898,78.233)))*43758.5453123);
@@ -57,9 +57,9 @@
         void vert(inout appdata_full vertexData) 
         {
             float3 pos = vertexData.vertex.xyz;
+            float newHeight = pos.x * pos.z * random(float2(pos.x, pos.y)) - _Time * _Frequency;
+            pos.y = (sin(newHeight) + 1) * _Power;
            
-           pos.y = sin(pos.x * pos.z * random(float2(pos.x, pos.y)) - _Time * _Frequency) * _Power;
-            
            vertexData.vertex.xyz = pos;
         }
         
