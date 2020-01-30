@@ -13,6 +13,14 @@ namespace Interactables
     [System.Serializable]
     public class Harvestable : Interactable
     {
+        [Tooltip("Whether the scale should be checked.")]
+        [SerializeField]
+        private bool checkScale;
+
+        [Tooltip("The maximum scale of the item in order to be gatherable.")]
+        [SerializeField]
+        private float maxScale;
+
         [Tooltip("The items being dropped on a successful harvest.")] [SerializeField]
         private List<ItemResourceData> drops;
 
@@ -33,6 +41,8 @@ namespace Interactables
 
         [SerializeField] [HideInInspector] protected bool isRespawning;
         [SerializeField] [HideInInspector] protected double respawnTimePassed;
+        
+        private bool _notGatherable;
 
         protected GameObject Parent;
         protected Camera MainCam;
@@ -50,6 +60,10 @@ namespace Interactables
             OwnCollider = GetComponent<Collider>();
             _ownMeshRenderer = GetComponent<MeshRenderer>();
             _playerController = PlayerManager.Instance.GetPlayerController();
+
+            // if scale should be checked, set _notGatherable
+            if (checkScale)
+                _notGatherable = transform.localScale.x > maxScale || transform.localScale.y > maxScale || transform.localScale.z > maxScale;
 
             if (destroyAfterHarvest)
                 Parent = transform.parent.gameObject;
@@ -80,6 +94,9 @@ namespace Interactables
         public override void Interact()
         {
             Equipable equipped = InventoryManager.Instance.CurrentlyEquippedItem;
+
+            if (_notGatherable)
+                return;
 
             if (neededAbility == Equipable.EquipableAbility.None ||
                 equipped != null && equipped.HasAbility(neededAbility))
