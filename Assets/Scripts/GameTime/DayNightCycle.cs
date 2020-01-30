@@ -22,6 +22,14 @@ namespace GameTime
         [SerializeField] [Tooltip("tilt of the sun (and moon)")] [Range(-45f, 45f)]
         private float tilt; // could vary depending seasons in the future
 
+        [SerializeField] [Tooltip("A gradient that changes the fog color depending of day time")]
+        private Gradient fogColor;
+
+        [SerializeField]
+        [Tooltip("An offset that will be applied to the intensity of the sun and it's angle, " +
+                 "which will increase/decrease the duration that it will shine light")]
+        private float sunIntensityOffset;
+
         private float _intensity;
 
         private void Update()
@@ -45,7 +53,7 @@ namespace GameTime
         /// </summary>
         private void SunIntensity()
         {
-            _intensity = Mathf.Clamp01(Vector3.Dot(sunLight.transform.forward, Vector3.down));
+            _intensity = Mathf.Clamp01(Vector3.Dot(sunLight.transform.forward, Vector3.down) + sunIntensityOffset);
 
             sunLight.intensity = _intensity + sunBaseIntensity;
         }
@@ -56,6 +64,7 @@ namespace GameTime
         private void AdjustSunColor()
         {
             sunLight.color = sunColor.Evaluate(_intensity);
+            RenderSettings.fogColor = fogColor.Evaluate(clock.TimeOfDay);
         }
     }
 }
