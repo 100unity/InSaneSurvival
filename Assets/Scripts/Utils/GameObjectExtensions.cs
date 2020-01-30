@@ -8,6 +8,12 @@ namespace Utils
 {
     public static class GameObjectExtensions
     {
+        /// <summary>
+        /// Get a pseudo-unique ID for a game object. Uses the object's transform and the
+        /// scene it is in to calculate a hash which can be used to identify the object.
+        /// </summary>
+        /// <param name="gameObject">The game object to get the ID for</param>
+        /// <returns>A pseudo-unique string ID</returns>
         public static string GetId(this GameObject gameObject)
         {
             Transform transform = gameObject.transform;
