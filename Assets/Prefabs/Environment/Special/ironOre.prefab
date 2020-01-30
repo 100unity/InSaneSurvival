@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4136407321520853068}
   - component: {fileID: 3680995572555735096}
   - component: {fileID: 7151350299627964319}
+  - component: {fileID: 790942897692435731}
   m_Layer: 0
   m_Name: ironOre
   m_TagString: Untagged
@@ -112,16 +113,44 @@ MonoBehaviour:
   isFocus: 0
   hasInteracted: 0
   player: {fileID: 0}
+  checkScale: 0
+  maxScale: 0
   drops:
   - item: {fileID: 11400000, guid: f144e69106a98f647b57e29ab30134e1, type: 2}
-    amount: 3
+    amount: 1
   gatherTime: 4
   destroyAfterHarvest: 0
-  respawnTime: 300
+  respawnTime: 600
   replacement: {fileID: 1907664404541925046}
-  neededAbility: 0
+  neededAbility: 1
   isRespawning: 0
   respawnTimePassed: 0
+--- !u!114 &790942897692435731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2403706723660555408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 1
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 1
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 0}
+  iconSize: 30
+  iconOffset: 30
+  mouseCursor: {fileID: 2800000, guid: 58a97f527b2703a48a52be6cfdc5b6fa, type: 3}
 --- !u!1001 &8961548885124559260
 PrefabInstance:
   m_ObjectHideFlags: 0

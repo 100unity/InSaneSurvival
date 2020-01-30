@@ -18,4 +18,4 @@ MonoBehaviour:
   description: A pathetic axe that probably breaks from looking at it.
   equipableAbility: 1
   damageBoost: 2
-  maxUses: 4
+  maxUses: 10

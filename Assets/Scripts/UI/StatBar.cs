@@ -43,7 +43,7 @@ namespace UI
     
         private void ChangeBarAnimation(int newValue, int oldValue)
         {
-            if (newValue > oldValue)
+            if (newValue >= oldValue)
             {
                 //_animator = gameObject.GetComponent<Animator>();
                 if (_animator != null)

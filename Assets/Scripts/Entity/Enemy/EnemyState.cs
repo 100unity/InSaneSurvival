@@ -39,11 +39,8 @@ namespace Entity.Enemy
                 Regenerate();
         }
 
-        public override void Die()
+        protected override void OnDeath()
         {
-            if (IsDead)
-                return;
-
             if (_attackLogic)
                 _attackLogic.enabled = false;
             Destroy(gameObject, 5f);
@@ -53,8 +50,7 @@ namespace Entity.Enemy
                     for (int i = 0; i < resourceData.amount; i++)
                         InventoryManager.Instance.AddItem(resourceData.item);
             });
-
-            base.Die();
+            base.OnDeath();
         }
 
         /// <summary>

@@ -145,6 +145,7 @@ namespace UI
         // Called when mouse over this object
         private void OnMouseEnter()
         {
+            if (!enabled) return;
             if (EventSystem.current.IsPointerOverGameObject()) return;
             else
             {

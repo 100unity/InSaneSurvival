@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa35902a700a3c4fa0f8326cfd2b2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 23
+  damage: 10
   attackRange: 4.5
   stoppingOffset: 2.3
   attackTime: 1.5
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8134761728789001844}
-  health: 40
+  health: 35
   regenerationCurve:
     serializedVersion: 2
     m_Curve:

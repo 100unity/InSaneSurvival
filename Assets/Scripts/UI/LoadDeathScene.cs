@@ -4,7 +4,6 @@ using Entity.Player;
 using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -13,7 +12,7 @@ namespace UI
     {
         [SerializeField] [Tooltip("White overlay that fades in")]
         private GameObject overlay;
-        
+
         private void Awake()
         {
             PlayerState.OnPlayerDeath += LoadScene;
@@ -28,6 +27,8 @@ namespace UI
         // Fades in the white overlay and when finished loads "DeathScene"
         private IEnumerator FadeThenLoad(float fadeDuration, Image elementToFade)
         {
+            PlayerState.OnPlayerDeath -= LoadScene;
+
             Color color = elementToFade.color;
             float currentTime = 0f;
 
@@ -45,9 +46,8 @@ namespace UI
 
             FadeOutAmbientSound();
             Load();
-            PlayerState.OnPlayerDeath -= LoadScene;
         }
-        
+
         // loads "DeathScene"
         private void Load()
         {

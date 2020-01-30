@@ -102,7 +102,7 @@ Material:
     - _OcclusionStrength: 1
     - _Opacity: 1
     - _Parallax: 0.02
-    - _Power: 2
+    - _Power: 1.5
     - _Reflection: 0
     - _Scale: 1
     - _Smoothness: 0

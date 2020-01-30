@@ -11,7 +11,7 @@ namespace Entity.Player
     {
         public delegate void PlayerStateChanged(int newValue);
 
-        [Tooltip("The probability in each frame to add up ticks for saturation and hydration.")] [SerializeField]
+        [Tooltip("The probability per second to add up ticks for saturation and hydration.")] [SerializeField]
         private float tickProbability;
 
         [Tooltip("The tick size that is added up for saturation.")] [SerializeField]

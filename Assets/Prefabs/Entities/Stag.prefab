@@ -178,7 +178,7 @@ MonoBehaviour:
   graphicsRenderer: {fileID: 1048219366177768972}
   itemDrops:
   - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
-    amount: 1
+    amount: 2
 --- !u!114 &629533310
 MonoBehaviour:
   m_ObjectHideFlags: 0

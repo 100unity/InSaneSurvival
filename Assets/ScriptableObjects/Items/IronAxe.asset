@@ -18,4 +18,4 @@ MonoBehaviour:
   description: A trustworthy Axe only a king would wield.
   equipableAbility: 1
   damageBoost: 2
-  maxUses: 10
+  maxUses: 50

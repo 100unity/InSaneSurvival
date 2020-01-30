@@ -62,3 +62,4 @@ MonoBehaviour:
   wood: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
   stone: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
   iron: {fileID: 11400000, guid: f144e69106a98f647b57e29ab30134e1, type: 2}
+  wool: {fileID: 11400000, guid: 8e4b1ba039a7f0849b8ea176ed127654, type: 2}

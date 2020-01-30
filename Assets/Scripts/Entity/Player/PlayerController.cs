@@ -229,7 +229,8 @@ namespace Entity.Player
                 return;
             }
 
-            _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * (invertRotation ? -1 : 1);
+            _cameraAngleX += obj.ReadValue<float>() * cameraRotationSpeed * OptionsMenu.MouseSensitivity *
+                             (invertRotation ? -1 : 1);
             UpdateCameraAngle();
         }
 

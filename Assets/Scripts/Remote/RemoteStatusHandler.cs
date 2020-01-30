@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Text;
 using Entity.Player;
 using Managers;
 using UnityEngine;
@@ -9,8 +10,6 @@ namespace Remote
     public class RemoteStatusHandler : MonoBehaviour
     {
         public delegate void PlayerStateChanged(int newValue);
-
-        public delegate void GameTimeChanged(float newTime);
 
         private TcpClient _client;
         private NetworkStream _stream;
@@ -45,17 +44,13 @@ namespace Remote
         private void Start()
         {
             if (use)
-            {
                 Connect(ip);
-            }
         }
 
         private void OnDestroy()
         {
             if (use)
-            {
                 Disconnect();
-            }
         }
 
         //server connection
@@ -64,7 +59,6 @@ namespace Remote
             try
             {
                 _client = new TcpClient(server, port);
-
                 _stream = _client.GetStream();
 
                 while (_client.Connected)
@@ -73,7 +67,7 @@ namespace Remote
                     int read = await _stream.ReadAsync(buffer, 0, buffer.Length);
                     if (read > 0)
                     {
-                        string responseData = System.Text.Encoding.ASCII.GetString(buffer, 0, read);
+                        string responseData = Encoding.ASCII.GetString(buffer, 0, read);
                         MessageReceived(responseData);
                     }
                 }
@@ -87,9 +81,9 @@ namespace Remote
 
         private void SendString(string message)
         {
-            if (use)
+            if (use && _client?.Connected == true)
             {
-                byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+                byte[] data = Encoding.ASCII.GetBytes(message);
                 _stream.Write(data, 0, data.Length);
             }
         }
