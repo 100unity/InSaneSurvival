@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8828110359721887709}
   - component: {fileID: 3073224466352823853}
   - component: {fileID: 6272855778106688420}
+  - component: {fileID: 7673735912579004042}
   m_Layer: 0
   m_Name: Plant Green 3
   m_TagString: Untagged
@@ -152,6 +153,32 @@ MonoBehaviour:
   neededAbility: 2
   isRespawning: 0
   respawnTimePassed: 0
+--- !u!114 &7673735912579004042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8828110359719696669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 0
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 20
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 0}
+  iconSize: 25
+  iconOffset: 0
+  mouseCursor: {fileID: 2800000, guid: e0633232b16a5f944a4affd7c9a44e1d, type: 3}
 --- !u!1001 &8535139058457430021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -219,6 +246,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7036727485350048377, guid: 989dbb4bb13f2e44898fc84a3c852283,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4785135656706161333, guid: 989dbb4bb13f2e44898fc84a3c852283,
         type: 3}
       propertyPath: m_Enabled
@@ -227,11 +259,6 @@ PrefabInstance:
     - target: {fileID: 4785135656706161333, guid: 989dbb4bb13f2e44898fc84a3c852283,
         type: 3}
       propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7036727485350048377, guid: 989dbb4bb13f2e44898fc84a3c852283,
-        type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

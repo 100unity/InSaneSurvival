@@ -144,9 +144,10 @@ MonoBehaviour:
   tooltipSize: 1
   tooltipFont: {fileID: 0}
   tooltipAlignment: 0
-  interactIcon: {fileID: 2800000, guid: 1e26e85a575ab744bae883b76425b1d0, type: 3}
+  interactIcon: {fileID: 0}
   iconSize: 40
   iconOffset: 25
+  mouseCursor: {fileID: 2800000, guid: dfd1ebb9afa91404b8fc0d2af6df5d1d, type: 3}
 --- !u!1 &9136285602905049077
 GameObject:
   m_ObjectHideFlags: 0
