@@ -46,11 +46,11 @@ namespace Managers
 
                 //get all harvestables
                 Harvestable[] harvestables = FindObjectsOfType<Harvestable>();
-                List<SavedHarvestable> sh = harvestables.Select(h => new SavedHarvestable
+                List<SavedHarvestable> savedHarvestables = harvestables.Select(harvestable => new SavedHarvestable
                 {
-                    id = h.gameObject.GetId(),
-                    isRespawning = h.IsRespawning,
-                    respawnTimePassed = h.RespawnTimePassed
+                    id = harvestable.gameObject.GetId(),
+                    isRespawning = harvestable.IsRespawning,
+                    respawnTimePassed = harvestable.RespawnTimePassed
                 }).ToList();
 
                 // build a JSON-Object
@@ -63,9 +63,9 @@ namespace Managers
                 save.buildVersion = Application.version;
 
                 save.campsites = new List<SavedCampsite>();
-                campsites.ForEach(c =>
+                campsites.ForEach(campsite =>
                 {
-                    List<SavedBlueprint> blueprints = c.buildingBlueprints.Select(b => new SavedBlueprint
+                    List<SavedBlueprint> blueprints = campsite.buildingBlueprints.Select(b => new SavedBlueprint
                     {
                         blueprintId = b.gameObject.GetId(),
                         buildingId = b.Building.gameObject.GetId(),
@@ -74,13 +74,13 @@ namespace Managers
                     }).ToList();
                     save.campsites.Add(new SavedCampsite
                     {
-                        id = c.gameObject.GetId(),
-                        isUnlocked = c.IsUnlocked,
+                        id = campsite.gameObject.GetId(),
+                        isUnlocked = campsite.IsUnlocked,
                         blueprints = blueprints
                     });
                 });
 
-                save.harvestables = sh;
+                save.harvestables = savedHarvestables;
 
                 Write(save, fileName);
             }
