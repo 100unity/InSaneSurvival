@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Managers;
 using UnityEngine;
 using Utils;
 
@@ -40,7 +39,7 @@ namespace Inventory
 
         /// <summary>
         /// Get all abilities from the MultiSelect (if null) and
-        /// checks if this item has the given ability
+        /// checks if this item has the given abilityi
         /// </summary>
         /// <param name="ability">The ability to check</param>
         /// <returns>Whether it has the given ability or not</returns>

@@ -130,8 +130,8 @@ namespace Entity.Player
             _controls.PlayerControls.RotateCamera.performed += RotateCamera;
             _controls.PlayerControls.Zoom.performed += Zoom;
             _controls.PlayerControls.Pause.performed += TogglePause;
-            _controls.PlayerControls.Inventory.performed += ctx => UIManager.Instance.InventoryUI.ToggleInventory();
-            _controls.PlayerControls.Crafting.performed += ToggleCrafting;
+            _controls.PlayerControls.Inventory.performed += ctx => UIManager.Instance.ShowInventory();
+            _controls.PlayerControls.Crafting.performed += ctx => UIManager.Instance.ShowCrafting();
 
             _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
@@ -238,11 +238,6 @@ namespace Entity.Player
         /// Allows the player to zoom in and out
         /// </summary>
         private void Zoom(InputAction.CallbackContext obj) => UpdateCameraAngle(obj.ReadValue<float>());
-
-        /// <summary>
-        /// Shows/Hides the crafting menu
-        /// </summary>
-        private void ToggleCrafting(InputAction.CallbackContext obj) => UIManager.Instance.CraftingUI.Toggle();
 
         /// <summary>
         /// Sets the distance of the camera to the player
