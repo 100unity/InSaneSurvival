@@ -4,28 +4,29 @@ namespace Interactables
 {
     public abstract class Interactable : MonoBehaviour
     {
-        [Tooltip("The radius around the object that stops character going inside it")]
-        [SerializeField] private float radius;
+        [Tooltip("The radius around the object that stops character going inside it")] [SerializeField]
+        private float radius;
 
         public float Radius => radius;
 
         public void SetRadius(float value) => radius = value;
 
-        [Tooltip("Is this interactable currently being focused?")]
-        [SerializeField] private bool isFocus;
+        [Tooltip("Is this interactable currently being focused?")] [SerializeField]
+        private bool isFocus;
 
-        [Tooltip("Have we already interacted with the object?")]
-        [SerializeField] private bool hasInteracted;
+        [Tooltip("Have we already interacted with the object?")] [SerializeField]
+        private bool hasInteracted;
 
         public bool HasInteracted => hasInteracted;
 
-        [SerializeField] private Transform player;    // Reference to the player transform
+        [SerializeField] private Transform player; // Reference to the player transform
 
         private Vector3 Position => transform.position - transform.localPosition;
 
         private void Update()
         {
-            if (isFocus)    // If currently being focused
+            // If currently being focused
+            if (isFocus)
             {
                 float distance = Vector3.Distance(player.position, Position);
                 // If we haven't already interacted and the player is close enough

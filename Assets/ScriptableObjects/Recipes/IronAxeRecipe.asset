@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c56c6397135a04ebfaeb59f7db11ca, type: 3}
+  m_Name: IronAxeRecipe
+  m_EditorClassIdentifier: 
+  neededItems:
+  - item: {fileID: 11400000, guid: f144e69106a98f647b57e29ab30134e1, type: 2}
+    amount: 2
+  - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
+    amount: 2
+  createdItem:
+    item: {fileID: 11400000, guid: a8d028a08d254f8408c0eb44813e101e, type: 2}
+    amount: 1
+  craftingStation: 3
+  recipeName: 

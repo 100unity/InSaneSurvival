@@ -47,8 +47,6 @@ MonoBehaviour:
     center: {fileID: 5100131744726563213}
     radius: 30
   maximumConcurrentEnemies: 6
-  spawnProbability: 0.00005
+  spawnProbability: 0.0005
   toSpawn: {fileID: 0}
-  spawnLayer:
-    serializedVersion: 2
-    m_Bits: 257
+  mainCamera: {fileID: 0}

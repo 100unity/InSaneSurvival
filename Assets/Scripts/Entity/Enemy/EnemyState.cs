@@ -90,7 +90,8 @@ namespace Entity.Enemy
         private void ChangeHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
-            if (updatedValue > _maxHealth) updatedValue = _maxHealth;
+            if (updatedValue > _maxHealth)
+                updatedValue = _maxHealth;
             else if (updatedValue <= 0)
             {
                 updatedValue = 0;
@@ -105,12 +106,12 @@ namespace Entity.Enemy
         /// </summary>
         private void Regenerate()
         {
-            if (_probability.GetProbability(regenerationProbability))
-            {
-                float x = (float) _random.NextDouble();
-                float healthPoints = regenerationCurve.Evaluate(x) * 10f;
-                ChangeHealth((int) healthPoints);
-            }
+            if (!_probability.GetProbability(regenerationProbability * Time.deltaTime))
+                return;
+
+            float x = (float) _random.NextDouble();
+            float healthPoints = regenerationCurve.Evaluate(x) * 10f;
+            ChangeHealth((int) healthPoints);
         }
     }
 }
