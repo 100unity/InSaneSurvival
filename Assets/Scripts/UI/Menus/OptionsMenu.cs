@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Constants;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -24,6 +25,10 @@ namespace UI.Menus
         [Tooltip("The volume slider, used for changing the volume")] [SerializeField]
         private Slider volumeSlider;
 
+        [Header("Mouse Sensitivity")] [Tooltip("The mouse sensitivity slider")] [SerializeField]
+        private Slider mouseSensitivitySlider;
+
+        public static float MouseSensitivity { get; private set; } = 1;
 
         private List<Resolution> _resolutions;
 
@@ -35,10 +40,16 @@ namespace UI.Menus
             AddResolutions();
             qualityDropdown.value = QualitySettings.GetQualityLevel();
 
+            fullscreenToggle.isOn = Screen.fullScreen;
+            audioMixer.GetFloat(Consts.Utils.AUDIO_MANAGER_VOLUME, out float volume);
+            volumeSlider.value = volume;
+            mouseSensitivitySlider.value = MouseSensitivity;
+
             resolutionDropdown.onValueChanged.AddListener(SetResolution);
             fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
             qualityDropdown.onValueChanged.AddListener(SetQuality);
             volumeSlider.onValueChanged.AddListener(SetVolume);
+            mouseSensitivitySlider.onValueChanged.AddListener(SetMouseSensitivity);
         }
 
         /// <summary>
@@ -83,6 +94,12 @@ namespace UI.Menus
         /// Sets a new volume level in the audio-mixer
         /// </summary>
         /// <param name="volume"></param>
-        private void SetVolume(float volume) => audioMixer.SetFloat("Volume", volume);
+        private void SetVolume(float volume) => audioMixer.SetFloat(Consts.Utils.AUDIO_MANAGER_VOLUME, volume);
+
+        /// <summary>
+        /// Sets the mouse sensitivity for rotating the camera
+        /// </summary>
+        /// <param name="sensitivity"></param>
+        private void SetMouseSensitivity(float sensitivity) => MouseSensitivity = sensitivity;
     }
 }
