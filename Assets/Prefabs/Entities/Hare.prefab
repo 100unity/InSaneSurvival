@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8621092685651523813}
-  health: 7
+  health: 5
   regenerationCurve:
     serializedVersion: 2
     m_Curve:
