@@ -12,19 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightSpeed: 4
-  hideTooltip: 0
-  followingMouseCursor: 1
-  tooltipPosition: {x: 0, y: 0}
-  tooltipText: 
-  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
-  tooltipSize: 1
-  tooltipFont: {fileID: 0}
-  tooltipAlignment: 0
-  interactIcon: {fileID: 2800000, guid: 27e49978c0f70764da00075faae41a0a, type: 3}
-  iconSize: 30
-  iconOffset: 30
+  mouseCursor: {fileID: 2800000, guid: 58a97f527b2703a48a52be6cfdc5b6fa, type: 3}
 --- !u!1 &1597766793671583826
 GameObject:
   m_ObjectHideFlags: 0
