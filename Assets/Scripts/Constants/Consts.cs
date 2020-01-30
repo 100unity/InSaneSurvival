@@ -23,6 +23,8 @@ namespace Constants
 
             // just a high number to ensure random point generation for wandering
             public const int MAPPING_ITERATIONS = 500;
+
+            public const string AUDIO_MANAGER_VOLUME = "Volume";
         }
 
         public static class Colors
