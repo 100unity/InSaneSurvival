@@ -10,7 +10,6 @@ using Utils;
 
 namespace Interactables
 {
-    [System.Serializable]
     public class Harvestable : Interactable
     {
         [Tooltip("The items being dropped on a successful harvest.")] [SerializeField]
@@ -37,11 +36,11 @@ namespace Interactables
         protected GameObject Parent;
         protected Camera MainCam;
         protected Collider OwnCollider;
+        protected PlayerController PlayerController;
 
         private double _gatherTimePassed;
         private MeshRenderer _ownMeshRenderer;
         private MeshRenderer _replacementMeshRenderer;
-        private PlayerController _playerController;
 
         protected virtual void Awake()
         {
@@ -49,15 +48,15 @@ namespace Interactables
 
             OwnCollider = GetComponent<Collider>();
             _ownMeshRenderer = GetComponent<MeshRenderer>();
-            _playerController = PlayerManager.Instance.GetPlayerController();
+            PlayerController = PlayerManager.Instance.GetPlayerController();
 
             if (destroyAfterHarvest)
                 Parent = transform.parent.gameObject;
-            else 
+            else
                 _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
 
             // If item was respawning before save, keep it respawning
-            if (isRespawning) 
+            if (isRespawning)
                 CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Respawn()));
         }
 
@@ -85,8 +84,8 @@ namespace Interactables
                 equipped != null && equipped.HasAbility(neededAbility))
             {
                 _gatherTimePassed = 0;
-                _playerController.SetAnimationFloat(Consts.Animation.INTERACT_SPEED_FLOAT, 1 / gatherTime);
-                _playerController.TriggerAnimation(Consts.Animation.INTERACT_TRIGGER);
+                PlayerController.SetAnimationFloat(Consts.Animation.INTERACT_SPEED_FLOAT, 1 / gatherTime);
+                PlayerController.TriggerAnimation(Consts.Animation.INTERACT_TRIGGER);
                 CoroutineManager.Instance.WaitForSeconds(1.0f / 60.0f, () => StartCoroutine(Gather()));
             }
             else
