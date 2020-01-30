@@ -1,22 +1,14 @@
-﻿using Buildings;
+﻿using System;
 
 namespace Utils.Saves
 {
-    [System.Serializable]
+    [Serializable]
     public class SavedBlueprint
     {
-        public BuildingBlueprint blueprint;
-        public Building building;
+        public string blueprintId;
+        public string buildingId;
 
         public bool blueprintActive;
         public bool buildingActive;
-
-        public SavedBlueprint(BuildingBlueprint blueprint, Building building, bool blueprintActive, bool buildingActive)
-        {
-            this.blueprint = blueprint;
-            this.building = building;
-            this.blueprintActive = blueprintActive;
-            this.buildingActive = buildingActive;
-        }
     }
 }

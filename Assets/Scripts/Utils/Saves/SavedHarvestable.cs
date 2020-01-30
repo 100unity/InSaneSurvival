@@ -1,24 +1,12 @@
-﻿using Interactables;
+﻿using System;
 
 namespace Utils.Saves
 {
-    [System.Serializable]
+    [Serializable]
     public class SavedHarvestable
     {
-        public Harvestable harvestable;
+        public string id;
         public bool isRespawning;
         public double respawnTimePassed;
-
-        public SavedHarvestable(Harvestable harvestable, bool isRespawning, double respawnTimePassed)
-        {
-            this.harvestable = harvestable;
-            this.isRespawning = isRespawning;
-            this.respawnTimePassed = respawnTimePassed;
-        }
-
-        public void SetState()
-        {
-            harvestable.SetFromSave(isRespawning, respawnTimePassed);
-        }
     }
 }
