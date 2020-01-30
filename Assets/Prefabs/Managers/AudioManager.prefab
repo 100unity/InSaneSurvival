@@ -115,6 +115,11 @@ MonoBehaviour:
     volume: 0.1
     loop: 0
     source: {fileID: 0}
+  - name: sanity_noise
+    clip: {fileID: 8300000, guid: b469ae6bbfccfe84494bde405cb54524, type: 3}
+    volume: 0.06
+    loop: 1
+    source: {fileID: 0}
   mainMixerMaster: {fileID: 24300002, guid: f12cc519cfc3f9a4ba9048f9939b00ea, type: 2}
   audioSources: {fileID: 7058954467443417514}
 --- !u!1 &7058954467443417514
