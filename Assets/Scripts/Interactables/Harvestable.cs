@@ -62,7 +62,14 @@ namespace Interactables
 
             // if scale should be checked, set _notGatherable
             if (checkScale)
+            {
                 _notGatherable = transform.localScale.x > maxScale || transform.localScale.y > maxScale || transform.localScale.z > maxScale;
+                if (_notGatherable)
+                {
+                    enabled = false;
+                    GetComponent<InteractTooltip>().enabled = false;
+                }
+            }
 
             if (destroyAfterHarvest)
                 Parent = transform.parent.gameObject;
