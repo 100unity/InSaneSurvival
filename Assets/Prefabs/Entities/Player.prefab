@@ -186,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6126187404098910136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 287.1, y: 13.18, z: 159.6}
+  m_LocalPosition: {x: -63.81, y: 9.8, z: -116.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1107132285515203231}
@@ -616,6 +616,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
+    - target: {fileID: 6175961162185614715, guid: 9df5d19eb07a9804a96f230bf905b704,
+        type: 3}
+      propertyPath: m_Name
+      value: CraftingUI
+      objectReference: {fileID: 0}
     - target: {fileID: 4065175225237497898, guid: 9df5d19eb07a9804a96f230bf905b704,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -720,11 +725,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175961162185614715, guid: 9df5d19eb07a9804a96f230bf905b704,
-        type: 3}
-      propertyPath: m_Name
-      value: CraftingUI
       objectReference: {fileID: 0}
     - target: {fileID: 1358884243312397464, guid: 9df5d19eb07a9804a96f230bf905b704,
         type: 3}
@@ -891,6 +891,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
+    - target: {fileID: 6367347880368899950, guid: d04fb0230baa9d84fb848b4b92f33456,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerGUI
+      objectReference: {fileID: 0}
     - target: {fileID: 6367347880368899858, guid: d04fb0230baa9d84fb848b4b92f33456,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -996,11 +1001,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6367347880368899950, guid: d04fb0230baa9d84fb848b4b92f33456,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerGUI
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d04fb0230baa9d84fb848b4b92f33456, type: 3}
 --- !u!224 &784861889176494528 stripped
@@ -1016,6 +1016,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
+    - target: {fileID: 1757607776424889163, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
+        type: 3}
+      propertyPath: m_Name
+      value: SpeechBubble
+      objectReference: {fileID: 0}
     - target: {fileID: 1385837920800683127, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1121,11 +1126,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1757607776424889163, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
-        type: 3}
-      propertyPath: m_Name
-      value: SpeechBubble
-      objectReference: {fileID: 0}
     - target: {fileID: 2396523189984196907, guid: 1c873d54ebe5f43b5bd15a2486a11b98,
         type: 3}
       propertyPath: playerController
@@ -1146,6 +1146,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5352124945648812668}
     m_Modifications:
+    - target: {fileID: 8925312529435403638, guid: 5a222cef04b644d79853525c21650fe3,
+        type: 3}
+      propertyPath: m_Name
+      value: WearingIndicator
+      objectReference: {fileID: 0}
     - target: {fileID: 6851690105828889913, guid: 5a222cef04b644d79853525c21650fe3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1250,11 +1255,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8925312529435403638, guid: 5a222cef04b644d79853525c21650fe3,
-        type: 3}
-      propertyPath: m_Name
-      value: WearingIndicator
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a222cef04b644d79853525c21650fe3, type: 3}

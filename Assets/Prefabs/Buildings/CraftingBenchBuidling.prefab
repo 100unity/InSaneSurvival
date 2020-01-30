@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingRenderer: {fileID: 4917085284801663163}
   useDistance: 3
-  isAlreadyBuild: 0
+  isAlreadyBuilt: 0
+  additionalBehaviour: {fileID: 0}
   craftingStation: 1
 --- !u!114 &5504922726236283899
 MonoBehaviour:

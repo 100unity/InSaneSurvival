@@ -24,6 +24,9 @@ namespace Effects
         [SerializeField] [Tooltip("Determines the opacity of the whole sanity mesh")]
         private AnimationCurve materialOpacityCurve;
 
+        [SerializeField] [Tooltip("Animation curve for the fog density")]
+        private AnimationCurve fogDensityCurve;
+
         // radius of the fog
         private float _apertureBaseRadius;
 
@@ -37,7 +40,10 @@ namespace Effects
         private static readonly int ApertureAlpha = Shader.PropertyToID("_ApertureAlpha");
 
         private GameObject _player;
-
+        
+        // Fog density; from 0 - 1
+        private float _newSanity = 1f;
+        
         private void Awake()
         {
             _apertureBaseRadius = 100;
@@ -51,6 +57,9 @@ namespace Effects
         {
             CenterFog();
             Pulse(pulseIntensity);
+            float fogDensity = fogDensityCurve.Evaluate(_newSanity);
+            if(Mathf.Abs(RenderSettings.fogDensity - fogDensity) > 0.01f)
+                RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, fogDensity, Time.deltaTime * pulseDelay);
         }
 
         /// <summary>
@@ -91,7 +100,11 @@ namespace Effects
             PlayerState.OnPlayerSanityUpdate -= OnSanityUpdated;
         }
 
-        private void OnSanityUpdated(int value) => UpdateFogRadius(value);
+        private void OnSanityUpdated(int value)
+        {
+            _newSanity = value / 100f;
+            UpdateFogRadius(value);
+        }
 
         private void UpdateFogRadius(int sanityLevel)
         {

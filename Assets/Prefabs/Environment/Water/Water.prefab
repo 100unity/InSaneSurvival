@@ -241,8 +241,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6472121475557118022}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -143.74628, y: -68.685104, z: 252.97372}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -280.15057, y: -114.31766, z: 155.4363}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6472121474773912583}
@@ -462,21 +462,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 795472343154017027, guid: 195cd39f40e9244679e4f5a4a76b923f,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 150.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 795472343154017027, guid: 195cd39f40e9244679e4f5a4a76b923f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 69.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 795472343154017027, guid: 195cd39f40e9244679e4f5a4a76b923f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -267.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 795472343154017027, guid: 195cd39f40e9244679e4f5a4a76b923f,
-        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -535,11 +520,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6472121475557118017}
     m_Modifications:
-    - target: {fileID: 8735106031168738795, guid: d0903d70aa41be34196853d8b84b5c4e,
-        type: 3}
-      propertyPath: m_Name
-      value: Waterfall_mid
-      objectReference: {fileID: 0}
     - target: {fileID: 8735106031168738794, guid: d0903d70aa41be34196853d8b84b5c4e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -594,6 +574,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8735106031168738795, guid: d0903d70aa41be34196853d8b84b5c4e,
+        type: 3}
+      propertyPath: m_Name
+      value: Waterfall_mid
       objectReference: {fileID: 0}
     - target: {fileID: 8735106032189230555, guid: d0903d70aa41be34196853d8b84b5c4e,
         type: 3}
