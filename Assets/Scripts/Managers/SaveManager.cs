@@ -34,7 +34,7 @@ namespace Managers
                 PlayerState state = player.GetComponent<PlayerState>();
 
                 //get a json-able list of items in the player's inventory
-                List<Item> inventoryData = inventoryController.GetItems();
+                List<string> inventoryData = inventoryController.GetItems().Select(i => i.name).ToList();
 
                 //get all campsites
                 List<Campsite> campsites = CampsiteManager.Instance.campsites;
@@ -204,8 +204,13 @@ namespace Managers
         /// <param name="save">The save to load the inventory from</param>
         private static void LoadInventory(Save save)
         {
+            Item[] items = Resources.FindObjectsOfTypeAll<Item>();
+            Dictionary<string, Item> itemMap = items
+                .Select(i => new KeyValuePair<string, Item>(i.name, i))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
+
             InventoryController inventoryController = InventoryManager.Instance.GetInvController();
-            inventoryController.SetItems(save.items);
+            inventoryController.SetItems(save.items.Select(i => itemMap[i]).ToList());
         }
 
         /// <summary>

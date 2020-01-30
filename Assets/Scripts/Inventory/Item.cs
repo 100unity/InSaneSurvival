@@ -1,10 +1,11 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Inventory
 {
     [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item/Item(General)")]
-    [System.Serializable]
+    [Serializable]
     public class Item : ScriptableObject
     {
         [Header("Item base")]
