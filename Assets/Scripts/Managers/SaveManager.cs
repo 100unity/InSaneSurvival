@@ -25,7 +25,6 @@ namespace Managers
             {
                 // grab required components to extract data from
                 GameObject player = PlayerManager.Instance.GetPlayer();
-                InventoryController inventoryController = InventoryManager.Instance.GetInvController();
 
                 // this is the player's current position in the map
                 Vector3 playerPosition = player.transform.localPosition;
@@ -34,7 +33,8 @@ namespace Managers
                 PlayerState state = player.GetComponent<PlayerState>();
 
                 //get a json-able list of items in the player's inventory
-                List<string> inventoryData = inventoryController.GetItems().Select(i => i.name).ToList();
+                List<string> inventoryData = InventoryManager.Instance.GetInvController()
+                    .GetItems().Select(i => i.name).ToList();
 
                 //get all campsites
                 List<Campsite> campsites = CampsiteManager.Instance.campsites;
@@ -98,7 +98,7 @@ namespace Managers
             try
             {
                 Save save = Read(fileName);
-                
+
                 LoadPlayer(save);
                 LoadDayTime(save);
                 LoadCampsites(save);
@@ -164,11 +164,13 @@ namespace Managers
                         print("Could not find blueprint");
                         return;
                     }
+
                     if (!buildingMap.TryGetValue(savedBlueprint.buildingId, out Building building))
                     {
                         print("Could not find building");
                         return;
                     }
+
                     blueprint.Building = building;
                     if (savedBlueprint.blueprintActive && savedBlueprint.buildingActive)
                     {
@@ -208,8 +210,7 @@ namespace Managers
                 .Select(i => new KeyValuePair<string, Item>(i.name, i))
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            InventoryController inventoryController = InventoryManager.Instance.GetInvController();
-            inventoryController.SetItems(save.items.Select(i => itemMap[i]).ToList());
+            InventoryManager.Instance.GetInvController().SetItems(save.items.Select(i => itemMap[i]).ToList());
         }
 
         /// <summary>
