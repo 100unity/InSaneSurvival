@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,7 +21,7 @@ namespace Utils
             Vector3 scale = transform.lossyScale;
 
             StringBuilder builder = new StringBuilder();
-            
+
             builder.Append(position.x);
             builder.Append(position.y);
             builder.Append(position.z);
