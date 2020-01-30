@@ -68,7 +68,7 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
     amount: 10
   - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
-    amount: 5
+    amount: 10
   fadeStrength: 0.2
 --- !u!1001 &8350830963180384893
 PrefabInstance:
@@ -274,6 +274,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3786582098739031718, guid: f5a344f14d48fb14e939261530a7950c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7169431523735949782, guid: f5a344f14d48fb14e939261530a7950c,
         type: 3}
       propertyPath: parent
@@ -284,11 +289,6 @@ PrefabInstance:
       propertyPath: blueprint
       value: 
       objectReference: {fileID: 3238405777838765277}
-    - target: {fileID: 3786582098739031718, guid: f5a344f14d48fb14e939261530a7950c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5a344f14d48fb14e939261530a7950c, type: 3}
 --- !u!224 &2601874734206806944 stripped
