@@ -1,5 +1,4 @@
-﻿using System;
-using AbstractClasses;
+﻿using AbstractClasses;
 using Entity.Enemy;
 using Inventory;
 using Remote;
@@ -46,6 +45,7 @@ namespace Entity.Player
                 OnPlayerSanityUpdate?.Invoke(value);
             }
         }
+
         public int Health
         {
             get => health;
@@ -55,6 +55,7 @@ namespace Entity.Player
                 OnPlayerHealthUpdate?.Invoke(value);
             }
         }
+
         public int Saturation
         {
             get => saturation;
@@ -64,6 +65,7 @@ namespace Entity.Player
                 OnPlayerSaturationUpdate?.Invoke(value);
             }
         }
+
         public int Hydration
         {
             get => hydration;
@@ -76,7 +78,7 @@ namespace Entity.Player
 
         private void OnValidate()
         {
-            if(Application.isPlaying)
+            if (Application.isPlaying)
                 OnPlayerSanityUpdate?.Invoke(sanity);
         }
 
@@ -95,7 +97,7 @@ namespace Entity.Player
             RemoteStatusHandler.OnPlayerSaturationRemoteUpdate -= ChangePlayerSaturation;
             RemoteStatusHandler.OnPlayerSanityRemoteUpdate -= ChangePlayerSanity;
         }
-        
+
         public void ChangePlayerHealth(int changeBy)
         {
             int updatedValue = health + changeBy;
@@ -190,9 +192,9 @@ namespace Entity.Player
             return true;
         }
 
-        public override void Die()
+        protected override void OnDeath()
         {
-            base.Die();
+            base.OnDeath();
             OnPlayerDeath?.Invoke();
         }
     }
