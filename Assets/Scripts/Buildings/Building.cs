@@ -6,7 +6,6 @@ namespace Buildings
     /// <summary>
     /// Simple building behaviour.
     /// </summary>
-    [System.Serializable]
     public abstract class Building : MonoBehaviour
     {
         [Header("Building-Base")]

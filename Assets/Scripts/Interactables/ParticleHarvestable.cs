@@ -13,6 +13,7 @@ namespace Interactables
         {
             MainCam = Camera.main;
             OwnCollider = GetComponent<Collider>();
+            PlayerController = PlayerManager.Instance.GetPlayerController();
 
             if (destroyAfterHarvest)
                 Parent = transform.parent.gameObject;
