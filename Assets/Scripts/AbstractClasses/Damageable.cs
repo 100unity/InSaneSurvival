@@ -47,10 +47,20 @@ namespace AbstractClasses
         /// <param name="attacker">The EnemyController of the attacker if it's an NPC.</param>
         public abstract void Hit(int damage, out int health, EnemyController attacker = null);
 
-        public virtual void Die()
+        /// <summary>
+        /// Lets the damageable die and prevents multiple deaths.
+        /// </summary>
+        public void Die()
         {
+            if (IsDead)
+                return;
             IsDead = true;
-            animator.SetTrigger(DieTrigger);
+            OnDeath();
         }
+
+        /// <summary>
+        /// Override this to add custom action OnDeath.
+        /// </summary>
+        protected virtual void OnDeath() => animator.SetTrigger(DieTrigger);
     }
 }
