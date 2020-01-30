@@ -139,7 +139,7 @@ namespace Entity.Player.Sanity
                 if (_fightTime >= criticalFightTime)
                 {
                     // check if last attacked target was aggressive
-                    if (_enemy.IsAggressive)
+                    if (_enemy != null && _enemy.IsAggressive)
                         AddUpEventTick(fightMalus);
                     else
                         AddUpEventTick(fightNonAggressivesMalus);
