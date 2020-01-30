@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &7987534433314426803
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811838043298497152}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 2a8a29e2404c2b64b919c30d39e38bcf, type: 3}
+--- !u!114 &3828557470190616751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811838043298497152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cbd8b7d984b444f90f466cb8349d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  isFocus: 0
+  hasInteracted: 0
+  player: {fileID: 0}
+  checkScale: 1
+  maxScale: 1.15
+  drops:
+  - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
+    amount: 1
+  gatherTime: 3
+  destroyAfterHarvest: 1
+  respawnTime: 0
+  replacement: {fileID: 0}
+  neededAbility: 1
+  isRespawning: 0
+  respawnTimePassed: 0
+--- !u!114 &2134570137370885952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811838043298497152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 1
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 1
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 0}
+  iconSize: 40
+  iconOffset: 25
+  mouseCursor: {fileID: 2800000, guid: 58a97f527b2703a48a52be6cfdc5b6fa, type: 3}
 --- !u!1 &8195634591905619213
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,15 +112,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.0017372
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.154
+      value: 0.14048
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.0052225
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e, type: 3}
       propertyPath: m_LocalRotation.x
@@ -86,8 +154,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e, type: 3}
+--- !u!1 &3811838043298497152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 3811838043298530336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3811838043298930336 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4ced3daf0f3ae4146ad0fcff2bf02f0e,

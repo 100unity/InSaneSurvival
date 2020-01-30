@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4982068690980405221}
   m_Layer: 0
-  m_Name: Rock 7 1
+  m_Name: Rock Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,6 +42,9 @@ GameObject:
   - component: {fileID: 7743325451550956856}
   - component: {fileID: 7743325451549662488}
   - component: {fileID: 7743325451548532696}
+  - component: {fileID: 1397149295970662676}
+  - component: {fileID: 2732870613045096673}
+  - component: {fileID: 3331736534495026663}
   m_Layer: 0
   m_Name: Rock 7
   m_TagString: Untagged
@@ -57,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7743325451550458136}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.291, z: 0}
+  m_LocalPosition: {x: -0.020216, y: 0.18871, z: 0.0026879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4982068690980405221}
@@ -109,3 +112,71 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1397149295970662676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743325451550458136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cbd8b7d984b444f90f466cb8349d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0.75
+  isFocus: 0
+  hasInteracted: 0
+  player: {fileID: 0}
+  checkScale: 1
+  maxScale: 1.8
+  drops:
+  - item: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
+    amount: 1
+  gatherTime: 3
+  destroyAfterHarvest: 1
+  respawnTime: 0
+  replacement: {fileID: 0}
+  neededAbility: 1
+  isRespawning: 0
+  respawnTimePassed: 0
+--- !u!64 &2732870613045096673
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743325451550458136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 87d6c47e8b8443e48bc23d26c6727f50, type: 3}
+--- !u!114 &3331736534495026663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743325451550458136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightSpeed: 4
+  hideTooltip: 0
+  followingMouseCursor: 1
+  tooltipPosition: {x: 0, y: 0}
+  tooltipText: 
+  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
+  tooltipSize: 1
+  tooltipFont: {fileID: 0}
+  tooltipAlignment: 0
+  interactIcon: {fileID: 0}
+  iconSize: 40
+  iconOffset: 25
+  mouseCursor: {fileID: 2800000, guid: 58a97f527b2703a48a52be6cfdc5b6fa, type: 3}
