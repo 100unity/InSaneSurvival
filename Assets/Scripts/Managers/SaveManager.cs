@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Buildings;
 using Entity.Player;
@@ -13,13 +14,13 @@ using Utils.Saves;
 
 namespace Managers
 {
-    public class SaveManager : Singleton<SaveManager>
+    public class SaveManager : MonoBehaviour
     {
         /// <summary>
         /// Saves the current state of the game to a JSON file
         /// </summary>
         /// <param name="fileName">The file name to use for the JSON file</param>
-        public static void Save(string fileName)
+        public static void Save(string fileName = null)
         {
             try
             {
@@ -93,7 +94,7 @@ namespace Managers
         /// loads the savegame from the file & sets the states of gameobjects sequentially afterwards...
         /// </summary>
         /// <param name="fileName">The file to load</param>
-        public static void Load(string fileName)
+        public static void Load(string fileName = null)
         {
             try
             {
@@ -229,20 +230,19 @@ namespace Managers
 
         //JSON - Utility functions - interaction with File system...
 
-        private static void Write(Save save, string fileName = "")
+        private static void Write(Save save, string fileName)
         {
-            string path = Application.persistentDataPath;
+            if (fileName.IsNullOrEmpty())
+                fileName = "save";
             string json = JsonUtility.ToJson(save);
-            if (fileName == "") System.IO.File.WriteAllText(@"" + path + "/save.json", json);
-            else System.IO.File.WriteAllText(@"" + path + "/" + fileName + ".json", json);
+            File.WriteAllText($"{Application.persistentDataPath}/{fileName}.json", json);
         }
 
         private static Save Read(string fileName)
         {
-            string path = Application.persistentDataPath;
-            string json = fileName == ""
-                ? System.IO.File.ReadAllText(@"" + path + "/save.json")
-                : System.IO.File.ReadAllText(@"" + path + "/" + fileName + ".json");
+            if (fileName.IsNullOrEmpty())
+                fileName = "save";
+            string json = File.ReadAllText($"{Application.persistentDataPath}/{fileName}.json");
             return JsonUtility.FromJson<Save>(json);
         }
     }

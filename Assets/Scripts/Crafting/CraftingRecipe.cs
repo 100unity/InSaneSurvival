@@ -26,7 +26,7 @@ namespace Crafting
         /// <summary>
         /// The <see cref="recipeName"/> of this crafting recipe or - if not defined - the name of the first item in the <see cref="createdItem"/> list
         /// </summary>
-        public string CreatedItemName => string.IsNullOrEmpty(recipeName) ? createdItem.item.ItemName : recipeName;
+        public string CreatedItemName => recipeName.IsNullOrEmpty() ? createdItem.item.ItemName : recipeName;
 
         /// <summary>
         /// The needed crafting station for this recipe.
