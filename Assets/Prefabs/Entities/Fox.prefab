@@ -63,7 +63,7 @@ MonoBehaviour:
     radius: 25
   wanderTimer: 10
   freezeArea: 0
-  runningSpeed: 5
+  runningSpeed: 4
   isAggressive: 1
   escapeRadius: 15
   showEscapeRadius: 1
