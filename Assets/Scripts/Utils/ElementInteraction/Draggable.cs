@@ -47,6 +47,8 @@ namespace Utils.ElementInteraction
         {
             set
             {
+                if(graphicRaycaster == null)
+                    return;
                 graphicRaycaster.enabled = !value;
                 canvas.overrideSorting = value;
                 canvas.sortingOrder = value ? 1 : 0;
