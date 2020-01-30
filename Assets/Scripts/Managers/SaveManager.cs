@@ -160,18 +160,8 @@ namespace Managers
                 Campsite campsite = campsiteMap[savedCampsite.id];
                 savedCampsite.blueprints.ForEach(savedBlueprint =>
                 {
-                    if (!blueprintMap.TryGetValue(savedBlueprint.blueprintId, out BuildingBlueprint blueprint))
-                    {
-                        print("Could not find blueprint");
-                        return;
-                    }
-
-                    if (!buildingMap.TryGetValue(savedBlueprint.buildingId, out Building building))
-                    {
-                        print("Could not find building");
-                        return;
-                    }
-
+                    BuildingBlueprint blueprint = blueprintMap[savedBlueprint.blueprintId];
+                    Building building = buildingMap[savedBlueprint.buildingId];
                     blueprint.Building = building;
                     if (savedBlueprint.blueprintActive && savedBlueprint.buildingActive)
                     {
