@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Iron
-    second: {fileID: 2100000, guid: 3b0482821953a054584a4f070d39892a, type: 2}
+    second: {fileID: 2100000, guid: 9062247fea884f6448fe22ecf0b304aa, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
