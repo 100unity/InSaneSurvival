@@ -49,7 +49,6 @@ namespace Interactables
 
             OwnCollider = GetComponent<Collider>();
             _ownMeshRenderer = GetComponent<MeshRenderer>();
-            _replacementMeshRenderer = replacement.GetComponent<MeshRenderer>();
             _playerController = PlayerManager.Instance.GetPlayerController();
 
             if (destroyAfterHarvest)
