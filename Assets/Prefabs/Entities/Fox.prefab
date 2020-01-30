@@ -63,7 +63,7 @@ MonoBehaviour:
     radius: 25
   wanderTimer: 10
   freezeArea: 0
-  runningSpeed: 5
+  runningSpeed: 4
   isAggressive: 1
   escapeRadius: 15
   showEscapeRadius: 1
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa35902a700a3c4fa0f8326cfd2b2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 15
+  damage: 5
   attackRange: 2.5
   stoppingOffset: 0.5
   attackTime: 0.8

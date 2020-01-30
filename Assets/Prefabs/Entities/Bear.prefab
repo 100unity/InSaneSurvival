@@ -71,9 +71,7 @@ MonoBehaviour:
   graphicsRenderer: {fileID: 8351342211094259593}
   itemDrops:
   - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
-    amount: 3
-  - item: {fileID: 11400000, guid: ebd901bb98b190740af556ae817824db, type: 2}
-    amount: 1
+    amount: 6
 --- !u!114 &4583121872170788062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa35902a700a3c4fa0f8326cfd2b2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 45
+  damage: 40
   attackRange: 6.2
   stoppingOffset: 3.5
   attackTime: 2
@@ -107,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8351342211089979721}
-  health: 65
+  health: 100
   regenerationCurve:
     serializedVersion: 2
     m_Curve:
