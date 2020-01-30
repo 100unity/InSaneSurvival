@@ -169,7 +169,6 @@ namespace Managers
                         print("Could not find building");
                         return;
                     }
-                    campsite.buildingBlueprints.Add(blueprint);
                     blueprint.Building = building;
                     if (savedBlueprint.blueprintActive && savedBlueprint.buildingActive)
                     {
