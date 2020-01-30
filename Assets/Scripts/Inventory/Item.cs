@@ -1,10 +1,12 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using Utils;
 
 namespace Inventory
 {
     [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item/Item(General)")]
-    [System.Serializable]
+    [Serializable]
     public class Item : ScriptableObject
     {
         [Header("Item base")]
@@ -24,8 +26,9 @@ namespace Inventory
 
         public Sprite Icon => icon;
         public int MaxStackSize => maxStackSize;
-        public string ItemName => string.IsNullOrEmpty(itemName) ? ItemNameWithSpaces : itemName;
+        public string ItemName => itemName.IsNullOrEmpty() ? ItemNameWithSpaces : itemName;
         public string Description => description;
+
         /// <summary>
         /// See: https://stackoverflow.com/a/155340
         /// </summary>

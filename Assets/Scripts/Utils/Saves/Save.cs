@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Utils.Saves
 {
-    [System.Serializable]
+    [Serializable]
     public class Save
     {
         //metadata
@@ -24,7 +24,7 @@ namespace Utils.Saves
         public int playerSanity;
 
         //inventory data
-        public List<Item> items;
+        public List<string> items;
 
         //world state data
         public float timeOfDay;
@@ -57,6 +57,6 @@ namespace Utils.Saves
             dayNumber = day;
         }
 
-        public void SetInventory(List<Item> itemList) => items = itemList;
+        public void SetInventory(List<string> itemList) => items = itemList;
     }
 }

@@ -114,11 +114,11 @@ namespace Remote
                         OnPlayerSanityRemoteUpdate?.Invoke(int.Parse(parameters[1]));
                         break;
                     case "SAVE":
-                        SaveManager.Instance.Save(parameters[1]);
+                        SaveManager.Save(parameters[1]);
                         SendString("saving initiated");
                         break;
                     case "LOAD":
-                        SaveManager.Instance.Load(parameters[1]);
+                        SaveManager.Load(parameters[1]);
                         SendString("loading initiated");
                         break;
                     case "TIME":

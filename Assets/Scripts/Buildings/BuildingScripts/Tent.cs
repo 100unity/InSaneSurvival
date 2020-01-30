@@ -30,6 +30,7 @@ namespace Buildings.BuildingScripts
         protected override void OnInteract()
         {
             _playerController.SetAnimationBool(Consts.Animation.SLEEP_BOOL, true);
+            SaveManager.Save("");
             DayNightManager.Instance.SetDayTimeWithAnimation(newTime, animationTime,
                 () => _playerController.SetAnimationBool(Consts.Animation.SLEEP_BOOL, false));
         }
