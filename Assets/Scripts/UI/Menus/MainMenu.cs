@@ -1,4 +1,5 @@
-﻿using Constants;
+﻿using System.IO;
+using Constants;
 using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -48,7 +49,7 @@ namespace UI.Menus
         {
             string pathToFile = @"" + Application.persistentDataPath + "/" + saveGameFile + ".json";
 
-            if (System.IO.File.Exists(pathToFile))
+            if (File.Exists(pathToFile))
             {
                 continueButton.GetComponent<Button>().onClick.AddListener(Continue);
                 continueButton.SetActive(true);
