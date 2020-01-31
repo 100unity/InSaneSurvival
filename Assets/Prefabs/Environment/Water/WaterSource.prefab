@@ -50,6 +50,8 @@ MonoBehaviour:
   isFocus: 0
   hasInteracted: 0
   player: {fileID: 0}
+  checkScale: 0
+  maxScale: 0
   drops:
   - item: {fileID: 11400000, guid: aefd87484774b4d88bcde59cc51e5c09, type: 2}
     amount: 1
@@ -86,20 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cd36f15bf750343b472cd9e8c41d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightSpeed: 4
-  hideTooltip: 0
-  followingMouseCursor: 1
-  tooltipPosition: {x: 0, y: 0}
-  tooltipText: 
-  tooltipColor: {r: 1, g: 1, b: 1, a: 1}
-  tooltipSize: 1
-  tooltipFont: {fileID: 0}
-  tooltipAlignment: 0
-  interactIcon: {fileID: 2800000, guid: 0779b80f1c4404e2e946a4e0d7773836, type: 3}
-  iconSize: 30
-  iconOffset: 30
-  mouseCursor: {fileID: 0}
+  mouseCursor: {fileID: 2800000, guid: e0633232b16a5f944a4affd7c9a44e1d, type: 3}
 --- !u!1001 &3819952315568355184
 PrefabInstance:
   m_ObjectHideFlags: 0

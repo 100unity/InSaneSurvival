@@ -24,8 +24,6 @@ namespace UI
         [Tooltip("The wearing indicator for displaying equipped items")] [SerializeField]
         private WearingIndicator wearingIndicator;
 
-        public InventoryUI InventoryUI => inventoryUI;
-        public CraftingUI CraftingUI => craftingUI;
         public SpeechBubble SpeechBubble => speechBubble;
         public WearingIndicator WearingIndicator => wearingIndicator;
 
@@ -41,6 +39,24 @@ namespace UI
             PlayerState.OnPlayerHealthUpdate -= OnHealthUpdated;
             PlayerState.OnPlayerHydrationUpdate -= OnHydrationUpdated;
             PlayerState.OnPlayerSaturationUpdate -= OnSaturationUpdated;
+        }
+
+        /// <summary>
+        /// Shows the inventory UI and updates the Cursor with <see cref="CursorManager.UpdateCursor"/>.
+        /// </summary>
+        public void ShowInventory()
+        {
+            inventoryUI.ToggleInventory();
+            CursorManager.Instance.UpdateCursor();
+        }
+
+        /// <summary>
+        /// Shows the crafting UI and updates the Cursor with <see cref="CursorManager.UpdateCursor"/>
+        /// </summary>
+        public void ShowCrafting()
+        {
+            craftingUI.Toggle();
+            CursorManager.Instance.UpdateCursor();
         }
 
         private void OnHealthUpdated(int value) => healthBar.UpdateBar(value);

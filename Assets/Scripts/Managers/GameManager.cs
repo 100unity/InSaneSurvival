@@ -11,7 +11,11 @@ namespace Managers
         /// <summary>
         /// Shows/Hides the pause menu
         /// </summary>
-        public void TogglePause() => pauseMenu.TogglePause();
+        public void TogglePause()
+        {
+            pauseMenu.TogglePause();
+            CursorManager.Instance.SetCursorToDefault();
+        }
 
 
         /// <summary>

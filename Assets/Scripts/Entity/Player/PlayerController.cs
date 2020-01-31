@@ -66,6 +66,16 @@ namespace Entity.Player
         private bool _startedDragOverUI;
 
         /// <summary>
+        /// Prevents unwanted movement enabling.
+        /// </summary>
+        private bool _movementDisabled;
+
+        /// <summary>
+        /// Whether the mouse cursor is over UI.
+        /// </summary>
+        private bool IsOverUI => EventSystem.current.IsPointerOverGameObject();
+
+        /// <summary>
         /// Gets references and sets up the controls.
         /// </summary>
         protected override void Awake()
@@ -130,8 +140,8 @@ namespace Entity.Player
             _controls.PlayerControls.RotateCamera.performed += RotateCamera;
             _controls.PlayerControls.Zoom.performed += Zoom;
             _controls.PlayerControls.Pause.performed += TogglePause;
-            _controls.PlayerControls.Inventory.performed += ctx => UIManager.Instance.InventoryUI.ToggleInventory();
-            _controls.PlayerControls.Crafting.performed += ToggleCrafting;
+            _controls.PlayerControls.Inventory.performed += ctx => UIManager.Instance.ShowInventory();
+            _controls.PlayerControls.Crafting.performed += ctx => UIManager.Instance.ShowCrafting();
 
             _controls.PauseMenuControls.ExitPause.performed += TogglePause;
         }
@@ -157,6 +167,24 @@ namespace Entity.Player
         public void SetAnimationBool(string propertyName, bool value) => Animator.SetBool(propertyName, value);
 
         /// <summary>
+        /// Activates movement.
+        /// </summary>
+        public void ActivateMovement()
+        {
+            _movementDisabled = false;
+            _controls.PlayerControls.Click.Enable();
+        }
+
+        /// <summary>
+        /// Deactivates movement.
+        /// </summary>
+        public void DeactivateMovement()
+        {
+            _movementDisabled = true;
+            _controls.PlayerControls.Click.Disable();
+        }
+
+        /// <summary>
         /// Let's the GameManager know, that the player pressed pause.
         /// </summary>
         private void TogglePause(InputAction.CallbackContext obj) => GameManager.Instance.TogglePause();
@@ -169,7 +197,7 @@ namespace Entity.Player
         /// </summary>
         private void OnRightClick(InputAction.CallbackContext obj)
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (IsOverUI)
                 return;
 
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -223,7 +251,7 @@ namespace Entity.Player
         {
             if (_startedDragOverUI) return;
 
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (IsOverUI)
             {
                 _startedDragOverUI = true;
                 return;
@@ -237,12 +265,12 @@ namespace Entity.Player
         /// <summary>
         /// Allows the player to zoom in and out
         /// </summary>
-        private void Zoom(InputAction.CallbackContext obj) => UpdateCameraAngle(obj.ReadValue<float>());
-
-        /// <summary>
-        /// Shows/Hides the crafting menu
-        /// </summary>
-        private void ToggleCrafting(InputAction.CallbackContext obj) => UIManager.Instance.CraftingUI.Toggle();
+        private void Zoom(InputAction.CallbackContext obj)
+        {
+            if(IsOverUI)
+                return;
+            UpdateCameraAngle(obj.ReadValue<float>());
+        }
 
         /// <summary>
         /// Sets the distance of the camera to the player
@@ -273,6 +301,8 @@ namespace Entity.Player
             {
                 _controls.PlayerControls.Enable();
                 _controls.PauseMenuControls.Disable();
+                if (_movementDisabled)
+                    _controls.PlayerControls.Click.Disable();
             }
         }
     }

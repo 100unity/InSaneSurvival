@@ -39,5 +39,23 @@ namespace Managers
                 onFinish?.Invoke();
             }
         }
+
+        /// <summary>
+        /// Waits for the given frames, then executes the given UnityAction.
+        /// </summary>
+        /// <param name="frames">The number of frames</param>
+        /// <param name="onFinish">Action to be executed afterwards</param>
+        public void WaitForFrames(int frames, UnityAction onFinish)
+        {
+            StartCoroutine(WaitFrames());
+
+            IEnumerator WaitFrames()
+            {
+                for (int i = 0; i < frames; i++)
+                    yield return null;
+
+                onFinish?.Invoke();
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: ead0d3e29f004094e8779b661c80f3ee, type: 3}
   maxStackSize: 1
   itemName: Bottle of Water
-  description: 
+  description: Such fresh water. So fresh, you can still taste the mountains.
   healthValue: 0
   saturationValue: 0
   hydrationValue: 10

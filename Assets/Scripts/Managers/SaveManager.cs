@@ -102,9 +102,9 @@ namespace Managers
 
                 LoadPlayer(save);
                 LoadDayTime(save);
+                LoadInventory(save);
                 LoadCampsites(save);
                 LoadHarvestables(save);
-                LoadInventory(save);
             }
             catch (Exception e)
             {
@@ -155,13 +155,28 @@ namespace Managers
             Dictionary<string, Building> buildingMap = GetIdentifiableObjects<Building>();
 
             // Load the saved state for each campsite and its buildings
-            save.campsites.ForEach(savedCampsite =>
+            foreach (SavedCampsite savedCampsite in save.campsites)
             {
-                Campsite campsite = campsiteMap[savedCampsite.id];
-                savedCampsite.blueprints.ForEach(savedBlueprint =>
+                if (!campsiteMap.TryGetValue(savedCampsite.id, out Campsite campsite))
                 {
-                    BuildingBlueprint blueprint = blueprintMap[savedBlueprint.blueprintId];
-                    Building building = buildingMap[savedBlueprint.buildingId];
+                    print($"Could not load campsite {savedCampsite.id}, skipping...");
+                    continue;
+                }
+
+                foreach (SavedBlueprint savedBlueprint in savedCampsite.blueprints)
+                {
+                    if (!blueprintMap.TryGetValue(savedBlueprint.blueprintId, out BuildingBlueprint blueprint))
+                    {
+                        print($"Could not load blueprint {savedBlueprint.blueprintId}, skipping...");
+                        continue;
+                    }
+
+                    if (!buildingMap.TryGetValue(savedBlueprint.buildingId, out Building building))
+                    {
+                        print($"Could not load building {savedBlueprint.buildingId}, skipping...");
+                        continue;
+                    }
+
                     blueprint.Building = building;
                     if (savedBlueprint.blueprintActive && savedBlueprint.buildingActive)
                     {
@@ -172,10 +187,11 @@ namespace Managers
                     {
                         building.IsBuilt = false;
                     }
-                });
+                }
+
                 if (savedCampsite.isUnlocked && !campsite.IsUnlocked)
                     campsite.UnlockBuildingBlueprintsInstantly();
-            });
+            }
         }
 
         /// <summary>
@@ -185,9 +201,16 @@ namespace Managers
         private static void LoadHarvestables(Save save)
         {
             Dictionary<string, Harvestable> harvestableMap = GetIdentifiableObjects<Harvestable>();
-            save.harvestables.ForEach(harvestable =>
-                harvestableMap[harvestable.id]
-                    .SetFromSave(harvestable.isRespawning, harvestable.respawnTimePassed));
+            foreach (SavedHarvestable savedHarvestable in save.harvestables)
+            {
+                if (!harvestableMap.TryGetValue(savedHarvestable.id, out Harvestable harvestable))
+                {
+                    print($"Could not load harvestable {savedHarvestable.id}, skipping...");
+                    continue;
+                }
+
+                harvestable.SetFromSave(savedHarvestable.isRespawning, savedHarvestable.respawnTimePassed);
+            }
         }
 
         /// <summary>
