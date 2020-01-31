@@ -10,8 +10,15 @@ namespace UI
         [SerializeField]
         private Texture2D mouseCursor;
 
+        public bool isDisabled;
 
-        private void OnMouseEnter() => CursorManager.Instance.SetCursorIcon(mouseCursor);
+
+        private void OnMouseEnter()
+        {
+            if(isDisabled)
+                return;
+            CursorManager.Instance.SetCursorIcon(mouseCursor);
+        }
 
 
         private void OnMouseExit() => CursorManager.Instance.SetCursorToDefault();

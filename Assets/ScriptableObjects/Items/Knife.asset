@@ -17,5 +17,5 @@ MonoBehaviour:
   itemName: 
   description: I'm gonna stab you! (Makes skinning so much easier)
   equipableAbility: 0
-  damageBoost: 3
+  damageBoost: 8
   maxUses: 5

@@ -102,15 +102,12 @@ namespace Entity.Player
         {
             int updatedValue = health + changeBy;
             if (updatedValue > 100) updatedValue = 100;
-            else if (updatedValue <= 0)
-            {
-                updatedValue = 0;
-                Die();
-            }
-
+            updatedValue = Mathf.Clamp(updatedValue, 0, 100);
             health = updatedValue;
             //throws an event with the new health value as a parameter
-            OnPlayerHealthUpdate?.Invoke(updatedValue);
+            OnPlayerHealthUpdate?.Invoke(health);
+            if (health <= 0) 
+                Die();
         }
 
         public void ChangePlayerSaturation(int changeBy)

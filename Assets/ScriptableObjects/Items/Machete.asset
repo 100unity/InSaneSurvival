@@ -17,5 +17,5 @@ MonoBehaviour:
   itemName: 
   description: Cut through all the nasty jungle vines with ease.
   equipableAbility: 0
-  damageBoost: 5
+  damageBoost: 20
   maxUses: 15

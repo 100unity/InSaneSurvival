@@ -67,7 +67,10 @@ namespace Interactables
                 if (_notGatherable)
                 {
                     enabled = false;
-                    GetComponent<InteractTooltip>().enabled = false;
+                    
+                    InteractTooltip tooltip = GetComponent<InteractTooltip>();
+                    tooltip.isDisabled = true;
+                    tooltip.enabled = false;
                 }
             }
 
