@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: a2db7ce84007fa44894dc0dda4c07147, type: 3}
   maxStackSize: 10
   itemName: 
-  description: 
+  description: Mmmmh... So tasty!
   healthValue: 0
   saturationValue: 20
   hydrationValue: 0
