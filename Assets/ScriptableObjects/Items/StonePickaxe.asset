@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: d397b4971ea00da4e9b9db902527855a, type: 3}
   maxStackSize: 1
   itemName: 
-  description: Defenitely not what a dwarf would mine with.
+  description: Definitely not what a dwarf would mine with.
   equipableAbility: 2
   damageBoost: 1
   maxUses: 10
