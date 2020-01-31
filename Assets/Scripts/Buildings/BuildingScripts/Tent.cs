@@ -44,7 +44,6 @@ namespace Buildings.BuildingScripts
             _playerController.DeactivateMovement();
             InteractDisabled = true;
             _playerController.SetAnimationBool(Consts.Animation.SLEEP_BOOL, true);
-            SaveManager.Save("");
             DayNightManager.Instance.SetDayTimeWithAnimation(newTime, animationTime,
                 () =>
                 {
@@ -56,6 +55,7 @@ namespace Buildings.BuildingScripts
                     playerState.ChangePlayerSanity(sanityValue);
                     playerState.ChangePlayerHydration(hydrationValue);
                     playerState.ChangePlayerSaturation(saturationValue);
+                    SaveManager.Save();
                 });
         }
     }

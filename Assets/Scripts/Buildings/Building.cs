@@ -37,7 +37,7 @@ namespace Buildings
         public bool IsBuilt { get; set; }
 
         /// <summary>
-        /// Can be used to temporally disable the interact behavior.
+        /// Can be used to temporarily disable the interact behavior.
         /// </summary>
         public bool InteractDisabled { get; protected set; }
 
