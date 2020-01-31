@@ -71,6 +71,11 @@ namespace Entity.Player
         private bool _movementDisabled;
 
         /// <summary>
+        /// Whether the mouse cursor is over UI.
+        /// </summary>
+        private bool IsOverUI => EventSystem.current.IsPointerOverGameObject();
+
+        /// <summary>
         /// Gets references and sets up the controls.
         /// </summary>
         protected override void Awake()
@@ -192,7 +197,7 @@ namespace Entity.Player
         /// </summary>
         private void OnRightClick(InputAction.CallbackContext obj)
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (IsOverUI)
                 return;
 
             Ray clickRay = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -246,7 +251,7 @@ namespace Entity.Player
         {
             if (_startedDragOverUI) return;
 
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (IsOverUI)
             {
                 _startedDragOverUI = true;
                 return;
@@ -260,7 +265,12 @@ namespace Entity.Player
         /// <summary>
         /// Allows the player to zoom in and out
         /// </summary>
-        private void Zoom(InputAction.CallbackContext obj) => UpdateCameraAngle(obj.ReadValue<float>());
+        private void Zoom(InputAction.CallbackContext obj)
+        {
+            if(IsOverUI)
+                return;
+            UpdateCameraAngle(obj.ReadValue<float>());
+        }
 
         /// <summary>
         /// Sets the distance of the camera to the player
