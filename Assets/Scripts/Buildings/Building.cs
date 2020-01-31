@@ -36,6 +36,11 @@ namespace Buildings
         /// </summary>
         public bool IsBuilt { get; set; }
 
+        /// <summary>
+        /// Can be used to temporarily disable the interact behavior.
+        /// </summary>
+        public bool InteractDisabled { get; protected set; }
+
 
         protected virtual void Awake() => IsBuilt = isAlreadyBuilt;
 
@@ -50,7 +55,7 @@ namespace Buildings
         /// </summary>
         public void Interact()
         {
-            if (!PlayerInReach) return;
+            if (!PlayerInReach || InteractDisabled) return;
             OnInteract();
         }
 

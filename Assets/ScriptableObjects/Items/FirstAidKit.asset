@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: 
   description: You should probably ask someone with a pair of thumbs to help you with
     this.
-  healthValue: 10
+  healthValue: 25
   saturationValue: 0
   hydrationValue: 0
   soundOnUse: uiBandage

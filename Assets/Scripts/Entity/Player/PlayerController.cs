@@ -66,6 +66,11 @@ namespace Entity.Player
         private bool _startedDragOverUI;
 
         /// <summary>
+        /// Prevents unwanted movement enabling.
+        /// </summary>
+        private bool _movementDisabled;
+
+        /// <summary>
         /// Gets references and sets up the controls.
         /// </summary>
         protected override void Awake()
@@ -155,6 +160,24 @@ namespace Entity.Player
         /// <param name="propertyName">The name of the property to set</param>
         /// <param name="value">The value to set the property to</param>
         public void SetAnimationBool(string propertyName, bool value) => Animator.SetBool(propertyName, value);
+
+        /// <summary>
+        /// Activates movement.
+        /// </summary>
+        public void ActivateMovement()
+        {
+            _movementDisabled = false;
+            _controls.PlayerControls.Click.Enable();
+        }
+
+        /// <summary>
+        /// Deactivates movement.
+        /// </summary>
+        public void DeactivateMovement()
+        {
+            _movementDisabled = true;
+            _controls.PlayerControls.Click.Disable();
+        }
 
         /// <summary>
         /// Let's the GameManager know, that the player pressed pause.
@@ -268,6 +291,8 @@ namespace Entity.Player
             {
                 _controls.PlayerControls.Enable();
                 _controls.PauseMenuControls.Disable();
+                if (_movementDisabled)
+                    _controls.PlayerControls.Click.Disable();
             }
         }
     }
