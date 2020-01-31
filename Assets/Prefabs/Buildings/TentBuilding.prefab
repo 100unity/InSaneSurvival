@@ -53,6 +53,10 @@ MonoBehaviour:
   additionalBehaviour: {fileID: 0}
   newTime: 0.3
   animationTime: 8
+  healValue: 25
+  sanityValue: 25
+  hydrationValue: -30
+  saturationValue: -30
 --- !u!114 &8626390662364033055
 MonoBehaviour:
   m_ObjectHideFlags: 0
