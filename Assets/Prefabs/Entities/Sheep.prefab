@@ -180,7 +180,8 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 151e426478f8537448e03bcef032f413, type: 2}
     amount: 1
   - item: {fileID: 11400000, guid: 8e4b1ba039a7f0849b8ea176ed127654, type: 2}
-    amount: 1
+    amount: 2
+  dropAmountRangeValue: 1
 --- !u!114 &629533310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 126135928738199635}
-  health: 20
+  health: 10
   regenerationCurve:
     serializedVersion: 2
     m_Curve:

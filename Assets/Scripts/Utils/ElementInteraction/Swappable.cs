@@ -56,6 +56,11 @@ namespace Utils.ElementInteraction
         private void OnDisable() => _draggable.OnEndDragging -= Swap;
 
         /// <summary>
+        /// Reset the elements position to the old position
+        /// </summary>
+        public void ResetPosition() => _draggable.ResetPosition();
+
+        /// <summary>
         /// Swap with another Swappable. If no swappable found, snap to old position
         /// </summary>
         /// <param name="eventData"></param>
@@ -65,7 +70,7 @@ namespace Utils.ElementInteraction
             // No swappable, nothing to do
             if (otherSwappable == null)
             {
-                _draggable.ResetPosition();
+                ResetPosition();
                 return;
             }
 

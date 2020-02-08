@@ -74,7 +74,7 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: dc0cd158442ec9b4a9e2ff201649af1c, type: 2}
     amount: 10
   - item: {fileID: 11400000, guid: 8e4b1ba039a7f0849b8ea176ed127654, type: 2}
-    amount: 15
+    amount: 10
   fadeStrength: 0.2
 --- !u!1001 &268295160176577508
 PrefabInstance:
@@ -304,6 +304,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1931566429376249256}
     m_Modifications:
+    - target: {fileID: 332521915694650532, guid: c9c4ed998a6f5894c8152221ecc5e0cd,
+        type: 3}
+      propertyPath: m_Name
+      value: BuildingTooltip
+      objectReference: {fileID: 0}
     - target: {fileID: 647700968031114466, guid: c9c4ed998a6f5894c8152221ecc5e0cd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -408,11 +413,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 332521915694650532, guid: c9c4ed998a6f5894c8152221ecc5e0cd,
-        type: 3}
-      propertyPath: m_Name
-      value: BuildingTooltip
       objectReference: {fileID: 0}
     - target: {fileID: 5520973636840646875, guid: c9c4ed998a6f5894c8152221ecc5e0cd,
         type: 3}
