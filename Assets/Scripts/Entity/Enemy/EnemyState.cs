@@ -47,7 +47,10 @@ namespace Entity.Enemy
             CoroutineManager.Instance.WaitForSeconds(5, () =>
             {
                 foreach (ItemResourceData resourceData in _enemyController.ItemDrops)
-                    for (int i = 0; i < resourceData.amount; i++)
+                    for (int i = 0;
+                        i < resourceData.amount + Random.Range(-_enemyController.DropAmountRangeValue,
+                            _enemyController.DropAmountRangeValue);
+                        i++)
                         InventoryManager.Instance.AddItem(resourceData.item);
             });
             base.OnDeath();

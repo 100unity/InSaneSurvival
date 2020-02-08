@@ -12,12 +12,10 @@ namespace Interactables
 {
     public class Harvestable : Interactable
     {
-        [Tooltip("Whether the scale should be checked.")]
-        [SerializeField]
+        [Tooltip("Whether the scale should be checked.")] [SerializeField]
         private bool checkScale;
 
-        [Tooltip("The maximum scale of the item in order to be gatherable.")]
-        [SerializeField]
+        [Tooltip("The maximum scale of the item in order to be gatherable.")] [SerializeField]
         private float maxScale;
 
         [Tooltip("The items being dropped on a successful harvest.")] [SerializeField]
@@ -40,7 +38,7 @@ namespace Interactables
 
         [SerializeField] [HideInInspector] protected bool isRespawning;
         [SerializeField] [HideInInspector] protected double respawnTimePassed;
-        
+
         private bool _notGatherable;
 
         protected GameObject Parent;
@@ -63,11 +61,12 @@ namespace Interactables
             // if scale should be checked, set _notGatherable
             if (checkScale)
             {
-                _notGatherable = transform.localScale.x > maxScale || transform.localScale.y > maxScale || transform.localScale.z > maxScale;
+                _notGatherable = transform.localScale.x > maxScale || transform.localScale.y > maxScale ||
+                                 transform.localScale.z > maxScale;
                 if (_notGatherable)
                 {
                     enabled = false;
-                    
+
                     InteractTooltip tooltip = GetComponent<InteractTooltip>();
                     tooltip.isDisabled = true;
                     tooltip.enabled = false;
@@ -136,7 +135,8 @@ namespace Interactables
                 if (_gatherTimePassed >= gatherTime)
                 {
                     AddItems();
-                    if (InventoryManager.Instance.CurrentlyEquippedItemButton != null)
+                    if (InventoryManager.Instance.CurrentlyEquippedItemButton != null &&
+                        neededAbility != Equipable.EquipableAbility.None)
                         InventoryManager.Instance.CurrentlyEquippedItemButton.IncreaseUses();
                     if (destroyAfterHarvest)
                         Destroy(Parent);

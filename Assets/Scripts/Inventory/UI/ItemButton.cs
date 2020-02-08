@@ -1,4 +1,3 @@
-using System;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -53,12 +52,12 @@ namespace Inventory.UI
         /// The amount of this item
         /// </summary>
         private int _count;
-        
+
         /// <summary>
         /// If this is an equipable, this is not null.
         /// </summary>
         private Equipable _equipable;
-        
+
         /// <summary>
         /// The currently amount of uses.
         /// </summary>
@@ -84,17 +83,17 @@ namespace Inventory.UI
             Item = item;
             icon.sprite = Item.Icon;
             Count = 1;
-            if (item is Equipable equipable) 
+            if (item is Equipable equipable)
                 _equipable = equipable;
         }
-        
+
         /// <summary>
         /// Increases the amount of uses of this item.
         /// </summary>
         /// <param name="amount">The increase of uses. By default 1</param>
         public void IncreaseUses(int amount = 1)
         {
-            if(_equipable == null)
+            if (_equipable == null)
                 return;
             _currentUses += amount;
             if (_currentUses >= _equipable.MaxUses)
@@ -133,7 +132,7 @@ namespace Inventory.UI
             Item.Use();
             if (Item is Equipable)
                 ToggleIsEquipped();
-            else if(Item is Consumable consumable)
+            else if (Item is Consumable consumable)
                 AudioManager.Instance.Play(consumable.SoundOnUse);
         }
 
@@ -179,6 +178,7 @@ namespace Inventory.UI
             // Move as much as possible
             otherStackable.ItemButton.Count += freeSpace;
             Count -= freeSpace;
+            swappable.ResetPosition();
             return false;
         }
     }

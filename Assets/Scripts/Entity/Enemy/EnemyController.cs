@@ -38,10 +38,14 @@ namespace Entity.Enemy
         [Header("Drops")] [Tooltip("Items that will be dropped when killing this emeny")] [SerializeField]
         private List<ItemResourceData> itemDrops;
 
+        [Tooltip("Range for the drop amount. Defines how many more/less items drop")] [SerializeField]
+        private int dropAmountRangeValue;
+
         public Renderer Renderer => graphicsRenderer;
         public bool IsAggressive => isAggressive;
         public Area WanderArea => wanderArea;
         public List<ItemResourceData> ItemDrops => itemDrops;
+        public int DropAmountRangeValue => dropAmountRangeValue;
 
         // component references
         private WanderAI _wanderAI;
