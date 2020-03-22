@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8720530238762120494}
   - component: {fileID: 8720530238762120495}
   - component: {fileID: 1438771571607802969}
+  - component: {fileID: 2961134309388268836}
   m_Layer: 0
   m_Name: Remote
   m_TagString: Untagged
@@ -63,3 +64,15 @@ MonoBehaviour:
   stone: {fileID: 11400000, guid: 74bcd3664db4596499f605254fb4026e, type: 2}
   iron: {fileID: 11400000, guid: f144e69106a98f647b57e29ab30134e1, type: 2}
   wool: {fileID: 11400000, guid: 8e4b1ba039a7f0849b8ea176ed127654, type: 2}
+--- !u!114 &2961134309388268836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8720530238762120480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761e22feca624f78bb36a6110afbac0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
